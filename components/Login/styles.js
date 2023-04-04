@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
   },
   fieldInputContainer: {
     alignItems: "center",
-    background: "#FFFFFF",
+    backgroundColor: "#FFFFFF",
     border: "1px solid #C1C7D0",
     borderRadius: 4,
     display: "flex",
@@ -44,6 +44,13 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     width: "100%",
+  },
+  error: {
+    border: "2px solid red",
+  },
+  errorText: {
+    color: "red",
+    fontWeight: "bold",
   },
   passwordInputContainer: {
     width: "100%",
@@ -89,10 +96,6 @@ export const styles = StyleSheet.create({
   },
   redirectionButtons: {
     gap: 16,
-  },
-  errorTextStyle: {
-    color: "red",
-    fontSize: 14,
   },
 });
 

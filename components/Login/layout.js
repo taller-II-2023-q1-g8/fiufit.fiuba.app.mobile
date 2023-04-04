@@ -7,28 +7,16 @@ import {
   TouchableOpacity,
 } from "react-native-web";
 import Loader from "../Loader";
-import {
-  loginTItle,
-  needAccount,
-  register,
-  submitButtonText,
-} from "./constants";
 import { texts } from "../../texts";
-
-const ErrorLabel = (errorText) => (
-  <Text style={styles.errorTextStyle}>{errorText}</Text>
-);
 
 const loginTexts = texts.Login;
 
 export default function Login({
-  errorText,
   fields,
   handleForgotPassword,
   handleRegister,
   handleSubmitPress,
   loading,
-  shouldShowError,
 }) {
   return (
     <View style={styles.container}>
@@ -41,7 +29,6 @@ export default function Login({
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{loginTexts.loginTitle}</Text>
           {fields.map((field) => field)}
-          {shouldShowError ? ErrorLabel(errorText) : null}
           <TouchableOpacity
             style={styles.submitButton}
             activeOpacity={0.5}
