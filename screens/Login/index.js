@@ -2,7 +2,7 @@ import { createRef, useState } from "react";
 import { EmailField, PasswordField } from "./constants";
 import Login from "./layout";
 
-export default function LoginContainer() {
+export default function LoginContainer({ navigation }) {
   const [passwordError, setPasswordError] = useState("");
   const [mailError, setMailError] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
@@ -28,7 +28,7 @@ export default function LoginContainer() {
 
   const handlePasswordVisibility = () => setHidePassword(!hidePassword);
 
-  const handleRegister = () => alert("Redirección a la vista de registro!");
+  const handleRegister = (navigation) => navigation.navigate("Register");
   const handleForgotPassword = () =>
     alert("Redirección a la vista de forgot password!");
 
@@ -53,7 +53,7 @@ export default function LoginContainer() {
     <Login
       fields={fields}
       handleForgotPassword={handleForgotPassword}
-      handleRegister={handleRegister}
+      handleRegister={() => handleRegister(navigation)}
       handleSubmitPress={handleSubmitPress}
       loading={loading}
     />
