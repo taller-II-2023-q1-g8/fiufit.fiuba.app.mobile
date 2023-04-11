@@ -1,5 +1,12 @@
 import { createRef, useState } from "react";
-import { AEmailField, ANameField, APasswordField, EmailField, NameField, PasswordField } from "./constants";
+import {
+  AEmailField,
+  ANameField,
+  APasswordField,
+  EmailField,
+  NameField,
+  PasswordField,
+} from "./constants";
 import Register from "./layout";
 
 export default function RegisterContainer({ navigation }) {
@@ -77,14 +84,8 @@ export default function RegisterContainer({ navigation }) {
 
   const fields = [
     ANameField(handleOnNameChange, nameError),
-    AEmailField(handleOnEmailChange, onSubmitEditingEmail, mailError),
-    APasswordField(
-      handleOnPasswordChange,
-      passwordInputRef,
-      hidePassword,
-      handlePasswordVisibility,
-      passwordError
-    ),
+    AEmailField(handleOnEmailChange, mailError),
+    APasswordField(handleOnPasswordChange, passwordError),
   ];
 
   return (

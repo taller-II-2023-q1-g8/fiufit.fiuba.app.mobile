@@ -1,12 +1,16 @@
 import { createRef, useState } from "react";
-import { AEmailField, APasswordField, EmailField, PasswordField } from "./constants";
+import {
+  AEmailField,
+  APasswordField,
+  EmailField,
+  PasswordField,
+} from "./constants";
 import Login from "./layout";
 import { texts } from "../../texts";
 
 export default function LoginContainer({ navigation }) {
   const [passwordError, setPasswordError] = useState("");
   const [mailError, setMailError] = useState("");
-  const [hidePassword, setHidePassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -27,8 +31,6 @@ export default function LoginContainer({ navigation }) {
     setLoading(true);
   };
 
-  const handlePasswordVisibility = () => setHidePassword(!hidePassword);
-
   const handleRegister = (navigation) =>
     navigation.navigate(texts.Register.name);
   const handleForgotPassword = () =>
@@ -41,14 +43,8 @@ export default function LoginContainer({ navigation }) {
     passwordInputRef.current && passwordInputRef.current.focus();
 
   const fields = [
-    AEmailField(handleOnEmailChange, onSubmitEditingEmail, mailError),
-    APasswordField(
-      handleOnPasswordChange,
-      passwordInputRef,
-      hidePassword,
-      handlePasswordVisibility,
-      passwordError
-    ),
+    AEmailField(handleOnEmailChange, mailError),
+    APasswordField(handleOnPasswordChange, passwordError),
   ];
 
   return (

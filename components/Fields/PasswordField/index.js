@@ -13,16 +13,14 @@ import {
 } from "../constants";
 import { texts } from "../../../texts";
 import { styles } from "../styles";
+import { useState } from "react";
 
 const fieldsTexts = texts.Fields;
 
-const PasswordField = ({
-  onChangeText,
-  ref,
-  hidePassword,
-  handlePasswordVisibility,
-  error,
-}) => {
+const PasswordField = ({ onChangeText, error }) => {
+  const [hidePassword, setHidePassword] = useState(true);
+  const handlePasswordVisibility = () => setHidePassword(!hidePassword);
+
   return (
     <View style={styles.fieldContainer} key={PASSWORD_FIELD_KEY}>
       <Text style={{ ...styles.fieldTitle, ...(error && styles.errorText) }}>
@@ -34,7 +32,6 @@ const PasswordField = ({
           onChangeText={onChangeText}
           onSubmitEditing={Keyboard.dismiss}
           placeholder={fieldsTexts.passwordPlaceholder}
-          ref={ref}
           secureTextEntry={hidePassword}
           {...commonFieldProps(error)}
         />

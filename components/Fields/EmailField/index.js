@@ -10,7 +10,7 @@ import { styles } from "../styles";
 
 const fieldsTexts = texts.Fields;
 
-const EmailField = ({ onChangeText, onSubmitEditing, error }) => {
+const EmailField = ({ onChangeText, error }) => {
   return (
     <View style={styles.fieldContainer} key={EMAIL_FIELD_KEY}>
       <Text style={{ ...styles.fieldTitle, ...(error && styles.errorText) }}>
@@ -20,7 +20,6 @@ const EmailField = ({ onChangeText, onSubmitEditing, error }) => {
         autoCapitalize="none"
         keyboardType={emailFieldType}
         onChangeText={onChangeText}
-        onSubmitEditing={onSubmitEditing}
         placeholder={fieldsTexts.emailPlaceholder}
         {...commonFieldProps(error)}
       />

@@ -3,29 +3,13 @@ import EmailField from "../../components/Fields/EmailField";
 import PasswordField from "../../components/Fields/PasswordField";
 
 export const ANameField = (onChangeText, nameError) => (
-  <NameField onChangeText={onChangeText} nameError={nameError} />
+  <NameField onChangeText={onChangeText} error={nameError} />
 );
 
-export const AEmailField = (onChangeText, onSubmitEditing, mailError) => (
-  <EmailField
-    onChangeText={onChangeText}
-    onSubmitEditing={onSubmitEditing}
-    mailError={mailError}
-  />
+export const AEmailField = (onChangeText, mailError) => (
+  <EmailField onChangeText={onChangeText} error={mailError} />
 );
 
-export const APasswordField = (
-  onChangeText,
-  ref,
-  hidePassword,
-  handlePasswordVisibility,
-  passwordError
-) => (
-  <PasswordField
-    onChangeText={onChangeText}
-    ref={ref}
-    hidePassword={hidePassword}
-    handlePasswordVisibility={handlePasswordVisibility}
-    passwordError={passwordError}
-  />
+export const APasswordField = (onChangeText, passwordError) => (
+  <PasswordField onChangeText={onChangeText} error={passwordError} />
 );
