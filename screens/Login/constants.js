@@ -10,29 +10,36 @@ import {
 import { styles } from "./styles";
 import { texts } from "../../texts";
 import { colors } from "../../colors";
-import { EMAIL_FIELD_KEY, PASSWORD_FIELD_KEY, emailFieldType, passwordFieldType } from "../../constants";
+import {
+  EMAIL_FIELD_KEY,
+  PASSWORD_FIELD_KEY,
+  emailFieldType,
+  passwordFieldType,
+} from "../../constants";
 
-const commonTextInputFieldProps = {
+const commonTextInputFieldProps = (error) => ({
   placeholderTextColor: colors.placeholderColor,
   returnKeyType: "next",
-  style: styles.fieldInputContainer,
+  style: { ...styles.fieldInputContainer, ...(error && styles.error) },
   underlineColorAndroid: colors.onFieldFocusColor,
-  // blurOnSubmit={false},
-};
+});
 
-const loginTexts = texts.Login;
+const fieldsTexts = texts.Fields;
 
-export const EmailField = (onChangeText, onSubmitEditing) => (
+export const EmailField = (onChangeText, onSubmitEditing, mailError) => (
   <View style={styles.fieldContainer} key={EMAIL_FIELD_KEY}>
-    <Text style={styles.fieldTitle}>{loginTexts.userFieldTitle}</Text>
+    <Text style={{ ...styles.fieldTitle, ...(mailError && styles.errorText) }}>
+      {fieldsTexts.emailFieldTitle}
+    </Text>
     <TextInput
       autoCapitalize="none"
       keyboardType={emailFieldType}
       onChangeText={onChangeText}
       onSubmitEditing={onSubmitEditing}
-      placeholder={loginTexts.emailPlaceholder}
-      {...commonTextInputFieldProps}
+      placeholder={fieldsTexts.emailPlaceholder}
+      {...commonTextInputFieldProps(mailError)}
     />
+    {mailError && <Text style={styles.errorText}>{mailError}</Text>}
   </View>
 );
 
@@ -40,19 +47,22 @@ export const PasswordField = (
   onChangeText,
   ref,
   hidePassword,
-  handlePasswordVisibility
+  handlePasswordVisibility,
+  passwordError
 ) => (
   <View style={styles.fieldContainer} key={PASSWORD_FIELD_KEY}>
-    <Text style={styles.fieldTitle}>{loginTexts.passwordFieldTitle}</Text>
+    <Text style={{ ...styles.fieldTitle, ...(passwordError && styles.errorText) }}>
+      {fieldsTexts.passwordFieldTitle}
+    </Text>
     <View style={styles.passwordInputContainer}>
       <TextInput
         keyboardType={passwordFieldType}
         onChangeText={onChangeText}
         onSubmitEditing={Keyboard.dismiss}
-        placeholder={loginTexts.passwordPlaceholder}
+        placeholder={fieldsTexts.passwordPlaceholder}
         ref={ref}
         secureTextEntry={hidePassword}
-        {...commonTextInputFieldProps}
+        {...commonTextInputFieldProps(passwordError)}
       />
       <TouchableOpacity
         activeOpacity={0.8}
@@ -69,5 +79,6 @@ export const PasswordField = (
         />
       </TouchableOpacity>
     </View>
+    {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
   </View>
 );

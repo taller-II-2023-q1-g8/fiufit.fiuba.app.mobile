@@ -2,8 +2,9 @@ import { createRef, useState } from "react";
 import { EmailField, PasswordField } from "./constants";
 import Login from "./layout";
 
-export default function LoginContainer() {
-  const [errorText, setErrorText] = useState("");
+export default function LoginContainer({ navigation }) {
+  const [passwordError, setPasswordError] = useState("");
+  const [mailError, setMailError] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
@@ -12,13 +13,14 @@ export default function LoginContainer() {
   const passwordInputRef = createRef();
 
   const handleSubmitPress = () => {
-    setErrorText("");
+    setMailError("");
+    setPasswordError("");
     if (!userEmail) {
-      setErrorText("Usuario obligatorio");
+      setMailError("Usuario obligatorio");
       return;
     }
     if (!userPassword) {
-      setErrorText("Contraseña obligatoria");
+      setPasswordError("Contraseña obligatoria");
       return;
     }
     setLoading(true);
@@ -26,34 +28,34 @@ export default function LoginContainer() {
 
   const handlePasswordVisibility = () => setHidePassword(!hidePassword);
 
-  const handleRegister = () => alert("Redirección a la vista de registro!");
+  const handleRegister = (navigation) => navigation.navigate("Register");
   const handleForgotPassword = () =>
     alert("Redirección a la vista de forgot password!");
 
   const handleOnEmailChange = (userMail) => setUserEmail(userMail);
-  const handleOnPasswordChange = (userPassword) => setUserPassword(userPassword);
+  const handleOnPasswordChange = (userPassword) =>
+    setUserPassword(userPassword);
   const onSubmitEditingEmail = () =>
     passwordInputRef.current && passwordInputRef.current.focus();
 
   const fields = [
-    EmailField(handleOnEmailChange, onSubmitEditingEmail),
+    EmailField(handleOnEmailChange, onSubmitEditingEmail, mailError),
     PasswordField(
       handleOnPasswordChange,
       passwordInputRef,
       hidePassword,
-      handlePasswordVisibility
+      handlePasswordVisibility,
+      passwordError
     ),
   ];
 
   return (
     <Login
-      errorText={errorText}
       fields={fields}
       handleForgotPassword={handleForgotPassword}
-      handleRegister={handleRegister}
+      handleRegister={() => handleRegister(navigation)}
       handleSubmitPress={handleSubmitPress}
       loading={loading}
-      shouldShowError={errorText != ""}
     />
   );
 }
