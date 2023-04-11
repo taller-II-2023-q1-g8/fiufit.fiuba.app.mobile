@@ -1,8 +1,8 @@
 import { createRef, useState } from "react";
-import { EmailField, NameField, PasswordField } from "./constants";
+import { AEmailField, ANameField, APasswordField, EmailField, NameField, PasswordField } from "./constants";
 import Register from "./layout";
 
-export default function RegisterContainer() {
+export default function RegisterContainer({ navigation }) {
   const [hidePassword, setHidePassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const [mailError, setMailError] = useState("");
@@ -76,9 +76,9 @@ export default function RegisterContainer() {
     passwordInputRef.current && passwordInputRef.current.focus();
 
   const fields = [
-    NameField(handleOnNameChange, nameError),
-    EmailField(handleOnEmailChange, onSubmitEditingEmail, mailError),
-    PasswordField(
+    ANameField(handleOnNameChange, nameError),
+    AEmailField(handleOnEmailChange, onSubmitEditingEmail, mailError),
+    APasswordField(
       handleOnPasswordChange,
       passwordInputRef,
       hidePassword,

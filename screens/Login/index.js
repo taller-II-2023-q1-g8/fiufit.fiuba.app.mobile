@@ -1,6 +1,7 @@
 import { createRef, useState } from "react";
-import { EmailField, PasswordField } from "./constants";
+import { AEmailField, APasswordField, EmailField, PasswordField } from "./constants";
 import Login from "./layout";
+import { texts } from "../../texts";
 
 export default function LoginContainer({ navigation }) {
   const [passwordError, setPasswordError] = useState("");
@@ -28,7 +29,8 @@ export default function LoginContainer({ navigation }) {
 
   const handlePasswordVisibility = () => setHidePassword(!hidePassword);
 
-  const handleRegister = (navigation) => navigation.navigate("Register");
+  const handleRegister = (navigation) =>
+    navigation.navigate(texts.Register.name);
   const handleForgotPassword = () =>
     alert("Redirección a la vista de forgot password!");
 
@@ -39,8 +41,8 @@ export default function LoginContainer({ navigation }) {
     passwordInputRef.current && passwordInputRef.current.focus();
 
   const fields = [
-    EmailField(handleOnEmailChange, onSubmitEditingEmail, mailError),
-    PasswordField(
+    AEmailField(handleOnEmailChange, onSubmitEditingEmail, mailError),
+    APasswordField(
       handleOnPasswordChange,
       passwordInputRef,
       hidePassword,

@@ -1,4 +1,5 @@
 export const colors = {
-  placeholderColor: "#8b9cb5",
-  onFieldFocusColor: "black",
+  placeholder: "#8b9cb5",
+  onFieldFocus: "black",
+  purple: "#6666FF",
 };
