@@ -24,19 +24,19 @@ const commonTextInputFieldProps = (error) => ({
   underlineColorAndroid: colors.onFieldFocusColor,
 });
 
-const loginTexts = texts.Login;
+const fieldsTexts = texts.Fields;
 
 export const EmailField = (onChangeText, onSubmitEditing, mailError) => (
   <View style={styles.fieldContainer} key={EMAIL_FIELD_KEY}>
     <Text style={{ ...styles.fieldTitle, ...(mailError && styles.errorText) }}>
-      {loginTexts.userFieldTitle}
+      {fieldsTexts.emailFieldTitle}
     </Text>
     <TextInput
       autoCapitalize="none"
       keyboardType={emailFieldType}
       onChangeText={onChangeText}
       onSubmitEditing={onSubmitEditing}
-      placeholder={loginTexts.emailPlaceholder}
+      placeholder={fieldsTexts.emailPlaceholder}
       {...commonTextInputFieldProps(mailError)}
     />
     {mailError && <Text style={styles.errorText}>{mailError}</Text>}
@@ -52,14 +52,14 @@ export const PasswordField = (
 ) => (
   <View style={styles.fieldContainer} key={PASSWORD_FIELD_KEY}>
     <Text style={{ ...styles.fieldTitle, ...(passwordError && styles.errorText) }}>
-      {loginTexts.passwordFieldTitle}
+      {fieldsTexts.passwordFieldTitle}
     </Text>
     <View style={styles.passwordInputContainer}>
       <TextInput
         keyboardType={passwordFieldType}
         onChangeText={onChangeText}
         onSubmitEditing={Keyboard.dismiss}
-        placeholder={loginTexts.passwordPlaceholder}
+        placeholder={fieldsTexts.passwordPlaceholder}
         ref={ref}
         secureTextEntry={hidePassword}
         {...commonTextInputFieldProps(passwordError)}

@@ -6,12 +6,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native-web";
-import Loader from "../Loader";
+import Loader from "../../components/Loader";
 import { texts } from "../../texts";
 
-const loginTexts = texts.Login;
+const registerTexts = texts.Register;
 
-export default function Login({
+export default function Register({
   fields,
   handleForgotPassword,
   handleRegister,
@@ -27,7 +27,7 @@ export default function Login({
         contentContainerStyle={scrollviewStyle}
       >
         <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <Text style={styles.title}>{loginTexts.loginTitle}</Text>
+          <Text style={styles.title}>{registerTexts.registerTitle}</Text>
           {fields.map((field) => field)}
           <TouchableOpacity
             style={styles.submitButton}
@@ -35,22 +35,9 @@ export default function Login({
             onPress={handleSubmitPress}
           >
             <Text style={styles.submitButtonText}>
-              {loginTexts.submitButtonText}
+              {registerTexts.submitButtonText}
             </Text>
           </TouchableOpacity>
-          <View style={styles.redirectionButtons}>
-            <Text style={styles.forgotPassword} onPress={handleForgotPassword}>
-              {loginTexts.forgotYourPasswordQuestion}
-            </Text>
-            <View style={styles.needAccountContainer}>
-              <Text style={styles.needAccountText}>
-                {loginTexts.needAccount}
-              </Text>
-              <Text style={styles.registerButton} onPress={handleRegister}>
-                {loginTexts.register}
-              </Text>
-            </View>
-          </View>
         </KeyboardAvoidingView>
       </ScrollView>
     </View>

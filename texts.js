@@ -1,13 +1,22 @@
 export const texts = {
   Login: {
-    submitButtonText: "Ingresar",
+    forgotYourPasswordQuestion: "¿Olvidaste tu contraseña?",
+    loginTitle: "Iniciá sesión con tu cuenta",
     needAccount: "¿No tienes una cuenta?",
     register: "Registrate",
-    loginTitle: "Iniciá sesión con tu cuenta",
+    submitButtonText: "Ingresar",
+  },
+  Register: {
+    registerTitle: "Registrate",
+    submitButtonText: "Registrarse",
+  },
+  Fields: {
+    emailFieldTitle: "Usuario",
     emailPlaceholder: "Ingresá tu email o usuario",
     passwordFieldTitle: "Contraseña",
-    userFieldTitle: "Usuario",
-    forgotYourPasswordQuestion: "¿Olvidaste tu contraseña?",
     passwordPlaceholder: "Ingresá tu contraseña",
+    nameFieldTitle: "Nombre",
+    namePlaceholder: "Ingresá tu nombre",
+    
   },
 };
