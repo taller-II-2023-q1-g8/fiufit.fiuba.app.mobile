@@ -6,15 +6,32 @@ import Register from "./screens/Register";
 
 const Stack = createNativeStackNavigator();
 
+const defaultNavigationOptions = {
+  title: "fiuFIT",
+  headerTintColor: "white",
+  headerTitleStyle: {
+    fontWeight: "bold",
+    alignSelf: "center",
+  },
+  headerTitleAlign: "center",
+  headerStyle: {
+    backgroundColor: "#6666FF",
+  },
+};
+
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen component={Login} name="Login" options={{ title: "" }} />
+        <Stack.Screen
+          component={Login}
+          name="Login"
+          options={defaultNavigationOptions}
+        />
         <Stack.Screen
           component={Register}
           name="Register"
-          options={{ title: "" }}
+          options={defaultNavigationOptions}
         />
       </Stack.Navigator>
     </NavigationContainer>
