@@ -1,12 +1,9 @@
-import { createRef, useState } from "react";
-import {
-  AEmailField,
-  APasswordField,
-  EmailField,
-  PasswordField,
-} from "./constants";
-import Login from "./layout";
 import { texts } from "../../texts";
+import { useState } from "react";
+import EmailField from "../../components/Fields/EmailField";
+import Login from "./layout";
+import PasswordField from "../../components/Fields/PasswordField";
+import { EMAIL_FIELD_KEY, PASSWORD_FIELD_KEY } from "../../components/Fields/constants";
 
 export default function LoginContainer({ navigation }) {
   const [passwordError, setPasswordError] = useState("");
@@ -14,8 +11,6 @@ export default function LoginContainer({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
-  const passwordInputRef = createRef();
 
   const handleSubmitPress = () => {
     setMailError("");
@@ -39,12 +34,10 @@ export default function LoginContainer({ navigation }) {
   const handleOnEmailChange = (userMail) => setUserEmail(userMail);
   const handleOnPasswordChange = (userPassword) =>
     setUserPassword(userPassword);
-  const onSubmitEditingEmail = () =>
-    passwordInputRef.current && passwordInputRef.current.focus();
 
   const fields = [
-    AEmailField(handleOnEmailChange, mailError),
-    APasswordField(handleOnPasswordChange, passwordError),
+    <EmailField key={EMAIL_FIELD_KEY} onChangeText={handleOnEmailChange} error={mailError} />,
+    <PasswordField key={PASSWORD_FIELD_KEY} onChangeText={handleOnPasswordChange} error={passwordError} />,
   ];
 
   return (

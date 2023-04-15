@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    padding: "0",
+    padding: 0,
     gap: 12,
     width: "100%",
   },

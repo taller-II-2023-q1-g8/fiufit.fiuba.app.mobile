@@ -1,12 +1,7 @@
 import { createRef, useState } from "react";
-import {
-  AEmailField,
-  ANameField,
-  APasswordField,
-  EmailField,
-  NameField,
-  PasswordField,
-} from "./constants";
+import EmailField from "../../components/Fields/EmailField";
+import NameField from "../../components/Fields/NameField";
+import PasswordField from "../../components/Fields/PasswordField";
 import Register from "./layout";
 
 export default function RegisterContainer({ navigation }) {
@@ -50,7 +45,7 @@ export default function RegisterContainer({ navigation }) {
           },
           mode: "cors",
           body: JSON.stringify({
-            id: userEmail,
+            username: userEmail,
             firstname: userName,
             gender: "male",
             email: userEmail,
@@ -68,8 +63,6 @@ export default function RegisterContainer({ navigation }) {
     setLoading(false);
   };
 
-  const handlePasswordVisibility = () => setHidePassword(!hidePassword);
-
   const handleRegister = () => alert("Redirección a la vista de registro!");
   const handleForgotPassword = () =>
     alert("Redirección a la vista de forgot password!");
@@ -79,13 +72,13 @@ export default function RegisterContainer({ navigation }) {
   const handleOnPasswordChange = (userPassword) =>
     setUserPassword(userPassword);
 
-  const onSubmitEditingEmail = () =>
-    passwordInputRef.current && passwordInputRef.current.focus();
-
   const fields = [
-    ANameField(handleOnNameChange, nameError),
-    AEmailField(handleOnEmailChange, mailError),
-    APasswordField(handleOnPasswordChange, passwordError),
+    <NameField onChangeText={handleOnNameChange} error={nameError} />,
+    <EmailField onChangeText={handleOnEmailChange} error={mailError} />,
+    <PasswordField
+      onChangeText={handleOnPasswordChange}
+      error={passwordError}
+    />,
   ];
 
   return (

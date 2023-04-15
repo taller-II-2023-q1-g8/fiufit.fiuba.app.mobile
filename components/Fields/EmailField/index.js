@@ -1,4 +1,4 @@
-import { TextInput, View, Text } from "react-native-web";
+import { TextInput, View, Text } from "react-native";
 
 import { texts } from "../../../texts";
 import {

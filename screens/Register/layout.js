@@ -5,7 +5,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TouchableOpacity,
-} from "react-native-web";
+} from "react-native";
 import Loader from "../../components/Loader";
 import { texts } from "../../texts";
 

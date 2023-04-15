@@ -1,10 +1,4 @@
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native-web";
+import { TextInput, View, Text, TouchableOpacity, Image } from "react-native";
 
 import {
   PASSWORD_FIELD_KEY,
@@ -14,6 +8,7 @@ import {
 import { texts } from "../../../texts";
 import { styles } from "../styles";
 import { useState } from "react";
+import { Keyboard } from "react-native";
 
 const fieldsTexts = texts.Fields;
 
