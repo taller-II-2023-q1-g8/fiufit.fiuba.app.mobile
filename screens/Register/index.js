@@ -1,9 +1,13 @@
-import { emailFieldType, passwordFieldType } from "../../components/Fields/constants";
+import {
+  emailFieldType,
+  passwordFieldType,
+} from "../../components/Fields/constants";
 import { texts } from "../../texts";
 import { useEffect, useState } from "react";
 import DateField from "../../components/Fields/DateField";
 import Register from "./layout";
 import TextField from "../../components/Fields/TextField";
+import SelectField from "../../components/Fields/SelectField";
 
 const fieldTexts = texts.Fields;
 
@@ -11,14 +15,16 @@ export default function RegisterContainer({ navigation }) {
   const [birthdate, setBirthdate] = useState("");
   const [birthdateError, setBirthdateError] = useState("");
   const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [genderError, setGenderError] = useState("");
   const [loading, setLoading] = useState(false);
   const [mailError, setMailError] = useState("");
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
-  const [username, setUsername] = useState("");
-  const [usernameError, setUsernameError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [username, setUsername] = useState("");
+  const [usernameError, setUsernameError] = useState("");
 
   const resetErrors = () => {
     setBirthdateError("");
@@ -26,6 +32,7 @@ export default function RegisterContainer({ navigation }) {
     setNameError("");
     setPasswordError("");
     setUsernameError("");
+    setGenderError("");
   };
 
   const resetFieldValues = () => {
@@ -33,12 +40,15 @@ export default function RegisterContainer({ navigation }) {
     setEmail("");
     setName("");
     setPassword("");
+    setGender("");
     setUsername("");
   };
 
   useEffect(() => {
-    resetFieldValues();
-    resetErrors();
+    return () => {
+      resetFieldValues();
+      resetErrors();
+    };
   }, []);
 
   const handleSubmitPress = async () => {
@@ -78,7 +88,7 @@ export default function RegisterContainer({ navigation }) {
           body: JSON.stringify({
             username: username,
             firstname: name,
-            gender: "male",
+            gender: gender,
             email: email,
             phone_number: "123456789",
             birth_date: birthdate,
@@ -107,37 +117,39 @@ export default function RegisterContainer({ navigation }) {
   const handleOnBirthdateChange = (birthdate) =>
     setBirthdate(formatDate(birthdate));
   const handleOnUsernameChange = (username) => setUsername(username);
-
+  const handleOnGenderChange = (gender) => setGender(gender);
   const fields = [
     <TextField
       error={nameError}
       onChangeText={handleOnNameChange}
       placeholder={fieldTexts.namePlaceholder}
-      title={fieldTexts.nameFieldTitle}
+      title={fieldTexts.nameTitle}
     />,
     <TextField
       error={mailError}
       keyboardType={emailFieldType}
       onChangeText={handleOnEmailChange}
       placeholder={fieldTexts.emailPlaceholder}
-      title={fieldTexts.emailFieldTitle}
+      title={fieldTexts.emailTitle}
     />,
     <TextField
       error={passwordError}
       keyboardType={passwordFieldType}
       onChangeText={handleOnPasswordChange}
       placeholder={fieldTexts.passwordPlaceholder}
-      title={fieldTexts.passwordFieldTitle}
+      title={fieldTexts.passwordTitle}
     />,
-    <DateField
-      error={birthdateError}
-      onChangeText={handleOnBirthdateChange}
-    />,
+    <DateField error={birthdateError} onChangeText={handleOnBirthdateChange} />,
     <TextField
       error={usernameError}
       onChangeText={handleOnUsernameChange}
       placeholder={fieldTexts.usernamePlaceholder}
-      title={fieldTexts.usernameFieldTitle}
+      title={fieldTexts.usernameTitle}
+    />,
+    <SelectField
+      error={genderError}
+      onChangeText={handleOnGenderChange}
+      title={fieldTexts.genderTitle}
     />,
   ];
 

@@ -23,10 +23,6 @@ export default function LoginContainer({ navigation }) {
     setPassword("");
   };
 
-  useEffect(() => {
-    resetFieldValues();
-  }, []);
-
   const handleSubmitPress = () => {
     setMailError("");
     setPasswordError("");
@@ -56,14 +52,14 @@ export default function LoginContainer({ navigation }) {
       keyboardType={emailFieldType}
       onChangeText={handleOnEmailChange}
       placeholder={fieldTexts.emailPlaceholder}
-      title={fieldTexts.emailFieldTitle}
+      title={fieldTexts.emailTitle}
     />,
     <TextField
       error={passwordError}
       keyboardType={passwordFieldType}
       onChangeText={handleOnPasswordChange}
       placeholder={fieldTexts.passwordPlaceholder}
-      title={fieldTexts.passwordFieldTitle}
+      title={fieldTexts.passwordTitle}
     />,
   ];
 

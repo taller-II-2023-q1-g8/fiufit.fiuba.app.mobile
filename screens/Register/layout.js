@@ -11,11 +11,7 @@ import { texts } from "../../texts";
 
 const registerTexts = texts.Register;
 
-export default function Register({
-  fields,
-  handleSubmitPress,
-  loading,
-}) {
+export default function Register({ fields, handleSubmitPress, loading }) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />

@@ -36,6 +36,5 @@ export const styles = StyleSheet.create({
 });
 
 export const scrollviewStyle = {
-  flex: 1,
-  borderRadius: 2,
+  flexGrow: 1,
 };

@@ -31,7 +31,7 @@ const DateField = ({ onChangeText, error }) => {
   return (
     <View style={styles.fieldContainer}>
       <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>
-        {fieldsTexts.birthdateFieldTitle}
+        {fieldsTexts.birthdateTitle}
       </Text>
       <TouchableOpacity style={{ width: "100%" }} onPress={showDatePicker}>
         <Text

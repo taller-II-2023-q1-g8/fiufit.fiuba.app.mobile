@@ -1,4 +1,4 @@
-import { TextInput, View, Text, Image } from "react-native";
+import { TextInput, View, Text, Image, TouchableOpacity } from "react-native";
 
 import { texts } from "../../../texts";
 import { styles } from "../styles";
@@ -7,7 +7,6 @@ import {
   passwordFieldType,
   textFieldType,
 } from "../constants";
-import { TouchableOpacity } from "react-native-web";
 import { useState } from "react";
 
 const fieldsTexts = texts.Fields;
@@ -19,7 +18,9 @@ const TextField = ({
   placeholder,
   keyboardType = textFieldType,
 }) => {
-  const [hidePassword, setHidePassword] = useState(true);
+  const [hidePassword, setHidePassword] = useState(
+    keyboardType === passwordFieldType
+  );
   const handlePasswordVisibility = () => setHidePassword(!hidePassword);
 
   return (
@@ -31,6 +32,7 @@ const TextField = ({
         <TextInput
           autoCapitalize="none"
           keyboardType={keyboardType}
+          secureTextEntry={hidePassword}
           onChangeText={onChangeText}
           placeholder={placeholder}
           {...commonFieldProps(error)}
