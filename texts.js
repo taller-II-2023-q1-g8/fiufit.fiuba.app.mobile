@@ -13,8 +13,8 @@ export const texts = {
     submitButtonText: "Registrarse",
   },
   Fields: {
-    emailFieldTitle: "Usuario",
-    emailPlaceholder: "Ingresá tu email o usuario",
+    emailFieldTitle: "Email",
+    emailPlaceholder: "Ingresá tu email",
     passwordFieldTitle: "Contraseña",
     passwordPlaceholder: "Ingresá tu contraseña",
     nameFieldTitle: "Nombre",
