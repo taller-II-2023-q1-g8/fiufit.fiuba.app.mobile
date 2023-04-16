@@ -19,6 +19,8 @@ export const texts = {
     passwordPlaceholder: "Ingresá tu contraseña",
     nameFieldTitle: "Nombre",
     namePlaceholder: "Ingresá tu nombre",  
+    birthdateFieldTitle: "Fecha de nacimiento",
+    birthdatePlaceholder: "Seleccioná tu fecha de nacimiento",  
   },
   App:{
     headerTitle: "fiuFIT",

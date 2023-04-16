@@ -13,7 +13,7 @@ const fieldsTexts = texts.Fields;
 const EmailField = ({ onChangeText, error }) => {
   return (
     <View style={styles.fieldContainer} key={EMAIL_FIELD_KEY}>
-      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorText) }}>
+      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>
         {fieldsTexts.emailFieldTitle}
       </Text>
       <TextInput
@@ -23,7 +23,7 @@ const EmailField = ({ onChangeText, error }) => {
         placeholder={fieldsTexts.emailPlaceholder}
         {...commonFieldProps(error)}
       />
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      {error && <Text style={styles.errorDescription}>{error}</Text>}
     </View>
   );
 };

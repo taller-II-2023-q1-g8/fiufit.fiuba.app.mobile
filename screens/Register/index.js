@@ -3,23 +3,24 @@ import EmailField from "../../components/Fields/EmailField";
 import NameField from "../../components/Fields/NameField";
 import PasswordField from "../../components/Fields/PasswordField";
 import Register from "./layout";
+import BirthdateField from "../../components/Fields/BirthdateField";
 
 export default function RegisterContainer({ navigation }) {
-  const [hidePassword, setHidePassword] = useState(true);
   const [loading, setLoading] = useState(false);
   const [mailError, setMailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [birthdateError, setBirthdateError] = useState("");
   const [nameError, setNameError] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
-  const passwordInputRef = createRef();
+  const [userBirthdate, setUserBirthdate] = useState("");
 
   const handleSubmitPress = async () => {
     setMailError("");
-    setPasswordError("");
     setNameError("");
+    setPasswordError("");
+    setBirthdateError("");
     if (!userName) {
       setNameError("Nombre obligatorio");
       return;
@@ -30,6 +31,10 @@ export default function RegisterContainer({ navigation }) {
     }
     if (!userPassword) {
       setPasswordError("Contraseña obligatoria");
+      return;
+    }
+    if (!userBirthdate) {
+      setBirthdateError("Fecha de nacimiento obligatoria");
       return;
     }
     setLoading(true);
@@ -71,6 +76,8 @@ export default function RegisterContainer({ navigation }) {
   const handleOnEmailChange = (userMail) => setUserEmail(userMail);
   const handleOnPasswordChange = (userPassword) =>
     setUserPassword(userPassword);
+  const handleOnBirthdateChange = (userBirthdate) =>
+    setUserBirthdate(userBirthdate);
 
   const fields = [
     <NameField onChangeText={handleOnNameChange} error={nameError} />,
@@ -78,6 +85,10 @@ export default function RegisterContainer({ navigation }) {
     <PasswordField
       onChangeText={handleOnPasswordChange}
       error={passwordError}
+    />,
+    <BirthdateField
+      onChangeText={handleOnBirthdateChange}
+      error={birthdateError}
     />,
   ];
 

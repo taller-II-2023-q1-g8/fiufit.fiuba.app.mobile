@@ -9,7 +9,7 @@ const fieldsTexts = texts.Fields;
 const NameField = ({ onChangeText, error }) => {
   return (
     <View style={styles.fieldContainer} key={NAME_FIELD_KEY}>
-      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorText) }}>
+      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>
         {fieldsTexts.nameFieldTitle}
       </Text>
       <TextInput
@@ -19,7 +19,7 @@ const NameField = ({ onChangeText, error }) => {
         placeholder={fieldsTexts.namePlaceholder}
         {...commonFieldProps(error)}
       />
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      {error && <Text style={styles.errorDescription}>{error}</Text>}
     </View>
   );
 };

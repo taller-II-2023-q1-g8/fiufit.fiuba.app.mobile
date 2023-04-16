@@ -18,7 +18,7 @@ const PasswordField = ({ onChangeText, error }) => {
 
   return (
     <View style={styles.fieldContainer} key={PASSWORD_FIELD_KEY}>
-      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorText) }}>
+      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>
         {fieldsTexts.passwordFieldTitle}
       </Text>
       <View style={styles.passwordInputContainer}>
@@ -45,7 +45,7 @@ const PasswordField = ({ onChangeText, error }) => {
           />
         </TouchableOpacity>
       </View>
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      {error && <Text style={styles.errorDescription}>{error}</Text>}
     </View>
   );
 };

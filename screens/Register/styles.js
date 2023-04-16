@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,7 +9,7 @@ export const styles = StyleSheet.create({
   formContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: 32,
+    // gap: 24,
     justifyContent: "center",
     paddingHorizontal: 32,
     paddingVertical: 16,
@@ -18,12 +19,14 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
     fontWeight: "500",
-    paddingTop: 30,
+    paddingTop: 20,
+    marginBottom: 24, //because of gap not working :/
   },
   submitButton: {
-    backgroundColor: "#6666FF",
+    backgroundColor: colors.purple,
     alignItems: "center",
     borderRadius: 4,
+    marginBottom: 24, //because of gap not working :/
   },
   submitButtonText: {
     color: "white",

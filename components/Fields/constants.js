@@ -13,5 +13,5 @@ export const commonFieldProps = (error) => ({
   placeholderTextColor: colors.placeholder,
   returnKeyType: "next",
   style: { ...styles.fieldInputContainer, ...(error && styles.error) },
-  underlineColorAndroid: colors.onFieldFocus,
+  underlineColorAndroid: "transparent",
 });
