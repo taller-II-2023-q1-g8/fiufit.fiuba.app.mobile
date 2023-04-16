@@ -9,7 +9,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 const fieldsTexts = texts.Fields;
 
-const BirthdateField = ({ onChangeText, error }) => {
+const DateField = ({ onChangeText, error }) => {
   const [date, setDate] = useState(undefined);
   const [show, setShow] = useState(false);
 
@@ -29,7 +29,7 @@ const BirthdateField = ({ onChangeText, error }) => {
     `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} `;
 
   return (
-    <View style={styles.fieldContainer} key={NAME_FIELD_KEY}>
+    <View style={styles.fieldContainer}>
       <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>
         {fieldsTexts.birthdateFieldTitle}
       </Text>
@@ -57,4 +57,4 @@ const BirthdateField = ({ onChangeText, error }) => {
   );
 };
 
-export default BirthdateField;
+export default DateField;

@@ -13,16 +13,18 @@ export const texts = {
     submitButtonText: "Registrarse",
   },
   Fields: {
+    birthdateFieldTitle: "Fecha de nacimiento",
+    birthdatePlaceholder: "Seleccioná tu fecha de nacimiento",
     emailFieldTitle: "Email",
     emailPlaceholder: "Ingresá tu email",
+    nameFieldTitle: "Nombre",
+    namePlaceholder: "Ingresá tu nombre",
     passwordFieldTitle: "Contraseña",
     passwordPlaceholder: "Ingresá tu contraseña",
-    nameFieldTitle: "Nombre",
-    namePlaceholder: "Ingresá tu nombre",  
-    birthdateFieldTitle: "Fecha de nacimiento",
-    birthdatePlaceholder: "Seleccioná tu fecha de nacimiento",  
+    usernameFieldTitle: "Usuario",
+    usernamePlaceholder: "Ingresá un nombre de usuario",
   },
-  App:{
+  App: {
     headerTitle: "fiuFIT",
-  }
+  },
 };

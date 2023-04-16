@@ -1,43 +1,70 @@
 import { texts } from "../../texts";
-import { useState } from "react";
-import EmailField from "../../components/Fields/EmailField";
+import { useEffect, useState } from "react";
 import Login from "./layout";
-import PasswordField from "../../components/Fields/PasswordField";
-import { EMAIL_FIELD_KEY, PASSWORD_FIELD_KEY } from "../../components/Fields/constants";
+import TextField from "../../components/Fields/TextField";
+import {
+  emailFieldType,
+  passwordFieldType,
+} from "../../components/Fields/constants";
+
+const fieldTexts = texts.Fields;
 
 export default function LoginContainer({ navigation }) {
-  const [passwordError, setPasswordError] = useState("");
-  const [mailError, setMailError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [mailError, setMailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const resetFieldValues = () => {
+    setMailError("");
+    setPasswordError("");
+    setEmail("");
+    setPassword("");
+  };
+
+  useEffect(() => {
+    resetFieldValues();
+  }, []);
 
   const handleSubmitPress = () => {
     setMailError("");
     setPasswordError("");
-    if (!userEmail) {
-      setMailError("Usuario obligatorio");
+    if (!email) {
+      setMailError("Email obligatorio");
       return;
     }
-    if (!userPassword) {
+    if (!password) {
       setPasswordError("Contraseña obligatoria");
       return;
     }
     setLoading(true);
   };
 
-  const handleRegister = (navigation) =>
+  const handleRegister = (navigation) => {
     navigation.navigate(texts.Register.name);
+  };
   const handleForgotPassword = () =>
     alert("Redirección a la vista de forgot password!");
 
-  const handleOnEmailChange = (userMail) => setUserEmail(userMail);
-  const handleOnPasswordChange = (userPassword) =>
-    setUserPassword(userPassword);
+  const handleOnEmailChange = (userMail) => setEmail(userMail);
+  const handleOnPasswordChange = (password) => setPassword(password);
 
   const fields = [
-    <EmailField key={EMAIL_FIELD_KEY} onChangeText={handleOnEmailChange} error={mailError} />,
-    <PasswordField key={PASSWORD_FIELD_KEY} onChangeText={handleOnPasswordChange} error={passwordError} />,
+    <TextField
+      error={mailError}
+      keyboardType={emailFieldType}
+      onChangeText={handleOnEmailChange}
+      placeholder={fieldTexts.emailPlaceholder}
+      title={fieldTexts.emailFieldTitle}
+    />,
+    <TextField
+      error={passwordError}
+      keyboardType={passwordFieldType}
+      onChangeText={handleOnPasswordChange}
+      placeholder={fieldTexts.passwordPlaceholder}
+      title={fieldTexts.passwordFieldTitle}
+    />,
   ];
 
   return (

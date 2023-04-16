@@ -1,40 +1,66 @@
-import { createRef, useState } from "react";
-import EmailField from "../../components/Fields/EmailField";
-import NameField from "../../components/Fields/NameField";
-import PasswordField from "../../components/Fields/PasswordField";
+import { emailFieldType, passwordFieldType } from "../../components/Fields/constants";
+import { texts } from "../../texts";
+import { useEffect, useState } from "react";
+import DateField from "../../components/Fields/DateField";
 import Register from "./layout";
-import BirthdateField from "../../components/Fields/BirthdateField";
+import TextField from "../../components/Fields/TextField";
+
+const fieldTexts = texts.Fields;
 
 export default function RegisterContainer({ navigation }) {
+  const [birthdate, setBirthdate] = useState("");
+  const [birthdateError, setBirthdateError] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [mailError, setMailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [birthdateError, setBirthdateError] = useState("");
+  const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userBirthdate, setUserBirthdate] = useState("");
+  const [username, setUsername] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  const handleSubmitPress = async () => {
+  const resetErrors = () => {
+    setBirthdateError("");
     setMailError("");
     setNameError("");
     setPasswordError("");
-    setBirthdateError("");
-    if (!userName) {
+    setUsernameError("");
+  };
+
+  const resetFieldValues = () => {
+    setBirthdate("");
+    setEmail("");
+    setName("");
+    setPassword("");
+    setUsername("");
+  };
+
+  useEffect(() => {
+    resetFieldValues();
+    resetErrors();
+  }, []);
+
+  const handleSubmitPress = async () => {
+    resetErrors();
+    if (!name) {
       setNameError("Nombre obligatorio");
       return;
     }
-    if (!userEmail) {
+    if (!email) {
       setMailError("Usuario obligatorio");
       return;
     }
-    if (!userPassword) {
+    if (!password) {
       setPasswordError("Contraseña obligatoria");
       return;
     }
-    if (!userBirthdate) {
+    if (!birthdate) {
       setBirthdateError("Fecha de nacimiento obligatoria");
+      return;
+    }
+    if (!username) {
+      setUsernameError("Nombre de usuario obligatorio");
       return;
     }
     setLoading(true);
@@ -50,13 +76,13 @@ export default function RegisterContainer({ navigation }) {
           },
           mode: "cors",
           body: JSON.stringify({
-            username: userEmail,
-            firstname: userName,
+            username: username,
+            firstname: name,
             gender: "male",
-            email: userEmail,
+            email: email,
             phone_number: "123456789",
-            birth_date: "1995-10-20",
-            password: userPassword,
+            birth_date: birthdate,
+            password: password,
           }),
         }
       );
@@ -68,27 +94,50 @@ export default function RegisterContainer({ navigation }) {
     setLoading(false);
   };
 
+  const formatDate = (date) =>
+    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
   const handleRegister = () => alert("Redirección a la vista de registro!");
   const handleForgotPassword = () =>
     alert("Redirección a la vista de forgot password!");
 
-  const handleOnNameChange = (userName) => setUserName(userName);
-  const handleOnEmailChange = (userMail) => setUserEmail(userMail);
-  const handleOnPasswordChange = (userPassword) =>
-    setUserPassword(userPassword);
-  const handleOnBirthdateChange = (userBirthdate) =>
-    setUserBirthdate(userBirthdate);
+  const handleOnNameChange = (name) => setName(name);
+  const handleOnEmailChange = (userMail) => setEmail(userMail);
+  const handleOnPasswordChange = (password) => setPassword(password);
+  const handleOnBirthdateChange = (birthdate) =>
+    setBirthdate(formatDate(birthdate));
+  const handleOnUsernameChange = (username) => setUsername(username);
 
   const fields = [
-    <NameField onChangeText={handleOnNameChange} error={nameError} />,
-    <EmailField onChangeText={handleOnEmailChange} error={mailError} />,
-    <PasswordField
-      onChangeText={handleOnPasswordChange}
-      error={passwordError}
+    <TextField
+      error={nameError}
+      onChangeText={handleOnNameChange}
+      placeholder={fieldTexts.namePlaceholder}
+      title={fieldTexts.nameFieldTitle}
     />,
-    <BirthdateField
-      onChangeText={handleOnBirthdateChange}
+    <TextField
+      error={mailError}
+      keyboardType={emailFieldType}
+      onChangeText={handleOnEmailChange}
+      placeholder={fieldTexts.emailPlaceholder}
+      title={fieldTexts.emailFieldTitle}
+    />,
+    <TextField
+      error={passwordError}
+      keyboardType={passwordFieldType}
+      onChangeText={handleOnPasswordChange}
+      placeholder={fieldTexts.passwordPlaceholder}
+      title={fieldTexts.passwordFieldTitle}
+    />,
+    <DateField
       error={birthdateError}
+      onChangeText={handleOnBirthdateChange}
+    />,
+    <TextField
+      error={usernameError}
+      onChangeText={handleOnUsernameChange}
+      placeholder={fieldTexts.usernamePlaceholder}
+      title={fieldTexts.usernameFieldTitle}
     />,
   ];
 
