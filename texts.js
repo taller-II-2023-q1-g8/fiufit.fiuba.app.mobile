@@ -24,8 +24,6 @@ export const texts = {
     usernameTitle: "Usuario",
     usernamePlaceholder: "Ingresá un nombre de usuario",
     genderTitle: "Género",
-    emailOrUserTitle: "Email o Usuario",
-    emailOrUserPlaceholder: "Ingresá tu email o usuario",
     phoneTitle: "Número de teléfono",
     phonePlaceholder: "Ingresá tu número de teléfono",
   },
