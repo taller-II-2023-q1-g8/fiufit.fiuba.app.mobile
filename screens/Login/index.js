@@ -51,8 +51,8 @@ export default function LoginContainer({ navigation }) {
       error={mailError}
       keyboardType={emailFieldType}
       onChangeText={handleOnEmailChange}
-      placeholder={fieldTexts.emailOrUserPlaceholder}
-      title={fieldTexts.emailOrUserTitle}
+      placeholder={fieldTexts.emailPlaceholder}
+      title={fieldTexts.emailTitle}
     />,
     <TextField
       error={passwordError}
