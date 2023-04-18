@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,7 +9,7 @@ export const styles = StyleSheet.create({
   formContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: 32,
+    // gap: 24,
     justifyContent: "center",
     paddingHorizontal: 32,
     paddingVertical: 16,
@@ -18,58 +19,14 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 22,
     fontWeight: "500",
-    paddingTop: 90,
-  },
-  fieldContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    padding: "0",
-    gap: 12,
-    width: "100%",
-  },
-  fieldTitle: {
-    fontSize: 16,
-    fontWeight: "400",
-  },
-  fieldInputContainer: {
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    border: "1px solid #C1C7D0",
-    borderRadius: 4,
-    display: "flex",
-    flexDirection: "row",
-    fontSize: 16,
-    gap: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    width: "100%",
-  },
-  error: {
-    border: "2px solid red",
-  },
-  errorText: {
-    color: "red",
-    fontWeight: "bold",
-  },
-  passwordInputContainer: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-end",
-  },
-  hidePasswordContainer: {
-    position: "absolute",
-    right: 10,
-  },
-  hidePasswordIcon: {
-    width: 20,
-    height: 20,
+    paddingTop: 20,
+    marginBottom: 24, //because of gap not working :/
   },
   submitButton: {
-    backgroundColor: "#6666FF",
+    backgroundColor: colors.purple,
     alignItems: "center",
     borderRadius: 4,
+    marginBottom: 24, //because of gap not working :/
   },
   submitButtonText: {
     color: "white",
@@ -79,23 +36,25 @@ export const styles = StyleSheet.create({
   needAccountContainer: {
     display: "flex",
     flexDirection: "row",
-    gap: 8,
+    // gap: 8,
   },
   needAccountText: {
     fontSize: 16,
+    marginRight: 8, //because of gap not working :/
   },
   forgotPassword: {
-    color: "#6666FF",
+    color: colors.purple,
     fontSize: 16,
     fontWeight: "bold",
+    marginBottom: 16, //because of gap not working :/
   },
   registerButton: {
-    color: "#6666FF",
+    color: colors.purple,
     fontSize: 16,
     fontWeight: "bold",
   },
   redirectionButtons: {
-    gap: 16,
+    // gap: 16,
   },
 });
 

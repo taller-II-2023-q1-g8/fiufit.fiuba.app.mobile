@@ -1,5 +1,6 @@
 export const texts = {
   Login: {
+    name: "Login",
     forgotYourPasswordQuestion: "¿Olvidaste tu contraseña?",
     loginTitle: "Iniciá sesión con tu cuenta",
     needAccount: "¿No tienes una cuenta?",
@@ -7,16 +8,28 @@ export const texts = {
     submitButtonText: "Ingresar",
   },
   Register: {
+    name: "Register",
     registerTitle: "Registrate",
     submitButtonText: "Registrarse",
   },
   Fields: {
-    emailFieldTitle: "Usuario",
-    emailPlaceholder: "Ingresá tu email o usuario",
-    passwordFieldTitle: "Contraseña",
-    passwordPlaceholder: "Ingresá tu contraseña",
-    nameFieldTitle: "Nombre",
+    birthdateTitle: "Fecha de nacimiento",
+    birthdatePlaceholder: "Seleccioná tu fecha de nacimiento",
+    emailTitle: "Email",
+    emailPlaceholder: "Ingresá tu email",
+    nameTitle: "Nombre",
     namePlaceholder: "Ingresá tu nombre",
-    
+    passwordTitle: "Contraseña",
+    passwordPlaceholder: "Ingresá tu contraseña",
+    usernameTitle: "Usuario",
+    usernamePlaceholder: "Ingresá un nombre de usuario",
+    genderTitle: "Género",
+    emailOrUserTitle: "Email o Usuario",
+    emailOrUserPlaceholder: "Ingresá tu email o usuario",
+    phoneTitle: "Número de teléfono",
+    phonePlaceholder: "Ingresá tu número de teléfono",
+  },
+  App: {
+    headerTitle: "fiuFIT",
   },
 };

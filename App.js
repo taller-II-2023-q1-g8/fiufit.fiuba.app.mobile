@@ -3,11 +3,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Login from "./screens/Login";
 import Register from "./screens/Register";
+import { texts } from "./texts";
+import { colors } from "./colors";
 
+const appTexts = texts.App;
 const Stack = createNativeStackNavigator();
 
 const defaultNavigationOptions = {
-  title: "fiuFIT",
+  title: appTexts.headerTitle,
   headerTintColor: "white",
   headerTitleStyle: {
     fontWeight: "bold",
@@ -15,7 +18,7 @@ const defaultNavigationOptions = {
   },
   headerTitleAlign: "center",
   headerStyle: {
-    backgroundColor: "#6666FF",
+    backgroundColor: colors.purple,
   },
 };
 
@@ -25,12 +28,12 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           component={Login}
-          name="Login"
+          name={texts.Login.name}
           options={defaultNavigationOptions}
         />
         <Stack.Screen
           component={Register}
-          name="Register"
+          name={texts.Register.name}
           options={defaultNavigationOptions}
         />
       </Stack.Navigator>

@@ -5,19 +5,13 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TouchableOpacity,
-} from "react-native-web";
+} from "react-native";
 import Loader from "../../components/Loader";
 import { texts } from "../../texts";
 
 const registerTexts = texts.Register;
 
-export default function Register({
-  fields,
-  handleForgotPassword,
-  handleRegister,
-  handleSubmitPress,
-  loading,
-}) {
+export default function Register({ fields, handleSubmitPress, loading }) {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -28,7 +22,9 @@ export default function Register({
       >
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{registerTexts.registerTitle}</Text>
-          {fields.map((field) => field)}
+          {fields.map((field, i) => (
+            <View key={i}>{field}</View>
+          ))}
           <TouchableOpacity
             style={styles.submitButton}
             activeOpacity={0.5}

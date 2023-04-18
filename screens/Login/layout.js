@@ -5,7 +5,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TouchableOpacity,
-} from "react-native-web";
+} from "react-native";
 import Loader from "../../components/Loader";
 import { texts } from "../../texts";
 
@@ -28,7 +28,9 @@ export default function Login({
       >
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{loginTexts.loginTitle}</Text>
-          {fields.map((field) => field)}
+          {fields.map((field, i) => (
+            <View key={i}>{field}</View>
+          ))}
           <TouchableOpacity
             style={styles.submitButton}
             activeOpacity={0.5}
