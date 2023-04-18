@@ -4,6 +4,7 @@ import { styles } from "./styles";
 export const textFieldType = "text";
 export const emailFieldType = "email-address";
 export const passwordFieldType = "default";
+export const phoneFieldType = "phone-pad";
 
 export const commonFieldProps = (error) => ({
   placeholderTextColor: colors.placeholder,

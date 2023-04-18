@@ -26,6 +26,8 @@ export const texts = {
     genderTitle: "Género",
     emailOrUserTitle: "Email o Usuario",
     emailOrUserPlaceholder: "Ingresá tu email o usuario",
+    phoneTitle: "Número de teléfono",
+    phonePlaceholder: "Ingresá tu número de teléfono",
   },
   App: {
     headerTitle: "fiuFIT",

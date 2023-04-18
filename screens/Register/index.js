@@ -1,6 +1,7 @@
 import {
   emailFieldType,
   passwordFieldType,
+  phoneFieldType,
 } from "../../components/Fields/constants";
 import { texts } from "../../texts";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import DateField from "../../components/Fields/DateField";
 import Register from "./layout";
 import TextField from "../../components/Fields/TextField";
 import SelectField from "../../components/Fields/SelectField";
+import { Alert } from "react-native";
 
 const fieldTexts = texts.Fields;
 
@@ -23,6 +25,8 @@ export default function RegisterContainer({ navigation }) {
   const [nameError, setNameError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
 
@@ -33,6 +37,7 @@ export default function RegisterContainer({ navigation }) {
     setPasswordError("");
     setUsernameError("");
     setGenderError("");
+    setPhoneError("");
   };
 
   const resetFieldValues = () => {
@@ -42,6 +47,7 @@ export default function RegisterContainer({ navigation }) {
     setPassword("");
     setGender("");
     setUsername("");
+    setPhone("");
   };
 
   useEffect(() => {
@@ -58,7 +64,7 @@ export default function RegisterContainer({ navigation }) {
       return;
     }
     if (!email) {
-      setMailError("Usuario obligatorio");
+      setMailError("Email obligatorio");
       return;
     }
     if (!password) {
@@ -71,6 +77,10 @@ export default function RegisterContainer({ navigation }) {
     }
     if (!username) {
       setUsernameError("Nombre de usuario obligatorio");
+      return;
+    }
+    if (!phone) {
+      setPhoneError("Número de teléfono obligatorio");
       return;
     }
     setLoading(true);
@@ -90,16 +100,20 @@ export default function RegisterContainer({ navigation }) {
             firstname: name,
             gender: gender,
             email: email,
-            phone_number: "123456789",
+            phone_number: phone,
             birth_date: birthdate,
             password: password,
           }),
         }
       );
       const json = await response.json();
-      console.log({ json });
+
+      if (response.ok) {
+        Alert.alert("Bienvenido", "Registro exitoso");
+        navigation.navigate(texts.Login.name);
+      } else Alert.alert("Error", "Intente nuevamente");
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
     setLoading(false);
   };
@@ -111,19 +125,27 @@ export default function RegisterContainer({ navigation }) {
   const handleForgotPassword = () =>
     alert("Redirección a la vista de forgot password!");
 
-  const handleOnNameChange = (name) => setName(name);
-  const handleOnEmailChange = (userMail) => setEmail(userMail);
-  const handleOnPasswordChange = (password) => setPassword(password);
   const handleOnBirthdateChange = (birthdate) =>
     setBirthdate(formatDate(birthdate));
-  const handleOnUsernameChange = (username) => setUsername(username);
+  const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnGenderChange = (gender) => setGender(gender);
+  const handleOnNameChange = (name) => setName(name);
+  const handleOnPasswordChange = (password) => setPassword(password);
+  const handleOnPhoneChange = (phone) => setPhone(phone);
+  const handleOnUsernameChange = (username) => setUsername(username);
+
   const fields = [
     <TextField
       error={nameError}
       onChangeText={handleOnNameChange}
       placeholder={fieldTexts.namePlaceholder}
       title={fieldTexts.nameTitle}
+    />,
+    <TextField
+      error={usernameError}
+      onChangeText={handleOnUsernameChange}
+      placeholder={fieldTexts.usernamePlaceholder}
+      title={fieldTexts.usernameTitle}
     />,
     <TextField
       error={mailError}
@@ -140,16 +162,17 @@ export default function RegisterContainer({ navigation }) {
       title={fieldTexts.passwordTitle}
     />,
     <DateField error={birthdateError} onChangeText={handleOnBirthdateChange} />,
-    <TextField
-      error={usernameError}
-      onChangeText={handleOnUsernameChange}
-      placeholder={fieldTexts.usernamePlaceholder}
-      title={fieldTexts.usernameTitle}
-    />,
     <SelectField
       error={genderError}
       onChangeText={handleOnGenderChange}
       title={fieldTexts.genderTitle}
+    />,
+    <TextField
+      error={phoneError}
+      keyboardType={phoneFieldType}
+      onChangeText={handleOnPhoneChange}
+      placeholder={fieldTexts.phonePlaceholder}
+      title={fieldTexts.phoneTitle}
     />,
   ];
 
