@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Login from "./screens/Login";
 import Register from "./screens/Register";
+import ForgotPassword from "./screens/ForgotPassword";
 import { texts } from "./texts";
 import { colors } from "./colors";
 
@@ -35,6 +36,11 @@ export default function App() {
           component={Register}
           name={texts.Register.name}
           options={defaultNavigationOptions}
+        />
+        <Stack.Screen
+            component={ForgotPassword}
+            name={texts.ForgotPassword.name}
+            options={defaultNavigationOptions}
         />
       </Stack.Navigator>
     </NavigationContainer>

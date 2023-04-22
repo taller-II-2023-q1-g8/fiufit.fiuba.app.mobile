@@ -12,6 +12,11 @@ export const texts = {
     registerTitle: "Registrate",
     submitButtonText: "Registrarse",
   },
+  ForgotPassword: {
+    name: "Forgot Password",
+    forgotPasswordTitle: "Reinicia tu contraseña",
+    submitButtonText: "Enviar email de reinicio",
+  },
   Fields: {
     birthdateTitle: "Fecha de nacimiento",
     birthdatePlaceholder: "Seleccioná tu fecha de nacimiento",

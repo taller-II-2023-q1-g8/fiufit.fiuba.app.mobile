@@ -40,8 +40,9 @@ export default function LoginContainer({ navigation }) {
   const handleRegister = (navigation) => {
     navigation.navigate(texts.Register.name);
   };
-  const handleForgotPassword = () =>
-    alert("Redirección a la vista de forgot password!");
+  const handleForgotPassword = () => {
+    navigation.navigate(texts.ForgotPassword.name);
+  };
 
   const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnPasswordChange = (password) => setPassword(password);
