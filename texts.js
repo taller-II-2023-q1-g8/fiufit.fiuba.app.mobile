@@ -17,6 +17,9 @@ export const texts = {
     forgotPasswordTitle: "Reinicia tu contraseña",
     submitButtonText: "Enviar email de reinicio",
   },
+  Home: {
+    name: "Home",
+  },
   Fields: {
     birthdateTitle: "Fecha de nacimiento",
     birthdatePlaceholder: "Seleccioná tu fecha de nacimiento",

@@ -5,7 +5,6 @@ import {
 } from "../../components/Fields/constants";
 import TextField from "../../components/Fields/TextField";
 import ForgotPassword from "./layout";
-import firebase from "../../firebaseConfig"
 import {Alert} from "react-native";
 const fieldTexts = texts.Fields;
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
