@@ -19,6 +19,8 @@ export const texts = {
   },
   Home: {
     name: "Home",
+    homeTitle: "Home",
+    submitButtonText: "Salir",
   },
   Fields: {
     birthdateTitle: "Fecha de nacimiento",
