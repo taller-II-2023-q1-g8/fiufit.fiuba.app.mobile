@@ -10,9 +10,9 @@ import Register from "./layout";
 import TextField from "../../components/Fields/TextField";
 import SelectField from "../../components/Fields/SelectField";
 import { Alert } from "react-native";
-
+/*
 var bcrypt = require("bcryptjs");
-var salt = bcrypt.genSaltSync(10);
+var salt = bcrypt.genSaltSync(10);*/
 
 const fieldTexts = texts.Fields;
 
@@ -89,7 +89,7 @@ export default function RegisterContainer({ navigation }) {
     setLoading(true);
 
      try {
-      const hash = bcrypt.hashSync(password, salt);
+      /*const hash = bcrypt.hashSync(password, salt);*/
       const response = await fetch(
         "https://api-gateway-k1nl.onrender.com/user",
         {
@@ -106,7 +106,7 @@ export default function RegisterContainer({ navigation }) {
             email: email,
             phone_number: phone,
             birth_date: birthdate,
-            password: hash,
+            password: password,
           }),
         }
       );

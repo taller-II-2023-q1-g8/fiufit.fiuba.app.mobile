@@ -6,7 +6,10 @@ import {
   emailFieldType,
   passwordFieldType,
 } from "../../components/Fields/constants";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import {Alert} from "react-native";
 
+const auth = getAuth();
 const fieldTexts = texts.Fields;
 
 export default function LoginContainer({ navigation }) {
@@ -23,7 +26,7 @@ export default function LoginContainer({ navigation }) {
     setPassword("");
   };
 
-  const handleSubmitPress = () => {
+  const handleSubmitPress = async () => {
     setMailError("");
     setPasswordError("");
     if (!email) {
@@ -35,13 +38,22 @@ export default function LoginContainer({ navigation }) {
       return;
     }
     setLoading(true);
+    try{
+      //Se deberia encriptar la password
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      Alert.alert("Error", error.message)
+    }
+  setLoading(false)
+
   };
 
   const handleRegister = (navigation) => {
     navigation.navigate(texts.Register.name);
   };
-  const handleForgotPassword = () =>
-    alert("Redirección a la vista de forgot password!");
+  const handleForgotPassword = () => {
+    navigation.navigate(texts.ForgotPassword.name);
+  };
 
   const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnPasswordChange = (password) => setPassword(password);
