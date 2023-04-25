@@ -13,6 +13,7 @@ const homeTexts = texts.Home;
 export default function Home({
                                 fields,
                                 handleSignOutPress,
+                                handleProfile,
                                 loading,
                              }) {
     return (
@@ -35,6 +36,15 @@ export default function Home({
                     >
                         <Text style={styles.submitButtonText}>
                             {homeTexts.submitButtonText}
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.submitButton}
+                        activeOpacity={0.5}
+                        onPress={handleProfile}
+                    >
+                        <Text style={styles.submitButtonText}>
+                            {homeTexts.profileButtonText}
                         </Text>
                     </TouchableOpacity>
                 </KeyboardAvoidingView>

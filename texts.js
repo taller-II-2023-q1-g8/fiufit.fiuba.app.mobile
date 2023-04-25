@@ -21,6 +21,12 @@ export const texts = {
     name: "Home",
     homeTitle: "Home",
     submitButtonText: "Salir",
+    profileButtonText: "Ir al perfil"
+  },
+  Profile: {
+    name: "Profile",
+    homeTitle: "Your profile",
+    submitButtonText: "Modificar perfil",
   },
   Fields: {
     birthdateTitle: "Fecha de nacimiento",

@@ -7,9 +7,9 @@ import TextField from "../../components/Fields/TextField";
 import ForgotPassword from "./layout";
 import {Alert} from "react-native";
 const fieldTexts = texts.Fields;
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import {sendPasswordResetEmail } from 'firebase/auth';
+import {auth} from '../../firebaseConfig'
 
-const auth = getAuth();
 export default function ForgotPasswordContainer({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [mailError, setMailError] = useState("");
