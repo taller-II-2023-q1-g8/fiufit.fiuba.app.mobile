@@ -21,12 +21,18 @@ export const texts = {
     name: "Home",
     homeTitle: "Home",
     submitButtonText: "Salir",
-    profileButtonText: "Ir al perfil"
+    profileButtonText: "Ir al perfil",
+    searchUsersButtonText: "Buscar usuarios"
   },
   Profile: {
     name: "Profile",
-    homeTitle: "Your profile",
+    homeTitle: "Tu perfil",
     submitButtonText: "Modificar perfil",
+  },
+  SearchUsers: {
+    name: "SearchUsers",
+    searchUsersTitle: "Busca usuarios",
+    submitButtonText: "Buscar",
   },
   Fields: {
     birthdateTitle: "Fecha de nacimiento",
@@ -42,6 +48,7 @@ export const texts = {
     genderTitle: "Género",
     phoneTitle: "Número de teléfono",
     phonePlaceholder: "Ingresá tu número de teléfono",
+    searchUsersPlaceholder: "Busca usuarios por su username"
   },
   App: {
     headerTitle: "fiuFIT",

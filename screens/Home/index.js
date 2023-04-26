@@ -9,10 +9,11 @@ import {auth} from '../../firebaseConfig'
 import { useStateValue } from '../../utils/state/state';
 import {texts} from "../../texts";
 
+
 export default function HomeScreen({navigation}) {
     const [loading, setLoading] = useState(false);
     const [state, dispatch] = useStateValue();
-    //ARREGLAR LO DE USE AUTHENTICATION QUE ESTA DUDOSISIMO
+
     const handleSignOutPress = async () => {
         setLoading(true);
         try{
@@ -27,14 +28,19 @@ export default function HomeScreen({navigation}) {
     const handleProfile = (navigation) => {
         navigation.navigate(texts.Profile.name);
     };
+    const handleSearchUsers = (navigation) => {
+        navigation.navigate(texts.SearchUsers.name);
+    }
+
     const fields = [
-        <Text>Welcome {state.user.email}!</Text>
+        <Text>Welcome {state.user.username}!</Text>
     ];
     return (
         <Home
             fields={fields}
             handleSignOutPress={handleSignOutPress}
             handleProfile={() => handleProfile(navigation)}
+            handleSearchUsers={() => handleSearchUsers(navigation)}
             loading={loading}
         />
     );
