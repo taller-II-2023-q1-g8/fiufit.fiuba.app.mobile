@@ -21,7 +21,7 @@ export default function SearchUsers({
                 <KeyboardAvoidingView style={styles.formContainer} enabled>
                     <Text style={styles.title}>{searchUserstext.searchUsersTitle}</Text>
                     <View style={{
-                        flexDirection: 'row',
+                        flexDirection: 'column',
                     }}>
                         {searchTextField.map((field, i) => (
                             <View key={i}>{field}</View>

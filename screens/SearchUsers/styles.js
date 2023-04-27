@@ -5,10 +5,12 @@ export const styles = StyleSheet.create({
     container: {
         width: "100%",
         height: "100%",
+        flex: 1
     },
     formContainer: {
         display: "flex",
         flexDirection: "column",
+        flex: 1,
         // gap: 24,
         justifyContent: "center",
         paddingHorizontal: 32,
@@ -17,20 +19,16 @@ export const styles = StyleSheet.create({
     },
     usernameContainer: {
         backgroundColor: colors.purple,
-        alignItems: "center",
-        borderRadius: 4,
-        marginBottom: 24, //because of gap not working :/
+        alignItems: "center", //because of gap not working :/
     },
     username: {
         color: "white",
-        paddingVertical: 8,
-        fontSize: 24,
+        padding: 10,
     },
     submitButton: {
         backgroundColor: colors.purple,
         alignItems: "center",
-        borderRadius: 4,
-        marginBottom: 24, //because of gap not working :/
+        borderRadius: 2,//because of gap not working :/
     },
     title: {
         alignSelf: "center",
@@ -41,6 +39,7 @@ export const styles = StyleSheet.create({
     },
     userList: {
         borderWidth: 5,
+        flex: 1
     }
 });
 

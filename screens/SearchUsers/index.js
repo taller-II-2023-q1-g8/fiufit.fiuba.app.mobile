@@ -1,4 +1,13 @@
-import {View, Text, FlatList, StyleSheet, StatusBar} from 'react-native'
+import {
+    View,
+    Text,
+    FlatList,
+    StyleSheet,
+    StatusBar,
+    TextInput,
+    TouchableHighlight,
+    TouchableOpacity
+} from 'react-native'
 import React, {useEffect, useState} from "react";
 import { scrollviewStyle, styles } from "./styles";
 import SearchUsers from "./layout";
@@ -31,24 +40,36 @@ export default function SearchUsersScreen({navigation}) {
         setLoading(false);
         setVisible(false)
     };
-    /*
-    useEffect(() => {
-        fetchData();
-    }, []);
-    */
 
     const handleSearchPress = async () => {
         fetchData(search)
     };
 
     const Item = ({title}) => (
-        <View style={styles.usernameContainer}>
-            <Text style={styles.username}>{title}</Text>
-        </View>
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => console.log(title)}
+        >
+            <View style={styles.usernameContainer}>
+                <Text style={styles.username}>{title}</Text>
+            </View>
+        </TouchableOpacity>
     );
+    const ItemSeparatorView = () => {
+        return (
+            <View
+                style={{
+                    height: 0.5,
+                    width: '100%',
+                    backgroundColor: '#000000',
+                }}
+            />
+        );
+    };
     const fields = [<FlatList
         data={data}
         renderItem={({item}) => <Item title={item} />}
+        ItemSeparatorComponent={ItemSeparatorView}
     />]
 
     const handleOnSearchChange = (search) => setSearch(search);
@@ -58,6 +79,7 @@ export default function SearchUsersScreen({navigation}) {
         onChangeText={handleOnSearchChange}
         placeholder={texts.Fields.searchUsersPlaceholder}
     />,]
+
     return (
         <SearchUsers
             userlist={fields}
