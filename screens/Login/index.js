@@ -6,10 +6,9 @@ import {
   emailFieldType,
   passwordFieldType,
 } from "../../components/Fields/constants";
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import {Alert} from "react-native";
-
-const auth = getAuth();
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from '../../firebaseConfig'
 const fieldTexts = texts.Fields;
 
 export default function LoginContainer({ navigation }) {
@@ -47,11 +46,10 @@ export default function LoginContainer({ navigation }) {
   setLoading(false)
 
   };
-
   const handleRegister = (navigation) => {
     navigation.navigate(texts.Register.name);
   };
-  const handleForgotPassword = () => {
+  const handleForgotPassword = (navigation) => {
     navigation.navigate(texts.ForgotPassword.name);
   };
 
@@ -78,7 +76,7 @@ export default function LoginContainer({ navigation }) {
   return (
     <Login
       fields={fields}
-      handleForgotPassword={handleForgotPassword}
+      handleForgotPassword={() => handleForgotPassword(navigation)}
       handleRegister={() => handleRegister(navigation)}
       handleSubmitPress={handleSubmitPress}
       loading={loading}

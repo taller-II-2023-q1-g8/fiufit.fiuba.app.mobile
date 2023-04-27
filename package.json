@@ -21,6 +21,7 @@
     "firebase": "^9.20.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-event-observer": "^0.5.11",
     "react-native": "0.69.9",
     "react-native-safe-area-context": "4.3.1",
     "react-native-screens": "~3.15.0",
