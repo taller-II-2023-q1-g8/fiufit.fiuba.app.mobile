@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 import { auth } from '../firebaseConfig';
 import AuthStack from './components/AuthStack';
-import firebaseObserver, { loggedIn } from '../utils/hooks/useAuthentication';
+import { firebaseObserver, loggedIn } from '../utils/hooks/useAuthentication';
 import UserStack from './components/UserStack';
 
 export default function RootNavigation() {
