@@ -1,13 +1,20 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
-import { scrollviewStyle, styles } from "./styles";
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import {
+  Image,
   KeyboardAvoidingView,
   ScrollView,
+  Text,
   TouchableOpacity,
-} from "react-native";
-import Loader from "../../components/Loader";
-import { texts } from "../../texts";
+  View
+} from 'react-native';
+import { arrayOf, bool, func } from 'prop-types';
+
+import GmailLogo from '../../assets/gmail_logo.png';
+import Loader from '../../components/Loader';
+import texts from '../../texts';
+
+import { scrollviewStyle, styles } from './styles';
 
 const loginTexts = texts.Login;
 
@@ -16,11 +23,11 @@ export default function Login({
   handleForgotPassword,
   handleRegister,
   handleSubmitPress,
-  loading,
+  loading
 }) {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar />
       <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -29,6 +36,7 @@ export default function Login({
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{loginTexts.loginTitle}</Text>
           {fields.map((field, i) => (
+            // eslint-disable-next-line react/no-array-index-key
             <View key={i}>{field}</View>
           ))}
           <TouchableOpacity
@@ -39,6 +47,15 @@ export default function Login({
             <Text style={styles.submitButtonText}>
               {loginTexts.submitButtonText}
             </Text>
+          </TouchableOpacity>
+          <Text style={{ textAlign: 'center', fontSize: 18 }}>
+            o ingresá con
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            // onPress={handlePasswordVisibility}
+          >
+            <Image style={styles.socialNetworkLogo} source={GmailLogo} />
           </TouchableOpacity>
           <View style={styles.redirectionButtons}>
             <Text style={styles.forgotPassword} onPress={handleForgotPassword}>
@@ -58,3 +75,11 @@ export default function Login({
     </View>
   );
 }
+
+Login.propTypes = {
+  fields: arrayOf(bool).isRequired,
+  handleForgotPassword: func.isRequired,
+  handleRegister: func.isRequired,
+  handleSubmitPress: func.isRequired,
+  loading: bool.isRequired
+};

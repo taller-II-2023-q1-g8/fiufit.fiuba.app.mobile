@@ -1,9 +1,7 @@
-import RootNavigation from "./navigation";
-import "./firebaseConfig"
 import React from 'react';
+import RootNavigation from './navigation';
+import './firebaseConfig';
 
 export default function App() {
-  return (
-      <RootNavigation />
-  );
+  return <RootNavigation />;
 }

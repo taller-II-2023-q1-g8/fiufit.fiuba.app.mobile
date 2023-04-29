@@ -1,60 +1,56 @@
-import { texts } from "../../texts";
-import { useEffect, useState } from "react";
-import Login from "./layout";
-import TextField from "../../components/Fields/TextField";
+import { Alert } from 'react-native';
+import { func, shape } from 'prop-types';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
+
+import TextField from '../../components/Fields/TextField';
 import {
   emailFieldType,
-  passwordFieldType,
-} from "../../components/Fields/constants";
-import {Alert} from "react-native";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from '../../firebaseConfig'
+  passwordFieldType
+} from '../../components/Fields/constants';
+import { auth } from '../../firebaseConfig';
+import texts from '../../texts';
+
+import Login from './layout';
+
 const fieldTexts = texts.Fields;
 
 export default function LoginContainer({ navigation }) {
   const [loading, setLoading] = useState(false);
-  const [mailError, setMailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const resetFieldValues = () => {
-    setMailError("");
-    setPasswordError("");
-    setEmail("");
-    setPassword("");
-  };
+  const [mailError, setMailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmitPress = async () => {
-    setMailError("");
-    setPasswordError("");
+    setMailError('');
+    setPasswordError('');
     if (!email) {
-      setMailError("Email obligatorio");
+      setMailError('Email obligatorio');
       return;
     }
     if (!password) {
-      setPasswordError("Contraseña obligatoria");
+      setPasswordError('Contraseña obligatoria');
       return;
     }
     setLoading(true);
-    try{
-      //Se deberia encriptar la password
+    try {
+      // Se deberia encriptar la password
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      Alert.alert("Error", error.message)
+      Alert.alert('Error', error.message);
     }
-  setLoading(false)
-
+    setLoading(false);
   };
-  const handleRegister = (navigation) => {
+  const handleRegister = () => {
     navigation.navigate(texts.Register.name);
   };
-  const handleForgotPassword = (navigation) => {
+  const handleForgotPassword = () => {
     navigation.navigate(texts.ForgotPassword.name);
   };
 
   const handleOnEmailChange = (userMail) => setEmail(userMail);
-  const handleOnPasswordChange = (password) => setPassword(password);
+  const handleOnPasswordChange = (userPassword) => setPassword(userPassword);
 
   const fields = [
     <TextField
@@ -70,16 +66,22 @@ export default function LoginContainer({ navigation }) {
       onChangeText={handleOnPasswordChange}
       placeholder={fieldTexts.passwordPlaceholder}
       title={fieldTexts.passwordTitle}
-    />,
+    />
   ];
 
   return (
     <Login
       fields={fields}
-      handleForgotPassword={() => handleForgotPassword(navigation)}
-      handleRegister={() => handleRegister(navigation)}
+      handleForgotPassword={() => handleForgotPassword()}
+      handleRegister={() => handleRegister()}
       handleSubmitPress={handleSubmitPress}
       loading={loading}
     />
   );
 }
+
+LoginContainer.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};

@@ -1,40 +1,40 @@
-import { StyleSheet } from "react-native";
-import { colors } from "../../colors";
+import { StyleSheet } from 'react-native';
+import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%'
   },
   formContainer: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     // gap: 24,
-    justifyContent: "center",
+    justifyContent: 'center',
     paddingHorizontal: 32,
     paddingVertical: 16,
-    width: "100%",
+    width: '100%'
   },
   title: {
-    alignSelf: "center",
+    alignSelf: 'center',
     fontSize: 22,
-    fontWeight: "500",
+    fontWeight: '500',
     paddingTop: 20,
-    marginBottom: 24, //because of gap not working :/
+    marginBottom: 24 // because of gap not working :/
   },
   submitButton: {
     backgroundColor: colors.purple,
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 4,
-    marginBottom: 24, //because of gap not working :/
+    marginBottom: 24 // because of gap not working :/
   },
   submitButtonText: {
-    color: "white",
+    color: 'white',
     paddingVertical: 8,
-    fontSize: 16,
-  },
+    fontSize: 16
+  }
 });
 
 export const scrollviewStyle = {
-  flexGrow: 1,
+  flexGrow: 1
 };

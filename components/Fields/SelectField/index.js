@@ -1,14 +1,15 @@
-import { View, Text } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { styles } from "../styles";
-import { useState } from "react";
+import { func, string } from 'prop-types';
+import { Picker } from '@react-native-picker/picker';
+import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import styles from '../styles';
 
-const SelectField = ({ onChangeText, error, title }) => {
-  const [selectedValue, setSelectedValue] = useState("female");
+function SelectField({ onChangeText, error, title }) {
+  const [selectedValue, setSelectedValue] = useState('female');
 
-  const handleOnValueChange = (selectedValue) => {
-    onChangeText(selectedValue);
-    setSelectedValue(selectedValue);
+  const handleOnValueChange = (newSelectedValue) => {
+    onChangeText(newSelectedValue);
+    setSelectedValue(newSelectedValue);
   };
 
   return (
@@ -20,7 +21,7 @@ const SelectField = ({ onChangeText, error, title }) => {
         selectedValue={selectedValue}
         style={{
           ...styles.fieldInputContainer,
-          ...(error && styles.error),
+          ...(error && styles.error)
         }}
         onValueChange={handleOnValueChange}
       >
@@ -31,6 +32,12 @@ const SelectField = ({ onChangeText, error, title }) => {
       {error && <Text style={styles.errorDescription}>{error}</Text>}
     </View>
   );
+}
+
+SelectField.propTypes = {
+  onChangeText: func.isRequired,
+  error: string.isRequired,
+  title: string.isRequired
 };
 
 export default SelectField;

@@ -1,20 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
-import { scrollviewStyle, styles } from "./styles";
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import {
+  Text,
+  View,
   KeyboardAvoidingView,
   ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import Loader from "../../components/Loader";
-import { texts } from "../../texts";
+  TouchableOpacity
+} from 'react-native';
+import { bool, func, shape } from 'prop-types';
+import { scrollviewStyle, styles } from './styles';
+import Loader from '../../components/Loader';
+import texts from '../../texts';
 
 const registerTexts = texts.Register;
 
 export default function Register({ fields, handleSubmitPress, loading }) {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar />
       <Loader loading={loading} />
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -23,6 +26,7 @@ export default function Register({ fields, handleSubmitPress, loading }) {
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{registerTexts.registerTitle}</Text>
           {fields.map((field, i) => (
+            // eslint-disable-next-line react/no-array-index-key
             <View key={i}>{field}</View>
           ))}
           <TouchableOpacity
@@ -39,3 +43,10 @@ export default function Register({ fields, handleSubmitPress, loading }) {
     </View>
   );
 }
+
+Register.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  fields: shape,
+  handleSubmitPress: func.isRequired,
+  loading: bool.isRequired
+};

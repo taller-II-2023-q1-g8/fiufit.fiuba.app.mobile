@@ -1,23 +1,23 @@
-import { TextInput, View, Text, Image, TouchableOpacity } from "react-native";
+import { func, string } from 'prop-types';
+import { TextInput, View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 
-import { texts } from "../../../texts";
-import { styles } from "../styles";
 import {
   commonFieldProps,
   passwordFieldType,
-  textFieldType,
-} from "../constants";
-import { useState } from "react";
+  textFieldType
+} from '../constants';
+import EyeCloseIcon from '../../../assets/icons/eye_close.png';
+import EyeOpenIcon from '../../../assets/icons/eye_open.png';
+import styles from '../styles';
 
-const fieldsTexts = texts.Fields;
-
-const TextField = ({
-  onChangeText,
+function TextField({
   error,
-  title,
-  placeholder,
   keyboardType = textFieldType,
-}) => {
+  onChangeText,
+  placeholder,
+  title
+}) {
   const [hidePassword, setHidePassword] = useState(
     keyboardType === passwordFieldType
   );
@@ -45,11 +45,7 @@ const TextField = ({
           >
             <Image
               style={styles.hidePasswordIcon}
-              source={
-                hidePassword
-                  ? require("../../../assets/icons/eye_close.png")
-                  : require("../../../assets/icons/eye_open.png")
-              }
+              source={hidePassword ? EyeCloseIcon : EyeOpenIcon}
             />
           </TouchableOpacity>
         )}
@@ -57,6 +53,14 @@ const TextField = ({
       {error && <Text style={styles.errorDescription}>{error}</Text>}
     </View>
   );
+}
+
+TextField.propTypes = {
+  error: string.isRequired,
+  keyboardType: string.isRequired,
+  onChangeText: func.isRequired,
+  placeholder: string.isRequired,
+  title: string.isRequired
 };
 
 export default TextField;

@@ -1,14 +1,10 @@
-import React from "react";
-import {auth} from '../../firebaseConfig'
 import ReactObserver from 'react-event-observer';
-
+import { auth } from '../../firebaseConfig';
 
 export const firebaseObserver = ReactObserver();
 
-auth.onAuthStateChanged(function(user) {
-    firebaseObserver.publish("authStateChanged", loggedIn())
-})
+export const loggedIn = () => !!auth.currentUser;
 
-export function loggedIn() {
-    return !!auth.currentUser;
-}
+auth.onAuthStateChanged(() => {
+  firebaseObserver.publish('authStateChanged', loggedIn());
+});
