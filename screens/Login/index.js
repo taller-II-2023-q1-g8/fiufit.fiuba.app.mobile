@@ -5,7 +5,9 @@ import React, { useState } from 'react';
 
 import TextField from '../../components/Fields/TextField';
 import {
+  EMAIL_KEY,
   emailFieldType,
+  PASSWORD_KEY,
   passwordFieldType
 } from '../../components/Fields/constants';
 import { auth } from '../../firebaseConfig';
@@ -53,20 +55,30 @@ export default function LoginContainer({ navigation }) {
   const handleOnPasswordChange = (userPassword) => setPassword(userPassword);
 
   const fields = [
-    <TextField
-      error={mailError}
-      keyboardType={emailFieldType}
-      onChangeText={handleOnEmailChange}
-      placeholder={fieldTexts.emailPlaceholder}
-      title={fieldTexts.emailTitle}
-    />,
-    <TextField
-      error={passwordError}
-      keyboardType={passwordFieldType}
-      onChangeText={handleOnPasswordChange}
-      placeholder={fieldTexts.passwordPlaceholder}
-      title={fieldTexts.passwordTitle}
-    />
+    {
+      key: EMAIL_KEY,
+      field: (
+        <TextField
+          error={mailError}
+          keyboardType={emailFieldType}
+          onChangeText={handleOnEmailChange}
+          placeholder={fieldTexts.emailPlaceholder}
+          title={fieldTexts.emailTitle}
+        />
+      )
+    },
+    {
+      key: PASSWORD_KEY,
+      field: (
+        <TextField
+          error={passwordError}
+          keyboardType={passwordFieldType}
+          onChangeText={handleOnPasswordChange}
+          placeholder={fieldTexts.passwordPlaceholder}
+          title={fieldTexts.passwordTitle}
+        />
+      )
+    }
   ];
 
   return (

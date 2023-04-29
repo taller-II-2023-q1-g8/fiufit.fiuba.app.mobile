@@ -1,16 +1,12 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {
-  Text,
-  View,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity
-} from 'react-native';
-import { bool, func, shape } from 'prop-types';
-import { scrollviewStyle, styles } from './styles';
+import { Text, View, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
+import { bool, func, string } from 'prop-types';
+
 import Loader from '../../components/Loader';
 import texts from '../../texts';
+
+import { scrollviewStyle, styles } from './styles';
 
 const registerTexts = texts.Register;
 
@@ -19,24 +15,14 @@ export default function Register({ fields, handleSubmitPress, loading }) {
     <View style={styles.container}>
       <StatusBar />
       <Loader loading={loading} />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={scrollviewStyle}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{registerTexts.registerTitle}</Text>
-          {fields.map((field, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <View key={i}>{field}</View>
+          {fields.map((field) => (
+            <View>{field}</View>
           ))}
-          <TouchableOpacity
-            style={styles.submitButton}
-            activeOpacity={0.5}
-            onPress={handleSubmitPress}
-          >
-            <Text style={styles.submitButtonText}>
-              {registerTexts.submitButtonText}
-            </Text>
+          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
+            <Text style={styles.submitButtonText}>{registerTexts.submitButtonText}</Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>
@@ -45,8 +31,7 @@ export default function Register({ fields, handleSubmitPress, loading }) {
 }
 
 Register.propTypes = {
-  // eslint-disable-next-line react/require-default-props
-  fields: shape,
+  fields: string,
   handleSubmitPress: func.isRequired,
   loading: bool.isRequired
 };

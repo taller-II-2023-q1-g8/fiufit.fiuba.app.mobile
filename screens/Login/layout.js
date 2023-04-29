@@ -1,13 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Image, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { arrayOf, bool, func } from 'prop-types';
 
 import GmailLogo from '../../assets/gmail_logo.png';
@@ -18,43 +11,22 @@ import { scrollviewStyle, styles } from './styles';
 
 const loginTexts = texts.Login;
 
-export default function Login({
-  fields,
-  handleForgotPassword,
-  handleRegister,
-  handleSubmitPress,
-  loading
-}) {
+export default function Login({ fields, handleForgotPassword, handleRegister, handleSubmitPress, loading }) {
   return (
     <View style={styles.container}>
       <StatusBar />
       <Loader loading={loading} />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={scrollviewStyle}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{loginTexts.loginTitle}</Text>
-          {fields.map((field, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <View key={i}>{field}</View>
+          {fields.map(({ field, key }) => (
+            <View key={key}>{field}</View>
           ))}
-          <TouchableOpacity
-            style={styles.submitButton}
-            activeOpacity={0.5}
-            onPress={handleSubmitPress}
-          >
-            <Text style={styles.submitButtonText}>
-              {loginTexts.submitButtonText}
-            </Text>
+          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
+            <Text style={styles.submitButtonText}>{loginTexts.submitButtonText}</Text>
           </TouchableOpacity>
-          <Text style={{ textAlign: 'center', fontSize: 18 }}>
-            o ingresá con
-          </Text>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            // onPress={handlePasswordVisibility}
-          >
+          <Text style={{ textAlign: 'center', fontSize: 18 }}>o ingresá con</Text>
+          <TouchableOpacity activeOpacity={0.8}>
             <Image style={styles.socialNetworkLogo} source={GmailLogo} />
           </TouchableOpacity>
           <View style={styles.redirectionButtons}>
@@ -62,9 +34,7 @@ export default function Login({
               {loginTexts.forgotYourPasswordQuestion}
             </Text>
             <View style={styles.needAccountContainer}>
-              <Text style={styles.needAccountText}>
-                {loginTexts.needAccount}
-              </Text>
+              <Text style={styles.needAccountText}>{loginTexts.needAccount}</Text>
               <Text style={styles.registerButton} onPress={handleRegister}>
                 {loginTexts.register}
               </Text>

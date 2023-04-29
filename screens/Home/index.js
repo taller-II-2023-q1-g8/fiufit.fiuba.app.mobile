@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Alert, Text } from 'react-native';
+import { Alert } from 'react-native';
 import { func, shape } from 'prop-types';
-
 import { signOut } from 'firebase/auth';
+
 import { auth } from '../../firebaseConfig';
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
@@ -11,7 +11,6 @@ import Home from './layout';
 
 export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useStateValue();
 
   const handleSignOutPress = async () => {
@@ -34,10 +33,9 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate(texts.SearchUsers.name);
   };
 
-  const fields = [<Text>Welcome {state.user.username}!</Text>];
   return (
     <Home
-      fields={fields}
+      username={state.user.username}
       handleSignOutPress={handleSignOutPress}
       handleProfile={() => handleProfile()}
       handleSearchUsers={() => handleSearchUsers(navigation)}

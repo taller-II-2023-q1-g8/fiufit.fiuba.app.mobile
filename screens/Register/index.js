@@ -1,18 +1,15 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import {
-  emailFieldType,
-  passwordFieldType,
-  phoneFieldType
-} from '../../components/Fields/constants';
 
+import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
+import { registerRequest } from '../../requests';
 import DateField from '../../components/Fields/DateField';
-import Register from './layout';
-import TextField from '../../components/Fields/TextField';
 import SelectField from '../../components/Fields/SelectField';
+import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
+
+import Register from './layout';
 /*
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10); */
@@ -78,10 +75,10 @@ export default function RegisterContainer({ navigation }) {
       setPasswordError('Contraseña obligatoria');
       return;
     }
-    if (!birthdate) {
-      setBirthdateError('Fecha de nacimiento obligatoria');
-      return;
-    }
+    // if (!birthdate) {
+    //   setBirthdateError('Fecha de nacimiento obligatoria');
+    //   return;
+    // }
     if (!username) {
       setUsernameError('Nombre de usuario obligatorio');
       return;
@@ -92,44 +89,34 @@ export default function RegisterContainer({ navigation }) {
     }
     setLoading(true);
 
+    const values = {
+      username,
+      firstname: name,
+      gender,
+      email,
+      phone_number: phone,
+      lastname: 'biachi',
+      birth_date: '1995-10-20',
+      password,
+      weight_in_kg: '8',
+      height_in_cm: '5'
+    };
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
-      const response = await fetch(
-        'https://api-gateway-k1nl.onrender.com/user',
-        {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          mode: 'cors',
-          body: JSON.stringify({
-            username,
-            firstname: name,
-            gender,
-            email,
-            phone_number: phone,
-            birth_date: birthdate,
-            password
-          })
-        }
-      );
+      const response = await registerRequest(values);
       if (response.ok) {
         Alert.alert('Bienvenido', 'Registro exitoso');
         navigation.navigate(texts.Home);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.log(error);
     }
     setLoading(false);
   };
 
-  const formatDate = (date) =>
-    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-  const handleOnBirthdateChange = (userBirthdate) =>
-    setBirthdate(formatDate(userBirthdate));
+  const handleOnBirthdateChange = (userBirthdate) => setBirthdate(formatDate(userBirthdate));
   const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnGenderChange = (userGender) => setGender(userGender);
   const handleOnNameChange = (userName) => setName(userName);
@@ -165,11 +152,7 @@ export default function RegisterContainer({ navigation }) {
       title={fieldTexts.passwordTitle}
     />,
     <DateField error={birthdateError} onChangeText={handleOnBirthdateChange} />,
-    <SelectField
-      error={genderError}
-      onChangeText={handleOnGenderChange}
-      title={fieldTexts.genderTitle}
-    />,
+    <SelectField error={genderError} onChangeText={handleOnGenderChange} title={fieldTexts.genderTitle} />,
     <TextField
       error={phoneError}
       keyboardType={phoneFieldType}
@@ -179,13 +162,7 @@ export default function RegisterContainer({ navigation }) {
     />
   ];
 
-  return (
-    <Register
-      fields={fields}
-      handleSubmitPress={handleSubmitPress}
-      loading={loading}
-    />
-  );
+  return <Register fields={fields} handleSubmitPress={handleSubmitPress} loading={loading} />;
 }
 
 RegisterContainer.propTypes = {
