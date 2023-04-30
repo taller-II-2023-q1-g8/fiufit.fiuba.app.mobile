@@ -14,7 +14,7 @@ import Loader from '../../../components/Loader';
 
 export default function UserStack({ loading, data, reducer, tabBarIcons }) {
   const Tab = createBottomTabNavigator();
-  console.log({ data });
+
   return loading ? (
     <Loader />
   ) : (
@@ -29,8 +29,8 @@ export default function UserStack({ loading, data, reducer, tabBarIcons }) {
           })}
         >
           <Tab.Screen component={HomeScreen} name={texts.Home.name} />
-          <Tab.Screen component={CoffeeAutonomous} name={texts.Profile.name} />
           <Tab.Screen component={SearchUsersScreen} name={texts.SearchUsers.name} />
+          <Tab.Screen component={CoffeeAutonomous} name={texts.Profile.name} />
         </Tab.Navigator>
       </NavigationContainer>
     </StateProvider>

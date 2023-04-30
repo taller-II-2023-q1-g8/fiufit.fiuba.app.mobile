@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
 
 import { auth } from '../firebaseConfig';
 import { firebaseObserver, loggedIn } from '../utils/hooks/useAuthentication';
