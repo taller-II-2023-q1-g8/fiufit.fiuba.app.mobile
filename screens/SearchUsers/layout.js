@@ -40,9 +40,9 @@ export default function SearchUsers({ data, handleSearchPress, handleOnSearchCha
         <Text style={styles.title}>{searchUserstext.searchUsersTitle}</Text>
         <View style={{ flexDirection: 'column' }}>
           <TextField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchPress}>
+          {/* <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchPress}>
             <Text style={styles.username}>{searchUserstext.submitButtonText}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.userList}>
           <FlatList

@@ -10,14 +10,13 @@ import CoffeeAutonomous from '../../../screens/Profile';
 import HomeScreen from '../../../screens/Home';
 import SearchUsersScreen from '../../../screens/SearchUsers';
 import texts from '../../../texts';
+import Loader from '../../../components/Loader';
 
 export default function UserStack({ loading, data, reducer, tabBarIcons }) {
   const Tab = createBottomTabNavigator();
   console.log({ data });
   return loading ? (
-    <View>
-      <Text> Loading... </Text>
-    </View>
+    <Loader />
   ) : (
     <StateProvider initialState={data} reducer={reducer}>
       <NavigationContainer>
