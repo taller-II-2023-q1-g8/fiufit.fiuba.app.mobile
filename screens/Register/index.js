@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
 import { registerRequest } from '../../requests';
@@ -8,6 +9,7 @@ import DateField from '../../components/Fields/DateField';
 import SelectField from '../../components/Fields/SelectField';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
+import { auth } from '../../firebaseConfig';
 
 import Register from './layout';
 /*
@@ -106,7 +108,7 @@ export default function RegisterContainer({ navigation }) {
       const response = await registerRequest(values);
       if (response.ok) {
         Alert.alert('Bienvenido', 'Registro exitoso');
-        navigation.navigate(texts.Home);
+        await signInWithEmailAndPassword(auth, email, password);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
       console.log(error);

@@ -1,4 +1,5 @@
 import ReactObserver from 'react-event-observer';
+
 import { auth } from '../../firebaseConfig';
 
 export const firebaseObserver = ReactObserver();
