@@ -1,26 +1,42 @@
-import React, {useEffect, useState} from 'react';
-import {firebaseObserver, loggedIn} from '../utils/hooks/useAuthentication';
-import {View, Text} from 'react-native'
-import UserStack from './userStack';
-import AuthStack from './authStack';
-import {auth} from "../firebaseConfig";
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+
+import { auth } from '../firebaseConfig';
+import { firebaseObserver, loggedIn } from '../utils/hooks/useAuthentication';
+
+import AuthStack from './components/AuthStack';
+import UserStack from './components/UserStack';
 
 export default function RootNavigation() {
+  const [authenticated, setAuthenticated] = useState(loggedIn());
+  const [isLoading, setIsLoading] = useState(true);
 
-    const [authenticated, setAuthenticated] = useState(loggedIn());
-    const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    firebaseObserver.subscribe('authStateChanged', (data) => {
+      setAuthenticated(data);
+      setIsLoading(false);
+    });
+    return () => {
+      firebaseObserver.unsubscribe('authStateChanged');
+    };
+  }, []);
 
-    useEffect(() => {
-        firebaseObserver.subscribe('authStateChanged', data => {
-            setAuthenticated(data);
-            setIsLoading(false);
-        });
-        return () => { firebaseObserver.unsubscribe('authStateChanged'); }
-    }, []);
-    /*Esto es porque para que firebase vea si el user esta autenticado o no
-    * Tarda unos segundos y si el usuario esta logeado muestra la pantalla de login de todas formas
-    * Hasta que termina de cargar firebase, mostramos un texto de loading(Cambiar en el futuro)*/
-    return isLoading ? <View><Text> Loading... </Text></View>:
-        authenticated ? <UserStack email={auth.currentUser.email} token={auth.currentUser.getIdToken()}/> :
-            <AuthStack />;
+  const { currentUser } = auth;
+
+  const Stack = authenticated ? (
+    <UserStack email={currentUser.email} token={currentUser.getIdToken()} />
+  ) : (
+    <AuthStack />
+  );
+
+  /* Esto es porque para que firebase vea si el user esta autenticado o no
+   * Tarda unos segundos y si el usuario esta logeado muestra la pantalla de login de todas formas
+   * Hasta que termina de cargar firebase, mostramos un texto de loading(Cambiar en el futuro) */
+  return isLoading ? (
+    <View>
+      <Text> Loading... </Text>
+    </View>
+  ) : (
+    Stack
+  );
 }

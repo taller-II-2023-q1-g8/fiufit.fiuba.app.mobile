@@ -1,142 +1,128 @@
-import {
-  emailFieldType,
-  passwordFieldType,
-  phoneFieldType,
-} from "../../components/Fields/constants";
-import { texts } from "../../texts";
-import { useEffect, useState } from "react";
-import DateField from "../../components/Fields/DateField";
-import Register from "./layout";
-import TextField from "../../components/Fields/TextField";
-import SelectField from "../../components/Fields/SelectField";
-import { Alert } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
+import PropTypes from 'prop-types';
+
+import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
+import { registerRequest } from '../../requests';
+import DateField from '../../components/Fields/DateField';
+import SelectField from '../../components/Fields/SelectField';
+import TextField from '../../components/Fields/TextField';
+import texts from '../../texts';
+
+import Register from './layout';
 /*
 var bcrypt = require("bcryptjs");
-var salt = bcrypt.genSaltSync(10);*/
+var salt = bcrypt.genSaltSync(10); */
 
 const fieldTexts = texts.Fields;
 
 export default function RegisterContainer({ navigation }) {
-  const [birthdate, setBirthdate] = useState("");
-  const [birthdateError, setBirthdateError] = useState("");
-  const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
-  const [genderError, setGenderError] = useState("");
+  const [birthdate, setBirthdate] = useState('');
+  const [birthdateError, setBirthdateError] = useState('');
+  const [email, setEmail] = useState('');
+  const [gender, setGender] = useState('');
+  const [genderError, setGenderError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [mailError, setMailError] = useState("");
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [phone, setPhone] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [username, setUsername] = useState("");
-  const [usernameError, setUsernameError] = useState("");
+  const [mailError, setMailError] = useState('');
+  const [name, setName] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState('');
 
   const resetErrors = () => {
-    setBirthdateError("");
-    setMailError("");
-    setNameError("");
-    setPasswordError("");
-    setUsernameError("");
-    setGenderError("");
-    setPhoneError("");
+    setBirthdateError('');
+    setMailError('');
+    setNameError('');
+    setPasswordError('');
+    setUsernameError('');
+    setGenderError('');
+    setPhoneError('');
   };
 
   const resetFieldValues = () => {
-    setBirthdate("");
-    setEmail("");
-    setName("");
-    setPassword("");
-    setGender("");
-    setUsername("");
-    setPhone("");
+    setBirthdate('');
+    setEmail('');
+    setName('');
+    setPassword('');
+    setGender('');
+    setUsername('');
+    setPhone('');
   };
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       resetFieldValues();
       resetErrors();
-    };
-  }, []);
+    },
+    []
+  );
 
   const handleSubmitPress = async () => {
     resetErrors();
     if (!name) {
-      setNameError("Nombre obligatorio");
+      setNameError('Nombre obligatorio');
       return;
     }
     if (!email) {
-      setMailError("Email obligatorio");
+      setMailError('Email obligatorio');
       return;
     }
     if (!password) {
-      setPasswordError("Contraseña obligatoria");
+      setPasswordError('Contraseña obligatoria');
       return;
     }
-    if (!birthdate) {
-      setBirthdateError("Fecha de nacimiento obligatoria");
-      return;
-    }
+    // if (!birthdate) {
+    //   setBirthdateError('Fecha de nacimiento obligatoria');
+    //   return;
+    // }
     if (!username) {
-      setUsernameError("Nombre de usuario obligatorio");
+      setUsernameError('Nombre de usuario obligatorio');
       return;
     }
     if (!phone) {
-      setPhoneError("Número de teléfono obligatorio");
+      setPhoneError('Número de teléfono obligatorio');
       return;
     }
     setLoading(true);
 
-     try {
-      /*const hash = bcrypt.hashSync(password, salt);*/
-      const response = await fetch(
-        "https://api-gateway-k1nl.onrender.com/user",
-        {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
-          body: JSON.stringify({
-            username: username,
-            firstname: name,
-            gender: gender,
-            email: email,
-            phone_number: phone,
-            birth_date: birthdate,
-            password: password,
-          }),
-        }
-      );
-      const json = await response.json();
-
+    const values = {
+      username,
+      firstname: name,
+      gender,
+      email,
+      phone_number: phone,
+      lastname: 'biachi',
+      birth_date: '1995-10-20',
+      password,
+      weight_in_kg: '8',
+      height_in_cm: '5'
+    };
+    try {
+      /* const hash = bcrypt.hashSync(password, salt); */
+      const response = await registerRequest(values);
       if (response.ok) {
-        Alert.alert("Bienvenido", "Registro exitoso");
-        navigation.navigate(texts.Login.name);
-      } else Alert.alert("Error", "Intente nuevamente");
+        Alert.alert('Bienvenido', 'Registro exitoso');
+        navigation.navigate(texts.Home);
+      } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
   };
 
-  const formatDate = (date) =>
-    `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-  const handleRegister = () => alert("Redirección a la vista de registro!");
-  const handleForgotPassword = () =>
-    alert("Redirección a la vista de forgot password!");
-
-  const handleOnBirthdateChange = (birthdate) =>
-    setBirthdate(formatDate(birthdate));
+  const handleOnBirthdateChange = (userBirthdate) => setBirthdate(formatDate(userBirthdate));
   const handleOnEmailChange = (userMail) => setEmail(userMail);
-  const handleOnGenderChange = (gender) => setGender(gender);
-  const handleOnNameChange = (name) => setName(name);
-  const handleOnPasswordChange = (password) => setPassword(password);
-  const handleOnPhoneChange = (phone) => setPhone(phone);
-  const handleOnUsernameChange = (username) => setUsername(username);
+  const handleOnGenderChange = (userGender) => setGender(userGender);
+  const handleOnNameChange = (userName) => setName(userName);
+  const handleOnPasswordChange = (userPassword) => setPassword(userPassword);
+  const handleOnPhoneChange = (userPhone) => setPhone(userPhone);
+  const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
 
   const fields = [
     <TextField
@@ -166,27 +152,21 @@ export default function RegisterContainer({ navigation }) {
       title={fieldTexts.passwordTitle}
     />,
     <DateField error={birthdateError} onChangeText={handleOnBirthdateChange} />,
-    <SelectField
-      error={genderError}
-      onChangeText={handleOnGenderChange}
-      title={fieldTexts.genderTitle}
-    />,
+    <SelectField error={genderError} onChangeText={handleOnGenderChange} title={fieldTexts.genderTitle} />,
     <TextField
       error={phoneError}
       keyboardType={phoneFieldType}
       onChangeText={handleOnPhoneChange}
       placeholder={fieldTexts.phonePlaceholder}
       title={fieldTexts.phoneTitle}
-    />,
+    />
   ];
 
-  return (
-    <Register
-      fields={fields}
-      handleForgotPassword={handleForgotPassword}
-      handleRegister={handleRegister}
-      handleSubmitPress={handleSubmitPress}
-      loading={loading}
-    />
-  );
+  return <Register fields={fields} handleSubmitPress={handleSubmitPress} loading={loading} />;
 }
+
+RegisterContainer.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired
+  }).isRequired
+};

@@ -1,58 +1,59 @@
-import { StyleSheet } from "react-native";
-import { colors } from "../../colors";
+import { StyleSheet } from 'react-native';
+import { colors } from '../../colors';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   fieldContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 24,
     padding: 0,
-    // gap: 12,
-    width: "100%",
-    marginBottom: 24, //because of gap not working :/
+    width: '100%'
   },
   fieldTitle: {
     fontSize: 16,
-    fontWeight: "400",
-    marginBottom: 12, //because of gap not working :/
+    fontWeight: '400',
+    marginBottom: 12
   },
   fieldInputContainer: {
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    borderColor: "#C1C7D0",
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderColor: '#C1C7D0',
     borderRadius: 4,
     borderWidth: 1,
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     fontSize: 16,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    width: "100%",
+    width: '100%'
   },
   error: {
-    borderColor: "#CC3300",
-    borderWidth: 2,
+    borderColor: '#CC3300',
+    borderWidth: 2
   },
   errorTitle: {
     color: colors.error,
-    fontWeight: "bold",
+    fontWeight: 'bold'
   },
   errorDescription: {
     color: colors.error,
-    marginTop: 12,
+    marginTop: 12
   },
   passwordInputContainer: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%'
   },
   hidePasswordContainer: {
-    position: "absolute",
-    right: 10,
+    position: 'absolute',
+    right: 10
   },
   hidePasswordIcon: {
-    width: 20,
     height: 20,
-  },
+    width: 20
+  }
 });
+
+export default styles;
