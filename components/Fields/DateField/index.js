@@ -26,9 +26,7 @@ function DateField({ onChangeText, error }) {
   };
 
   const formatDate = (dateToFormat) =>
-    `${dateToFormat.getDate()}/${
-      dateToFormat.getMonth() + 1
-    }/${dateToFormat.getFullYear()} `;
+    `${dateToFormat.getDate()}/${dateToFormat.getMonth() + 1}/${dateToFormat.getFullYear()} `;
 
   return (
     <View style={styles.fieldContainer}>
@@ -46,14 +44,7 @@ function DateField({ onChangeText, error }) {
           {date ? formatDate(date) : fieldsTexts.birthdatePlaceholder}
         </Text>
       </TouchableOpacity>
-      {show && (
-        <DateTimePicker
-          value={date}
-          display="default"
-          mode="date"
-          onChange={onChange}
-        />
-      )}
+      {show && <DateTimePicker value={date} display="default" mode="date" onChange={onChange} />}
       {error && <Text style={styles.errorDescription}>{error}</Text>}
     </View>
   );

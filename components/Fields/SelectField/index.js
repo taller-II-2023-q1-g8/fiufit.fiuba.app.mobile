@@ -2,6 +2,7 @@ import { func, string } from 'prop-types';
 import { Picker } from '@react-native-picker/picker';
 import { View, Text } from 'react-native';
 import React, { useState } from 'react';
+
 import styles from '../styles';
 
 function SelectField({ onChangeText, error, title }) {
@@ -14,9 +15,7 @@ function SelectField({ onChangeText, error, title }) {
 
   return (
     <View style={styles.fieldContainer}>
-      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>
-        {title}
-      </Text>
+      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>{title}</Text>
       <Picker
         selectedValue={selectedValue}
         style={{

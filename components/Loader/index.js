@@ -32,12 +32,7 @@ function Loader(props) {
     <Modal transparent animationType="none" visible={loading}>
       <View style={styles.modalBackground}>
         <View style={styles.activityIndicatorWrapper}>
-          <ActivityIndicator
-            animating
-            color="#000000"
-            size="large"
-            style={styles.activityIndicator}
-          />
+          <ActivityIndicator animating color="#000000" size="large" style={styles.activityIndicator} />
         </View>
       </View>
     </Modal>

@@ -34,13 +34,7 @@ export default function CoffeeAutonomous() {
     <View>
       <Text> Fetch API</Text>
       {loading && <Text>Loading..</Text>}
-      {data && (
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      )}
+      {data && <FlatList data={data} renderItem={renderItem} keyExtractor={(item) => item.id.toString()} />}
     </View>
   );
 }
