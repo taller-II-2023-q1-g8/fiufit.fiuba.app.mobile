@@ -1,16 +1,15 @@
+import { bool, object, func } from 'prop-types';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, View } from 'react-native';
-import { bool, object, func } from 'prop-types';
 
 import { colors } from '../../../colors';
 import { StateProvider } from '../../../utils/state/state';
 import CoffeeAutonomous from '../../../screens/Profile';
 import HomeScreen from '../../../screens/Home';
+import Loader from '../../../components/Loader';
 import SearchUsersScreen from '../../../screens/SearchUsers';
 import texts from '../../../texts';
-import Loader from '../../../components/Loader';
 
 export default function UserStack({ loading, data, reducer, tabBarIcons }) {
   const Tab = createBottomTabNavigator();

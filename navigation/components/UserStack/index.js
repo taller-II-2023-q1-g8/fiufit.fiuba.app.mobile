@@ -18,7 +18,6 @@ export default function UserStackContainer({ email, token }) {
   const fetchUser = async () => {
     const response = await fetchUserByEmail(email);
     const json = await response.json();
-    console.log(json.message);
     const initialState = {
       user: json.message
     };

@@ -18,7 +18,7 @@ var salt = bcrypt.genSaltSync(10); */
 
 const fieldTexts = texts.Fields;
 
-export default function RegisterContainer({ navigation }) {
+export default function RegisterContainer() {
   const [birthdate, setBirthdate] = useState('');
   const [birthdateError, setBirthdateError] = useState('');
   const [email, setEmail] = useState('');
