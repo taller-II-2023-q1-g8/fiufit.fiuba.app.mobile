@@ -30,7 +30,7 @@ const texts = {
     submitButtonText: 'Modificar perfil'
   },
   SearchUsers: {
-    name: 'SearchUsers',
+    name: 'Search',
     searchUsersTitle: 'Busca usuarios',
     submitButtonText: 'Buscar'
   },

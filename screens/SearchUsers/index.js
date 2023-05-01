@@ -1,38 +1,33 @@
-import React, { useState } from 'react';
-import { func, shape } from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
 import { fetchUsersByUsername } from '../../requests';
+import Loader from '../../components/Loader';
+import { isEmpty } from '../../utils';
 
 import SearchUsers from './layout';
 
-export default function SearchUsersScreen({ navigation }) {
+export default function SearchUsersScreen() {
+  const [search, setSearch] = useState([]);
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState('');
 
-  const fetchData = async (username) => {
-    const response = await fetchUsersByUsername(username);
-    const json = await response.json();
-    console.log(json.message);
-    setData(json.message);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetchUsersByUsername('');
+      const json = await response.json();
+      setData(json.message);
+    }
+    fetchData();
+  }, []);
+
+  const filterData = (usernameToSearch) => data.filter((username) => username.includes(usernameToSearch));
+
+  const handleOnSearchChange = (usernameToSearch) => {
+    setSearch(isEmpty(usernameToSearch) ? '' : filterData(usernameToSearch));
   };
 
-  const handleSearchPress = async () => {
-    fetchData(search);
-  };
-
-  const handleOnSearchChange = (value) => setSearch(value);
-
-  return (
-    <SearchUsers
-      data={data}
-      handleOnSearchChange={handleOnSearchChange}
-      handleSearchPress={handleSearchPress}
-    />
+  return !isEmpty(data) ? (
+    <SearchUsers data={search} handleOnSearchChange={handleOnSearchChange} />
+  ) : (
+    <Loader />
   );
 }
-
-SearchUsersScreen.propTypes = {
-  navigation: shape({
-    navigate: func.isRequired
-  }).isRequired
-};

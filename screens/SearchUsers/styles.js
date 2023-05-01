@@ -4,6 +4,7 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     width: '100%',
     height: '100%',
     flex: 1
@@ -40,6 +41,24 @@ export const styles = StyleSheet.create({
   userList: {
     borderWidth: 5,
     flex: 1
+  },
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingVertical: 10
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
+    borderRadius: '20%'
+  },
+  profileName: {
+    fontSize: 17,
+    fontWeight: 600,
+    paddingLeft: 10
+  },
+  profileType: {
+    paddingLeft: 10
   }
 });
 

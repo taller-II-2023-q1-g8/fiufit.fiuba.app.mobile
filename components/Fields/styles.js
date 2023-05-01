@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 import { colors } from '../../colors';
 
@@ -54,6 +54,33 @@ const styles = StyleSheet.create({
   hidePasswordIcon: {
     height: 20,
     width: 20
+  },
+  searchField: {
+    marginLeft: 10,
+    alignItems: 'center',
+    display: 'flex',
+    borderColor: 'transparent',
+    flexDirection: 'row',
+    fontSize: 16,
+    width: '100%',
+    ...Platform.select({
+      web: {
+        outlineStyle: 'none'
+      }
+    })
+  },
+  searchContainer: {
+    verticalAlign: 'baseline',
+    backgroundColor: '#FFFFFF',
+    borderColor: '#C1C7D0',
+    borderRadius: 4,
+    borderWidth: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    fontSize: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    width: '100%'
   }
 });
 

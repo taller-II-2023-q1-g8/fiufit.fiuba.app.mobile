@@ -1,9 +1,9 @@
 const ICONS = {
   FOCUSED_HOME: 'home-outline',
-  FOCUSED_LIST: 'ios-list-outline',
+  FOCUSED_LIST: 'search-outline',
   FOCUSED_PERSON: 'person-outline',
   HOME: 'home',
-  LIST: 'ios-list',
+  LIST: 'search',
   PERSON: 'person'
 };
 
