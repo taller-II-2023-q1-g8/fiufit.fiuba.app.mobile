@@ -1,7 +1,8 @@
 import { Alert } from 'react-native';
 import { func, shape } from 'prop-types';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
 import React, { useState } from 'react';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import TextField from '../../components/Fields/TextField';
 import {
@@ -17,6 +18,10 @@ import Login from './layout';
 
 const fieldTexts = texts.Fields;
 
+GoogleSignin.configure({
+  webClientId: '587864716594-rieevghh6j6gi2m10lhb835u4ndn0631.apps.googleusercontent.com',
+  offlineAccess: true
+});
 export default function LoginContainer({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [mailError, setMailError] = useState('');
@@ -51,6 +56,25 @@ export default function LoginContainer({ navigation }) {
     navigation.navigate(texts.ForgotPassword.name);
   };
 
+  const handleGmailLogin = async () => {
+    // Get the users ID token
+    const user = await GoogleSignin.signIn();
+    // Hacer un get al back con el email a ver si existe el user
+    // Si existe preguntarle que quiere hacer?
+    // Agregar al back de users columna de federado
+    console.log(user.user.email);
+    // Create a Google credential with the token
+    const googleCredential = GoogleAuthProvider.credential(user.idToken);
+    // Sign-in the user with the credential
+    const userSignIn = signInWithCredential(auth, googleCredential);
+    userSignIn
+      .then((userCred) => {
+        console.log(userCred);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnPasswordChange = (userPassword) => setPassword(userPassword);
 
@@ -87,6 +111,7 @@ export default function LoginContainer({ navigation }) {
       handleForgotPassword={() => handleForgotPassword()}
       handleRegister={() => handleRegister()}
       handleSubmitPress={handleSubmitPress}
+      handleGmailLogin={handleGmailLogin}
       loading={loading}
     />
   );

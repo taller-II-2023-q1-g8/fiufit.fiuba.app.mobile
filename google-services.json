@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "587864716594",
+    "project_id": "fiufit-73a11",
+    "storage_bucket": "fiufit-73a11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587864716594:android:4fe98a629afbf0cd6f132b",
+        "android_client_info": {
+          "package_name": "com.santiagobiach.fiuFit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587864716594-8b7ou9lnsbj7scjgmn1tv54h3soi3sqc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santiagobiach.fiuFit",
+            "certificate_hash": "db9427b1e7c976b8bf87d95fe56526031414a628"
+          }
+        },
+        {
+          "client_id": "587864716594-no40o7tma9e7bmjghi16vhoajf9du76q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santiagobiach.fiuFit",
+            "certificate_hash": "eaaf5f99f69095ed7c7b6d03558c4784b0367761"
+          }
+        },
+        {
+          "client_id": "587864716594-rieevghh6j6gi2m10lhb835u4ndn0631.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HkJ_OTFKo5GVthu0Vyd_cVElE0bPKfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587864716594-pthjchnmm8d0o3dm8ljn3i6vj4ouurs8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

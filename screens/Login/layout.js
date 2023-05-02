@@ -11,7 +11,14 @@ import { scrollviewStyle, styles } from './styles';
 
 const loginTexts = texts.Login;
 
-export default function Login({ fields, handleForgotPassword, handleRegister, handleSubmitPress, loading }) {
+export default function Login({
+  fields,
+  handleForgotPassword,
+  handleRegister,
+  handleSubmitPress,
+  loading,
+  handleGmailLogin
+}) {
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -26,7 +33,7 @@ export default function Login({ fields, handleForgotPassword, handleRegister, ha
             <Text style={styles.submitButtonText}>{loginTexts.submitButtonText}</Text>
           </TouchableOpacity>
           <Text style={{ textAlign: 'center', fontSize: 18 }}>o ingresá con</Text>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity activeOpacity={0.8} onPress={handleGmailLogin}>
             <Image style={styles.socialNetworkLogo} source={GmailLogo} />
           </TouchableOpacity>
           <View style={styles.redirectionButtons}>
@@ -51,5 +58,6 @@ Login.propTypes = {
   handleForgotPassword: func.isRequired,
   handleRegister: func.isRequired,
   handleSubmitPress: func.isRequired,
+  handleGmailLogin: func.isRequired,
   loading: bool.isRequired
 };
