@@ -33,12 +33,14 @@ export default function SearchUsersScreen({ navigation }) {
 
   return (
     <>
-      <Loader loading={!isEmpty(data)} />
-      <SearchUsers
-        handleItemPress={handleItemPress}
-        data={search}
-        handleOnSearchChange={handleOnSearchChange}
-      />
+      <Loader loading={isEmpty(data)} />
+      {!isEmpty(data) && (
+        <SearchUsers
+          handleItemPress={handleItemPress}
+          data={search}
+          handleOnSearchChange={handleOnSearchChange}
+        />
+      )}
     </>
   );
 }

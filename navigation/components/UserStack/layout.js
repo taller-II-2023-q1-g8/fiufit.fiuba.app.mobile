@@ -28,22 +28,24 @@ export default function UserStack({ loading, data, reducer, tabBarIcons }) {
   return (
     <>
       <Loader loading={loading} />
-      <StateProvider initialState={data} reducer={reducer}>
-        <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={({ route }) => ({
-              headerShown: false,
-              tabBarIcon: (icon) => tabBarIcons(route, icon),
-              tabBarActiveTintColor: colors.purple,
-              tabBarInactiveTintColor: colors.gray
-            })}
-          >
-            <Tab.Screen component={HomeScreen} name={texts.Home.name} />
-            <Tab.Screen component={SearchUsersScreens} name={texts.SearchUsers.name} />
-            <Tab.Screen component={CoffeeAutonomous} name={texts.Profile.name} />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </StateProvider>
+      {!loading && (
+        <StateProvider initialState={data} reducer={reducer}>
+          <NavigationContainer>
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                headerShown: false,
+                tabBarIcon: (icon) => tabBarIcons(route, icon),
+                tabBarActiveTintColor: colors.purple,
+                tabBarInactiveTintColor: colors.gray
+              })}
+            >
+              <Tab.Screen component={HomeScreen} name={texts.Home.name} />
+              <Tab.Screen component={SearchUsersScreens} name={texts.SearchUsers.name} />
+              <Tab.Screen component={CoffeeAutonomous} name={texts.Profile.name} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </StateProvider>
+      )}
     </>
   );
 }
