@@ -1,3 +1,13 @@
+const fetchData = async (url) =>
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors'
+  });
+
 export const registerRequest = async (values) =>
   fetch('https://api-gateway-k1nl.onrender.com/user', {
     method: 'PUT',
@@ -10,21 +20,10 @@ export const registerRequest = async (values) =>
   });
 
 export const fetchUsersByUsername = async (username) =>
-  fetch(`https://api-gateway-k1nl.onrender.com/user/usernames?prefix=${username}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    mode: 'cors'
-  });
+  fetchData(`https://api-gateway-k1nl.onrender.com/user/usernames?prefix=${username}`);
 
 export const fetchUserByEmail = async (email) =>
-  fetch(`https://api-gateway-k1nl.onrender.com/user?email=${email}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    mode: 'cors'
-  });
+  fetchData(`https://api-gateway-k1nl.onrender.com/user?email=${email}`);
+
+export const fetchUserProfileByUsername = async (username) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/user?username=${username}`);
