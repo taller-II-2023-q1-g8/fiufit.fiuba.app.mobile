@@ -13,6 +13,7 @@ import {
 } from '../../components/Fields/constants';
 import { auth } from '../../firebaseConfig';
 import texts from '../../texts';
+import { fetchUserByEmail } from '../../requests';
 
 import Login from './layout';
 
@@ -62,18 +63,28 @@ export default function LoginContainer({ navigation }) {
     // Hacer un get al back con el email a ver si existe el user
     // Si existe preguntarle que quiere hacer?
     // Agregar al back de users columna de federado
-    console.log(user.user.email);
-    // Create a Google credential with the token
-    const googleCredential = GoogleAuthProvider.credential(user.idToken);
-    // Sign-in the user with the credential
-    const userSignIn = signInWithCredential(auth, googleCredential);
-    userSignIn
-      .then((userCred) => {
-        console.log(userCred);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setLoading(true);
+    const response = await fetchUserByEmail(user.user.email);
+    const json = await response.json();
+    // En vez de true seria: json.message.esFederado
+    if (json.message == null || true) {
+      // No existe el email en el backend o ya ingreso alguna vez con gmail
+      // Create a Google credential with the token
+      const googleCredential = GoogleAuthProvider.credential(user.idToken);
+      // Sign-in the user with the credential
+      const userSignIn = signInWithCredential(auth, googleCredential);
+      userSignIn
+        .then((userCred) => {
+          console.log(userCred);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      // Intenta ingresar con un email ya asociado a una cuenta con contrasenia
+      Alert.alert('Ese email ya tiene una cuenta asociada');
+    }
+    setLoading(false);
   };
   const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnPasswordChange = (userPassword) => setPassword(userPassword);

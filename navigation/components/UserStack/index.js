@@ -5,6 +5,7 @@ import { object, string } from 'prop-types';
 import texts from '../../../texts';
 import ICONS from '../../constants';
 import { fetchUserByEmail } from '../../../requests';
+import { auth } from '../../../firebaseConfig';
 
 import UserStack from './layout';
 
@@ -15,13 +16,22 @@ export default function UserStackContainer({ email, token }) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
+  // Si el fetchUser da null, significa que entro con google
+  // Hay que registrarlo a mano, sacando los datos que sean posibles de google
+  // Y los que no pedirle la info
   const fetchUser = async () => {
     const response = await fetchUserByEmail(email);
     const json = await response.json();
-    const initialState = {
-      user: json.message
-    };
-    setData(initialState);
+    console.log(auth.currentUser);
+    console.log(auth.currentUser.providerData);
+    if (json.message == null) {
+      console.log(auth.currentUser);
+    } else {
+      const initialState = {
+        user: json.message
+      };
+      setData(initialState);
+    }
     setLoading(false);
   };
 
