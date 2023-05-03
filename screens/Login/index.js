@@ -13,7 +13,7 @@ import {
 } from '../../components/Fields/constants';
 import { auth } from '../../firebaseConfig';
 import texts from '../../texts';
-import { fetchUserByEmail } from '../../requests';
+import { fetchUserByEmail, registerRequest } from '../../requests';
 
 import Login from './layout';
 
@@ -60,22 +60,42 @@ export default function LoginContainer({ navigation }) {
   const handleGmailLogin = async () => {
     // Get the users ID token
     const user = await GoogleSignin.signIn();
-    // Hacer un get al back con el email a ver si existe el user
-    // Si existe preguntarle que quiere hacer?
-    // Agregar al back de users columna de federado
+    console.log(user);
     setLoading(true);
     const response = await fetchUserByEmail(user.user.email);
     const json = await response.json();
-    // En vez de true seria: json.message.esFederado
-    if (json.message == null || true) {
+    console.log(json);
+    if (json.message == null || json.message.is_federated) {
       // No existe el email en el backend o ya ingreso alguna vez con gmail
       // Create a Google credential with the token
       const googleCredential = GoogleAuthProvider.credential(user.idToken);
       // Sign-in the user with the credential
       const userSignIn = signInWithCredential(auth, googleCredential);
       userSignIn
-        .then((userCred) => {
-          console.log(userCred);
+        .then(async (userCred) => {
+          // Si el fetchUser da null, significa que entro con google x primera vez
+          // Hay que registrarlo a mano, sacando los datos que sean posibles de google
+          // Y los que no pedirle la info
+          if (json.message == null) {
+            /*
+            const values = {
+              username: user.user.email,
+              firstname: user.user.givenName,
+              gender: null,
+              email: user.user.email,
+              phone_number: null,
+              lastname: user.user.familyName,
+              birth_date: null,
+              password: null,
+              weight_in_kg: null,
+              height_in_cm: null,
+              is_federated: true
+            };
+            const r = await registerRequest(values);
+            */
+            console.log('Register');
+          }
+          console.log('Exito logeando con google');
         })
         .catch((error) => {
           console.log(error);

@@ -100,8 +100,9 @@ export default function RegisterContainer() {
       lastname: 'biachi',
       birth_date: '1995-10-20',
       password,
-      weight_in_kg: '8',
-      height_in_cm: '5'
+      weight_in_kg: 8,
+      height_in_cm: 5,
+      is_federated: false
     };
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
