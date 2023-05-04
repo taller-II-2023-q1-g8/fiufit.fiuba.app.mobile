@@ -33,6 +33,20 @@ export const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     paddingVertical: 8
+  },
+  scrollButton: {
+    backgroundColor: colors.purple,
+    alignItems: 'center',
+    width: '46%',
+    borderRadius: 4,
+    margin: 10
+  },
+  scrollButtonDisabled: {
+    backgroundColor: colors.gray,
+    alignItems: 'center',
+    width: '46%',
+    borderRadius: 4,
+    margin: 10
   }
 });
 
