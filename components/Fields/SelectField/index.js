@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 
 import styles from '../styles';
 
-function SelectField({ onChangeText, error, title }) {
-  const [selectedValue, setSelectedValue] = useState('female');
+function SelectField({ defaultValue, onChangeText, error, title }) {
+  const defSelectedValue = defaultValue == null ? 'femaile' : defaultValue;
+  const [selectedValue, setSelectedValue] = useState(defSelectedValue);
 
   const handleOnValueChange = (newSelectedValue) => {
     onChangeText(newSelectedValue);
@@ -34,6 +35,7 @@ function SelectField({ onChangeText, error, title }) {
 }
 
 SelectField.propTypes = {
+  defaultValue: string,
   onChangeText: func.isRequired,
   error: string.isRequired,
   title: string.isRequired
