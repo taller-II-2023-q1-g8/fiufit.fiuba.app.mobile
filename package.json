@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "prepare": "husky install",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lintfix": "eslint . --fix"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.4",
@@ -20,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "expo": "^46.0.21",
     "expo-status-bar": "~1.4.4",
     "expo-updates": "~0.14.7",

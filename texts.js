@@ -45,6 +45,8 @@ const texts = {
     passwordPlaceholder: 'Ingresá tu contraseña',
     usernameTitle: 'Usuario',
     usernamePlaceholder: 'Ingresá un nombre de usuario',
+    lastnameTitle: 'Apellido',
+    lastnamePlaceholder: 'Ingresá tu apellido',
     genderTitle: 'Género',
     phoneTitle: 'Número de teléfono',
     phonePlaceholder: 'Ingresá tu número de teléfono',

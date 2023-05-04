@@ -34,11 +34,14 @@ export default function RegisterContainer() {
   const [phoneError, setPhoneError] = useState('');
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [lastnameError, setLastnameError] = useState('');
 
   const resetErrors = () => {
     setBirthdateError('');
     setMailError('');
     setNameError('');
+    setLastnameError('');
     setPasswordError('');
     setUsernameError('');
     setGenderError('');
@@ -49,6 +52,7 @@ export default function RegisterContainer() {
     setBirthdate('');
     setEmail('');
     setName('');
+    setLastname('');
     setPassword('');
     setGender('');
     setUsername('');
@@ -85,6 +89,10 @@ export default function RegisterContainer() {
       setUsernameError('Nombre de usuario obligatorio');
       return;
     }
+    if (!lastname) {
+      setLastnameError('Es obligatorio ingresar apellido');
+      return;
+    }
     if (!phone) {
       setPhoneError('Número de teléfono obligatorio');
       return;
@@ -97,7 +105,7 @@ export default function RegisterContainer() {
       gender,
       email,
       phone_number: phone,
-      lastname: 'biachi',
+      lastname,
       birth_date: '1995-10-20',
       password,
       weight_in_kg: '8',
@@ -125,6 +133,7 @@ export default function RegisterContainer() {
   const handleOnPasswordChange = (userPassword) => setPassword(userPassword);
   const handleOnPhoneChange = (userPhone) => setPhone(userPhone);
   const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
+  const handleOnLastNameChange = (lastName) => setLastname(lastName);
 
   const fields = [
     <TextField
@@ -132,6 +141,12 @@ export default function RegisterContainer() {
       onChangeText={handleOnNameChange}
       placeholder={fieldTexts.namePlaceholder}
       title={fieldTexts.nameTitle}
+    />,
+    <TextField
+      error={lastnameError}
+      onChangeText={handleOnLastNameChange}
+      placeholder={fieldTexts.lastnamePlaceholder}
+      title={fieldTexts.lastnameTitle}
     />,
     <TextField
       error={usernameError}
