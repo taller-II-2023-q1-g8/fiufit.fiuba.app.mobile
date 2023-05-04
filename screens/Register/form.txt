@@ -11,12 +11,35 @@ import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import { auth } from '../../firebaseConfig';
 
-import Register from './layout';
+import Register from './formlayout.txt';
+import RegisterStep1 from './formlayout.txt';
+
 /*
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10); */
 
 const fieldTexts = texts.Fields;
+
+function Step1(props) {
+  if (props.currentStep !== 1) {
+    return null;
+  }
+  return <RegisterStep1 fields={fields} handleSubmitPress={handleSubmitPress} loading={loading} />;
+  return (
+    <div className="form-group">
+      <label htmlFor="email">Email address</label>
+      <input
+        className="form-control"
+        id="email"
+        name="email"
+        type="text"
+        placeholder="Enter email"
+        value={props.email}
+        onChange={props.handleChange}
+      />
+    </div>
+  );
+}
 
 export default function RegisterContainer() {
   const [currentStep, changeCurrentStep] = useState(1);
@@ -67,6 +90,16 @@ export default function RegisterContainer() {
     },
     []
   );
+
+  const handleNextPress = (currentStep) => {
+    const updatedStep = currentStep >= 2 ? 3 : currentStep + 1;
+    changeCurrentStep(updatedStep);
+  };
+
+  const handlePrevPress = (currentStep) => {
+    const updatedStep = currentStep <= 1 ? 1 : currentStep - 1;
+    changeCurrentStep(updatedStep);
+  };
 
   const handleSubmitPress = async () => {
     resetErrors();
