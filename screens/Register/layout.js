@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes, { bool, func } from 'prop-types';
+import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 
 import Loader from '../../components/Loader';
 import texts from '../../texts';
@@ -68,16 +69,49 @@ export default function Register({ fields, handleSubmitPress, loading }) {
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{registerTexts.registerTitle}</Text>
-          <View>
-            {fields[currentStep].map((field) => (
-              <View>{field}</View>
-            ))}
-          </View>
-          <View flexDirection="row" alignItems="center" justifyContent="center">
-            {prevButton()}
-            {nextButton()}
-          </View>
-          {registerButton()}
+          <ProgressSteps
+            borderStyle="outset"
+            borderWidth={3}
+            progressBarColor="#686868"
+            completedProgressBarColor="#039174"
+            completedStepIconColor="#039174"
+            labelColor="black"
+            activeLabelColor="#039174"
+            activeStepIconBorderColor="#039174"
+          >
+            <ProgressStep
+              nextBtnText="Siguiente"
+              onNext={() => {
+                setCurrentStep(nextStep(currentStep));
+              }}
+              label="Tu cuenta "
+            >
+              <View>{currentStep === 0 ? fields[0].map((field) => <View>{field}</View>) : null}</View>
+            </ProgressStep>
+            <ProgressStep
+              nextBtnText="Siguiente"
+              previousBtnText="Anterior"
+              onNext={() => {
+                setCurrentStep(nextStep(currentStep));
+              }}
+              onPrevious={() => {
+                setCurrentStep(prevStep(currentStep));
+              }}
+              label="Sobre vos "
+            >
+              <View>{currentStep === 1 ? fields[1].map((field) => <View>{field}</View>) : null}</View>
+            </ProgressStep>
+            <ProgressStep
+              previousBtnText="Anterior"
+              onPrevious={() => {
+                setCurrentStep(prevStep(currentStep));
+              }}
+              onSubmit={handleSubmitPress}
+              label="Ejercicio "
+            >
+              <View>{currentStep === 2 ? fields[2].map((field) => <View>{field}</View>) : null}</View>
+            </ProgressStep>
+          </ProgressSteps>
         </KeyboardAvoidingView>
       </ScrollView>
     </View>
