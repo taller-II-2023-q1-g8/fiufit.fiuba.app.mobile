@@ -23,8 +23,15 @@ var salt = bcrypt.genSaltSync(10); */
 
 const fieldTexts = texts.Fields;
 
+const STEPS = 3;
+const nextStep = (currentStep) => (currentStep >= STEPS - 2 ? STEPS - 1 : currentStep + 1);
+const prevStep = (currentStep) => (currentStep <= 1 ? 0 : currentStep - 1);
+
 export default function RegisterContainer() {
   const [currentStep, changeCurrentStep] = useState(0);
+  const [step0Error, setStep0Error] = useState(false);
+  const [step1Error, setStep1Error] = useState(false);
+
   const [birthdate, setBirthdate] = useState('');
   const [birthdateError, setBirthdateError] = useState('');
   const [email, setEmail] = useState('');
@@ -46,6 +53,8 @@ export default function RegisterContainer() {
   const [lastnameError, setLastnameError] = useState('');
   const [heightError, setHeightError] = useState('');
   const [weightError, setWeightError] = useState('');
+
+  const [submitError, setSubmitError] = useState(false);
 
   const resetErrors = () => {
     setBirthdateError('');
@@ -77,44 +86,74 @@ export default function RegisterContainer() {
     []
   );
 
-  const handleSubmitPress = async () => {
+  const handleNextPressStep0 = async () => {
     resetErrors();
-    if (!name) {
-      setNameError('Nombre obligatorio');
-      return;
+    setStep0Error(false);
+    let mayAdvance = true;
+    if (!username) {
+      setUsernameError('Nombre de usuario obligatorio');
+      mayAdvance = false;
     }
     if (!email) {
       setMailError('Email obligatorio');
-      return;
+      mayAdvance = false;
     }
     if (!password) {
       setPasswordError('Contraseña obligatoria');
-      return;
+      mayAdvance = false;
     }
-    // if (!birthdate) {
-    //   setBirthdateError('Fecha de nacimiento obligatoria');
-    //   return;
-    // }
-    if (!username) {
-      setUsernameError('Nombre de usuario obligatorio');
-      return;
+    if (mayAdvance) {
+      changeCurrentStep(nextStep(currentStep));
+    } else {
+      setStep0Error(true);
+    }
+  };
+
+  const handleNextPressStep1 = async () => {
+    resetErrors();
+    setStep1Error(false);
+    let mayAdvance = true;
+    if (!name) {
+      setNameError('Nombre obligatorio');
+      mayAdvance = false;
     }
     if (!lastname) {
       setLastnameError('Es obligatorio ingresar apellido');
-      return;
+      mayAdvance = false;
     }
     if (!phone) {
       setPhoneError('Número de teléfono obligatorio');
-      return;
+      mayAdvance = false;
     }
+    if (mayAdvance) {
+      changeCurrentStep(nextStep(currentStep));
+    } else {
+      setStep1Error(true);
+    }
+  };
+
+  const handlePrevPress = async () => {
+    changeCurrentStep(prevStep(currentStep));
+  };
+
+  const handleSubmitPress = async () => {
+    resetErrors();
+    setSubmitError(false);
+    let maySubmit = true;
+
+    // if (!birthdate) {
+    //  setBirthdateError('Fecha de nacimiento obligatoria');
+    //  maySubmit = false;
+    // }
     if (!height) {
       setHeightError('Es obligatorio ingresar altura');
-      return;
+      maySubmit = false;
     }
     if (!weight) {
-      setHeightError('Es obligatorio ingresar peso');
-      return;
+      setWeightError('Es obligatorio ingresar peso');
+      maySubmit = false;
     }
+    if (!maySubmit) return setSubmitError(true);
 
     setLoading(true);
 
@@ -199,6 +238,12 @@ export default function RegisterContainer() {
       placeholder={fieldTexts.lastnamePlaceholder}
       title={fieldTexts.lastnameTitle}
     />,
+    <SelectField
+      defaultValue={gender}
+      error={genderError}
+      onChangeText={handleOnGenderChange}
+      title={fieldTexts.genderTitle}
+    />,
     <TextField
       defaultValue={phone}
       error={phoneError}
@@ -210,12 +255,6 @@ export default function RegisterContainer() {
   ];
   const fields3 = [
     <DateField error={birthdateError} onChangeText={handleOnBirthdateChange} />,
-    <SelectField
-      defaultValue={gender}
-      error={genderError}
-      onChangeText={handleOnGenderChange}
-      title={fieldTexts.genderTitle}
-    />,
     <TextField
       defaultValue={height}
       error={heightError}
@@ -236,10 +275,15 @@ export default function RegisterContainer() {
     <Register
       fields={[fields1, fields2, fields3]}
       handleSubmitPress={handleSubmitPress}
+      submitError={submitError}
       secureTextEntry={false}
       loading={loading}
       currentStep={currentStep}
-      changeCurrentStep={changeCurrentStep}
+      handleNextPressStep0={handleNextPressStep0}
+      handleNextPressStep1={handleNextPressStep1}
+      step0Error={step0Error}
+      step1Error={step1Error}
+      handlePrevPress={handlePrevPress}
     />
   );
 }
