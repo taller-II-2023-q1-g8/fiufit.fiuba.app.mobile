@@ -7,6 +7,7 @@ import Login from '../../../screens/Login';
 import Register from '../../../screens/Register';
 import texts from '../../../texts';
 import { colors } from '../../../colors';
+import FederatedRegister from '../../../screens/FederatedRegister';
 
 const appTexts = texts.App;
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,11 @@ export default function AuthStack() {
       <Stack.Navigator>
         <Stack.Screen component={Login} name={texts.Login.name} options={defaultNavigationOptions} />
         <Stack.Screen component={Register} name={texts.Register.name} options={defaultNavigationOptions} />
+        <Stack.Screen
+          component={FederatedRegister}
+          name={texts.FederatedRegister.name}
+          options={defaultNavigationOptions}
+        />
         <Stack.Screen
           component={ForgotPassword}
           name={texts.ForgotPassword.name}

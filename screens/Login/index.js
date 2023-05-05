@@ -29,7 +29,6 @@ export default function LoginContainer({ navigation }) {
   const [passwordError, setPasswordError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const handleSubmitPress = async () => {
     setMailError('');
     setPasswordError('');
@@ -60,48 +59,20 @@ export default function LoginContainer({ navigation }) {
   const handleGmailLogin = async () => {
     // Get the users ID token
     const user = await GoogleSignin.signIn();
-    console.log(user);
     setLoading(true);
     const response = await fetchUserByEmail(user.user.email);
     const json = await response.json();
+    if (json.message == null) {
+      setLoading(false);
+      navigation.navigate(texts.FederatedRegister.name);
+      return;
+    }
     console.log(json);
-    if (json.message == null || json.message.is_federated) {
-      // No existe el email en el backend o ya ingreso alguna vez con gmail
-      // Create a Google credential with the token
+    if (json.message.is_federated) {
       const googleCredential = GoogleAuthProvider.credential(user.idToken);
       // Sign-in the user with the credential
-      const userSignIn = signInWithCredential(auth, googleCredential);
-      userSignIn
-        .then(async (userCred) => {
-          // Si el fetchUser da null, significa que entro con google x primera vez
-          // Hay que registrarlo a mano, sacando los datos que sean posibles de google
-          // Y los que no pedirle la info
-          if (json.message == null) {
-            /*
-            const values = {
-              username: user.user.email,
-              firstname: user.user.givenName,
-              gender: null,
-              email: user.user.email,
-              phone_number: null,
-              lastname: user.user.familyName,
-              birth_date: null,
-              password: null,
-              weight_in_kg: null,
-              height_in_cm: null,
-              is_federated: true
-            };
-            const r = await registerRequest(values);
-            */
-            console.log('Register');
-          }
-          console.log('Exito logeando con google');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      await signInWithCredential(auth, googleCredential);
     } else {
-      // Intenta ingresar con un email ya asociado a una cuenta con contrasenia
       Alert.alert('Ese email ya tiene una cuenta asociada');
     }
     setLoading(false);
