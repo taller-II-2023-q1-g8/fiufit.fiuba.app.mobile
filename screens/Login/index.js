@@ -58,6 +58,7 @@ export default function LoginContainer({ navigation }) {
 
   const handleGmailLogin = async () => {
     // Get the users ID token
+    await GoogleSignin.signOut();
     const user = await GoogleSignin.signIn();
     setLoading(true);
     const response = await fetchUserByEmail(user.user.email);

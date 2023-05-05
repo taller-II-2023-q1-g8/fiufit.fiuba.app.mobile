@@ -4,8 +4,13 @@ import PropTypes from 'prop-types';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
-import { registerRequest } from '../../requests';
+import {
+  emailFieldType,
+  passwordFieldType,
+  phoneFieldType,
+  textFieldType
+} from '../../components/Fields/constants';
+import { fetchUserByEmail, fetchUsersByUsername, registerRequest } from '../../requests';
 import DateField from '../../components/Fields/DateField';
 import SelectField from '../../components/Fields/SelectField';
 import TextField from '../../components/Fields/TextField';
@@ -34,6 +39,8 @@ export default function FederatedRegisterContainer() {
   const [weight, setWeight] = useState(0);
   const [heightError, setHeightError] = useState('');
   const [weightError, setWeightError] = useState('');
+  const [step1Error, setStep1Error] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const resetErrors = () => {
     setBirthdateError('');
     setUsernameError('');
@@ -55,34 +62,51 @@ export default function FederatedRegisterContainer() {
     },
     []
   );
-  const handleNextPress = () => {
-    changeCurrentStep(currentStep + 1);
+  const handleNextPress = async () => {
+    resetErrors();
+    setStep1Error(false);
+    let mayAdvance = true;
+    if (!username) {
+      setUsernameError('Nombre de usuario obligatorio');
+      mayAdvance = false;
+    }
+    const response = await fetchUsersByUsername(username);
+    const json = await response.json();
+    if (json.message != null) {
+      setUsernameError('Nombre de usuario en uso');
+      mayAdvance = false;
+    }
+
+    if (!phone) {
+      setPhoneError('Número de teléfono obligatorio');
+      mayAdvance = false;
+    }
+    if (!birthdate) {
+      setBirthdateError('Fecha de nacimiento obligatoria');
+      mayAdvance = false;
+    }
+    if (mayAdvance) {
+      changeCurrentStep(currentStep + 1);
+    } else {
+      setStep1Error(true);
+    }
   };
   const handlePreviousPress = () => {
     changeCurrentStep(currentStep - 1);
   };
   const handleSubmitPress = async () => {
     resetErrors();
-    if (!birthdate) {
-      setBirthdateError('Fecha de nacimiento obligatoria');
-      return;
-    }
-    if (!username) {
-      setUsernameError('Nombre de usuario obligatorio');
-      return;
-    }
-    if (!phone) {
-      setPhoneError('Número de teléfono obligatorio');
-      return;
-    }
+    setSubmitError(false);
+    let maySubmit = true;
     if (!height) {
       setHeightError('Es obligatorio ingresar altura');
-      return;
+      maySubmit = false;
     }
     if (!weight) {
       setWeightError('Es obligatorio ingresar peso');
-      return;
+      maySubmit = false;
     }
+    if (!maySubmit) return setSubmitError(true);
     setLoading(true);
     const user = await GoogleSignin.getCurrentUser();
     const values = {
@@ -122,11 +146,12 @@ export default function FederatedRegisterContainer() {
   const handleOnGenderChange = (userGender) => setGender(userGender);
   const handleOnPhoneChange = (userPhone) => setPhone(userPhone);
   const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
-  const handleOnHeightChange = (userHeight) => setHeight(userHeight);
-  const handleOnWeightChange = (userWeight) => setWeight(userWeight);
+  const handleOnHeightChange = (userHeight) => setHeight(parseInt(userHeight, 10));
+  const handleOnWeightChange = (userWeight) => setWeight(parseInt(userWeight, 10));
   const step1 = [
     <TextField
       error={usernameError}
+      keyboardType={textFieldType}
       onChangeText={handleOnUsernameChange}
       placeholder={fieldTexts.usernamePlaceholder}
       title={fieldTexts.usernameTitle}
@@ -164,6 +189,8 @@ export default function FederatedRegisterContainer() {
     <FederatedRegister
       step1={step1}
       step2={step2}
+      step1Error={step1Error}
+      submitError={submitError}
       handleNextPress={handleNextPress}
       handlePreviousPress={handlePreviousPress}
       currentStep={currentStep}

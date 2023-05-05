@@ -11,14 +11,11 @@ import { scrollviewStyle, styles } from './styles';
 
 const federatedRegisterTexts = texts.FederatedRegister;
 
-const STEPS = 3;
-
-const nextStep = (currentStep) => (currentStep >= STEPS - 2 ? STEPS - 1 : currentStep + 1);
-const prevStep = (currentStep) => (currentStep <= 1 ? 0 : currentStep - 1);
-
 export default function FederatedRegister({
   step1,
   step2,
+  submitError,
+  step1Error,
   handleNextPress,
   handlePreviousPress,
   currentStep,
@@ -46,6 +43,7 @@ export default function FederatedRegister({
               nextBtnText="Siguiente"
               onNext={handleNextPress}
               label={federatedRegisterTexts.step1Title}
+              errors={step1Error}
             >
               <View>{currentStep === 0 ? step1.map((field) => <View>{field}</View>) : null}</View>
             </ProgressStep>
@@ -54,6 +52,7 @@ export default function FederatedRegister({
               onPrevious={handlePreviousPress}
               label={federatedRegisterTexts.step2Title}
               onSubmit={handleSubmitPress}
+              errors={submitError}
             >
               <View>{currentStep === 1 ? step2.map((field) => <View>{field}</View>) : null}</View>
             </ProgressStep>
@@ -67,6 +66,8 @@ export default function FederatedRegister({
 FederatedRegister.propTypes = {
   step1: PropTypes.array.isRequired,
   step2: PropTypes.array.isRequired,
+  step1Error: bool.isRequired,
+  submitError: bool.isRequired,
   handleNextPress: func.isRequired,
   handlePreviousPress: func.isRequired,
   currentStep: number.isRequired,
