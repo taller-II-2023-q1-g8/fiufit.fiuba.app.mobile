@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Image, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { arrayOf, bool, func } from 'prop-types';
+import PropTypes, { arrayOf, bool, func } from 'prop-types';
 
 import GmailLogo from '../../assets/gmail_logo.png';
 import Loader from '../../components/Loader';
@@ -54,7 +54,7 @@ export default function Login({
 }
 
 Login.propTypes = {
-  fields: arrayOf(bool).isRequired,
+  fields: PropTypes.array.isRequired,
   handleForgotPassword: func.isRequired,
   handleRegister: func.isRequired,
   handleSubmitPress: func.isRequired,
