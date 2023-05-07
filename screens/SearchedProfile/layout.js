@@ -11,13 +11,13 @@ import { colors } from '../../colors';
 
 import { styles } from './styles';
 
-function Item({ handleItemPress, username }) {
+function Item({ title }) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(username)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => console.log(title)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{username}</Text>
+          <Text style={styles.profileName}>{title}</Text>
           <Text style={styles.profileType}>Trainee</Text>
         </View>
       </View>
@@ -38,7 +38,7 @@ function ItemSeparatorView() {
   );
 }
 
-export default function SearchUsers({ data, handleOnSearchChange, handleItemPress }) {
+export default function SearchUsers({ data, handleOnSearchChange }) {
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -46,7 +46,7 @@ export default function SearchUsers({ data, handleOnSearchChange, handleItemPres
         <SearchField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
         <FlatList
           data={data}
-          renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item} />}
+          renderItem={({ item }) => <Item title={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
         />
       </KeyboardAvoidingView>
@@ -55,12 +55,10 @@ export default function SearchUsers({ data, handleOnSearchChange, handleItemPres
 }
 
 Item.propTypes = {
-  handleItemPress: func,
-  username: string
+  title: string.isRequired
 };
 
 SearchUsers.propTypes = {
   data: bool,
-  handleItemPress: func,
   handleOnSearchChange: func
 };

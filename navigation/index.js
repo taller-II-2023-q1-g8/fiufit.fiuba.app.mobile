@@ -32,5 +32,10 @@ export default function RootNavigation() {
   /* Esto es porque para que firebase vea si el user esta autenticado o no
    * Tarda unos segundos y si el usuario esta logeado muestra la pantalla de login de todas formas
    * Hasta que termina de cargar firebase, mostramos un texto de loading(Cambiar en el futuro) */
-  return isLoading ? <Loader /> : Stack;
+  return (
+    <>
+      <Loader loading={isLoading} />
+      {Stack}
+    </>
+  );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { func, shape } from 'prop-types';
 
 import { fetchUsersByUsername } from '../../requests';
 import Loader from '../../components/Loader';
@@ -6,7 +7,7 @@ import { isEmpty } from '../../utils';
 
 import SearchUsers from './layout';
 
-export default function SearchUsersScreen() {
+export default function SearchUsersScreen({ navigation }) {
   const [search, setSearch] = useState([]);
   const [data, setData] = useState([]);
 
@@ -25,9 +26,27 @@ export default function SearchUsersScreen() {
     setSearch(isEmpty(usernameToSearch) ? '' : filterData(usernameToSearch));
   };
 
-  return !isEmpty(data) ? (
-    <SearchUsers data={search} handleOnSearchChange={handleOnSearchChange} />
-  ) : (
-    <Loader />
+  const handleItemPress = (username) => {
+    console.log({ username });
+    navigation.navigate('HOLA', { username });
+  };
+
+  return (
+    <>
+      <Loader loading={isEmpty(data)} />
+      {!isEmpty(data) && (
+        <SearchUsers
+          handleItemPress={handleItemPress}
+          data={search}
+          handleOnSearchChange={handleOnSearchChange}
+        />
+      )}
+    </>
   );
 }
+
+SearchUsersScreen.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};
