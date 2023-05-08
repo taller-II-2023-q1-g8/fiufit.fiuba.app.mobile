@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { shape, func } from 'prop-types';
 
 import { fetchUserProfileByUsername } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
+import texts from '../../texts';
 
 import UserProfile from './layout';
 
-export default function UserProfileContainer() {
+export default function UserProfileContainer({ navigation }) {
   const [data, setData] = useState([]);
   const [state, dispatch] = useStateValue();
 
@@ -18,11 +20,12 @@ export default function UserProfileContainer() {
     fetchData();
   }, []);
 
-  return <UserProfile data={data} />;
+  const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
+  return <UserProfile data={data} handleEditProfile={handleEditProfile} />;
 }
 
-// UserProfileContainer.propTypes = {
-//   route: shape({
-//     params: shape.isRequired
-//   }).isRequired
-// };
+UserProfileContainer.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};

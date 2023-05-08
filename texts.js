@@ -39,6 +39,9 @@ const texts = {
     searchUsersTitle: 'Busca usuarios',
     submitButtonText: 'Buscar'
   },
+  EditUserProfile: {
+    name: 'EditUserProfile'
+  },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
     birthdatePlaceholder: 'Seleccioná tu fecha de nacimiento',

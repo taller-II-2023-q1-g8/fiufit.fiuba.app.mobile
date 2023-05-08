@@ -7,10 +7,17 @@ import EyeCloseIcon from '../../../assets/icons/eye_close.png';
 import EyeOpenIcon from '../../../assets/icons/eye_open.png';
 import styles from '../styles';
 
-function TextField({ error, keyboardType = textFieldType, onChangeText, placeholder, title }) {
+function TextField({
+  error,
+  keyboardType = textFieldType,
+  onChangeText,
+  placeholder,
+  title,
+  initialValue = ''
+}) {
   const [hidePassword, setHidePassword] = useState(keyboardType === passwordFieldType);
   const handlePasswordVisibility = () => setHidePassword(!hidePassword);
-
+  console.log({ initialValue });
   return (
     <View style={styles.fieldContainer}>
       <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>{title}</Text>
@@ -18,6 +25,7 @@ function TextField({ error, keyboardType = textFieldType, onChangeText, placehol
         <TextInput
           autoCapitalize="none"
           keyboardType={keyboardType}
+          defaultValue={initialValue || undefined}
           secureTextEntry={hidePassword}
           onChangeText={onChangeText}
           placeholder={placeholder}
@@ -43,7 +51,8 @@ TextField.propTypes = {
   keyboardType: string.isRequired,
   onChangeText: func.isRequired,
   placeholder: string.isRequired,
-  title: string.isRequired
+  title: string.isRequired,
+  initialValue: string.isRequired
 };
 
 export default TextField;
