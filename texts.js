@@ -39,6 +39,9 @@ const texts = {
     searchUsersTitle: 'Busca usuarios',
     submitButtonText: 'Buscar'
   },
+  EditUserProfile: {
+    name: 'EditUserProfile'
+  },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
     birthdatePlaceholder: 'Seleccioná tu fecha de nacimiento',
@@ -50,10 +53,16 @@ const texts = {
     passwordPlaceholder: 'Ingresá tu contraseña',
     usernameTitle: 'Usuario',
     usernamePlaceholder: 'Ingresá un nombre de usuario',
+    lastnameTitle: 'Apellido',
+    lastnamePlaceholder: 'Ingresá tu apellido',
     genderTitle: 'Género',
     phoneTitle: 'Número de teléfono',
     phonePlaceholder: 'Ingresá tu número de teléfono',
-    searchUsersPlaceholder: 'Busca usuarios por su username'
+    searchUsersPlaceholder: 'Busca usuarios por su username',
+    weightTitle: 'Peso',
+    weightPlaceholder: 'Introduzca su peso en kg',
+    heightTitle: 'Altura',
+    heightPlaceholder: 'Introduzca su altura en cm'
   },
   App: {
     headerTitle: 'fiuFIT'

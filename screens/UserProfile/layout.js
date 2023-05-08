@@ -1,4 +1,4 @@
-import { bool } from 'prop-types';
+import { bool, func } from 'prop-types';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 
@@ -10,13 +10,10 @@ import Loader from '../../components/Loader';
 
 import { styles } from './styles';
 
-export default function UserProfile({ data }) {
+export default function UserProfile({ data, handleEditProfile }) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={0.1}
-        // onPress={handleEditIn}
-      >
+      <TouchableOpacity activeOpacity={0.1} onPress={handleEditProfile}>
         <Image
           style={{ width: 30, height: 30, opacity: 0.5, display: 'flex', alignSelf: 'flex-end' }}
           source={MoreOptionsIcon}
@@ -64,5 +61,6 @@ export default function UserProfile({ data }) {
 }
 
 UserProfile.propTypes = {
-  data: bool
+  data: bool,
+  handleEditProfile: func
 };
