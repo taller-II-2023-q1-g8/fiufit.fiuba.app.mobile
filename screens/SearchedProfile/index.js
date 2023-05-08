@@ -1,10 +1,11 @@
 import { shape } from 'prop-types';
-import { Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 import { fetchUserProfileByUsername } from '../../requests';
 
-export default function SearchedProfile({ route }) {
+import SearchedProfile from './layout';
+
+export default function SearchedProfileContainer({ route }) {
   const [data, setData] = useState([]);
   const { username } = route.params;
 
@@ -17,10 +18,10 @@ export default function SearchedProfile({ route }) {
     fetchData();
   }, []);
 
-  return <Text>Hola {username}!</Text>;
+  return <SearchedProfile data={data} />;
 }
 
-SearchedProfile.propTypes = {
+SearchedProfileContainer.propTypes = {
   route: shape({
     params: shape.isRequired
   }).isRequired

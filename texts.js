@@ -24,8 +24,8 @@ const texts = {
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'
   },
-  Profile: {
-    name: 'Profile',
+  UserProfile: {
+    name: 'UserProfile',
     homeTitle: 'Tu perfil',
     submitButtonText: 'Modificar perfil'
   },
@@ -33,6 +33,14 @@ const texts = {
     name: 'Search',
     searchUsersTitle: 'Busca usuarios',
     submitButtonText: 'Buscar'
+  },
+  SearchedProfile: {
+    name: 'SeachedProfile',
+    searchUsersTitle: 'Busca usuarios',
+    submitButtonText: 'Buscar'
+  },
+  EditUserProfile: {
+    name: 'EditUserProfile'
   },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',

@@ -8,6 +8,17 @@ const fetchData = async (url) =>
     mode: 'cors'
   });
 
+export const updateUserInformationRequest = async (values) =>
+  fetch('https://api-gateway-k1nl.onrender.com/user', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify(values)
+  });
+
 export const registerRequest = async (values) =>
   fetch('https://api-gateway-k1nl.onrender.com/user', {
     method: 'PUT',

@@ -1,17 +1,24 @@
-import { Text, View, Image } from 'react-native';
+import { bool, func } from 'prop-types';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { bool } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
+import MoreOptionsIcon from '../../assets/more-options.png';
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
 import Loader from '../../components/Loader';
 
 import { styles } from './styles';
 
-export default function SearchedProfile({ data }) {
+export default function UserProfile({ data, handleEditProfile }) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
+      <TouchableOpacity activeOpacity={0.1} onPress={handleEditProfile}>
+        <Image
+          style={{ width: 30, height: 30, opacity: 0.5, display: 'flex', alignSelf: 'flex-end' }}
+          source={MoreOptionsIcon}
+        />
+      </TouchableOpacity>
       <View style={styles.header}>
         <Image style={styles.profilePicture} source={manPic} />
         <View>
@@ -38,12 +45,22 @@ export default function SearchedProfile({ data }) {
       <Text>...</Text>
       <Text style={styles.title}>Photos</Text>
       <Text>...</Text>
+      {/* {Object.keys(data).map((key) => {
+        const value = data[key];
+        return (
+          <>
+            <Text>{key}</Text>
+            <Text>{!!value && value.length > 0 ? value : 'No hay datos'}</Text>;
+          </>
+        );
+      })} */}
     </View>
   ) : (
     <Loader loading={data.length === 0} />
   );
 }
 
-SearchedProfile.propTypes = {
-  data: bool
+UserProfile.propTypes = {
+  data: bool,
+  handleEditProfile: func
 };
