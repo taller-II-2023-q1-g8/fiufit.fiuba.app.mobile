@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
   };
 
   const handleProfile = () => {
-    navigation.navigate(texts.Profile.name);
+    navigation.navigate(texts.UserProfile.name);
   };
 
   const handleSearchUsers = () => {
