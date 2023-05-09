@@ -8,14 +8,15 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "prepare": "husky install",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lintfix": "eslint . --fix"
   },
   "dependencies": {
     "@expo/config-plugins": "^6.0.1",
     "@expo/webpack-config": "^0.17.4",
     "@react-native-community/datetimepicker": "6.2.0",
     "@react-native-google-signin/google-signin": "^8.2.2",
-    "@react-native-picker/picker": "2.4.2",
+    "@react-native-picker/picker": "2.4.10",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
