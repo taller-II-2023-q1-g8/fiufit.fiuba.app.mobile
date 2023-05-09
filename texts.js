@@ -12,6 +12,13 @@ const texts = {
     registerTitle: 'Registrate',
     submitButtonText: 'Registrarse'
   },
+  FederatedRegister: {
+    name: 'FederatedRegister',
+    federatedRegisterTitle: 'Ultimos pasos',
+    submitButtonText: 'Registrarse',
+    step1Title: 'Sobre vos',
+    step2Title: 'Ejercicio'
+  },
   ForgotPassword: {
     name: 'Forgot Password',
     forgotPasswordTitle: 'Reinicia tu contraseña',

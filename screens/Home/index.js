@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { func, shape } from 'prop-types';
 import { signOut } from 'firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import { auth } from '../../firebaseConfig';
 import { useStateValue } from '../../utils/state/state';
@@ -16,8 +17,14 @@ export default function HomeScreen({ navigation }) {
   const handleSignOutPress = async () => {
     setLoading(true);
     try {
+      // Si la sesion actual es de un usuario federado hay que salir de su cuenta de google
+
+      if (auth.currentUser.providerData[0].providerId === 'google.com') {
+        await GoogleSignin.revokeAccess();
+      }
       await signOut(auth);
     } catch (error) {
+      console.log(error);
       setLoading(false);
       return;
     }
