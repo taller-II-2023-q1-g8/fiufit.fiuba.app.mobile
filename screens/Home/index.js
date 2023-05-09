@@ -39,11 +39,17 @@ export default function HomeScreen({ navigation }) {
   const handleSearchUsers = () => {
     navigation.navigate(texts.SearchUsers.name);
   };
-
+  const handleTrainerHome = () => {
+    dispatch({
+      type: 'changeCurrentStack',
+      newScreen: false
+    });
+  };
   return (
     <Home
       username={state.user.username}
       handleSignOutPress={handleSignOutPress}
+      handleTrainerHome={handleTrainerHome}
       handleProfile={() => handleProfile()}
       handleSearchUsers={() => handleSearchUsers(navigation)}
       loading={loading}

@@ -5,7 +5,6 @@ import { object, string } from 'prop-types';
 import texts from '../../../texts';
 import ICONS from '../../constants';
 import { fetchUserByEmail } from '../../../requests';
-import { auth } from '../../../firebaseConfig';
 
 import UserStack from './layout';
 
@@ -21,7 +20,8 @@ export default function UserStackContainer({ email, token }) {
     const json = await response.json();
     console.log(json);
     const initialState = {
-      user: json.message
+      user: json.message,
+      athleteScreen: true
     };
     setData(initialState);
     setLoading(false);
@@ -38,6 +38,11 @@ export default function UserStackContainer({ email, token }) {
           ...state,
           user: action.newUser
         };
+      case 'changeCurrentStack':
+        return {
+          ...state,
+          athleteScreen: action.newScreen
+        };
       default:
         return state;
     }
@@ -52,7 +57,7 @@ export default function UserStackContainer({ email, token }) {
 
     return <Ionicons name={iconName} size={size} color={color} />;
   };
-
+  // Agregar state provider aca?
   return <UserStack data={data} loading={loading} reducer={reducer} tabBarIcons={tabBarIcons} />;
 }
 

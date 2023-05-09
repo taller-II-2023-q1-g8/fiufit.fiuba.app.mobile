@@ -10,7 +10,14 @@ import { scrollviewStyle, styles } from './styles';
 
 const homeTexts = texts.Home;
 
-export default function Home({ username, handleSignOutPress, handleProfile, handleSearchUsers, loading }) {
+export default function Home({
+  username,
+  handleSignOutPress,
+  handleProfile,
+  handleSearchUsers,
+  loading,
+  handleTrainerHome
+}) {
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -28,6 +35,9 @@ export default function Home({ username, handleSignOutPress, handleProfile, hand
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchUsers}>
             <Text style={styles.submitButtonText}>{homeTexts.searchUsersButtonText}</Text>
           </TouchableOpacity> */}
+          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
+            <Text style={styles.submitButtonText}>Ir a home de trainer</Text>
+          </TouchableOpacity>
         </KeyboardAvoidingView>
       </ScrollView>
     </View>
@@ -39,5 +49,6 @@ Home.propTypes = {
   handleProfile: func.isRequired,
   handleSearchUsers: func.isRequired,
   handleSignOutPress: func.isRequired,
-  loading: bool.isRequired
+  loading: bool.isRequired,
+  handleTrainerHome: func.isRequired
 };

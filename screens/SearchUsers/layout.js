@@ -1,7 +1,7 @@
 import React from 'react';
 import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { string, bool, func } from 'prop-types';
+import PropTypes, { string, bool, func } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import womanPic from '../../assets/woman.jpeg';
@@ -60,7 +60,7 @@ Item.propTypes = {
 };
 
 SearchUsers.propTypes = {
-  data: bool,
+  data: PropTypes.array.isRequired,
   handleItemPress: func,
   handleOnSearchChange: func
 };
