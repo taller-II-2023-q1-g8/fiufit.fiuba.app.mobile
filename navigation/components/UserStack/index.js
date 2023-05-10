@@ -24,6 +24,7 @@ export default function UserStackContainer({ email, token }) {
       athleteScreen: true
     };
     setData(initialState);
+    console.log('abc');
     setLoading(false);
   };
 

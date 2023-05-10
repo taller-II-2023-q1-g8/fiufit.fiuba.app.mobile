@@ -6,8 +6,10 @@ import Loader from '../../../components/Loader';
 import { StateProvider, useStateValue } from '../../../utils/state/state';
 
 import AthleteStack from './athleteLayout';
+import TrainerStack from './trainerLayout';
 
 export default function UserStack({ loading, data, reducer, tabBarIcons }) {
+  console.log(loading);
   return (
     <>
       <Loader loading={loading} />
@@ -21,13 +23,11 @@ export default function UserStack({ loading, data, reducer, tabBarIcons }) {
 }
 
 function AuxStack({ tabBarIcons }) {
-  const [state, dispatch] = useStateValue();
-  return state.athleteScreen ? (
-    <AthleteStack tabBarIcons={tabBarIcons} />
-  ) : (
-    <View>
-      <Text>Hola</Text>
-    </View>
+  return (
+    <>
+      <AthleteStack tabBarIcons={tabBarIcons} />
+      <TrainerStack tabBarIcons={tabBarIcons} />
+    </>
   );
 }
 AuxStack.propTypes = {
