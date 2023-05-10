@@ -10,7 +10,21 @@ import texts from '../../../texts';
 
 export default function TrainerStack({ tabBarIcons }) {
   const [state, dispatch] = useStateValue();
-  return state.athleteScreen ? null : <TrainerHomeScreen />;
+  const Tab = createBottomTabNavigator();
+  return state.athleteScreen ? null : (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: (icon) => tabBarIcons(route, icon),
+          tabBarActiveTintColor: colors.purple,
+          tabBarInactiveTintColor: colors.gray
+        })}
+      >
+        <Tab.Screen component={TrainerHomeScreen} name={texts.TrainerHome.iconTitle} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
 }
 
 TrainerStack.propTypes = {
