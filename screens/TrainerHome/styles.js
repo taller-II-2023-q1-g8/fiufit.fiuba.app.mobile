@@ -33,6 +33,28 @@ export const styles = StyleSheet.create({
     color: 'white',
     paddingVertical: 8,
     fontSize: 16
+  },
+  userList: {
+    borderWidth: 5,
+    flex: 1
+  },
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingVertical: 10
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
+    borderRadius: 20
+  },
+  profileName: {
+    fontSize: 17,
+    fontWeight: '600',
+    paddingLeft: 10
+  },
+  profileType: {
+    paddingLeft: 10
   }
 });
 
