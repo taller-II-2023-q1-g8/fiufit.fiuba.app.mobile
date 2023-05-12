@@ -24,6 +24,7 @@ export default function UserStackContainer({ email, token }) {
       athleteScreen: true
     };
     setData(initialState);
+    console.log('abc');
     setLoading(false);
   };
 
@@ -48,7 +49,7 @@ export default function UserStackContainer({ email, token }) {
     }
   };
 
-  const tabBarIcons = (route, { focused, color, size }) => {
+  const tabBarIconsAthlete = (route, { focused, color, size }) => {
     let iconName;
 
     if (route.name === texts.Home.name) iconName = focused ? ICONS.HOME : ICONS.FOCUSED_HOME;
@@ -59,8 +60,23 @@ export default function UserStackContainer({ email, token }) {
 
     return <Ionicons name={iconName} size={size} color={color} />;
   };
+  const tabBarIconsTrainer = (route, { focused, color, size }) => {
+    let iconName;
+
+    if (route.name === texts.TrainerHome.iconTitle) iconName = focused ? ICONS.HOME : ICONS.FOCUSED_HOME;
+
+    return <Ionicons name={iconName} size={size} color={color} />;
+  };
   // Agregar state provider aca?
-  return <UserStack data={data} loading={loading} reducer={reducer} tabBarIcons={tabBarIcons} />;
+  return (
+    <UserStack
+      data={data}
+      loading={loading}
+      reducer={reducer}
+      tabBarIconsAthlete={tabBarIconsAthlete}
+      tabBarIconsTrainer={tabBarIconsTrainer}
+    />
+  );
 }
 
 UserStackContainer.propTypes = {

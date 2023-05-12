@@ -6,36 +6,38 @@ import Loader from '../../../components/Loader';
 import { StateProvider, useStateValue } from '../../../utils/state/state';
 
 import AthleteStack from './athleteLayout';
+import TrainerStack from './trainerLayout';
 
-export default function UserStack({ loading, data, reducer, tabBarIcons }) {
+export default function UserStack({ loading, data, reducer, tabBarIconsAthlete, tabBarIconsTrainer }) {
+  console.log(loading);
   return (
     <>
       <Loader loading={loading} />
       {!loading && (
         <StateProvider initialState={data} reducer={reducer}>
-          <AuxStack tabBarIcons={tabBarIcons} />
+          <AuxStack tabBarIconsAthlete={tabBarIconsAthlete} tabBarIconsTrainer={tabBarIconsTrainer} />
         </StateProvider>
       )}
     </>
   );
 }
 
-function AuxStack({ tabBarIcons }) {
-  const [state, dispatch] = useStateValue();
-  return state.athleteScreen ? (
-    <AthleteStack tabBarIcons={tabBarIcons} />
-  ) : (
-    <View>
-      <Text>Hola</Text>
-    </View>
+function AuxStack({ tabBarIconsAthlete, tabBarIconsTrainer }) {
+  return (
+    <>
+      <AthleteStack tabBarIcons={tabBarIconsAthlete} />
+      <TrainerStack tabBarIcons={tabBarIconsTrainer} />
+    </>
   );
 }
 AuxStack.propTypes = {
-  tabBarIcons: func.isRequired
+  tabBarIconsAthlete: func.isRequired,
+  tabBarIconsTrainer: func.isRequired
 };
 UserStack.propTypes = {
   loading: bool.isRequired,
   data: object.isRequired,
   reducer: func.isRequired,
-  tabBarIcons: func.isRequired
+  tabBarIconsAthlete: func.isRequired,
+  tabBarIconsTrainer: func.isRequired
 };

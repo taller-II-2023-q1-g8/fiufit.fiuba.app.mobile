@@ -31,6 +31,14 @@ const texts = {
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'
   },
+  TrainerHome: {
+    name: 'Trainer Home',
+    homeTitle: 'Trainer Home',
+    iconTitle: 'Home',
+    submitButtonText: 'Salir',
+    profileButtonText: 'Ir al perfil',
+    searchUsersButtonText: 'Buscar usuarios'
+  },
   UserProfile: {
     name: 'UserProfile',
     homeTitle: 'Tu perfil',

@@ -5,7 +5,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { colors } from '../../../colors';
-import { StateProvider } from '../../../utils/state/state';
+import { StateProvider, useStateValue } from '../../../utils/state/state';
 import UserProfile from '../../../screens/UserProfile';
 import HomeScreen from '../../../screens/Home';
 import SearchUsersScreen from '../../../screens/SearchUsers';
@@ -14,6 +14,7 @@ import texts from '../../../texts';
 import SearchedProfile from '../../../screens/SearchedProfile';
 import EditUserProfile from '../../../screens/EditUserProfile';
 import SearchedTrainingPlan from '../../../screens/SearchedTrainingPlan';
+import TrainerHomeScreen from '../../../screens/TrainerHome';
 
 function SearchUsersScreens() {
   const Stack = createNativeStackNavigator();
@@ -66,8 +67,8 @@ function UserProfileScreens() {
 }
 export default function AthleteStack({ tabBarIcons }) {
   const Tab = createBottomTabNavigator();
-
-  return (
+  const [state, dispatch] = useStateValue();
+  return state.athleteScreen ? (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -83,7 +84,7 @@ export default function AthleteStack({ tabBarIcons }) {
         <Tab.Screen component={UserProfileScreens} name={texts.UserProfile.name} />
       </Tab.Navigator>
     </NavigationContainer>
-  );
+  ) : null;
 }
 
 AthleteStack.propTypes = {
