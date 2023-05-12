@@ -33,10 +33,20 @@ export const styles = StyleSheet.create({
     color: 'white',
     paddingVertical: 8,
     fontSize: 16
+  },
+  profilePicture: {
+    borderRadius: 50,
+    height: 200,
+    marginRight: 20,
+    width: 200
+  },
+  header: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row'
   }
 });
 
 export const scrollviewStyle = {
-  flex: 1,
-  borderRadius: 2
+  flexGrow: 1
 };
