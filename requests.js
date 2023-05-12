@@ -38,3 +38,6 @@ export const fetchUserByEmail = async (email) =>
 
 export const fetchUserProfileByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/user?username=${username}`);
+
+export const fetchTrainingPlanByTitle = async (planTitle) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/plan?title=${planTitle}`);

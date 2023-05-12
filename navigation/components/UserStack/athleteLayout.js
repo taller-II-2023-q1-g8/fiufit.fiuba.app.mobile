@@ -9,9 +9,11 @@ import { StateProvider, useStateValue } from '../../../utils/state/state';
 import UserProfile from '../../../screens/UserProfile';
 import HomeScreen from '../../../screens/Home';
 import SearchUsersScreen from '../../../screens/SearchUsers';
+import SearchPlansScreen from '../../../screens/SearchTrainingPlan';
 import texts from '../../../texts';
 import SearchedProfile from '../../../screens/SearchedProfile';
 import EditUserProfile from '../../../screens/EditUserProfile';
+import SearchedTrainingPlan from '../../../screens/SearchedTrainingPlan';
 import TrainerHomeScreen from '../../../screens/TrainerHome';
 
 function SearchUsersScreens() {
@@ -24,6 +26,24 @@ function SearchUsersScreens() {
         options={{ title: '', headerShown: false }}
       />
       <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
+    </Stack.Navigator>
+  );
+}
+
+function SearchPlansScreens() {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name={texts.SearchTrainingPlans.name}
+        component={SearchPlansScreen}
+        options={{ title: '', headerShown: false }}
+      />
+      <Stack.Screen
+        name={texts.SearchedTrainingPlan.name}
+        component={SearchedTrainingPlan}
+        options={{ title: '' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -60,6 +80,7 @@ export default function AthleteStack({ tabBarIcons }) {
       >
         <Tab.Screen component={HomeScreen} name={texts.Home.name} />
         <Tab.Screen component={SearchUsersScreens} name={texts.SearchUsers.name} />
+        <Tab.Screen component={SearchPlansScreens} name={texts.SearchTrainingPlans.name} />
         <Tab.Screen component={UserProfileScreens} name={texts.UserProfile.name} />
       </Tab.Navigator>
     </NavigationContainer>

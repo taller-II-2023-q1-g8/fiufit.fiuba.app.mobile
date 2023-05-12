@@ -45,13 +45,23 @@ const texts = {
     submitButtonText: 'Modificar perfil'
   },
   SearchUsers: {
-    name: 'Search',
+    name: 'SearchUsers',
     searchUsersTitle: 'Busca usuarios',
+    submitButtonText: 'Buscar'
+  },
+  SearchTrainingPlans: {
+    name: 'SearchPlans',
+    searchTrainingPlansTitle: 'Busca planes',
     submitButtonText: 'Buscar'
   },
   SearchedProfile: {
     name: 'SeachedProfile',
     searchUsersTitle: 'Busca usuarios',
+    submitButtonText: 'Buscar'
+  },
+  SearchedTrainingPlan: {
+    name: 'SearchedTrainingPlan',
+    searchUsersTitle: 'Busca planes',
     submitButtonText: 'Buscar'
   },
   EditUserProfile: {
@@ -74,6 +84,7 @@ const texts = {
     phoneTitle: 'Número de teléfono',
     phonePlaceholder: 'Ingresá tu número de teléfono',
     searchUsersPlaceholder: 'Busca usuarios por su username',
+    searchTrainingPlansPlaceholder: 'Busca planes de entrenamiento',
     weightTitle: 'Peso',
     weightPlaceholder: 'Introduzca su peso en kg',
     heightTitle: 'Altura',
