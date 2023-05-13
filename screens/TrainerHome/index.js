@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
+import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../utils/state/state';
 import { fetchUsersByUsername } from '../../requests';
+import texts from '../../texts';
 
 import TrainerHome from './layout';
 
-export default function TrainerHomeScreen() {
+export default function TrainerHomeScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [state, dispatch] = useStateValue();
@@ -24,7 +26,7 @@ export default function TrainerHomeScreen() {
     fetchData();
   }, []);
   const handleItemPress = (planTitle) => {
-    console.log(planTitle);
+    navigation.navigate(texts.TrainerPlanView.name, { planTitle });
   };
   const handleTrainerHome = () => {
     dispatch({
@@ -42,3 +44,8 @@ export default function TrainerHomeScreen() {
     />
   );
 }
+TrainerHomeScreen.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};

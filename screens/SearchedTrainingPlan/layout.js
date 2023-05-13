@@ -1,6 +1,6 @@
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { bool } from 'prop-types';
+import { array, bool } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
@@ -10,20 +10,21 @@ import Loader from '../../components/Loader';
 import { styles } from './styles';
 
 function Exercises({ exercises }) {
-  exercises_to_show = [];
-  for (const exercise of exercises) {
-    exercises_to_show.push(
-      <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontWeight: 'bold' }}>{exercise.muscle.toUpperCase()} | </Text>
-        <Text style={{ width: '80%' }}>{exercise.title}</Text>
-      </View>
-    );
-  }
-  return exercises_to_show;
+  console.log(exercises);
+  return (
+    <View>
+      {exercises.map(({ muscle, title }) => (
+        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontWeight: 'bold' }}>{muscle.toUpperCase()} | </Text>
+          <Text style={{ width: '80%' }}>{title}</Text>
+        </View>
+      ))}
+    </View>
+  );
 }
 
 function foo() {
-  a = 2;
+  console.log('a');
 }
 
 export default function SearchedTrainingPlan({ data }) {
@@ -61,7 +62,9 @@ export default function SearchedTrainingPlan({ data }) {
     <Loader loading={data.length === 0} />
   );
 }
-
+Exercises.propTypes = {
+  exercises: array
+};
 SearchedTrainingPlan.propTypes = {
   data: bool
 };

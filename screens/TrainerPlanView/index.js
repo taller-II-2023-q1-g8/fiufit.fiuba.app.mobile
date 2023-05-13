@@ -1,14 +1,13 @@
 import { shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-import { fetchTrainingPlanByTitle } from '../../requests';
+import TrainerPlanView from './layout';
 
-import SearchedTrainingPlan from './layout';
-
-export default function SearchedTrainingPlanContainer({ route }) {
+export default function TrainerPlanViewContainer({ route }) {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { title } = route.params;
-
+  console.log('ROUTE1:', route);
   useEffect(() => {
     async function fetchData() {
       // const response = await fetchTrainingPlanByTitle(username);
@@ -16,43 +15,33 @@ export default function SearchedTrainingPlanContainer({ route }) {
       // setData(json.message);
       const planData = {
         title: 'Duro como final de AM3',
-        trainer: 'Marco Aurelio',
         difficulty: 'HARD',
         description: 'Hacé que el volumen de tus brazos no se pueda calcular ni con variable compleja.',
         created_at: '2021-04-04',
         updated_at: '2021-04-04',
-        exercises: [
+        likes: '3',
+        average_calification: '5.1',
+        quality_califactions: [
           {
-            title: 'Curl de Biceps',
-            muscle: 'Biceps'
-          },
-          {
-            title: 'Curl en Banco Scott',
-            muscle: 'Biceps'
-          },
-          {
-            title: 'Tirón de Triceps con Cable',
-            muscle: 'Triceps'
-          },
-          {
-            title: 'Remo con Barra',
-            muscle: 'Espalda'
-          },
-          {
-            title: 'Banco de Pecho Plano',
-            muscle: 'Pectorales'
+            username: 'Franco Papa',
+            quality_cal: 'Great workout for the arms',
+            calification: 7
           }
         ]
       };
       setData(planData);
+      setLoading(false);
     }
     fetchData();
   }, []);
+  const handleCalificationPress = (planTitle) => {
+    console.log(planTitle);
+  };
 
-  return <SearchedTrainingPlan data={data} />;
+  return <TrainerPlanView data={data} loading={loading} handleCalificationPress={handleCalificationPress} />;
 }
 
-SearchedTrainingPlanContainer.propTypes = {
+TrainerPlanViewContainer.propTypes = {
   route: shape({
     params: shape.isRequired
   }).isRequired

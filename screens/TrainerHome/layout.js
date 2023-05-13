@@ -47,7 +47,6 @@ function ItemSeparatorView() {
   );
 }
 export default function TrainerHome({ username, handleTrainerHome, data, handleItemPress, loading }) {
-  console.log(data);
   return (
     <>
       <Loader loading={loading} />
