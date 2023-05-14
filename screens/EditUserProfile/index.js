@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Alert from 'react-native';
+import { Alert, Image, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import storage from '@react-native-firebase/storage';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
+import { auth, storage } from '../../firebaseConfig';
 import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
 import TextField from '../../components/Fields/TextField';
@@ -11,15 +12,53 @@ import { emailFieldType, passwordFieldType, phoneFieldType } from '../../compone
 import SelectField from '../../components/Fields/SelectField';
 
 import EditUserProfile from './layout';
+import { styles } from './styles';
 
 export default function EditUserProfileContainer() {
   const [data, setData] = useState([]);
   const [state, dispatch] = useStateValue();
-  const [image, setImage] = useState(null);
-  // console.log(defaultProfPic);
+  const [profPicUrl, setProfPicUrl] = useState(null);
 
-  // const urlP = storage().ref('prueba.jpg');
-  // console.log(urlP);
+  // PROFILE PICTURE HANDLING
+  const cloudProfPicPath = 'profile-pics'.concat('/', data.username, '.jpg');
+  // const prueba = 'prueba.jpg'
+  // const cloudProfilePicRef = ref(storage, prueba);
+  const cloudProfilePicRef = ref(storage, cloudProfPicPath);
+  console.log('asta', cloudProfilePicRef.fullPath);
+  console.log(cloudProfilePicRef.name);
+  console.log(cloudProfilePicRef.bucket);
+
+  getDownloadURL(cloudProfilePicRef)
+    .then((url) => {
+      console.log(url);
+      setProfPicUrl(url);
+    })
+    .catch((error) => {
+      console.log('Coudlnt fethc profile pic for User: ', error);
+    });
+
+  const handlePickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+      allowsEditing: true
+    });
+    console.log(result.uri);
+
+    if (!result.cancelled) {
+      try {
+        const response = await fetch(result.uri);
+        const blob = await response.blob();
+        await uploadBytes(cloudProfilePicRef, blob);
+
+        setProfPicUrl(result.uri);
+      } catch (error) {
+        alert("Couldn't upload image!");
+        console.log('Error uploading image:', error);
+      }
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -47,24 +86,10 @@ export default function EditUserProfileContainer() {
     }
   }, [data]);
 
-  const handlePickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-      allowsEditing: true
-    });
-    console.log(result.uri);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
   const handleSubmitPress = async () => {
     setLoading(true);
 
-    console.log({ data });
+    console.log('a', { data });
     const values = {
       username: username || '',
       firstname: name || '',
@@ -130,13 +155,24 @@ export default function EditUserProfileContainer() {
     />
   ];
 
+  /* return (
+      <EditUserProfile
+          handlePickImage={handlePickImage}
+          image={image}
+          handleSubmitPress={handleSubmitPress}
+          fields={fields}
+          loading={loading}
+      />
+  ); */
+
   return (
     <EditUserProfile
       handlePickImage={handlePickImage}
-      image={image}
+      image={profPicUrl}
       handleSubmitPress={handleSubmitPress}
       fields={fields}
       loading={loading}
+      test={profPicUrl}
     />
   );
 }

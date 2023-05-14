@@ -7,7 +7,14 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { scrollviewStyle, styles } from './styles';
 
-export default function EditUserProfile({ handlePickImage, image, handleSubmitPress, fields, loading }) {
+export default function EditUserProfile({
+  handlePickImage,
+  image,
+  handleSubmitPress,
+  fields,
+  loading,
+  test
+}) {
   return (
     <View style={styles.container}>
       <Loader loading={loading} />
@@ -40,5 +47,6 @@ EditUserProfile.propTypes = {
   image: string,
   handleSubmitPress: func.isRequired,
   fields: array.isRequired,
-  loading: bool.isRequired
+  loading: bool.isRequired,
+  test: string
 };
