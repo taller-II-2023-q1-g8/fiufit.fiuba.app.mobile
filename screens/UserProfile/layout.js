@@ -1,4 +1,4 @@
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 
@@ -11,9 +11,10 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
-export default function UserProfile({ data, handleEditProfile }) {
+export default function UserProfile({ data, handleEditProfile, profPicUrl, loading }) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
+      <Loader loading={loading} />
       <TouchableOpacity activeOpacity={0.1} onPress={handleEditProfile}>
         <Image
           style={{ width: 30, height: 30, opacity: 0.5, display: 'flex', alignSelf: 'flex-end' }}
@@ -21,7 +22,11 @@ export default function UserProfile({ data, handleEditProfile }) {
         />
       </TouchableOpacity>
       <View style={styles.header}>
-        <Image style={styles.profilePicture} source={defaultProfPic} />
+        {profPicUrl !== null ? (
+          <Image source={{ uri: profPicUrl }} style={styles.profilePicture} />
+        ) : (
+          <Image source={defaultProfPic} style={styles.profilePicture} />
+        )}
         <View>
           <Text style={styles.username}>{data.firstname + (data.lastname || '')}</Text>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
@@ -63,5 +68,7 @@ export default function UserProfile({ data, handleEditProfile }) {
 
 UserProfile.propTypes = {
   data: bool,
-  handleEditProfile: func
+  handleEditProfile: func,
+  profPicUrl: string,
+  loading: bool
 };

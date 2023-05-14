@@ -4,12 +4,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 import { auth, storage } from '../../firebaseConfig';
-import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
+import { fetchUserByEmail, fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
 import SelectField from '../../components/Fields/SelectField';
+import getProfilePicURL from '../../utils/profilePicURL';
 
 import EditUserProfile from './layout';
 import { styles } from './styles';
@@ -18,24 +19,32 @@ export default function EditUserProfileContainer() {
   const [data, setData] = useState([]);
   const [state, dispatch] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // PROFILE PICTURE HANDLING
-  const cloudProfPicPath = 'profile-pics'.concat('/', data.username, '.jpg');
-  // const prueba = 'prueba.jpg'
-  // const cloudProfilePicRef = ref(storage, prueba);
-  const cloudProfilePicRef = ref(storage, cloudProfPicPath);
-  console.log('asta', cloudProfilePicRef.fullPath);
-  console.log(cloudProfilePicRef.name);
-  console.log(cloudProfilePicRef.bucket);
+  const fetchProfPicUrl = async () => {
+    const url = await getProfilePicURL(state.user.username);
+    setProfPicUrl(url);
+    setLoading(false);
+  };
 
-  getDownloadURL(cloudProfilePicRef)
-    .then((url) => {
-      console.log(url);
-      setProfPicUrl(url);
-    })
-    .catch((error) => {
-      console.log('Coudlnt fethc profile pic for User: ', error);
-    });
+  useEffect(() => {
+    fetchProfPicUrl();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetchUserProfileByUsername(state.user.username);
+      const json = await response.json();
+      setData(json.message);
+    }
+    fetchData();
+  }, []);
+
+  const [email, setEmail] = useState(data.email || '');
+  const [gender, setGender] = useState(data.gender || '');
+  const [name, setName] = useState(data.firstname || '');
+  const [phone, setPhone] = useState(data.phone || '');
+  const [username, setUsername] = useState(data.username || '');
 
   const handlePickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -46,6 +55,8 @@ export default function EditUserProfileContainer() {
     });
     console.log(result.uri);
 
+    const cloudProfPicPath = 'profile-pics'.concat('/', username, '.jpg');
+    const cloudProfilePicRef = ref(storage, cloudProfPicPath);
     if (!result.cancelled) {
       try {
         const response = await fetch(result.uri);
@@ -59,22 +70,6 @@ export default function EditUserProfileContainer() {
       }
     }
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetchUserProfileByUsername(state.user.username);
-      const json = await response.json();
-      setData(json.message);
-    }
-    fetchData();
-  }, []);
-
-  const [email, setEmail] = useState(data.email || '');
-  const [gender, setGender] = useState(data.gender || '');
-  const [loading, setLoading] = useState(false);
-  const [name, setName] = useState(data.firstname || '');
-  const [phone, setPhone] = useState(data.phone || '');
-  const [username, setUsername] = useState(data.username || '');
 
   useEffect(() => {
     if (Object.keys(data).length > 0) {

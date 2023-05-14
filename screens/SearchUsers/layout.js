@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import PropTypes, { string, bool, func } from 'prop-types';
@@ -8,14 +8,31 @@ import womanPic from '../../assets/woman.jpeg';
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
 import { colors } from '../../colors';
+import getProfilePicURL from '../../utils/profilePicURL';
+import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
 function Item({ handleItemPress, username }) {
+  const [profPicUrl, setProfPicUrl] = useState(null);
+
+  const fetchProfPicUrl = async () => {
+    const url = await getProfilePicURL(username);
+    setProfPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchProfPicUrl();
+  }, []);
+
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(username)}>
       <View style={styles.item}>
-        <Image style={styles.profilePic} source={manPic} />
+        {profPicUrl !== null ? (
+          <Image source={{ uri: profPicUrl }} style={styles.profilePic} />
+        ) : (
+          <Image source={defaultProfPic} style={styles.profilePic} />
+        )}
         <View style={{ display: 'flex' }}>
           <Text style={styles.profileName}>{username}</Text>
           <Text style={styles.profileType}>Trainee</Text>

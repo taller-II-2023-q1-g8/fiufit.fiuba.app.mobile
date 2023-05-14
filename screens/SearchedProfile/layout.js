@@ -1,19 +1,25 @@
 import { Text, View, Image } from 'react-native';
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
 import Loader from '../../components/Loader';
+import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
-export default function SearchedProfile({ data }) {
+export default function SearchedProfile({ data, profPicUrl, loading }) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
+      <Loader loading={loading} />
       <View style={styles.header}>
-        <Image style={styles.profilePicture} source={manPic} />
+        {profPicUrl !== null ? (
+          <Image source={{ uri: profPicUrl }} style={styles.profilePicture} />
+        ) : (
+          <Image source={defaultProfPic} style={styles.profilePicture} />
+        )}
         <View>
           <Text style={styles.username}>{data.firstname + (data.lastname || '')}</Text>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
@@ -45,5 +51,7 @@ export default function SearchedProfile({ data }) {
 }
 
 SearchedProfile.propTypes = {
-  data: bool
+  data: bool,
+  profPicUrl: string,
+  loading: bool
 };
