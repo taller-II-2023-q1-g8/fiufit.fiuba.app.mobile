@@ -16,14 +16,14 @@ import { styles } from './styles';
 function Item({ handleItemPress, username }) {
   const [profPicUrl, setProfPicUrl] = useState(null);
 
-  const fetchProfPicUrl = async () => {
-    const url = await getProfilePicURL(username);
+  const fetchProfPicUrl = async (searchedUsername) => {
+    const url = await getProfilePicURL(searchedUsername);
     setProfPicUrl(url);
   };
 
   useEffect(() => {
-    fetchProfPicUrl();
-  }, []);
+    fetchProfPicUrl(username);
+  }, [username]);
 
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(username)}>
