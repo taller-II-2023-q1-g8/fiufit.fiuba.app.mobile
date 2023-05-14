@@ -1,43 +1,44 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { string, bool, func } from 'prop-types';
+import { Image, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import PropTypes, { string, bool, func, array } from 'prop-types';
 
-import texts from '../../texts';
 import Loader from '../../components/Loader';
+import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { scrollviewStyle, styles } from './styles';
 
-const homeTexts = texts.Home;
-
-export default function Home({ username, handleSignOutPress, handleProfile, handleSearchUsers, loading }) {
+export default function EditUserProfile({ handlePickImage, image, handleSubmitPress, fields, loading }) {
   return (
     <View style={styles.container}>
-      <StatusBar />
       <Loader loading={loading} />
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <Text style={styles.title}>{homeTexts.homeTitle}</Text>
-          <Text>Welcome {username}!</Text>
-          {/* <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSignOutPress}>
-            <Text style={styles.submitButtonText}>{homeTexts.submitButtonText}</Text>
+          <TouchableOpacity style={styles.profilePicOpacity} activeOpacity={0.5} onPress={handlePickImage}>
+            {image !== null ? (
+              <Image source={{ uri: image }} style={styles.profilePicture} />
+            ) : (
+              <Image source={defaultProfPic} style={styles.profilePicture} />
+            )}
+            <View style={styles.overlayContainer}>
+              <Text style={styles.overlayText}>Subir Foto</Text>
+            </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleProfile}>
-            <Text style={styles.submitButtonText}>{homeTexts.profileButtonText}</Text>
+          {fields.map((field) => (
+            <View>{field}</View>
+          ))}
+          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
+            <Text style={styles.submitButtonText}>Actualizar!</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchUsers}>
-            <Text style={styles.submitButtonText}>{homeTexts.searchUsersButtonText}</Text>
-          </TouchableOpacity> */}
         </KeyboardAvoidingView>
       </ScrollView>
     </View>
   );
 }
 
-Home.propTypes = {
-  username: string.isRequired,
-  handleProfile: func.isRequired,
-  handleSearchUsers: func.isRequired,
-  handleSignOutPress: func.isRequired,
+EditUserProfile.propTypes = {
+  handlePickImage: func.isRequired,
+  image: string,
+  handleSubmitPress: func.isRequired,
+  fields: array.isRequired,
   loading: bool.isRequired
 };

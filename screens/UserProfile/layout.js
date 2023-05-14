@@ -7,6 +7,7 @@ import MoreOptionsIcon from '../../assets/more-options.png';
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
 import Loader from '../../components/Loader';
+import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
@@ -20,7 +21,7 @@ export default function UserProfile({ data, handleEditProfile }) {
         />
       </TouchableOpacity>
       <View style={styles.header}>
-        <Image style={styles.profilePicture} source={manPic} />
+        <Image style={styles.profilePicture} source={defaultProfPic} />
         <View>
           <Text style={styles.username}>{data.firstname + (data.lastname || '')}</Text>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>

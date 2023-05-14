@@ -34,16 +34,31 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 16
   },
-  profilePicture: {
-    borderRadius: 50,
-    height: 200,
-    marginRight: 20,
-    width: 200
-  },
-  header: {
+  profilePicOpacity: {
+    flexDirection: 'row',
     alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row'
+    marginLeft: 20,
+    marginBottom: 20
+  },
+  profilePicture: {
+    width: 300,
+    height: 300,
+    borderRadius: 15
+  },
+  overlayContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    alignSelf: 'flex-end'
+  },
+  overlayText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 });
 
