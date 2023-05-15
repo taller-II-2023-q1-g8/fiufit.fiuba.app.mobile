@@ -17,7 +17,7 @@ export default function UserProfileStack() {
       <Stack.Screen
         name={texts.EditUserProfile.name}
         component={EditUserProfile}
-        options={{ title: 'Editar' }}
+        options={{ title: 'Tu Perfil' }}
       />
     </Stack.Navigator>
   );

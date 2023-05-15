@@ -26,15 +26,18 @@ export default function Home({
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{homeTexts.homeTitle}</Text>
           <Text>Welcome {username}!</Text>
-          {/* <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSignOutPress}>
-            <Text style={styles.submitButtonText}>{homeTexts.submitButtonText}</Text>
-          </TouchableOpacity>
+          {
+            <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSignOutPress}>
+              <Text style={styles.submitButtonText}>{homeTexts.submitButtonText}</Text>
+            </TouchableOpacity>
+            /*
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleProfile}>
             <Text style={styles.submitButtonText}>{homeTexts.profileButtonText}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchUsers}>
             <Text style={styles.submitButtonText}>{homeTexts.searchUsersButtonText}</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity> */
+          }
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
             <Text style={styles.submitButtonText}>Ir a home de trainer</Text>
           </TouchableOpacity>
