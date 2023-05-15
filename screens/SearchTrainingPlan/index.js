@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
-import { Text } from 'react-native';
 
 import Loader from '../../components/Loader';
 import { isEmpty } from '../../utils';
@@ -21,7 +20,7 @@ export default function SearchPlansScreen({ navigation }) {
       const response = await fetchPlans('');
       const json = await response.json();
       setData(json);
-      setSearchResults(json.map((plan) => plan.title));
+      setSearchResults(json.map((plan) => plan));
     }
     fetchData();
   }, []);
@@ -57,8 +56,8 @@ export default function SearchPlansScreen({ navigation }) {
     setSearchResults(filterData(titleSearch, trainingTagToSearch, filterByTrainingTag));
   };
 
-  const handleItemPress = (planTitle) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { planTitle });
+  const handleItemPress = (planID) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
   };
 
   return (
