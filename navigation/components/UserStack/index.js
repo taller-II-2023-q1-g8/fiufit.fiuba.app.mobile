@@ -18,13 +18,11 @@ export default function UserStackContainer({ email, token }) {
   const fetchUser = async () => {
     const response = await fetchUserByEmail(email);
     const json = await response.json();
-    console.log(json);
     const initialState = {
       user: json.message,
       athleteScreen: true
     };
     setData(initialState);
-    console.log('abc');
     setLoading(false);
   };
 
@@ -56,10 +54,15 @@ export default function UserStackContainer({ email, token }) {
     else if (route.name === texts.SearchUsers.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
     else if (route.name === texts.SearchTrainingPlans.name)
       iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
-    else if (route.name === texts.UserProfile.name) iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
+    else if (route.name === texts.AddPlan.name) {
+      iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
+      color = 'red';
+    } else if (route.name === texts.UserProfile.name)
+      iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
 
     return <Ionicons name={iconName} size={size} color={color} />;
   };
+
   const tabBarIconsTrainer = (route, { focused, color, size }) => {
     let iconName;
 
@@ -67,6 +70,7 @@ export default function UserStackContainer({ email, token }) {
 
     return <Ionicons name={iconName} size={size} color={color} />;
   };
+
   // Agregar state provider aca?
   return (
     <UserStack
