@@ -30,6 +30,7 @@ const texts = {
   Home: {
     name: 'Home',
     homeTitle: 'Home',
+    closeGoalsTitle: 'Tus Metas Cercanas',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'

@@ -1,16 +1,18 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { string, bool, func } from 'prop-types';
+import { string, bool, func, array } from 'prop-types';
 
 import texts from '../../texts';
 import Loader from '../../components/Loader';
+import { Goal } from '../PersonalGoals/layout';
 
 import { scrollviewStyle, styles } from './styles';
 
 const homeTexts = texts.Home;
 
 export default function Home({
+  goals,
   username,
   handleSignOutPress,
   handleProfile,
@@ -26,6 +28,8 @@ export default function Home({
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{homeTexts.homeTitle}</Text>
           <Text>Welcome {username}!</Text>
+          <Text style={styles.title}>{homeTexts.closeGoalsTitle}</Text>
+          {loading ? null : goals.map((goal) => Goal({ goal }))}
           {
             <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSignOutPress}>
               <Text style={styles.submitButtonText}>{homeTexts.submitButtonText}</Text>
@@ -48,6 +52,7 @@ export default function Home({
 }
 
 Home.propTypes = {
+  goals: array,
   username: string.isRequired,
   handleProfile: func.isRequired,
   handleSearchUsers: func.isRequired,

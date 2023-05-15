@@ -90,7 +90,7 @@ function TrainingPlanCompletion({ goal }) {
   );
 }
 
-function Goal({ goal }) {
+export function Goal({ goal }) {
   switch (goal.type) {
     case 'max_weight_lifted_in_exercise':
       return MaxWeightLiftedInExercise({ goal });
@@ -101,7 +101,7 @@ function Goal({ goal }) {
   }
 }
 
-export default function PersonalGoals({ goals, handleAddGoal }) {
+export function PersonalGoals({ goals, handleAddGoal }) {
   return (
     <ScrollView>
       <View style={{ padding: 10, alignItems: 'center', flexDirection: 'row' }}>
