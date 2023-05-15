@@ -48,7 +48,7 @@ const difficultyOptions = [
 const trainingTypeOptions = [
   { label: 'Cualquiera', value: 'ANY' },
   { label: 'Brazos', value: 'ARMS' },
-  { label: 'Abdomen', value: 'ABDOMINAL' },
+  { label: 'Pecho', value: 'CHEST' },
   { label: 'Piernas', value: 'LEGS' }
 ];
 

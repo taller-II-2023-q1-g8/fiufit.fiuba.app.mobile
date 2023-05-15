@@ -30,6 +30,8 @@ export const registerRequest = async (values) =>
     body: JSON.stringify(values)
   });
 
+export const fetchPlans = async () => fetchData('https://fiufit-plans2.onrender.com/api/v1/plans');
+
 export const fetchUsersByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/user/usernames?prefix=${username}`);
 

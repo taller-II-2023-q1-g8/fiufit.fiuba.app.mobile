@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
+import { Text } from 'react-native';
 
 import Loader from '../../components/Loader';
 import { isEmpty } from '../../utils';
 import texts from '../../texts';
+import { fetchPlans } from '../../requests';
 
 import SearchTrainingPlans from './layout';
 
 export default function SearchPlansScreen({ navigation }) {
-  const [searchResults, setSearchResults] = useState([]);
   const [difficultySearch, setDifficultySearch] = useState('ANY');
-  const [trainingTypeSearch, setTrainingTypeSearch] = useState('ANY');
+  const [trainingTagSearch, setTrainingTagSearch] = useState('ANY');
   const [titleSearch, setTitleSearch] = useState('');
   const [data, setData] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      // const response = await fetchUsersByUsername('');
-      // const json = await response.json();
-      // setData(json.message);
-      setData([
-        { title: 'Plan de la Fiuba', difficulty: 'EASY', trainingType: 'LEGS' },
-        { title: 'Road To Ingeniero', difficulty: 'MEDIUM', trainingType: 'ARMS' },
-        { title: 'Duro como final de AM3', difficulty: 'HARD', trainingType: 'LEGS' },
-        { title: 'Fuerte como el café del comedor', difficulty: 'MEDIUM', trainingType: 'ABDOMINAL' }
-      ]);
+      const response = await fetchPlans('');
+      const json = await response.json();
+      setData(json);
+      setSearchResults(json.map((plan) => plan.title));
     }
     fetchData();
   }, []);
 
-  const filterByDifficulty = (plan, difficulty) => difficulty === 'ANY' || plan.difficulty === difficulty;
+  const filterByDifficulty = (plan, difficulty) =>
+    (difficulty === 'ANY' || difficulty === plan.difficulty) &&
+    (trainingTagSearch === 'ANY' || plan.tags.includes(trainingTagSearch));
 
-  const filterByTrainingType = (plan, trainingType) =>
-    trainingType === 'ANY' || plan.trainingType === trainingType;
+  const filterByTrainingTag = (plan, trainingTag) =>
+    (difficultySearch === 'ANY' || difficultySearch === plan.difficulty) &&
+    (trainingTag === 'ANY' || plan.tags.includes(trainingTag));
 
   const filterData = (titleToSearch, filterToApllied, filterToUse = () => {}) =>
     data
@@ -52,9 +52,9 @@ export default function SearchPlansScreen({ navigation }) {
     setSearchResults(filterData(titleSearch, difficultyToSearch, filterByDifficulty));
   };
 
-  const handleOnTrainingTypeChange = (trainingTypeToSearch) => {
-    setTrainingTypeSearch(trainingTypeToSearch);
-    setSearchResults(filterData(titleSearch, trainingTypeToSearch, filterByTrainingType));
+  const handleOnTrainingTypeChange = (trainingTagToSearch) => {
+    setTrainingTagSearch(trainingTagToSearch);
+    setSearchResults(filterData(titleSearch, trainingTagToSearch, filterByTrainingTag));
   };
 
   const handleItemPress = (planTitle) => {
