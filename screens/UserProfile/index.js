@@ -33,6 +33,8 @@ export default function UserProfileContainer({ navigation }) {
     fetchData();
   }, []);
 
+  const handleAddStat = () => navigation.navigate(texts.PersonalGoals.name);
+
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
   return (
     <UserProfile
@@ -40,6 +42,7 @@ export default function UserProfileContainer({ navigation }) {
       handleEditProfile={handleEditProfile}
       profPicUrl={profPicUrl}
       loading={loading}
+      handleAddStat={handleAddStat}
     />
   );
 }
