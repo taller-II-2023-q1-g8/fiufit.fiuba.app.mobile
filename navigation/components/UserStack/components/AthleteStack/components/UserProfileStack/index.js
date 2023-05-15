@@ -4,6 +4,18 @@ import React from 'react-native';
 import EditUserProfile from '../../../../../../../screens/EditUserProfile';
 import texts from '../../../../../../../texts';
 import UserProfile from '../../../../../../../screens/UserProfile';
+import PersonalGoals from '../../../../../../../screens/PersonalGoals';
+import CreateGoal from '../../../../../../../screens/CreateGoal';
+
+function PersonalGoalsScreens() {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={texts.PersonalGoals.name} component={PersonalGoals} />
+      <Stack.Screen name={texts.CreateGoal.name} component={CreateGoal} />
+    </Stack.Navigator>
+  );
+}
 
 export default function UserProfileStack() {
   const Stack = createNativeStackNavigator();
@@ -18,6 +30,11 @@ export default function UserProfileStack() {
         name={texts.EditUserProfile.name}
         component={EditUserProfile}
         options={{ title: 'Tu Perfil' }}
+      />
+      <Stack.Screen
+        component={PersonalGoalsScreens}
+        name={texts.PersonalGoals.name}
+        options={{ title: '', headerShown: false }}
       />
     </Stack.Navigator>
   );

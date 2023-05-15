@@ -11,7 +11,7 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
-export default function UserProfile({ data, handleEditProfile, profPicUrl, loading }) {
+export default function UserProfile({ data, handleEditProfile, profPicUrl, loading, handleAddStat }) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
       <Loader loading={loading} />
@@ -45,7 +45,27 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
           </View>
         </View>
       </View>
-      <Text style={styles.title}>Stats</Text>
+      <View style={{ display: 'flex', flexDirection: 'row' }}>
+        <Text style={styles.title}>Stats</Text>
+        <TouchableOpacity activeOpacity={0.5} onPress={handleAddStat}>
+          <Text
+            style={{
+              ...styles.title,
+              ...{
+                color: 'red',
+                marginHorizontal: 10,
+                paddingHorizontal: 10,
+                borderColor: 'red',
+                borderWidth: 0.5,
+                borderRadius: 50,
+                fontWeight: '400'
+              }
+            }}
+          >
+            +
+          </Text>
+        </TouchableOpacity>
+      </View>
       <Text>...</Text>
       <Text style={styles.title}>Training</Text>
       <Text>...</Text>
@@ -68,6 +88,7 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
 
 UserProfile.propTypes = {
   data: bool,
+  handleAddStat: func,
   handleEditProfile: func,
   profPicUrl: string,
   loading: bool
