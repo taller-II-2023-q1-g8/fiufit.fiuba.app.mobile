@@ -3,7 +3,7 @@ import React from 'react-native';
 
 import EditUserProfile from '../../../../../../../screens/EditUserProfile';
 import texts from '../../../../../../../texts';
-import UserProfile from '../../../../../../../screens/UserProfile/layout';
+import UserProfile from '../../../../../../../screens/UserProfile';
 
 export default function UserProfileStack() {
   const Stack = createNativeStackNavigator();
