@@ -34,7 +34,7 @@ export default function SearchedProfile({ data, profPicUrl, loading }) {
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Image style={{ width: 20, height: 20 }} source={TrainerIcon} />
-            <Text>Trainer</Text>
+            <Text>Athlete</Text>
           </View>
         </View>
       </View>
