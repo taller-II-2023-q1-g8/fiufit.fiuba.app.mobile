@@ -1,10 +1,9 @@
 import React from 'react';
 import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import PropTypes, { string, bool, func } from 'prop-types';
+import PropTypes, { string, func } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
-import womanPic from '../../assets/woman.jpeg';
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
 import { colors } from '../../colors';

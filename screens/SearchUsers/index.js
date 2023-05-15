@@ -12,7 +12,7 @@ import SearchUsers from './layout';
 export default function SearchUsersScreen({ navigation }) {
   const [search, setSearch] = useState([]);
   const [data, setData] = useState([]);
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
 
   useEffect(() => {
     async function fetchData() {

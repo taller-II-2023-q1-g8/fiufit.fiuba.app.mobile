@@ -1,20 +1,22 @@
-import { shape } from 'prop-types';
+import { shape, func } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-import { fetchTrainingPlanByTitle } from '../../requests';
+import texts from '../../texts';
 
 import SearchedTrainingPlan from './layout';
 
-export default function SearchedTrainingPlanContainer({ route }) {
+export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const [data, setData] = useState([]);
   const { title } = route.params;
+
+  const handleStartTraining = () => navigation.navigate(texts.TrainingInProgress.name);
 
   useEffect(() => {
     async function fetchData() {
       // const response = await fetchTrainingPlanByTitle(username);
       // const json = await response.json();
       // setData(json.message);
-      plan_data = {
+      const planData = {
         title: 'Duro como final de AM3',
         trainer: 'Marco Aurelio',
         difficulty: 'HARD',
@@ -44,15 +46,18 @@ export default function SearchedTrainingPlanContainer({ route }) {
           }
         ]
       };
-      setData(plan_data);
+      setData(planData);
     }
     fetchData();
   }, []);
 
-  return <SearchedTrainingPlan data={data} />;
+  return <SearchedTrainingPlan data={data} handleStartTraining={handleStartTraining} />;
 }
 
 SearchedTrainingPlanContainer.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired,
   route: shape({
     params: shape.isRequired
   }).isRequired

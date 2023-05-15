@@ -9,7 +9,7 @@ import UserProfile from './layout';
 
 export default function UserProfileContainer({ navigation }) {
   const [data, setData] = useState([]);
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
 
   useEffect(() => {
     async function fetchData() {

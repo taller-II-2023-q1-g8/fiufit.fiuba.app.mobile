@@ -41,3 +41,9 @@ export const fetchUserProfileByUsername = async (username) =>
 
 export const fetchTrainingPlanByTitle = async (planTitle) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/plan?title=${planTitle}`);
+
+export const fetchUserMetricsByUsername = async (username) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/metric?username=${username}`);
+
+export const fetchUserGoalsByUsername = async (username) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/goal?username=${username}`);

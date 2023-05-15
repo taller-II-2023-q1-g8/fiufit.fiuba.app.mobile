@@ -64,6 +64,16 @@ const texts = {
     searchUsersTitle: 'Busca planes',
     submitButtonText: 'Buscar'
   },
+  TrainingInProgress: {
+    name: 'TrainingInProgress',
+    searchUsersTitle: 'Plan en Progreso',
+    submitButtonText: 'Plan en Progreso'
+  },
+  PersonalGoals: {
+    name: 'PersonalGoals',
+    personalMetricsTitle: 'Métricas personales',
+    submitButtonText: 'Guardar'
+  },
   EditUserProfile: {
     name: 'EditUserProfile'
   },
