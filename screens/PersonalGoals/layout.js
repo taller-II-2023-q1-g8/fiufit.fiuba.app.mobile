@@ -1,23 +1,91 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { array, object } from 'prop-types';
 
+import { colors } from '../../colors';
+
 function MaxWeightLiftedInExercise({ goal }) {
-  // const completionPercentage = goal.completion_percentage;
-  const completionPercentage = 50;
+  const completionPercentage = goal.completion_percentage;
+  let barColor;
+  let goalStatus;
+
+  switch (goal.status) {
+    case 'in_progress':
+      goalStatus = 'En Progreso';
+      barColor = 'orange';
+      break;
+    case 'completed':
+      goalStatus = 'Completada';
+      barColor = 'green';
+      break;
+    default:
+      goalStatus = 'Fallida';
+      barColor = 'red';
+      break;
+  }
+
   return (
-    <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: 'white' }}>
-      <Text style={{ fontWeight: 'bold', padding: 5 }}>Máximo Peso Levantado en {goal.exercise_title}</Text>
+    <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: 'white', padding: 10 }}>
+      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0 }}>
+        Máximo Peso Levantado en {goal.exercise_title}
+      </Text>
       <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>Objetivo: {goal.goal_weight_in_kg}KG</Text>
-      <View style={{ backgroundColor: 'green', width: `${completionPercentage}%`, height: 10 }} />
+      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>{goalStatus}</Text>
+        <View style={{ backgroundColor: '#e8e8e8', width: '100%', height: 10, borderRadius: 4 }}>
+          <View
+            style={{
+              backgroundColor: barColor,
+              width: `${completionPercentage}%`,
+              height: 10,
+              borderRadius: 4
+            }}
+          />
+        </View>
+      </View>
     </View>
   );
 }
 
 function TrainingPlanCompletion({ goal }) {
+  const completionPercentage = goal.completion_percentage;
+  let barColor;
+  let goalStatus;
+
+  switch (goal.status) {
+    case 'in_progress':
+      goalStatus = 'En Progreso';
+      barColor = 'orange';
+      break;
+    case 'completed':
+      goalStatus = 'Completada';
+      barColor = 'green';
+      break;
+    default:
+      goalStatus = 'Fallida';
+      barColor = 'red';
+      break;
+  }
+
   return (
-    <View>
-      <Text>{goal.type}</Text>
+    <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: 'white', padding: 10 }}>
+      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0 }}>
+        Planes de Entrenamiento Completados
+      </Text>
+      <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>Objetivo: {goal.goal_num_of_completions}</Text>
+      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>{goalStatus}</Text>
+        <View style={{ backgroundColor: '#e8e8e8', width: '100%', height: 10, borderRadius: 4 }}>
+          <View
+            style={{
+              backgroundColor: barColor,
+              width: `${completionPercentage}%`,
+              height: 10,
+              borderRadius: 4
+            }}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -35,10 +103,25 @@ function Goal({ goal }) {
 
 export default function PersonalGoals({ goals }) {
   return (
-    <View>
-      <Text style={{ fontSize: 20 }}>Personal Goals</Text>
+    <ScrollView>
+      <View style={{ padding: 10, alignItems: 'center', flexDirection: 'row' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, paddingHorizontal: 10 }}>Tus Metas</Text>
+        <TouchableOpacity
+          style={{
+            fontWeight: 'bold',
+            fontSize: 20,
+            paddingHorizontal: 10,
+            backgroundColor: colors.purple,
+            borderRadius: 10
+          }}
+        >
+          <Text style={{ color: 'white', padding: 3 }}>Agregar</Text>
+        </TouchableOpacity>
+      </View>
       {goals.map((goal) => Goal({ goal }))}
-    </View>
+      {goals.map((goal) => Goal({ goal }))}
+      {goals.map((goal) => Goal({ goal }))}
+    </ScrollView>
   );
 }
 
