@@ -1,6 +1,6 @@
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool, func } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
@@ -10,23 +10,15 @@ import Loader from '../../components/Loader';
 import { styles } from './styles';
 
 function Exercises({ exercises }) {
-  const exercisesToShow = [];
-  exercises.forEach((exercise) => {
-    exercisesToShow.push(
-      <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontWeight: 'bold' }}>{exercise.muscle.toUpperCase()} | </Text>
-        <Text style={{ width: '80%' }}>{exercise.title}</Text>
-      </View>
-    );
-  });
-  return exercisesToShow;
+  return exercises.map((exercise) => (
+    <View key={exercise.title} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+      <Text style={{ fontWeight: 'bold' }}>{exercise.muscle.toUpperCase()} | </Text>
+      <Text style={{ width: '80%' }}>{exercise.title}</Text>
+    </View>
+  ));
 }
 
-function foo() {
-  console.log('pressed!');
-}
-
-export default function SearchedTrainingPlan({ data }) {
+export default function SearchedTrainingPlan({ data, handleStartTraining }) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -52,7 +44,7 @@ export default function SearchedTrainingPlan({ data }) {
       <Text style={styles.title}>Ejercicios</Text>
       <Exercises exercises={data.exercises} />
       <View style={{ paddingVertical: 10 }}>
-        <TouchableOpacity style={styles.startButton} activeOpacity={0.5} onPress={foo}>
+        <TouchableOpacity style={styles.startButton} activeOpacity={0.5} onPress={handleStartTraining}>
           <Text style={styles.startButtonText}>Empezar!</Text>
         </TouchableOpacity>
       </View>
@@ -63,5 +55,6 @@ export default function SearchedTrainingPlan({ data }) {
 }
 
 SearchedTrainingPlan.propTypes = {
+  handleStartTraining: func.isRequired,
   data: bool
 };

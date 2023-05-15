@@ -156,7 +156,12 @@ export default function FederatedRegisterContainer() {
       placeholder={fieldTexts.usernamePlaceholder}
       title={fieldTexts.usernameTitle}
     />,
-    <DateField error={birthdateError} onChangeText={handleOnBirthdateChange} />,
+    <DateField
+      title={texts.Fields.birthdateTitle}
+      placeholder={texts.Fields.birthdatePlaceholder}
+      error={birthdateError}
+      onChangeText={handleOnBirthdateChange}
+    />,
     <SelectField error={genderError} onChangeText={handleOnGenderChange} title={fieldTexts.genderTitle} />,
     <TextField
       error={phoneError}

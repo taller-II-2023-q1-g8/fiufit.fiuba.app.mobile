@@ -31,12 +31,12 @@ export default function Home({
               <Text style={styles.submitButtonText}>{homeTexts.submitButtonText}</Text>
             </TouchableOpacity>
             /*
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleProfile}>
-            <Text style={styles.submitButtonText}>{homeTexts.profileButtonText}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchUsers}>
-            <Text style={styles.submitButtonText}>{homeTexts.searchUsersButtonText}</Text>
-          </TouchableOpacity> */
+        <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleProfile}>
+          <Text style={styles.submitButtonText}>{homeTexts.profileButtonText}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchUsers}>
+          <Text style={styles.submitButtonText}>{homeTexts.searchUsersButtonText}</Text>
+        </TouchableOpacity> */
           }
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
             <Text style={styles.submitButtonText}>Ir a home de trainer</Text>

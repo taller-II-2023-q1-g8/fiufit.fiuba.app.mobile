@@ -9,7 +9,7 @@ import texts from '../../../texts';
 
 const fieldsTexts = texts.Fields;
 
-function DateField({ onChangeText, error }) {
+function DateField({ onChangeText, title, placeholder, error }) {
   const [date, setDate] = useState(undefined);
   const [show, setShow] = useState(false);
 
@@ -30,9 +30,7 @@ function DateField({ onChangeText, error }) {
 
   return (
     <View style={styles.fieldContainer}>
-      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>
-        {fieldsTexts.birthdateTitle}
-      </Text>
+      <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>{title}</Text>
       <TouchableOpacity style={{ width: '100%' }} onPress={showDatePicker}>
         <Text
           style={{
@@ -41,7 +39,7 @@ function DateField({ onChangeText, error }) {
             ...(!date && { color: colors.placeholder })
           }}
         >
-          {date ? formatDate(date) : fieldsTexts.birthdatePlaceholder}
+          {date ? formatDate(date) : placeholder}
         </Text>
       </TouchableOpacity>
       {show && <DateTimePicker value={date} display="default" mode="date" onChange={onChange} />}
@@ -51,6 +49,8 @@ function DateField({ onChangeText, error }) {
 }
 
 DateField.propTypes = {
+  title: string.isRequired,
+  placeholder: string.isRequired,
   onChangeText: func.isRequired,
   error: string.isRequired
 };

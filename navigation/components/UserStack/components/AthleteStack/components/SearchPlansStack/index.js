@@ -1,8 +1,9 @@
 import React from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SearchedTrainingPlan from '../../../../../../../screens/SearchedTrainingPlan';
+import SearchedTrainingPlan from '../../../../../../../screens/SearchedTrainingPlan/layout';
 import SearchPlansScreen from '../../../../../../../screens/SearchTrainingPlan';
+import TrainingInProgress from '../../../../../../../screens/TrainingInProgress';
 import texts from '../../../../../../../texts';
 
 export default function SearchPlansStack() {
@@ -17,6 +18,11 @@ export default function SearchPlansStack() {
       <Stack.Screen
         name={texts.SearchedTrainingPlan.name}
         component={SearchedTrainingPlan}
+        options={{ title: '' }}
+      />
+      <Stack.Screen
+        name={texts.TrainingInProgress.name}
+        component={TrainingInProgress}
         options={{ title: '' }}
       />
     </Stack.Navigator>
