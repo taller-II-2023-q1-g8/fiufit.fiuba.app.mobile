@@ -92,6 +92,9 @@ const texts = {
   },
   App: {
     headerTitle: 'fiuFIT'
+  },
+  Commons: {
+    focusedIcon: '-outline'
   }
 };
 

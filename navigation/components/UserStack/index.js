@@ -18,13 +18,11 @@ export default function UserStackContainer({ email, token }) {
   const fetchUser = async () => {
     const response = await fetchUserByEmail(email);
     const json = await response.json();
-    console.log(json);
     const initialState = {
       user: json.message,
       athleteScreen: true
     };
     setData(initialState);
-    console.log('abc');
     setLoading(false);
   };
 
@@ -60,6 +58,7 @@ export default function UserStackContainer({ email, token }) {
 
     return <Ionicons name={iconName} size={size} color={color} />;
   };
+
   const tabBarIconsTrainer = (route, { focused, color, size }) => {
     let iconName;
 
@@ -67,6 +66,7 @@ export default function UserStackContainer({ email, token }) {
 
     return <Ionicons name={iconName} size={size} color={color} />;
   };
+
   // Agregar state provider aca?
   return (
     <UserStack

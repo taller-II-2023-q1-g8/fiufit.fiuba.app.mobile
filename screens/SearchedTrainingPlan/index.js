@@ -14,7 +14,7 @@ export default function SearchedTrainingPlanContainer({ route }) {
       // const response = await fetchTrainingPlanByTitle(username);
       // const json = await response.json();
       // setData(json.message);
-      plan_data = {
+      const planData = {
         title: 'Duro como final de AM3',
         trainer: 'Marco Aurelio',
         difficulty: 'HARD',
@@ -44,7 +44,7 @@ export default function SearchedTrainingPlanContainer({ route }) {
           }
         ]
       };
-      setData(plan_data);
+      setData(planData);
     }
     fetchData();
   }, []);

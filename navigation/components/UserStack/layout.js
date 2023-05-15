@@ -1,12 +1,11 @@
 import { bool, object, func } from 'prop-types';
 import React from 'react';
-import { Text, View } from 'react-native';
 
 import Loader from '../../../components/Loader';
-import { StateProvider, useStateValue } from '../../../utils/state/state';
+import { StateProvider } from '../../../utils/state/state';
 
-import AthleteStack from './athleteLayout';
-import TrainerStack from './trainerLayout';
+import AthleteStack from './components/AthleteStack';
+import TrainerStack from './components/TrainerStack';
 
 export default function UserStack({ loading, data, reducer, tabBarIconsAthlete, tabBarIconsTrainer }) {
   console.log(loading);

@@ -10,20 +10,20 @@ import Loader from '../../components/Loader';
 import { styles } from './styles';
 
 function Exercises({ exercises }) {
-  exercises_to_show = [];
-  for (const exercise of exercises) {
-    exercises_to_show.push(
+  const exercisesToShow = [];
+  exercises.forEach((exercise) => {
+    exercisesToShow.push(
       <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
         <Text style={{ fontWeight: 'bold' }}>{exercise.muscle.toUpperCase()} | </Text>
         <Text style={{ width: '80%' }}>{exercise.title}</Text>
       </View>
     );
-  }
-  return exercises_to_show;
+  });
+  return exercisesToShow;
 }
 
 function foo() {
-  a = 2;
+  console.log('pressed!');
 }
 
 export default function SearchedTrainingPlan({ data }) {
