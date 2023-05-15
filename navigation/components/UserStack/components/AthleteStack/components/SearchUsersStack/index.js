@@ -1,7 +1,7 @@
 import React from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SearchedProfile from '../../../../../../../screens/SearchedProfile/layout';
+import SearchedProfile from '../../../../../../../screens/SearchedProfile';
 import SearchUsersScreen from '../../../../../../../screens/SearchUsers';
 import texts from '../../../../../../../texts';
 

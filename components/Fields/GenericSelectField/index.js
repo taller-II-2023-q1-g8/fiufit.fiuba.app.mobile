@@ -1,11 +1,18 @@
-import { func, string, array } from 'prop-types';
+import { func, string, array, object } from 'prop-types';
 import { Picker } from '@react-native-picker/picker';
 import { View, Text } from 'react-native';
 import React, { useState } from 'react';
 
 import styles from '../styles';
 
-function GenericSelectField({ onChangeText, title, items }) {
+function GenericSelectField({
+  onChangeText,
+  title,
+  items,
+  titleStyle = styles.fieldTitle,
+  fieldInputContainerStyle = styles.fieldInputContainer,
+  containerStyle = styles.fieldContainer
+}) {
   // const defSelectedValue = defaultValue == null ? 'femaile' : defaultValue;
   const [selectedValue, setSelectedValue] = useState('');
 
@@ -15,11 +22,11 @@ function GenericSelectField({ onChangeText, title, items }) {
   };
 
   return (
-    <View style={styles.fieldContainer}>
-      <Text style={styles.fieldTitle}>{title}</Text>
+    <View style={containerStyle}>
+      <Text style={titleStyle}>{title}</Text>
       <Picker
         selectedValue={selectedValue}
-        style={styles.fieldInputContainer}
+        style={fieldInputContainerStyle}
         onValueChange={handleOnValueChange}
       >
         {items.map((item) => (
@@ -34,7 +41,10 @@ function GenericSelectField({ onChangeText, title, items }) {
 GenericSelectField.propTypes = {
   items: array.isRequired,
   onChangeText: func.isRequired,
-  title: string.isRequired
+  title: string.isRequired,
+  titleStyle: object.isRequired,
+  containerStyle: object.isRequired,
+  fieldInputContainerStyle: object.isRequired
 };
 
 export default GenericSelectField;

@@ -40,8 +40,8 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
             </View>
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <Image style={{ width: 20, height: 20 }} source={TrainerIcon} />
-            <Text>Trainer</Text>
+            <Image style={{ width: 20, height: 20, marginRight: 2 }} source={TrainerIcon} />
+            <Text>Athlete</Text>
           </View>
         </View>
       </View>

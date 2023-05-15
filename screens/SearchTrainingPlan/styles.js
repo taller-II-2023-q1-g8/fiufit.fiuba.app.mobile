@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 32,
-    paddingVertical: 16,
+    paddingVertical: 28,
     width: '100%'
   },
   usernameContainer: {

@@ -46,11 +46,19 @@ const difficultyOptions = [
   { label: 'Difícil', value: 'HARD' }
 ];
 
+const trainingTypeOptions = [
+  { label: 'Cualquiera', value: 'ANY' },
+  { label: 'Brazos', value: 'ARMS' },
+  { label: 'Abdomen', value: 'ABDOMINAL' },
+  { label: 'Piernas', value: 'LEGS' }
+];
+
 export default function SearchTrainingPlans({
   data,
   handleOnTitleChange,
   handleOnDifficultyChange,
-  handleItemPress
+  handleItemPress,
+  handleOnTrainingTypeChange
 }) {
   return (
     <View style={styles.container}>
@@ -60,10 +68,20 @@ export default function SearchTrainingPlans({
           onChangeText={handleOnTitleChange}
           placeholder={texts.Fields.searchTrainingPlansPlaceholder}
         />
+        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18 }}>Filtros</Text>
         <GenericSelectField
-          title="Dificultad"
+          titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
+          containerStyle={{ display: 'flex', flexDirection: 'row' }}
+          title=" Dificultad"
           items={difficultyOptions}
           onChangeText={handleOnDifficultyChange}
+        />
+        <GenericSelectField
+          titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
+          containerStyle={{ display: 'flex', flexDirection: 'row' }}
+          title=" Tipo de Entrenamiento"
+          items={trainingTypeOptions}
+          onChangeText={handleOnTrainingTypeChange}
         />
         <FlatList
           data={data}
@@ -84,5 +102,6 @@ SearchTrainingPlans.propTypes = {
   data: PropTypes.array.isRequired,
   handleItemPress: func,
   handleOnTitleChange: func,
-  handleOnDifficultyChange: func
+  handleOnDifficultyChange: func,
+  handleOnTrainingTypeChange: func
 };

@@ -54,7 +54,11 @@ export default function UserStackContainer({ email, token }) {
     else if (route.name === texts.SearchUsers.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
     else if (route.name === texts.SearchTrainingPlans.name)
       iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
-    else if (route.name === texts.UserProfile.name) iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
+    else if (route.name === texts.AddPlan.name) {
+      iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
+      color = 'red';
+    } else if (route.name === texts.UserProfile.name)
+      iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
 
     return <Ionicons name={iconName} size={size} color={color} />;
   };

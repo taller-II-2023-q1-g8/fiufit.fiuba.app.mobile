@@ -1,7 +1,7 @@
 import React from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SearchedTrainingPlan from '../../../../../../../screens/SearchedTrainingPlan/layout';
+import SearchedTrainingPlan from '../../../../../../../screens/SearchedTrainingPlan';
 import SearchPlansScreen from '../../../../../../../screens/SearchTrainingPlan';
 import texts from '../../../../../../../texts';
 
