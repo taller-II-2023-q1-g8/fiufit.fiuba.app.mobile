@@ -34,7 +34,7 @@ export default function SearchPlansScreen({ navigation }) {
   const filterByTrainingType = (plan, trainingType) =>
     trainingType === 'ANY' || plan.trainingType === trainingType;
 
-  const filterData = (titleToSearch, filterToUse, filterToApllied) =>
+  const filterData = (titleToSearch, filterToApllied, filterToUse = () => {}) =>
     data
       .filter(
         (plan) =>
@@ -49,12 +49,12 @@ export default function SearchPlansScreen({ navigation }) {
 
   const handleOnDifficultyChange = (difficultyToSearch) => {
     setDifficultySearch(difficultyToSearch);
-    setSearchResults(filterData(titleSearch, filterByDifficulty, difficultyToSearch));
+    setSearchResults(filterData(titleSearch, difficultyToSearch, filterByDifficulty));
   };
 
   const handleOnTrainingTypeChange = (trainingTypeToSearch) => {
     setTrainingTypeSearch(trainingTypeToSearch);
-    setSearchResults(filterData(titleSearch, filterByTrainingType, trainingTypeToSearch));
+    setSearchResults(filterData(titleSearch, trainingTypeToSearch, filterByTrainingType));
   };
 
   const handleItemPress = (planTitle) => {

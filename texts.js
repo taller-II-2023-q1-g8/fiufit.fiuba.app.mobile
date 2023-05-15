@@ -24,6 +24,9 @@ const texts = {
     forgotPasswordTitle: 'Reinicia tu contraseña',
     submitButtonText: 'Enviar email de reinicio'
   },
+  AddPlan: {
+    name: 'Add Plan'
+  },
   Home: {
     name: 'Home',
     homeTitle: 'Home',
@@ -40,17 +43,17 @@ const texts = {
     searchUsersButtonText: 'Buscar usuarios'
   },
   UserProfile: {
-    name: 'UserProfile',
+    name: 'User Profile',
     homeTitle: 'Tu perfil',
     submitButtonText: 'Modificar perfil'
   },
   SearchUsers: {
-    name: 'SearchUsers',
+    name: 'Search Users',
     searchUsersTitle: 'Busca usuarios',
     submitButtonText: 'Buscar'
   },
   SearchTrainingPlans: {
-    name: 'SearchPlans',
+    name: 'Search Plans',
     searchTrainingPlansTitle: 'Busca planes',
     submitButtonText: 'Buscar'
   },
