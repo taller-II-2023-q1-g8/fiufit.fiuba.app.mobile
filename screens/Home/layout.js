@@ -30,7 +30,6 @@ export default function Home({
             <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSignOutPress}>
               <Text style={styles.submitButtonText}>{homeTexts.submitButtonText}</Text>
             </TouchableOpacity>
-            /* <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleProfile}>
             <Text style={styles.submitButtonText}>{homeTexts.profileButtonText}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchUsers}>

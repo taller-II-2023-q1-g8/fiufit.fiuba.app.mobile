@@ -1,18 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
+import { Alert, Image, View } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
-import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
+import { auth, storage } from '../../firebaseConfig';
+import { fetchUserByEmail, fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
 import SelectField from '../../components/Fields/SelectField';
-import { scrollviewStyle, styles } from '../Register/styles';
-import Loader from '../../components/Loader';
+import getProfilePicURL from '../../utils/profilePicURL';
 
-export default function EditUserProfile() {
+import EditUserProfile from './layout';
+import { styles } from './styles';
+
+export default function EditUserProfileContainer() {
   const [data, setData] = useState([]);
   const [state, dispatch] = useStateValue();
+  const [profPicUrl, setProfPicUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProfPicUrl = async () => {
+    const url = await getProfilePicURL(state.user.username);
+    setProfPicUrl(url);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProfPicUrl();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,10 +42,34 @@ export default function EditUserProfile() {
 
   const [email, setEmail] = useState(data.email || '');
   const [gender, setGender] = useState(data.gender || '');
-  const [loading, setLoading] = useState(false);
   const [name, setName] = useState(data.firstname || '');
   const [phone, setPhone] = useState(data.phone || '');
   const [username, setUsername] = useState(data.username || '');
+
+  const handlePickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+      allowsEditing: true
+    });
+    console.log(result.uri);
+
+    const cloudProfPicPath = 'profile-pics'.concat('/', username, '.jpg');
+    const cloudProfilePicRef = ref(storage, cloudProfPicPath);
+    if (!result.cancelled) {
+      try {
+        const response = await fetch(result.uri);
+        const blob = await response.blob();
+        await uploadBytes(cloudProfilePicRef, blob);
+
+        setProfPicUrl(result.uri);
+      } catch (error) {
+        alert("Couldn't upload image!");
+        console.log('Error uploading image:', error);
+      }
+    }
+  };
 
   useEffect(() => {
     if (Object.keys(data).length > 0) {
@@ -43,7 +84,7 @@ export default function EditUserProfile() {
   const handleSubmitPress = async () => {
     setLoading(true);
 
-    console.log({ data });
+    console.log('a', { data });
     const values = {
       username: username || '',
       firstname: name || '',
@@ -76,7 +117,6 @@ export default function EditUserProfile() {
   const handleOnNameChange = (userName) => setName(userName);
   const handleOnPhoneChange = (userPhone) => setPhone(userPhone);
   const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
-
   const fieldTexts = texts.Fields;
 
   console.log({ data, name, username });
@@ -110,25 +150,24 @@ export default function EditUserProfile() {
     />
   ];
 
+  /* return (
+      <EditUserProfile
+          handlePickImage={handlePickImage}
+          image={image}
+          handleSubmitPress={handleSubmitPress}
+          fields={fields}
+          loading={loading}
+      />
+  ); */
+
   return (
-    <View style={styles.container}>
-      <Loader loading={loading} />
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
-        <KeyboardAvoidingView style={styles.formContainer} enabled>
-          {fields.map((field) => (
-            <View>{field}</View>
-          ))}
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
-            <Text style={styles.submitButtonText}>Actualizar!</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ScrollView>
-    </View>
+    <EditUserProfile
+      handlePickImage={handlePickImage}
+      image={profPicUrl}
+      handleSubmitPress={handleSubmitPress}
+      fields={fields}
+      loading={loading}
+      test={profPicUrl}
+    />
   );
 }
-
-// UserProfileContainer.propTypes = {
-//   route: shape({
-//     params: shape.isRequired
-//   }).isRequired
-// };

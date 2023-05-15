@@ -2,12 +2,25 @@ import { shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import { fetchUserProfileByUsername } from '../../requests';
+import getProfilePicURL from '../../utils/profilePicURL';
 
 import SearchedProfile from './layout';
 
 export default function SearchedProfileContainer({ route }) {
   const [data, setData] = useState([]);
   const { username } = route.params;
+  const [profPicUrl, setProfPicUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProfPicUrl = async () => {
+    const url = await getProfilePicURL(username);
+    setProfPicUrl(url);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProfPicUrl();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -18,7 +31,7 @@ export default function SearchedProfileContainer({ route }) {
     fetchData();
   }, []);
 
-  return <SearchedProfile data={data} />;
+  return <SearchedProfile data={data} profPicUrl={profPicUrl} loading={loading} />;
 }
 
 SearchedProfileContainer.propTypes = {
