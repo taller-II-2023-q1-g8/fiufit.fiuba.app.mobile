@@ -3,6 +3,7 @@ import { func, shape } from 'prop-types';
 
 import Loader from '../../components/Loader';
 import { isEmpty } from '../../utils';
+import { fetchPlans } from '../../requests';
 import texts from '../../texts';
 
 import SearchTrainingPlans from './layout';
@@ -16,15 +17,9 @@ export default function SearchPlansScreen({ navigation }) {
 
   useEffect(() => {
     async function fetchData() {
-      // const response = await fetchUsersByUsername('');
-      // const json = await response.json();
-      // setData(json.message);
-      setData([
-        { title: 'Plan de la Fiuba', difficulty: 'EASY', trainingType: 'LEGS' },
-        { title: 'Road To Ingeniero', difficulty: 'MEDIUM', trainingType: 'ARMS' },
-        { title: 'Duro como final de AM3', difficulty: 'HARD', trainingType: 'LEGS' },
-        { title: 'Fuerte como el café del comedor', difficulty: 'MEDIUM', trainingType: 'ABDOMINAL' }
-      ]);
+      const response = await fetchPlans('');
+      const json = await response.json();
+      setData(json);
     }
     fetchData();
   }, []);

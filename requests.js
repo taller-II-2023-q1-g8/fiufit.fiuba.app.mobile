@@ -48,6 +48,8 @@ export const fetchUserMetricsByUsername = async (username) =>
 export const fetchUserGoalsByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/goals?username=${username}`);
 
+export const fetchPlans = async () => fetchData('https://fiufit-plans2.onrender.com/api/v1/plans');
+
 export const createGoalRequest = async (values) =>
   fetch('https://api-gateway-k1nl.onrender.com/goals', {
     method: 'POST',
