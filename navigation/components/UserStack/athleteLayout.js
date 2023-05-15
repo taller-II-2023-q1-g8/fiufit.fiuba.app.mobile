@@ -16,6 +16,7 @@ import EditUserProfile from '../../../screens/EditUserProfile';
 import SearchedTrainingPlan from '../../../screens/SearchedTrainingPlan';
 import TrainingInProgress from '../../../screens/TrainingInProgress';
 import PersonalGoals from '../../../screens/PersonalGoals';
+import CreateGoal from '../../../screens/CreateGoal';
 
 function SearchUsersScreens() {
   const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ function PersonalGoalsScreens() {
   return (
     <Stack.Navigator>
       <Stack.Screen name={texts.PersonalGoals.name} component={PersonalGoals} options={{ title: '' }} />
+      <Stack.Screen name={texts.CreateGoal.name} component={CreateGoal} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }

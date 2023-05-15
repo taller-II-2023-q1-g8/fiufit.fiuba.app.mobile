@@ -254,7 +254,12 @@ export default function RegisterContainer() {
     />
   ];
   const fields3 = [
-    <DateField error={birthdateError} onChangeText={handleOnBirthdateChange} />,
+    <DateField
+      title={texts.Fields.birthdateTitle}
+      placeholder={texts.Fields.birthdatePlaceholder}
+      error={birthdateError}
+      onChangeText={handleOnBirthdateChange}
+    />,
     <TextField
       defaultValue={height}
       error={heightError}

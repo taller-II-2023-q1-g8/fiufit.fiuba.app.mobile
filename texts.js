@@ -77,9 +77,15 @@ const texts = {
   EditUserProfile: {
     name: 'EditUserProfile'
   },
+  CreateGoal: {
+    name: 'CreateGoal',
+    createGoalTitle: 'Agregá una Meta'
+  },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
     birthdatePlaceholder: 'Seleccioná tu fecha de nacimiento',
+    deadlineTitle: 'Fecha límite para cumplir la meta',
+    deadlinePlaceholder: 'Hacé Click',
     emailTitle: 'Email',
     emailPlaceholder: 'Ingresá tu email',
     nameTitle: 'Nombre',
@@ -98,7 +104,13 @@ const texts = {
     weightTitle: 'Peso',
     weightPlaceholder: 'Introduzca su peso en kg',
     heightTitle: 'Altura',
-    heightPlaceholder: 'Introduzca su altura en cm'
+    heightPlaceholder: 'Introduzca su altura en cm',
+    goalExerciseTitle: 'Nombre del Ejercicio',
+    goalExerciseTitlePlaceholder: 'ej: Sentadillas',
+    completionWeightTitle: 'Peso en Kg',
+    goalCompletionWeightPlaceholder: 'ej: 25',
+    completionPlansTitle: 'Cantidad de Planes',
+    goalCompletionPlansPlaceholder: 'ej: 5'
   },
   App: {
     headerTitle: 'fiuFIT'

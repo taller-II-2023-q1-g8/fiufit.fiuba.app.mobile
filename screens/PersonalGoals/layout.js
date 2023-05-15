@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { array, object } from 'prop-types';
+import { array, object, func } from 'prop-types';
 
 import { colors } from '../../colors';
 
@@ -101,7 +101,7 @@ function Goal({ goal }) {
   }
 }
 
-export default function PersonalGoals({ goals }) {
+export default function PersonalGoals({ goals, handleAddGoal }) {
   return (
     <ScrollView>
       <View style={{ padding: 10, alignItems: 'center', flexDirection: 'row' }}>
@@ -114,6 +114,7 @@ export default function PersonalGoals({ goals }) {
             backgroundColor: colors.purple,
             borderRadius: 10
           }}
+          onPress={handleAddGoal}
         >
           <Text style={{ color: 'white', padding: 3 }}>Agregar</Text>
         </TouchableOpacity>
@@ -126,7 +127,8 @@ export default function PersonalGoals({ goals }) {
 }
 
 PersonalGoals.propTypes = {
-  goals: array.isRequired
+  goals: array.isRequired,
+  handleAddGoal: func.isRequired
 };
 
 TrainingPlanCompletion.propTypes = {

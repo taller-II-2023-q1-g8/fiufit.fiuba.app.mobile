@@ -43,7 +43,18 @@ export const fetchTrainingPlanByTitle = async (planTitle) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/plan?title=${planTitle}`);
 
 export const fetchUserMetricsByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/metric?username=${username}`);
+  fetchData(`https://api-gateway-k1nl.onrender.com/metrics?username=${username}`);
 
 export const fetchUserGoalsByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/goal?username=${username}`);
+  fetchData(`https://api-gateway-k1nl.onrender.com/goals?username=${username}`);
+
+export const createGoalRequest = async (values) =>
+  fetch('https://api-gateway-k1nl.onrender.com/goals', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify(values)
+  });
