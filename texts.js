@@ -24,12 +24,10 @@ const texts = {
     forgotPasswordTitle: 'Reinicia tu contraseña',
     submitButtonText: 'Enviar email de reinicio'
   },
-  AddPlan: {
-    name: 'Add Plan'
-  },
+  AddPlan: { name: 'Add Plan', title: 'Create Plan' },
   Home: {
     name: 'Home',
-    homeTitle: 'Home',
+    title: 'Inicio',
     closeGoalsTitle: 'Tus Metas Cercanas',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',
@@ -82,12 +80,20 @@ const texts = {
     personalMetricsTitle: 'Métricas personales',
     submitButtonText: 'Guardar'
   },
+  PersonalPlans: {
+    name: 'PersonalPlans',
+    submitButtonText: 'Guardar'
+  },
   EditUserProfile: {
     name: 'EditUserProfile'
   },
   CreateGoal: {
     name: 'CreateGoal',
     createGoalTitle: 'Agregá una Meta'
+  },
+  CreatePlan: {
+    name: 'CreatePlan',
+    createPlanTitle: 'Creá un Plan'
   },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
@@ -118,14 +124,25 @@ const texts = {
     completionWeightTitle: 'Peso en Kg',
     goalCompletionWeightPlaceholder: 'ej: 25',
     completionPlansTitle: 'Cantidad de Planes',
-    goalCompletionPlansPlaceholder: 'ej: 5'
+    goalCompletionPlansPlaceholder: 'ej: 5',
+    planTitlePlaceholder: 'Titulo del Plan de entrenamiento',
+    planTitle: 'Titulo',
+    planDescriptionPlaceholder: 'Descripción del Plan de entrenamiento',
+    planDescription: 'Descripción',
+    planTagsPlaceholder: 'Tags del Plan de entrenamiento',
+    planTags: 'Tags',
+    planExternalIDPlaceholder: 'ID del Trainer',
+    planExternalID: 'ID del Trainer'
   },
   App: {
     headerTitle: 'fiuFIT'
   },
   Commons: {
     focusedIcon: '-outline'
-  }
+  },
+  SearchPlansStack: { name: 'SearchPlansStack', title: 'Search Plans' },
+  SearchUsersStack: { name: 'SearchUsersStack', title: 'Search Users' },
+  UserProfileStack: { name: 'UserProfileStack', title: 'Profile' }
 };
 
 export default texts;
