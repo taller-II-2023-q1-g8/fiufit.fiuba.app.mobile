@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import PropTypes, { string, bool, func, array } from 'prop-types';
+import { string, bool, func, array } from 'prop-types';
 
 import Loader from '../../components/Loader';
 import defaultProfPic from '../../assets/profile-pic-def.png';
