@@ -1,13 +1,11 @@
-import { shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import TrainerPlanView from './layout';
 
-export default function TrainerPlanViewContainer({ route }) {
+export default function TrainerPlanViewContainer() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { title } = route.params;
-  console.log('ROUTE1:', route);
+  // console.log('ROUTE1:', route);
   useEffect(() => {
     async function fetchData() {
       // const response = await fetchTrainingPlanByTitle(username);
@@ -34,15 +32,15 @@ export default function TrainerPlanViewContainer({ route }) {
     }
     fetchData();
   }, []);
-  const handleCalificationPress = (planTitle) => {
-    console.log(planTitle);
+  const handleCalificationPress = (/* planTitle */) => {
+    // console.log(planTitle);
   };
 
   return <TrainerPlanView data={data} loading={loading} handleCalificationPress={handleCalificationPress} />;
 }
 
-TrainerPlanViewContainer.propTypes = {
-  route: shape({
-    params: shape.isRequired
-  }).isRequired
-};
+// TrainerPlanViewContainer.propTypes = {
+//   route: shape({
+//     params: shape.isRequired
+//   }).isRequired
+// };

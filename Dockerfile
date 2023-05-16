@@ -8,5 +8,5 @@ COPY . .
 # RUN npm install --global yarn
 RUN yarn install
 
-CMD npm run start
+ENTRYPOINT npx expo start --dev-client
 # CMD tail -f /dev/null

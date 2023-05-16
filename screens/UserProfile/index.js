@@ -10,7 +10,7 @@ import UserProfile from './layout';
 
 export default function UserProfileContainer({ navigation }) {
   const [data, setData] = useState([]);
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
 

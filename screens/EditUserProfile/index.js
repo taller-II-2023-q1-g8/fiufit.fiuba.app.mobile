@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Image, View } from 'react-native';
+import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes } from 'firebase/storage';
 
-import { auth, storage } from '../../firebaseConfig';
-import { fetchUserByEmail, fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
+import { storage } from '../../firebaseConfig';
+import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
-import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
+import { emailFieldType, phoneFieldType } from '../../components/Fields/constants';
 import SelectField from '../../components/Fields/SelectField';
 import getProfilePicURL from '../../utils/profilePicURL';
 
 import EditUserProfile from './layout';
-import { styles } from './styles';
 
 export default function EditUserProfileContainer() {
   const [data, setData] = useState([]);
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,13 +46,11 @@ export default function EditUserProfileContainer() {
   const [username, setUsername] = useState(data.username || '');
 
   const handlePickImage = async () => {
-    // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
       allowsEditing: true
     });
-    console.log(result.uri);
 
     const cloudProfPicPath = 'profile-pics'.concat('/', username, '.jpg');
     const cloudProfilePicRef = ref(storage, cloudProfPicPath);
@@ -65,8 +62,7 @@ export default function EditUserProfileContainer() {
 
         setProfPicUrl(result.uri);
       } catch (error) {
-        alert("Couldn't upload image!");
-        console.log('Error uploading image:', error);
+        Alert.alert("Couldn't upload image!");
       }
     }
   };
@@ -84,7 +80,6 @@ export default function EditUserProfileContainer() {
   const handleSubmitPress = async () => {
     setLoading(true);
 
-    console.log('a', { data });
     const values = {
       username: username || '',
       firstname: name || '',
@@ -105,12 +100,10 @@ export default function EditUserProfileContainer() {
         Alert.alert('Actualizado correctamente!', '');
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
     setLoading(false);
   };
-
-  const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
   const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnGenderChange = (userGender) => setGender(userGender);
@@ -119,29 +112,37 @@ export default function EditUserProfileContainer() {
   const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
   const fieldTexts = texts.Fields;
 
-  console.log({ data, name, username });
   const fields = [
     <TextField
+      key="nameField"
       defaultValue={name}
       onChangeText={handleOnNameChange}
       placeholder={fieldTexts.namePlaceholder}
       title={fieldTexts.nameTitle}
     />,
     <TextField
+      key="usernameField"
       defaultValue={username}
       onChangeText={handleOnUsernameChange}
       placeholder={fieldTexts.usernamePlaceholder}
       title={fieldTexts.usernameTitle}
     />,
     <TextField
+      key="emailField"
       defaultValue={email}
       keyboardType={emailFieldType}
       onChangeText={handleOnEmailChange}
       placeholder={fieldTexts.emailPlaceholder}
       title={fieldTexts.emailTitle}
     />,
-    <SelectField defaultValue={gender} onChangeText={handleOnGenderChange} title={fieldTexts.genderTitle} />,
+    <SelectField
+      key="genderField"
+      defaultValue={gender}
+      onChangeText={handleOnGenderChange}
+      title={fieldTexts.genderTitle}
+    />,
     <TextField
+      key="phoneField"
       defaultValue={phone}
       keyboardType={phoneFieldType}
       onChangeText={handleOnPhoneChange}
@@ -162,12 +163,11 @@ export default function EditUserProfileContainer() {
 
   return (
     <EditUserProfile
-      handlePickImage={handlePickImage}
-      image={profPicUrl}
-      handleSubmitPress={handleSubmitPress}
       fields={fields}
+      handlePickImage={handlePickImage}
+      handleSubmitPress={handleSubmitPress}
+      image={profPicUrl}
       loading={loading}
-      test={profPicUrl}
     />
   );
 }

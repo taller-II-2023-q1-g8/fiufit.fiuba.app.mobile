@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Image, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import PropTypes, { arrayOf, bool, func } from 'prop-types';
+import PropTypes, { bool, func } from 'prop-types';
 
 import GmailLogo from '../../assets/gmail_logo.png';
 import Loader from '../../components/Loader';

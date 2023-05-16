@@ -35,7 +35,7 @@ const texts = {
   },
   TrainerHome: {
     name: 'Trainer Home',
-    homeTitle: 'Trainer Home',
+    homeTitle: 'Inicio de Trainer',
     iconTitle: 'Home',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',

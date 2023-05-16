@@ -6,11 +6,12 @@ import React from 'react';
 import { colors } from '../../../../../colors';
 import { useStateValue } from '../../../../../utils/state/state';
 import texts from '../../../../../texts';
+import AddPlanScreen from '../../../../../screens/AddPlan';
 
 import TrainerPlanStack from './components/TrainerPlansStack';
 
 export default function TrainerStack({ tabBarIcons }) {
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const Tab = createBottomTabNavigator();
   return state.athleteScreen ? null : (
     <NavigationContainer>
@@ -23,6 +24,11 @@ export default function TrainerStack({ tabBarIcons }) {
         })}
       >
         <Tab.Screen component={TrainerPlanStack} name={texts.TrainerHome.iconTitle} />
+        <Tab.Screen
+          component={AddPlanScreen}
+          name={texts.AddPlan.name}
+          options={{ title: texts.AddPlan.title }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

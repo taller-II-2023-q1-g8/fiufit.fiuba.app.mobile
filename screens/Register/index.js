@@ -3,12 +3,7 @@ import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import {
-  emailFieldType,
-  numericFieldType,
-  passwordFieldType,
-  phoneFieldType
-} from '../../components/Fields/constants';
+import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
 import { registerRequest } from '../../requests';
 import DateField from '../../components/Fields/DateField';
 import SelectField from '../../components/Fields/SelectField';
@@ -32,7 +27,7 @@ export default function RegisterContainer() {
   const [step0Error, setStep0Error] = useState(false);
   const [step1Error, setStep1Error] = useState(false);
 
-  const [birthdate, setBirthdate] = useState('');
+  const [, setBirthdate] = useState('');
   const [birthdateError, setBirthdateError] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
@@ -173,13 +168,13 @@ export default function RegisterContainer() {
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await registerRequest(values);
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         Alert.alert('Bienvenido', 'Registro exitoso');
         await signInWithEmailAndPassword(auth, email, password);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
     setLoading(false);
   };
@@ -199,6 +194,7 @@ export default function RegisterContainer() {
 
   const fields1 = [
     <TextField
+      key="emailField"
       defaultValue={email}
       error={mailError}
       keyboardType={emailFieldType}
@@ -207,6 +203,7 @@ export default function RegisterContainer() {
       title={fieldTexts.emailTitle}
     />,
     <TextField
+      key="usernameField"
       defaultValue={username}
       error={usernameError}
       onChangeText={handleOnUsernameChange}
@@ -214,6 +211,7 @@ export default function RegisterContainer() {
       title={fieldTexts.usernameTitle}
     />,
     <TextField
+      key="passwordField"
       defaultValue={password}
       error={passwordError}
       keyboardType={passwordFieldType}
@@ -225,6 +223,7 @@ export default function RegisterContainer() {
 
   const fields2 = [
     <TextField
+      key="nameField"
       defaultValue={name}
       error={nameError}
       onChangeText={handleOnNameChange}
@@ -232,6 +231,7 @@ export default function RegisterContainer() {
       title={fieldTexts.nameTitle}
     />,
     <TextField
+      key="lastnameField"
       defaultValue={lastname}
       error={lastnameError}
       onChangeText={handleOnLastNameChange}
@@ -239,12 +239,14 @@ export default function RegisterContainer() {
       title={fieldTexts.lastnameTitle}
     />,
     <SelectField
+      key="genderField"
       defaultValue={gender}
       error={genderError}
       onChangeText={handleOnGenderChange}
       title={fieldTexts.genderTitle}
     />,
     <TextField
+      key="phoneField"
       defaultValue={phone}
       error={phoneError}
       keyboardType={phoneFieldType}
@@ -255,12 +257,14 @@ export default function RegisterContainer() {
   ];
   const fields3 = [
     <DateField
+      key="birthdateField"
       title={texts.Fields.birthdateTitle}
       placeholder={texts.Fields.birthdatePlaceholder}
       error={birthdateError}
       onChangeText={handleOnBirthdateChange}
     />,
     <TextField
+      key="heightField"
       defaultValue={height}
       error={heightError}
       onChangeText={handleOnHeightChange}
@@ -268,6 +272,7 @@ export default function RegisterContainer() {
       title={fieldTexts.heightTitle}
     />,
     <TextField
+      key="weightField"
       defaultValue={weight}
       error={weightError}
       onChangeText={handleOnWeightChange}

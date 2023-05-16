@@ -4,13 +4,8 @@ import PropTypes from 'prop-types';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-import {
-  emailFieldType,
-  passwordFieldType,
-  phoneFieldType,
-  textFieldType
-} from '../../components/Fields/constants';
-import { fetchUserByEmail, fetchUsersByUsername, registerRequest } from '../../requests';
+import { phoneFieldType, textFieldType } from '../../components/Fields/constants';
+import { fetchUsersByUsername, registerRequest } from '../../requests';
 import DateField from '../../components/Fields/DateField';
 import SelectField from '../../components/Fields/SelectField';
 import TextField from '../../components/Fields/TextField';
@@ -123,11 +118,11 @@ export default function FederatedRegisterContainer() {
       is_federated: true
     };
     // Ver como necesita el back weight y height
-    console.log(values);
+    // console.log(values);
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await registerRequest(values);
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         Alert.alert('Bienvenido', 'Registro exitoso');
         const googleCredential = GoogleAuthProvider.credential(user.idToken);
@@ -135,7 +130,7 @@ export default function FederatedRegisterContainer() {
         await signInWithCredential(auth, googleCredential);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
     setLoading(false);
   };
@@ -150,6 +145,7 @@ export default function FederatedRegisterContainer() {
   const handleOnWeightChange = (userWeight) => setWeight(parseInt(userWeight, 10));
   const step1 = [
     <TextField
+      key="usernameField"
       error={usernameError}
       keyboardType={textFieldType}
       onChangeText={handleOnUsernameChange}
@@ -157,13 +153,20 @@ export default function FederatedRegisterContainer() {
       title={fieldTexts.usernameTitle}
     />,
     <DateField
+      key="birthdateField"
       title={texts.Fields.birthdateTitle}
       placeholder={texts.Fields.birthdatePlaceholder}
       error={birthdateError}
       onChangeText={handleOnBirthdateChange}
     />,
-    <SelectField error={genderError} onChangeText={handleOnGenderChange} title={fieldTexts.genderTitle} />,
+    <SelectField
+      key="genderField"
+      error={genderError}
+      onChangeText={handleOnGenderChange}
+      title={fieldTexts.genderTitle}
+    />,
     <TextField
+      key="phoneField"
       error={phoneError}
       keyboardType={phoneFieldType}
       onChangeText={handleOnPhoneChange}
@@ -173,6 +176,7 @@ export default function FederatedRegisterContainer() {
   ];
   const step2 = [
     <TextField
+      key="heightField"
       defaultValue={height}
       error={heightError}
       keyboardType={phoneFieldType}
@@ -181,6 +185,7 @@ export default function FederatedRegisterContainer() {
       title={fieldTexts.heightTitle}
     />,
     <TextField
+      key="weightField"
       defaultValue={weight}
       error={weightError}
       keyboardType={phoneFieldType}

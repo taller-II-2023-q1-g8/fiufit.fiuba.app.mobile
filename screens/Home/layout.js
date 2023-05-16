@@ -67,8 +67,6 @@ export default function Home({
 Home.propTypes = {
   goals: array,
   username: string.isRequired,
-  handleProfile: func.isRequired,
-  handleSearchUsers: func.isRequired,
   handleSignOutPress: func.isRequired,
   loading: bool.isRequired,
   handleTrainerHome: func.isRequired

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import PropTypes, { bool, func, number } from 'prop-types';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 
@@ -45,7 +45,9 @@ export default function FederatedRegister({
               label={federatedRegisterTexts.step1Title}
               errors={step1Error}
             >
-              <View>{currentStep === 0 ? step1.map((field) => <View>{field}</View>) : null}</View>
+              <View>
+                {currentStep === 0 ? step1.map((field) => <View key={field.key}>{field}</View>) : null}
+              </View>
             </ProgressStep>
             <ProgressStep
               previousBtnText="Anterior"
@@ -54,7 +56,9 @@ export default function FederatedRegister({
               onSubmit={handleSubmitPress}
               errors={submitError}
             >
-              <View>{currentStep === 1 ? step2.map((field) => <View>{field}</View>) : null}</View>
+              <View>
+                {currentStep === 1 ? step2.map((field) => <View key={field.key}>{field}</View>) : null}
+              </View>
             </ProgressStep>
           </ProgressSteps>
         </KeyboardAvoidingView>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
-import PropTypes, { arrayOf, bool, func } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 
 import Loader from '../../components/Loader';
 import texts from '../../texts';
@@ -31,7 +31,7 @@ export default function ForgotPassword({ fields, handleSubmitPress, loading }) {
 }
 
 ForgotPassword.propTypes = {
-  fields: PropTypes.array.isRequired,
+  fields: array.isRequired,
   handleSubmitPress: func.isRequired,
   loading: bool.isRequired
 };

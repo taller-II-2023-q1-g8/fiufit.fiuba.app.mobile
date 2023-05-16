@@ -41,14 +41,17 @@ export const fetchUserByEmail = async (email) =>
 export const fetchUserProfileByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/user?username=${username}`);
 
-export const fetchTrainingPlanByTitle = async (planTitle) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/plan?title=${planTitle}`);
+export const fetchTrainingPlanByID = async (planID) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/plans/${planID}`);
 
 export const fetchUserMetricsByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/metrics?username=${username}`);
 
 export const fetchUserGoalsByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/goals?username=${username}`);
+
+export const fetchGoalByID = async (goalID) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/goals/${goalID}`);
 
 export const createGoalRequest = async (values) =>
   fetch('https://api-gateway-k1nl.onrender.com/goals', {
@@ -59,4 +62,28 @@ export const createGoalRequest = async (values) =>
     },
     mode: 'cors',
     body: JSON.stringify(values)
+  });
+
+export const createPlanRequest = async (values) =>
+  fetch('https://fiufit-plans2.onrender.com/api/v1/plans', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify(values)
+  });
+
+export const fetchTrainersID = async () => fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers`);
+
+export const fetchPlansByTrainerID = async (id) =>
+  fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify(id)
   });

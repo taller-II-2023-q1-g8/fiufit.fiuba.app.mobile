@@ -1,12 +1,9 @@
 import { Text, View, ScrollView, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import React from 'react';
-import PropTypes, { bool, func, number, string, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 
 import { scrollviewStyle, styles } from '../Register/styles';
-import Loader from '../../components/Loader';
 import texts from '../../texts';
-import Register from '../Register/layout';
-import Login from '../Login/layout';
 
 export default function CreateGoal({
   type,

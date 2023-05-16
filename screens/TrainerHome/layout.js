@@ -1,14 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  FlatList
-} from 'react-native';
+import { FlatList, Image, KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
 import { string, bool, func, array } from 'prop-types';
 
 import texts from '../../texts';
@@ -16,7 +8,7 @@ import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import Loader from '../../components/Loader';
 
-import { scrollviewStyle, styles } from './styles';
+import { styles } from './styles';
 
 const trainerHomeTexts = texts.TrainerHome;
 
@@ -55,15 +47,15 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
           <StatusBar />
           <KeyboardAvoidingView style={styles.formContainer} enabled>
             <Text style={styles.title}>{trainerHomeTexts.homeTitle}</Text>
-            <Text>Welcome to trainer home {username}!</Text>
-            <Text>Your training plans: </Text>
+            <Text>Bienvenido al inicio de entrenadores, {username}!</Text>
+            <Text>Tus planes:</Text>
             <FlatList
               data={data}
               renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item.title} />}
               ItemSeparatorComponent={ItemSeparatorView}
             />
             <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
-              <Text style={styles.submitButtonText}>Ir a home de atleta</Text>
+              <Text style={styles.submitButtonText}>Ir a inicio de atleta</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </View>

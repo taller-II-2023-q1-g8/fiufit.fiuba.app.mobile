@@ -1,7 +1,7 @@
 import React from 'react';
 import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import PropTypes, { string, func } from 'prop-types';
+import { array, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import texts from '../../texts';
@@ -11,13 +11,13 @@ import { colors } from '../../colors';
 
 import { styles } from './styles';
 
-function Item({ handleItemPress, username }) {
+function Item({ handleItemPress, itemData }) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(username)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData.id)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{username}</Text>
+          <Text style={styles.profileName}>{itemData.title}</Text>
           <Text style={styles.profileType}>Plan de Entrenamiento</Text>
         </View>
       </View>
@@ -84,7 +84,7 @@ export default function SearchTrainingPlans({
         />
         <FlatList
           data={data}
-          renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item} />}
+          renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
         />
       </KeyboardAvoidingView>
@@ -94,11 +94,11 @@ export default function SearchTrainingPlans({
 
 Item.propTypes = {
   handleItemPress: func,
-  username: string
+  itemData: object.isRequired
 };
 
 SearchTrainingPlans.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: array.isRequired,
   handleItemPress: func,
   handleOnTitleChange: func,
   handleOnDifficultyChange: func,
