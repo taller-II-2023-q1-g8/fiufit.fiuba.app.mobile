@@ -9,10 +9,12 @@ import TrainerIcon from '../../assets/personal-trainer.png';
 import { styles } from './styles';
 
 function Exercises({ exercises }) {
-  return exercises.map((exercise) => (
+  return exercises.map((exercise, index) => (
     <View key={exercise.title} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-      <Text style={{ fontWeight: 'bold' }}>{exercise.muscle.toUpperCase()} | </Text>
-      <Text style={{ width: '80%' }}>{exercise.title}</Text>
+      {/* <Text style={{ fontWeight: 'bold' }}>{exercise.muscles.toUpperCase()} | </Text> */}
+      <Text style={{ width: '80%' }}>
+        {index + 1} | {exercise.title.toUpperCase()}
+      </Text>
     </View>
   ));
 }
