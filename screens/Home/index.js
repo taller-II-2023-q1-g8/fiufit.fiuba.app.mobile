@@ -7,31 +7,29 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { auth } from '../../firebaseConfig';
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
-import { fetchUserGoalsByUsername } from '../../requests';
 
 import Home from './layout';
 
 export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [state, dispatch] = useStateValue();
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState(state.userGoals);
 
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
-      const response = await fetchUserGoalsByUsername(state.user.username);
-      const json = await response.json();
-      console.log('b', json.message);
+      // const response = await fetchUserGoalsByUsername(state.user.username);
+      // const json = await response.json();
+      // console.log('b', json.message);
 
       // Ordeno las goals del usuario según su deadline
-      const sortedGoals = json.message
+      const sortedGoals = goals
         .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
         .filter((goal) => goal.status === 'in_progress');
       const now = new Date();
 
       // de las más cercanas a expirar, muestro 3
       const closestGoals = sortedGoals.filter((goal, index) => index < 3 || new Date(goal.deadline) < now);
-      console.log('bb', closestGoals);
 
       setGoals(closestGoals);
       setLoading(false);
@@ -49,7 +47,6 @@ export default function HomeScreen({ navigation }) {
       }
       await signOut(auth);
     } catch (error) {
-      console.log(error);
       setLoading(false);
       return;
     }
@@ -77,7 +74,7 @@ export default function HomeScreen({ navigation }) {
       handleSignOutPress={handleSignOutPress}
       handleTrainerHome={handleTrainerHome}
       handleProfile={() => handleProfile()}
-      handleSearchUsers={() => handleSearchUsers(navigation)}
+      handleSearchUsers={() => handleSearchUsers}
       loading={loading}
     />
   );

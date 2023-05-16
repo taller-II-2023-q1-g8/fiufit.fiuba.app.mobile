@@ -45,7 +45,7 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
         </View>
       </View>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
-        <Text style={styles.title}>Stats</Text>
+        <Text style={styles.title}>Metas</Text>
         <TouchableOpacity activeOpacity={0.5} onPress={handleAddStat}>
           <Text
             style={{
@@ -66,9 +66,9 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
         </TouchableOpacity>
       </View>
       <Text>...</Text>
-      <Text style={styles.title}>Training</Text>
+      <Text style={styles.title}>Entrenamientos</Text>
       <Text>...</Text>
-      <Text style={styles.title}>Photos</Text>
+      <Text style={styles.title}>Fotos</Text>
       <Text>...</Text>
       {/* {Object.keys(data).map((key) => {
         const value = data[key];

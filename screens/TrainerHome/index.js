@@ -3,7 +3,7 @@ import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
-import { fetchPlansByTrainerID, fetchTrainersID, fetchUserByEmail } from '../../requests';
+import { fetchPlansByTrainerID, fetchTrainersID } from '../../requests';
 
 import TrainerHome from './layout';
 
@@ -28,7 +28,6 @@ export default function TrainerHomeScreen({ navigation }) {
       };
       const plans = await fetchPlansByTrainerID(idMessage);
       const plansJson = await plans.json();
-      console.log(plansJson);
       dispatch({
         type: 'addPlansData',
         plansData: plansJson
@@ -36,7 +35,6 @@ export default function TrainerHomeScreen({ navigation }) {
       setData(plansJson);
       setLoading(false);
     }
-    console.log('navigation', navigation.isFocused());
     fetchData();
   }, []);
   const handleItemPress = (planTitle) => {

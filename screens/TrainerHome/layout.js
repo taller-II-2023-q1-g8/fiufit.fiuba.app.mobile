@@ -47,15 +47,15 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
           <StatusBar />
           <KeyboardAvoidingView style={styles.formContainer} enabled>
             <Text style={styles.title}>{trainerHomeTexts.homeTitle}</Text>
-            <Text>Welcome to trainer home {username}!</Text>
-            <Text>Your training plans: </Text>
+            <Text>Bienvenido al inicio de entrenadores, {username}!</Text>
+            <Text>Tus planes:</Text>
             <FlatList
               data={data}
               renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item.title} />}
               ItemSeparatorComponent={ItemSeparatorView}
             />
             <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
-              <Text style={styles.submitButtonText}>Ir a home de atleta</Text>
+              <Text style={styles.submitButtonText}>Ir a inicio de atleta</Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </View>

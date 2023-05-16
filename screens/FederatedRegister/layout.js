@@ -45,7 +45,9 @@ export default function FederatedRegister({
               label={federatedRegisterTexts.step1Title}
               errors={step1Error}
             >
-              <View>{currentStep === 0 ? step1.map((field) => <View>{field}</View>) : null}</View>
+              <View>
+                {currentStep === 0 ? step1.map((field) => <View key={field.key}>{field}</View>) : null}
+              </View>
             </ProgressStep>
             <ProgressStep
               previousBtnText="Anterior"
@@ -54,7 +56,9 @@ export default function FederatedRegister({
               onSubmit={handleSubmitPress}
               errors={submitError}
             >
-              <View>{currentStep === 1 ? step2.map((field) => <View>{field}</View>) : null}</View>
+              <View>
+                {currentStep === 1 ? step2.map((field) => <View key={field.key}>{field}</View>) : null}
+              </View>
             </ProgressStep>
           </ProgressSteps>
         </KeyboardAvoidingView>

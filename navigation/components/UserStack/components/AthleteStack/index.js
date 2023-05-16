@@ -7,7 +7,6 @@ import { colors } from '../../../../../colors';
 import { useStateValue } from '../../../../../utils/state/state';
 import HomeScreen from '../../../../../screens/Home';
 import texts from '../../../../../texts';
-import AddPlanScreen from '../../../../../screens/AddPlan';
 
 import SearchUsersStack from './components/SearchUsersStack';
 import SearchPlansStack from './components/SearchPlansStack';
@@ -15,7 +14,7 @@ import UserProfileStack from './components/UserProfileStack';
 
 export default function AthleteStack({ tabBarIcons }) {
   const Tab = createBottomTabNavigator();
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   return state.athleteScreen ? (
     <NavigationContainer>
       <Tab.Navigator

@@ -5,12 +5,11 @@ import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import { useStateValue } from '../../utils/state/state';
 import GenericSelectField from '../../components/Fields/GenericSelectField';
-import { createPlanRequest } from '../../requests';
 
 import CreatePlan from './layout';
 
 export default function CreatePlanContainer({ navigation }) {
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const [difficulty, setDifficulty] = useState('NORMAL');
   // const [difficultyError, setDifficultyError] = useState('');
   const [title, setTitle] = useState('');
@@ -52,23 +51,7 @@ export default function CreatePlanContainer({ navigation }) {
     values.difficulty = difficulty;
     values.tags = tags;
     values.trainer_id = externalID;
-    console.log('valores: ', values);
-    const response = await createPlanRequest(values)
-      .then((r) => {
-        console.log('PLAN CREATED');
-        console.log(r);
-        console.log(values);
-        const newState = state.plansData;
-        newState.push(values);
-        console.log(newState);
-        dispatch({
-          type: 'addPlansData',
-          plansData: newState
-        });
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-      });
+    // console.log('valores: ', values);
     // const json = await response.json();
     // const planID = json.id;
     // navigation.navigate(texts.SearchedTrainingPlan.name, { planID } );

@@ -100,7 +100,7 @@ export default function EditUserProfileContainer() {
         Alert.alert('Actualizado correctamente!', '');
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
     setLoading(false);
   };
@@ -114,26 +114,35 @@ export default function EditUserProfileContainer() {
 
   const fields = [
     <TextField
+      key="nameField"
       defaultValue={name}
       onChangeText={handleOnNameChange}
       placeholder={fieldTexts.namePlaceholder}
       title={fieldTexts.nameTitle}
     />,
     <TextField
+      key="usernameField"
       defaultValue={username}
       onChangeText={handleOnUsernameChange}
       placeholder={fieldTexts.usernamePlaceholder}
       title={fieldTexts.usernameTitle}
     />,
     <TextField
+      key="emailField"
       defaultValue={email}
       keyboardType={emailFieldType}
       onChangeText={handleOnEmailChange}
       placeholder={fieldTexts.emailPlaceholder}
       title={fieldTexts.emailTitle}
     />,
-    <SelectField defaultValue={gender} onChangeText={handleOnGenderChange} title={fieldTexts.genderTitle} />,
+    <SelectField
+      key="genderField"
+      defaultValue={gender}
+      onChangeText={handleOnGenderChange}
+      title={fieldTexts.genderTitle}
+    />,
     <TextField
+      key="phoneField"
       defaultValue={phone}
       keyboardType={phoneFieldType}
       onChangeText={handleOnPhoneChange}

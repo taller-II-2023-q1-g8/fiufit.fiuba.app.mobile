@@ -1,14 +1,14 @@
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useEffect, useState } from 'react';
-import { object, string } from 'prop-types';
+import { string } from 'prop-types';
 
 import texts from '../../../texts';
 import ICONS from '../../constants';
-import { fetchUserByEmail } from '../../../requests';
+import { fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
 
 import UserStack from './layout';
 
-export default function UserStackContainer({ email, token }) {
+export default function UserStackContainer({ email }) {
   // Token es una promise, hay que ejecutarla en algun momento
   // Cargar aca el usuario en initial state y ejecutar la token promise
   // Para tener el token de validacion para hacer requests
@@ -18,10 +18,14 @@ export default function UserStackContainer({ email, token }) {
   const fetchUser = async () => {
     const response = await fetchUserByEmail(email);
     const json = await response.json();
+    const goals = await fetchUserGoalsByUsername(json.message.username);
+    const goalsJson = await goals.json();
+
     const initialState = {
       user: json.message,
       athleteScreen: true,
-      plansData: []
+      plansData: [],
+      userGoals: goalsJson.message
     };
     setData(initialState);
     setLoading(false);
@@ -47,6 +51,11 @@ export default function UserStackContainer({ email, token }) {
         return {
           ...state,
           plansData: action.plansData
+        };
+      case 'addNewGoal':
+        return {
+          ...state,
+          userGoals: action.newGoal
         };
       default:
         return state;
@@ -91,6 +100,6 @@ export default function UserStackContainer({ email, token }) {
 }
 
 UserStackContainer.propTypes = {
-  email: string.isRequired,
-  token: object.isRequired
+  email: string.isRequired
+  // token: object.isRequired
 };

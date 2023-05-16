@@ -6,19 +6,19 @@ import texts from '../../texts';
 import DateField from '../../components/Fields/DateField';
 import { useStateValue } from '../../utils/state/state';
 import GenericSelectField from '../../components/Fields/GenericSelectField';
-import { createGoalRequest } from '../../requests';
+import { createGoalRequest, fetchGoalByID } from '../../requests';
 
 import CreateGoal from './layout';
 
 export default function CreateGoalContainer({ navigation }) {
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
   const [type, setType] = useState('max_weight_lifted_in_exercise');
-  const [typeError, setTypeError] = useState('');
+  const [, setTypeError] = useState('');
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
   const [completionWeight, setCompletionWeight] = useState(0);
   const [completionPlans, setCompletionPlans] = useState(0);
-  const [submitError, setSubmitError] = useState(false);
+  const [, setSubmitError] = useState(false);
 
   const [deadline, setDeadline] = useState('');
   const [deadlineError, setDeadlineError] = useState('');
@@ -75,13 +75,16 @@ export default function CreateGoalContainer({ navigation }) {
         return setSubmitError(true);
     }
 
-    await createGoalRequest(values)
-      .then(() => {
-        console.log('GOD');
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-      });
+    const createGoalResponse = await createGoalRequest(values);
+    const createGoalJson = await createGoalResponse.json();
+    const getGoalResponse = await fetchGoalByID(createGoalJson.message);
+    const getGoalJson = await getGoalResponse.json();
+
+    const newState = state.userGoals.push(getGoalJson.message);
+    dispatch({
+      type: 'addNewGoal',
+      newGoal: newState
+    });
 
     navigation.navigate(texts.PersonalGoals.name);
   };

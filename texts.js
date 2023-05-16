@@ -27,7 +27,7 @@ const texts = {
   AddPlan: { name: 'Add Plan', title: 'Create Plan' },
   Home: {
     name: 'Home',
-    homeTitle: 'Home',
+    title: 'Inicio',
     closeGoalsTitle: 'Tus Metas Cercanas',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',
@@ -35,7 +35,7 @@ const texts = {
   },
   TrainerHome: {
     name: 'Trainer Home',
-    homeTitle: 'Trainer Home',
+    homeTitle: 'Inicio de Trainer',
     iconTitle: 'Home',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',

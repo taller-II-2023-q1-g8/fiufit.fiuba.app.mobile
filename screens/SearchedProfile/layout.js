@@ -37,7 +37,7 @@ export default function SearchedProfile({ data, profPicUrl, loading }) {
           </View>
         </View>
       </View>
-      <Text style={styles.title}>Stats</Text>
+      <Text style={styles.title}>Estadísticas</Text>
       <Text>...</Text>
       <Text style={styles.title}>Training</Text>
       <Text>...</Text>

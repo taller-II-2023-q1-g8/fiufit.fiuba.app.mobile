@@ -11,15 +11,7 @@ import { scrollviewStyle, styles } from './styles';
 
 const homeTexts = texts.Home;
 
-export default function Home({
-  goals,
-  username,
-  handleSignOutPress,
-  handleProfile,
-  handleSearchUsers,
-  loading,
-  handleTrainerHome
-}) {
+export default function Home({ goals, username, handleSignOutPress, loading, handleTrainerHome }) {
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -27,7 +19,7 @@ export default function Home({
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{homeTexts.title}</Text>
-          <Text>Welcome {username}!</Text>
+          <Text>Bienvenido {username}!</Text>
           <Text style={styles.title}>{homeTexts.closeGoalsTitle}</Text>
           {loading ? null : goals.map((goal) => Goal({ goal }))}
           {
@@ -54,8 +46,6 @@ export default function Home({
 Home.propTypes = {
   goals: array,
   username: string.isRequired,
-  handleProfile: func.isRequired,
-  handleSearchUsers: func.isRequired,
   handleSignOutPress: func.isRequired,
   loading: bool.isRequired,
   handleTrainerHome: func.isRequired

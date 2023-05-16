@@ -11,7 +11,7 @@ import AddPlanScreen from '../../../../../screens/AddPlan';
 import TrainerPlanStack from './components/TrainerPlansStack';
 
 export default function TrainerStack({ tabBarIcons }) {
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const Tab = createBottomTabNavigator();
   return state.athleteScreen ? null : (
     <NavigationContainer>

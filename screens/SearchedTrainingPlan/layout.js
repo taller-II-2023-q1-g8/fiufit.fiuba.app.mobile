@@ -45,7 +45,7 @@ export default function SearchedTrainingPlan({
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingVertical: 10 }}>
             <Image style={{ width: 20, height: 20 }} source={TrainerIcon} />
-            <Text style={{ paddingHorizontal: 5 }}>Trainer ID: {trainer}</Text>
+            <Text style={{ paddingHorizontal: 5 }}>Trainer: {trainer}</Text>
           </View>
         </View>
       </View>
