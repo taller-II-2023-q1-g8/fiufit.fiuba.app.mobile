@@ -13,7 +13,7 @@ import {
 } from '../../components/Fields/constants';
 import { auth } from '../../firebaseConfig';
 import texts from '../../texts';
-import { fetchUserByEmail, registerRequest } from '../../requests';
+import { fetchUserByEmail } from '../../requests';
 
 import Login from './layout';
 
@@ -68,7 +68,6 @@ export default function LoginContainer({ navigation }) {
       navigation.navigate(texts.FederatedRegister.name);
       return;
     }
-    console.log(json);
     if (json.message.is_federated) {
       const googleCredential = GoogleAuthProvider.credential(user.idToken);
       // Sign-in the user with the credential

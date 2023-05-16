@@ -26,7 +26,7 @@ export default function Home({
       <Loader loading={loading} />
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <Text style={styles.title}>{homeTexts.homeTitle}</Text>
+          <Text style={styles.title}>{homeTexts.title}</Text>
           <Text>Welcome {username}!</Text>
           <Text style={styles.title}>{homeTexts.closeGoalsTitle}</Text>
           {loading ? null : goals.map((goal) => Goal({ goal }))}

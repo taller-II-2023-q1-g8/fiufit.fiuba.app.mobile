@@ -1,28 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
 import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../utils/state/state';
-import { fetchUsersByUsername } from '../../requests';
 import texts from '../../texts';
+import { fetchPlansByTrainerID, fetchTrainersID, fetchUserByEmail } from '../../requests';
 
 import TrainerHome from './layout';
 
 export default function TrainerHomeScreen({ navigation }) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [state, dispatch] = useStateValue();
+  const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
       // Deberiamos hacer un fetch de los training plans del trainer.
-      setData([
-        { title: 'Plan de la Fiuba', difficulty: 'EASY' },
-        { title: 'Road To Ingeniero', difficulty: 'MEDIUM' },
-        { title: 'Duro como final de AM3', difficulty: 'HARD' },
-        { title: 'Fuerte como el café del comedor', difficulty: 'MEDIUM' }
-      ]);
+      // Haganme mas facil en endpoint!
+      const trainers = await fetchTrainersID();
+      const trainersJson = await trainers.json();
+      const id = trainersJson.find((trainer) => trainer.external_id === state.user.username);
+      if (id === undefined) {
+        setData([]);
+        setLoading(false);
+        return;
+      }
+      const idMessage = {
+        trainer_id: id.id
+      };
+      const plans = await fetchPlansByTrainerID(idMessage);
+      const plansJson = await plans.json();
+      console.log(plansJson);
+      dispatch({
+        type: 'addPlansData',
+        plansData: plansJson
+      });
+      setData(plansJson);
       setLoading(false);
     }
+    console.log('navigation', navigation.isFocused());
     fetchData();
   }, []);
   const handleItemPress = (planTitle) => {

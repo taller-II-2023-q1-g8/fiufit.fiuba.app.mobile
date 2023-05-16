@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import PropTypes, { string, func } from 'prop-types';
+import { string, func, array } from 'prop-types';
 
-import manPic from '../../assets/man.jpeg';
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
 import { colors } from '../../colors';
@@ -76,7 +75,7 @@ Item.propTypes = {
 };
 
 SearchUsers.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: array.isRequired,
   handleItemPress: func,
   handleOnSearchChange: func
 };

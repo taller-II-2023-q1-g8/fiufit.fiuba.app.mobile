@@ -1,8 +1,7 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 
-import manPic from '../../assets/man.jpeg';
 import MoreOptionsIcon from '../../assets/more-options.png';
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
@@ -87,7 +86,7 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
 }
 
 UserProfile.propTypes = {
-  data: bool,
+  data: object,
   handleAddStat: func,
   handleEditProfile: func,
   profPicUrl: string,

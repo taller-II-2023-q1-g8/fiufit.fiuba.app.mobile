@@ -44,7 +44,7 @@ GenericSelectField.propTypes = {
   title: string.isRequired,
   titleStyle: object.isRequired,
   containerStyle: object.isRequired,
-  fieldInputContainerStyle: object.isRequired
+  fieldInputContainerStyle: object
 };
 
 export default GenericSelectField;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, KeyboardAvoidingView, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import PropTypes, { bool, func, number } from 'prop-types';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 

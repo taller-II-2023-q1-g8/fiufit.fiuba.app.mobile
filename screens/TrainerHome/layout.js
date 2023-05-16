@@ -1,14 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  FlatList
-} from 'react-native';
+import { FlatList, Image, KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
 import { string, bool, func, array } from 'prop-types';
 
 import texts from '../../texts';
@@ -16,7 +8,7 @@ import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import Loader from '../../components/Loader';
 
-import { scrollviewStyle, styles } from './styles';
+import { styles } from './styles';
 
 const trainerHomeTexts = texts.TrainerHome;
 

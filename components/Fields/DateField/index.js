@@ -5,9 +5,6 @@ import React, { useState } from 'react';
 
 import { colors } from '../../../colors';
 import styles from '../styles';
-import texts from '../../../texts';
-
-const fieldsTexts = texts.Fields;
 
 function DateField({ onChangeText, title, placeholder, error }) {
   const [date, setDate] = useState(undefined);

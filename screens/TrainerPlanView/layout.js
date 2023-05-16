@@ -1,6 +1,6 @@
-import { Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import React from 'react';
-import { array, bool, func, string } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
@@ -76,7 +76,7 @@ export default function TrainerPlanView({ data, loading, handleCalificationPress
 }
 
 TrainerPlanView.propTypes = {
-  data: bool,
+  data: array,
   loading: bool,
   handleCalificationPress: func
 };
