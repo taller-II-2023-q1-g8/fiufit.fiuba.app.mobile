@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
-import { Text } from 'react-native';
 
-import Loader from '../../components/Loader';
-import { isEmpty } from '../../utils';
-import texts from '../../texts';
 import { fetchPlans } from '../../requests';
+import { isEmpty } from '../../utils';
+import Loader from '../../components/Loader';
+import texts from '../../texts';
 
 import SearchTrainingPlans from './layout';
 
@@ -26,35 +25,36 @@ export default function SearchPlansScreen({ navigation }) {
     fetchData();
   }, []);
 
+  const hasSelectedDifficulty = (difficulty, plan) => difficulty === 'ANY' || difficulty === plan.difficulty;
+  const hasSelectedTag = (tag, plan) => tag === 'ANY' || plan.tags.includes(tag);
+
+  const hasSelectedFilters = (plan, name, difficulty, tag) =>
+    plan.title.includes(name) && hasSelectedDifficulty(difficulty, plan) && hasSelectedTag(tag, plan);
+
+  const filterByName = (plan, name) => hasSelectedFilters(plan, name, difficultySearch, trainingTagSearch);
+
   const filterByDifficulty = (plan, difficulty) =>
-    (difficulty === 'ANY' || difficulty === plan.difficulty) &&
-    (trainingTagSearch === 'ANY' || plan.tags.includes(trainingTagSearch));
+    hasSelectedFilters(plan, titleSearch, difficulty, trainingTagSearch);
 
   const filterByTrainingTag = (plan, trainingTag) =>
-    (difficultySearch === 'ANY' || difficultySearch === plan.difficulty) &&
-    (trainingTag === 'ANY' || plan.tags.includes(trainingTag));
+    hasSelectedFilters(plan, titleSearch, difficultySearch, trainingTag);
 
-  const filterData = (titleToSearch, filterToApllied, filterToUse = () => {}) =>
-    data
-      .filter(
-        (plan) =>
-          plan.title.toLowerCase().includes(titleToSearch.toLowerCase()) && filterToUse(plan, filterToApllied)
-      )
-      .map((plan) => plan.title);
+  const filterData = (filterToApllied, filterToUse = () => {}) =>
+    data.filter((plan) => filterToUse(plan, filterToApllied)).map((plan) => plan.title);
 
   const handleOnTitleChange = (titleToSearch) => {
     setTitleSearch(titleToSearch);
-    setSearchResults(filterData(titleToSearch, difficultySearch));
+    setSearchResults(filterData(titleToSearch, filterByName));
   };
 
   const handleOnDifficultyChange = (difficultyToSearch) => {
     setDifficultySearch(difficultyToSearch);
-    setSearchResults(filterData(titleSearch, difficultyToSearch, filterByDifficulty));
+    setSearchResults(filterData(difficultyToSearch, filterByDifficulty));
   };
 
   const handleOnTrainingTypeChange = (trainingTagToSearch) => {
     setTrainingTagSearch(trainingTagToSearch);
-    setSearchResults(filterData(titleSearch, trainingTagToSearch, filterByTrainingTag));
+    setSearchResults(filterData(trainingTagToSearch, filterByTrainingTag));
   };
 
   const handleItemPress = (planTitle) => {
