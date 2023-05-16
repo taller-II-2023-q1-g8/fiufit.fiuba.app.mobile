@@ -45,7 +45,6 @@ export default function Home({
   handleTrainerHome
 }) {
   return (
-<<<<<<< HEAD
     <MenuProvider>
       <View style={styles.container}>
         <StatusBar />
@@ -62,35 +61,6 @@ export default function Home({
         </ScrollView>
       </View>
     </MenuProvider>
-=======
-    <View style={styles.container}>
-      <StatusBar />
-      <Loader loading={loading} />
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
-        <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <Text style={styles.title}>{homeTexts.title}</Text>
-          <Text>Welcome {username}!</Text>
-          <Text style={styles.title}>{homeTexts.closeGoalsTitle}</Text>
-          {loading ? null : goals.map((goal) => Goal({ goal }))}
-          {
-            <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSignOutPress}>
-              <Text style={styles.submitButtonText}>{homeTexts.submitButtonText}</Text>
-            </TouchableOpacity>
-            /*
-        <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleProfile}>
-          <Text style={styles.submitButtonText}>{homeTexts.profileButtonText}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSearchUsers}>
-          <Text style={styles.submitButtonText}>{homeTexts.searchUsersButtonText}</Text>
-        </TouchableOpacity> */
-          }
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
-            <Text style={styles.submitButtonText}>Ir a home de trainer</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ScrollView>
-    </View>
->>>>>>> f8c509fac396a004f6f856ba24492e265c7db4c9
   );
 }
 
