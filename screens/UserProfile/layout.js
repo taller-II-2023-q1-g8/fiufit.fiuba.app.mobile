@@ -1,4 +1,4 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 
@@ -86,7 +86,7 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
 }
 
 UserProfile.propTypes = {
-  data: bool,
+  data: object,
   handleAddStat: func,
   handleEditProfile: func,
   profPicUrl: string,

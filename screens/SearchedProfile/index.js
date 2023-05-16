@@ -7,7 +7,7 @@ import getProfilePicURL from '../../utils/profilePicURL';
 import SearchedProfile from './layout';
 
 export default function SearchedProfileContainer({ route }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const { username } = route.params;
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);

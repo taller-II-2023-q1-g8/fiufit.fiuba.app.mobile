@@ -76,7 +76,7 @@ export default function TrainerPlanView({ data, loading, handleCalificationPress
 }
 
 TrainerPlanView.propTypes = {
-  data: bool,
+  data: array,
   loading: bool,
   handleCalificationPress: func
 };

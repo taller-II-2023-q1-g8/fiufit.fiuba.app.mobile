@@ -26,11 +26,27 @@ export default function AthleteStack({ tabBarIcons }) {
           tabBarInactiveTintColor: colors.gray
         })}
       >
-        <Tab.Screen component={HomeScreen} name={texts.Home.name} />
-        <Tab.Screen component={SearchUsersStack} name={texts.SearchUsers.name} />
-        <Tab.Screen component={AddPlanScreen} name={texts.AddPlan.name} />
-        <Tab.Screen component={SearchPlansStack} name={texts.SearchTrainingPlans.name} />
-        <Tab.Screen component={UserProfileStack} name={texts.UserProfile.name} />
+        <Tab.Screen component={HomeScreen} name={texts.Home.name} options={{ title: texts.Home.title }} />
+        <Tab.Screen
+          component={SearchUsersStack}
+          name={texts.SearchUsersStack.name}
+          options={{ title: texts.SearchUsersStack.title }}
+        />
+        <Tab.Screen
+          component={AddPlanScreen}
+          name={texts.AddPlan.name}
+          options={{ title: texts.AddPlan.title }}
+        />
+        <Tab.Screen
+          component={SearchPlansStack}
+          name={texts.SearchPlansStack.name}
+          options={{ title: texts.SearchPlansStack.title }}
+        />
+        <Tab.Screen
+          component={UserProfileStack}
+          name={texts.UserProfileStack.name}
+          options={{ title: texts.UserProfileStack.title }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   ) : null;
