@@ -33,11 +33,6 @@ export default function AthleteStack({ tabBarIcons }) {
           options={{ title: texts.SearchUsersStack.title }}
         />
         <Tab.Screen
-          component={AddPlanScreen}
-          name={texts.AddPlan.name}
-          options={{ title: texts.AddPlan.title }}
-        />
-        <Tab.Screen
           component={SearchPlansStack}
           name={texts.SearchPlansStack.name}
           options={{ title: texts.SearchPlansStack.title }}

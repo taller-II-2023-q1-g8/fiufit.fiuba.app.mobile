@@ -3,26 +3,38 @@ import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
+import { fetchPlansByTrainerID, fetchTrainersID, fetchUserByEmail } from '../../requests';
 
 import TrainerHome from './layout';
 
 export default function TrainerHomeScreen({ navigation }) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [state, dispatch] = useStateValue();
+  const [data, setData] = useState([]); // initialState = state.dataPlans?
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
       // Deberiamos hacer un fetch de los training plans del trainer.
-      setData([
-        { title: 'Plan de la Fiuba', difficulty: 'EASY' },
-        { title: 'Road To Ingeniero', difficulty: 'MEDIUM' },
-        { title: 'Duro como final de AM3', difficulty: 'HARD' },
-        { title: 'Fuerte como el café del comedor', difficulty: 'MEDIUM' }
-      ]);
+      // Haganme mas facil en endpoint!
+      const trainers = await fetchTrainersID();
+      const trainersJson = await trainers.json();
+      const id = trainersJson.filter((trainer) => trainer.external_id === state.user.username);
+      const idMessage = {
+        trainer_id: id[0].id
+      };
+      const plans = await fetchPlansByTrainerID(idMessage);
+      const plansJson = await plans.json();
+      console.log(plansJson);
+      /* dispatch({
+        type: 'addPlansData',
+        plansData: plansJson
+      }); */
+      setData(plansJson);
       setLoading(false);
     }
-    fetchData();
-  }, []);
+    if (navigation.isFocused()) {
+      fetchData();
+    }
+  }, [navigation.isFocused()]);
   const handleItemPress = (planTitle) => {
     navigation.navigate(texts.TrainerPlanView.name, { planTitle });
   };

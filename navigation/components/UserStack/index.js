@@ -20,7 +20,8 @@ export default function UserStackContainer({ email, token }) {
     const json = await response.json();
     const initialState = {
       user: json.message,
-      athleteScreen: true
+      athleteScreen: true,
+      plansData: []
     };
     setData(initialState);
     setLoading(false);
@@ -41,6 +42,11 @@ export default function UserStackContainer({ email, token }) {
         return {
           ...state,
           athleteScreen: action.newScreen
+        };
+      case 'addPlansData':
+        return {
+          ...state,
+          plansData: action.plansData
         };
       default:
         return state;
@@ -66,11 +72,13 @@ export default function UserStackContainer({ email, token }) {
     let iconName;
 
     if (route.name === texts.TrainerHome.iconTitle) iconName = focused ? ICONS.HOME : ICONS.FOCUSED_HOME;
-
+    else if (route.name === texts.AddPlan.name) {
+      iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
+      color = 'red';
+    }
     return <Ionicons name={iconName} size={size} color={color} />;
   };
 
-  // Agregar state provider aca?
   return (
     <UserStack
       data={data}

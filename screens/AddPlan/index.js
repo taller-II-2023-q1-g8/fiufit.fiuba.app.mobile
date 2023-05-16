@@ -10,7 +10,7 @@ import { createPlanRequest } from '../../requests';
 import CreatePlan from './layout';
 
 export default function CreatePlanContainer({ navigation }) {
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
   const [difficulty, setDifficulty] = useState('NORMAL');
   const [difficultyError, setDifficultyError] = useState('');
   const [title, setTitle] = useState('');
@@ -54,8 +54,17 @@ export default function CreatePlanContainer({ navigation }) {
     values.trainer_id = externalID;
     console.log('valores: ', values);
     const response = await createPlanRequest(values)
-      .then(() => {
+      .then((r) => {
         console.log('PLAN CREATED');
+        /* console.log(r);
+        console.log(values);
+        const newState = state.plansData;
+        newState.push(values);
+        console.log(newState);
+        dispatch({
+          type: 'addPlansData',
+          plansData: newState
+        }); */
       })
       .catch((error) => {
         console.log('Error:', error);
