@@ -46,13 +46,11 @@ export default function EditUserProfileContainer() {
   const [username, setUsername] = useState(data.username || '');
 
   const handlePickImage = async () => {
-    // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
       allowsEditing: true
     });
-    console.log(result.uri);
 
     const cloudProfPicPath = 'profile-pics'.concat('/', username, '.jpg');
     const cloudProfilePicRef = ref(storage, cloudProfPicPath);
@@ -64,8 +62,7 @@ export default function EditUserProfileContainer() {
 
         setProfPicUrl(result.uri);
       } catch (error) {
-        alert("Couldn't upload image!");
-        console.log('Error uploading image:', error);
+        Alert.alert("Couldn't upload image!");
       }
     }
   };
@@ -83,7 +80,6 @@ export default function EditUserProfileContainer() {
   const handleSubmitPress = async () => {
     setLoading(true);
 
-    console.log('a', { data });
     const values = {
       username: username || '',
       firstname: name || '',
@@ -116,7 +112,6 @@ export default function EditUserProfileContainer() {
   const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
   const fieldTexts = texts.Fields;
 
-  console.log({ data, name, username });
   const fields = [
     <TextField
       defaultValue={name}
@@ -159,12 +154,11 @@ export default function EditUserProfileContainer() {
 
   return (
     <EditUserProfile
-      handlePickImage={handlePickImage}
-      image={profPicUrl}
-      handleSubmitPress={handleSubmitPress}
       fields={fields}
+      handlePickImage={handlePickImage}
+      handleSubmitPress={handleSubmitPress}
+      image={profPicUrl}
       loading={loading}
-      test={profPicUrl}
     />
   );
 }

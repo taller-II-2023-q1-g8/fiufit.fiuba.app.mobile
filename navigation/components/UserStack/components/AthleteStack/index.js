@@ -2,7 +2,6 @@ import { func } from 'prop-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { colors } from '../../../../../colors';
 import { useStateValue } from '../../../../../utils/state/state';
