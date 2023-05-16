@@ -39,7 +39,7 @@ export default function SearchPlansScreen({ navigation }) {
         (plan) =>
           plan.title.toLowerCase().includes(titleToSearch.toLowerCase()) && filterToUse(plan, filterToApllied)
       )
-      .map((plan) => plan.title);
+      .map((plan) => plan);
 
   const handleOnTitleChange = (titleToSearch) => {
     setTitleSearch(titleToSearch);
