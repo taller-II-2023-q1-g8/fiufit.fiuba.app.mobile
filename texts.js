@@ -117,7 +117,15 @@ const texts = {
     completionWeightTitle: 'Peso en Kg',
     goalCompletionWeightPlaceholder: 'ej: 25',
     completionPlansTitle: 'Cantidad de Planes',
-    goalCompletionPlansPlaceholder: 'ej: 5'
+    goalCompletionPlansPlaceholder: 'ej: 5',
+    planTitlePlaceholder: 'Titulo del Plan de entrenamiento',
+    planTitle: 'Titulo',
+    planDescriptionPlaceholder: 'Descripción del Plan de entrenamiento',
+    planDescription: 'Descripción',
+    planTagsPlaceholder: 'Tags del Plan de entrenamiento',
+    planTags: 'Tags',
+    planExternalIDPlaceholder: 'ID del Trainer',
+    planExternalID: 'ID del Trainer'
   },
   App: {
     headerTitle: 'fiuFIT'

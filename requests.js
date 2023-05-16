@@ -60,3 +60,14 @@ export const createGoalRequest = async (values) =>
     mode: 'cors',
     body: JSON.stringify(values)
   });
+
+export const createPlanRequest = async (values) =>
+  fetch('https://fiufit-plans2.onrender.com/api/v1/plans', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify(values)
+  });
