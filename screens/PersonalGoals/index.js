@@ -8,7 +8,7 @@ import Loader from '../../components/Loader';
 import texts from '../../texts';
 import SearchedTrainingPlanContainer from '../SearchedTrainingPlan';
 
-import PersonalGoals from './layout';
+import { PersonalGoals } from './layout';
 
 export default function PersonalGoalsContainer({ navigation }) {
   const [goals, setGoals] = useState([]);
