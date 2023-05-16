@@ -3,7 +3,6 @@ import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } f
 import { StatusBar } from 'expo-status-bar';
 import PropTypes, { string, func } from 'prop-types';
 
-import manPic from '../../assets/man.jpeg';
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
 import { colors } from '../../colors';

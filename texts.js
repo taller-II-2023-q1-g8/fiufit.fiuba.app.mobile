@@ -42,6 +42,10 @@ const texts = {
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'
   },
+  TrainerPlanView: {
+    name: 'Trainer Plan View',
+    homeTitle: 'Plan View'
+  },
   UserProfile: {
     name: 'User Profile',
     homeTitle: 'Tu perfil',

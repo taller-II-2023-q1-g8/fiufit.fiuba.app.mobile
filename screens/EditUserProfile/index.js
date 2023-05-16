@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Image, View } from 'react-native';
+import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes } from 'firebase/storage';
 
-import { auth, storage } from '../../firebaseConfig';
-import { fetchUserByEmail, fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
+import { storage } from '../../firebaseConfig';
+import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
-import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
+import { emailFieldType, phoneFieldType } from '../../components/Fields/constants';
 import SelectField from '../../components/Fields/SelectField';
 import getProfilePicURL from '../../utils/profilePicURL';
 
 import EditUserProfile from './layout';
-import { styles } from './styles';
 
 export default function EditUserProfileContainer() {
   const [data, setData] = useState([]);
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -109,8 +108,6 @@ export default function EditUserProfileContainer() {
     }
     setLoading(false);
   };
-
-  const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
   const handleOnEmailChange = (userMail) => setEmail(userMail);
   const handleOnGenderChange = (userGender) => setGender(userGender);

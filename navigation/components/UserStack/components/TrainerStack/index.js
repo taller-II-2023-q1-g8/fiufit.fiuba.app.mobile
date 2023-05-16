@@ -5,8 +5,9 @@ import React from 'react';
 
 import { colors } from '../../../../../colors';
 import { useStateValue } from '../../../../../utils/state/state';
-import TrainerHomeScreen from '../../../../../screens/TrainerHome';
 import texts from '../../../../../texts';
+
+import TrainerPlanStack from './components/TrainerPlansStack';
 
 export default function TrainerStack({ tabBarIcons }) {
   const [state, dispatch] = useStateValue();
@@ -21,7 +22,7 @@ export default function TrainerStack({ tabBarIcons }) {
           tabBarInactiveTintColor: colors.gray
         })}
       >
-        <Tab.Screen component={TrainerHomeScreen} name={texts.TrainerHome.iconTitle} />
+        <Tab.Screen component={TrainerPlanStack} name={texts.TrainerHome.iconTitle} />
       </Tab.Navigator>
     </NavigationContainer>
   );
