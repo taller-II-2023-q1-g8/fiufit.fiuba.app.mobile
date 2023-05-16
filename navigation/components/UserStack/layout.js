@@ -8,7 +8,6 @@ import AthleteStack from './components/AthleteStack';
 import TrainerStack from './components/TrainerStack';
 
 export default function UserStack({ loading, data, reducer, tabBarIconsAthlete, tabBarIconsTrainer }) {
-  console.log(loading);
   return (
     <>
       <Loader loading={loading} />

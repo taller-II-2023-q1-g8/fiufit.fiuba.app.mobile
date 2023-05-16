@@ -51,13 +51,12 @@ export default function UserStackContainer({ email, token }) {
     let iconName;
 
     if (route.name === texts.Home.name) iconName = focused ? ICONS.HOME : ICONS.FOCUSED_HOME;
-    else if (route.name === texts.SearchUsers.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
-    else if (route.name === texts.SearchTrainingPlans.name)
-      iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
+    else if (route.name === texts.SearchUsersStack.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
+    else if (route.name === texts.SearchPlansStack.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
     else if (route.name === texts.AddPlan.name) {
       iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
       color = 'red';
-    } else if (route.name === texts.UserProfile.name)
+    } else if (route.name === texts.UserProfileStack.name)
       iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
 
     return <Ionicons name={iconName} size={size} color={color} />;

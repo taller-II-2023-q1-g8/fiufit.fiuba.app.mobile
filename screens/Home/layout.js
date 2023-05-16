@@ -24,7 +24,7 @@ export default function Home({
       <Loader loading={loading} />
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <Text style={styles.title}>{homeTexts.homeTitle}</Text>
+          <Text style={styles.title}>{homeTexts.title}</Text>
           <Text>Welcome {username}!</Text>
           {
             <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSignOutPress}>

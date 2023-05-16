@@ -1,7 +1,7 @@
 import React from 'react';
 import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import PropTypes, { func, object } from 'prop-types';
+import { array, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import texts from '../../texts';
@@ -98,7 +98,7 @@ Item.propTypes = {
 };
 
 SearchTrainingPlans.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: array.isRequired,
   handleItemPress: func,
   handleOnTitleChange: func,
   handleOnDifficultyChange: func,

@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 
 import { fetchUserGoalsByUsername } from '../../requests';
-import { isEmpty } from '../../utils';
 import { useStateValue } from '../../utils/state/state';
-import Loader from '../../components/Loader';
 import texts from '../../texts';
-import SearchedTrainingPlanContainer from '../SearchedTrainingPlan';
 
 import PersonalGoals from './layout';
 

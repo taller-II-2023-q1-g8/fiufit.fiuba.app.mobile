@@ -75,7 +75,6 @@ export default function CreateGoalContainer({ navigation }) {
         return setSubmitError(true);
     }
 
-    console.log('valores: ', values);
     await createGoalRequest(values)
       .then(() => {
         console.log('GOD');

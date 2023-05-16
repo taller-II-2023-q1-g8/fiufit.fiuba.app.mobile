@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
 import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../utils/state/state';
-import { fetchUsersByUsername } from '../../requests';
 import texts from '../../texts';
 
 import TrainerHome from './layout';
