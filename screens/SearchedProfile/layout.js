@@ -1,8 +1,7 @@
 import { Text, View, Image } from 'react-native';
 import React from 'react';
-import { bool, string } from 'prop-types';
+import { bool, object, string } from 'prop-types';
 
-import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
 import Loader from '../../components/Loader';
@@ -51,7 +50,7 @@ export default function SearchedProfile({ data, profPicUrl, loading }) {
 }
 
 SearchedProfile.propTypes = {
-  data: bool,
+  data: object,
   profPicUrl: string,
   loading: bool
 };

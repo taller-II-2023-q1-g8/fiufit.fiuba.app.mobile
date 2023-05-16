@@ -1,6 +1,6 @@
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { func, object, string } from 'prop-types';
+import { func, number, object, string } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
@@ -65,6 +65,6 @@ SearchedTrainingPlan.propTypes = {
   title: string.isRequired,
   description: string.isRequired,
   difficulty: string.isRequired,
-  trainer: string.isRequired,
+  trainer: number.isRequired,
   exercises: object.isRequired
 };

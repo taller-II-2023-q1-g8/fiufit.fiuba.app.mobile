@@ -24,12 +24,10 @@ const texts = {
     forgotPasswordTitle: 'Reinicia tu contraseña',
     submitButtonText: 'Enviar email de reinicio'
   },
-  AddPlan: {
-    name: 'Add Plan'
-  },
+  AddPlan: { name: 'Add Plan', title: 'Create Plan' },
   Home: {
     name: 'Home',
-    homeTitle: 'Home',
+    title: 'Home',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'
@@ -140,7 +138,10 @@ const texts = {
   },
   Commons: {
     focusedIcon: '-outline'
-  }
+  },
+  SearchPlansStack: { name: 'SearchPlansStack', title: 'Search Plans' },
+  SearchUsersStack: { name: 'SearchUsersStack', title: 'Search Users' },
+  UserProfileStack: { name: 'UserProfileStack', title: 'Profile' }
 };
 
 export default texts;
