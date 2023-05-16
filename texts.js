@@ -81,12 +81,20 @@ const texts = {
     personalMetricsTitle: 'Métricas personales',
     submitButtonText: 'Guardar'
   },
+  PersonalPlans: {
+    name: 'PersonalPlans',
+    submitButtonText: 'Guardar'
+  },
   EditUserProfile: {
     name: 'EditUserProfile'
   },
   CreateGoal: {
     name: 'CreateGoal',
     createGoalTitle: 'Agregá una Meta'
+  },
+  CreatePlan: {
+    name: 'CreatePlan',
+    createPlanTitle: 'Agregá un Titulo'
   },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',

@@ -18,10 +18,10 @@ export default function CreatePlan({
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
           <Text style={styles.title}>{texts.CreatePlan.createPlanTitle}</Text>
-          <View>{difficultyField}</View>
           <View>{titleField}</View>
           <View>{descriptionField}</View>
           <View>{tagsField}</View>
+          <View>{difficultyField}</View>
           <View>{externalIDField}</View>
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
             <Text style={styles.submitButtonText}>{texts.PersonalPlans.submitButtonText}</Text>

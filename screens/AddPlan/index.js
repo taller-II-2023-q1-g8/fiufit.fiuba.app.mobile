@@ -53,15 +53,17 @@ export default function CreatePlanContainer({ navigation }) {
     values.tags = tags;
     values.trainer_id = externalID;
     console.log('valores: ', values);
-    await createPlanRequest(values)
+    const response = await createPlanRequest(values)
       .then(() => {
         console.log('PLAN CREATED');
       })
       .catch((error) => {
         console.log('Error:', error);
       });
-
-    navigation.navigate(texts.Home.name);
+    // const json = await response.json();
+    // const planID = json.id;
+    // navigation.navigate(texts.SearchedTrainingPlan.name, { planID } );
+    navigation.navigate(texts.SearchTrainingPlans.name);
   };
 
   const handleOnDifficultyChange = (eType) => setDifficulty(eType);
