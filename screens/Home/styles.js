@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'center',
-    fontSize: 22,
+    fontSize: 25,
     fontWeight: '500',
     paddingTop: 20,
     marginBottom: 24
@@ -27,7 +27,8 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.purple,
     alignItems: 'center',
     borderRadius: 4,
-    marginBottom: 24
+    marginBottom: 24,
+    marginTop: 24
   },
   submitButtonText: {
     color: 'white',

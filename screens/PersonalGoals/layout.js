@@ -24,14 +24,23 @@ function MaxWeightLiftedInExercise({ goal }) {
       break;
   }
 
+  const deadline = new Date(goal.deadline);
+  const deadlineStr = deadline.toLocaleDateString('es-ES', deadline);
+
   return (
     <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: 'white', padding: 10 }}>
       <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0 }}>
         Máximo Peso Levantado en {goal.exercise_title}
       </Text>
-      <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>Objetivo: {goal.goal_weight_in_kg}KG</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>Objetivo: {goal.goal_weight_in_kg}KG</Text>
+        <Text style={{ paddingBottom: 5, paddingRight: 5 }}>Vencimiento</Text>
+      </View>
       <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-        <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>{goalStatus}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ paddingBottom: 5, paddingLeft: 5 }}>{goalStatus}</Text>
+          <Text style={{ paddingBottom: 5, paddingRight: 5 }}>{deadlineStr}</Text>
+        </View>
         <View style={{ backgroundColor: '#e8e8e8', width: '100%', height: 10, borderRadius: 4 }}>
           <View
             style={{
@@ -90,7 +99,7 @@ function TrainingPlanCompletion({ goal }) {
   );
 }
 
-function Goal({ goal }) {
+export function Goal({ goal }) {
   switch (goal.type) {
     case 'max_weight_lifted_in_exercise':
       return MaxWeightLiftedInExercise({ goal });
@@ -101,7 +110,7 @@ function Goal({ goal }) {
   }
 }
 
-export default function PersonalGoals({ goals, handleAddGoal }) {
+export function PersonalGoals({ goals, handleAddGoal }) {
   return (
     <ScrollView>
       <View style={{ padding: 10, alignItems: 'center', flexDirection: 'row' }}>
@@ -119,8 +128,6 @@ export default function PersonalGoals({ goals, handleAddGoal }) {
           <Text style={{ color: 'white', padding: 3 }}>Agregar</Text>
         </TouchableOpacity>
       </View>
-      {goals.map((goal) => Goal({ goal }))}
-      {goals.map((goal) => Goal({ goal }))}
       {goals.map((goal) => Goal({ goal }))}
     </ScrollView>
   );

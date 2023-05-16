@@ -5,7 +5,7 @@ import { fetchUserGoalsByUsername } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
 
-import PersonalGoals from './layout';
+import { PersonalGoals } from './layout';
 
 export default function PersonalGoalsContainer({ navigation }) {
   const [goals, setGoals] = useState([]);
