@@ -17,9 +17,14 @@ export default function TrainerHomeScreen({ navigation }) {
       // Haganme mas facil en endpoint!
       const trainers = await fetchTrainersID();
       const trainersJson = await trainers.json();
-      const id = trainersJson.filter((trainer) => trainer.external_id === state.user.username);
+      const id = trainersJson.find((trainer) => trainer.external_id === state.user.username);
+      if (id === undefined) {
+        setData([]);
+        setLoading(false);
+        return;
+      }
       const idMessage = {
-        trainer_id: id[0].id
+        trainer_id: id.id
       };
       const plans = await fetchPlansByTrainerID(idMessage);
       const plansJson = await plans.json();

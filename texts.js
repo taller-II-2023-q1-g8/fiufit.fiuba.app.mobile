@@ -92,7 +92,7 @@ const texts = {
   },
   CreatePlan: {
     name: 'CreatePlan',
-    createPlanTitle: 'Agregá un Titulo'
+    createPlanTitle: 'Creá un Plan'
   },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',

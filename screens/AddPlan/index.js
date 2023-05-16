@@ -10,30 +10,30 @@ import { createPlanRequest } from '../../requests';
 import CreatePlan from './layout';
 
 export default function CreatePlanContainer({ navigation }) {
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const [difficulty, setDifficulty] = useState('NORMAL');
-  const [difficultyError, setDifficultyError] = useState('');
+  // const [difficultyError, setDifficultyError] = useState('');
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
   const [description, setDescription] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [tags, setTags] = useState('');
   const [tagsError, setTagsError] = useState('');
-  const [externalID, setExternalID] = useState('');
-  const [externalIDError, setExternalIDError] = useState('');
+  // const [externalIDError, setExternalIDError] = useState('');
+  const externalID = state.user.username;
 
   const resetErrors = () => {
     setTitleError('');
     setDescriptionError('');
     setTagsError('');
-    setExternalIDError('');
+    // setExternalIDError('');
   };
 
   const resetFieldValues = () => {
     setTitle('');
     setDescription('');
     setTags('');
-    setExternalID('');
+    // setExternalID('');
   };
 
   useEffect(
@@ -79,7 +79,6 @@ export default function CreatePlanContainer({ navigation }) {
   const handleOnTitleChange = (eTitle) => setTitle(eTitle);
   const handleOnDescriptionChange = (eDescription) => setDescription(eDescription);
   const handleOnTagsChange = (eTags) => setTags(eTags);
-  const handleOnExternalIDChange = (eExternalID) => setExternalID(eExternalID);
 
   const difficulties = [
     { label: 'Facil', value: 'EASY' },
@@ -120,15 +119,15 @@ export default function CreatePlanContainer({ navigation }) {
     />
   );
 
-  const externalIDField = (
-    <TextField
-      defaultValue={externalID}
-      error={externalIDError}
-      onChangeText={handleOnExternalIDChange}
-      placeholder={texts.Fields.planExternalIDPlaceholder}
-      title={texts.Fields.planExternalID}
-    />
-  );
+  // const externalIDField = (
+  //   <TextField
+  //     defaultValue={externalID}
+  //     error={externalIDError}
+  //     onChangeText={handleOnExternalIDChange}
+  //     placeholder={texts.Fields.planExternalIDPlaceholder}
+  //     title={texts.Fields.planExternalID}
+  //   />
+  // );
 
   return (
     <CreatePlan
@@ -136,7 +135,7 @@ export default function CreatePlanContainer({ navigation }) {
       titleField={titleField}
       descriptionField={descriptionField}
       tagsField={tagsField}
-      externalIDField={externalIDField}
+      // externalIDField={externalIDField}
       handleSubmitPress={handleSubmitPress}
     />
   );
