@@ -9,7 +9,7 @@ import TrainerHome from './layout';
 
 export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
-  const [data, setData] = useState([]); // initialState = state.dataPlans?
+  const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
@@ -29,17 +29,16 @@ export default function TrainerHomeScreen({ navigation }) {
       const plans = await fetchPlansByTrainerID(idMessage);
       const plansJson = await plans.json();
       console.log(plansJson);
-      /* dispatch({
+      dispatch({
         type: 'addPlansData',
         plansData: plansJson
-      }); */
+      });
       setData(plansJson);
       setLoading(false);
     }
-    if (navigation.isFocused()) {
-      fetchData();
-    }
-  }, [navigation.isFocused()]);
+    console.log('navigation', navigation.isFocused());
+    fetchData();
+  }, []);
   const handleItemPress = (planTitle) => {
     navigation.navigate(texts.TrainerPlanView.name, { planTitle });
   };
