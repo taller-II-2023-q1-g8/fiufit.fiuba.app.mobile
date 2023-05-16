@@ -3,12 +3,7 @@ import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import {
-  emailFieldType,
-  numericFieldType,
-  passwordFieldType,
-  phoneFieldType
-} from '../../components/Fields/constants';
+import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
 import { registerRequest } from '../../requests';
 import DateField from '../../components/Fields/DateField';
 import SelectField from '../../components/Fields/SelectField';
