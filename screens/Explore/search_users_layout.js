@@ -24,7 +24,7 @@ function Item({ handleItemPress, username }) {
   }, [username]);
 
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(username)}>
+    <TouchableOpacity key={username} activeOpacity={0.8} onPress={() => handleItemPress(username)}>
       <View style={styles.item}>
         {profPicUrl !== null ? (
           <Image source={{ uri: profPicUrl }} style={styles.profilePic} />

@@ -95,6 +95,9 @@ const texts = {
     name: 'CreatePlan',
     createPlanTitle: 'Creá un Plan'
   },
+  Explore: {
+    title: 'Explorar'
+  },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
     birthdatePlaceholder: 'Seleccioná tu fecha de nacimiento',
@@ -142,7 +145,7 @@ const texts = {
   },
   SearchPlansStack: { name: 'SearchPlansStack', title: 'Search Plans' },
   SearchUsersStack: { name: 'SearchUsersStack', title: 'Search Users' },
-  UserProfileStack: { name: 'UserProfileStack', title: 'Profile' }
+  UserProfileStack: { name: 'UserProfileStack', title: 'Perfil' }
 };
 
 export default texts;

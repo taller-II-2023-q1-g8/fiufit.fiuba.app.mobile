@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native';
 import { string, bool, func, array } from 'prop-types';
 import { MenuProvider, MenuOption, MenuOptions, Menu, MenuTrigger } from 'react-native-popup-menu';
 
@@ -35,15 +35,7 @@ DotMenu.propTypes = {
   handleSignOutPress: func.isRequired
 };
 
-export default function Home({
-  goals,
-  username,
-  handleSignOutPress,
-  handleProfile,
-  handleSearchUsers,
-  loading,
-  handleTrainerHome
-}) {
+export default function Home({ goals, handleSignOutPress, loading, handleTrainerHome }) {
   return (
     <MenuProvider>
       <View style={styles.container}>
@@ -66,7 +58,6 @@ export default function Home({
 
 Home.propTypes = {
   goals: array,
-  username: string.isRequired,
   handleSignOutPress: func.isRequired,
   loading: bool.isRequired,
   handleTrainerHome: func.isRequired

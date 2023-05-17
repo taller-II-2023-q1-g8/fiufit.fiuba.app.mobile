@@ -8,8 +8,7 @@ import { useStateValue } from '../../../../../utils/state/state';
 import HomeScreen from '../../../../../screens/Home';
 import texts from '../../../../../texts';
 
-import SearchUsersStack from './components/SearchUsersStack';
-import SearchPlansStack from './components/SearchPlansStack';
+import ExploreStack from './components/ExploreStack';
 import UserProfileStack from './components/UserProfileStack';
 
 export default function AthleteStack({ tabBarIcons }) {
@@ -26,15 +25,15 @@ export default function AthleteStack({ tabBarIcons }) {
         })}
       >
         <Tab.Screen component={HomeScreen} name={texts.Home.name} options={{ title: texts.Home.title }} />
-        <Tab.Screen
+        {/* <Tab.Screen
           component={SearchUsersStack}
           name={texts.SearchUsersStack.name}
           options={{ title: texts.SearchUsersStack.title }}
-        />
+        /> */}
         <Tab.Screen
-          component={SearchPlansStack}
+          component={ExploreStack}
           name={texts.SearchPlansStack.name}
-          options={{ title: texts.SearchPlansStack.title }}
+          options={{ title: texts.Explore.title }}
         />
         <Tab.Screen
           component={UserProfileStack}
