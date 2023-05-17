@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native';
-import { string, bool, func, array } from 'prop-types';
+import { bool, func, array } from 'prop-types';
 import { MenuProvider, MenuOption, MenuOptions, Menu, MenuTrigger } from 'react-native-popup-menu';
 
 import texts from '../../texts';
@@ -16,7 +16,9 @@ function DotMenu({ handleTrainerHome, handleSignOutPress }) {
   return (
     <View>
       <Menu>
-        <MenuTrigger text="• • •" customStyles={{ triggerTexts: { fontSize: 25 } }} />
+        <MenuTrigger>
+          <Text style={{ fontSize: 20, color: 'white' }}>• • •</Text>
+        </MenuTrigger>
         <MenuOptions>
           <MenuOption onSelect={() => handleTrainerHome()}>
             <Text style={{ color: 'black', fontSize: 20 }}>Inicio Entrenador</Text>
@@ -42,11 +44,11 @@ export default function Home({ goals, handleSignOutPress, loading, handleTrainer
         <StatusBar />
         <Loader loading={loading} />
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
+          <View style={styles.homeHeader}>
+            <Text style={{ ...styles.title, color: 'white' }}>{homeTexts.title}</Text>
+            <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
+          </View>
           <KeyboardAvoidingView style={styles.formContainer} enabled>
-            <View style={styles.header}>
-              <Text style={styles.title}>{homeTexts.title}</Text>
-              <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
-            </View>
             <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
             {loading ? null : goals.map((goal) => Goal({ goal }))}
           </KeyboardAvoidingView>

@@ -25,11 +25,6 @@ export default function AthleteStack({ tabBarIcons }) {
         })}
       >
         <Tab.Screen component={HomeScreen} name={texts.Home.name} options={{ title: texts.Home.title }} />
-        {/* <Tab.Screen
-          component={SearchUsersStack}
-          name={texts.SearchUsersStack.name}
-          options={{ title: texts.SearchUsersStack.title }}
-        /> */}
         <Tab.Screen
           component={ExploreStack}
           name={texts.SearchPlansStack.name}

@@ -31,6 +31,17 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 16
   },
+  homeHeader: {
+    backgroundColor: colors.purple,
+    width: '100%',
+    // height: 70,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 42,
+    paddingTop: 20,
+    paddingBottom: 5
+  },
   title: {
     fontSize: 32,
     fontWeight: 'bold'
@@ -62,5 +73,6 @@ export const styles = StyleSheet.create({
 });
 
 export const scrollviewStyle = {
-  flexGrow: 1
+  flexGrow: 1,
+  padding: 0
 };
