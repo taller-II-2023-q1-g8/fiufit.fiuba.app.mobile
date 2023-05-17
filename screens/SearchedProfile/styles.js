@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { colors } from '../../colors';
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -15,6 +17,9 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold'
   },
+  follow: {
+    fontSize: 18
+  },
   profilePicture: {
     borderRadius: 50,
     height: 110,
@@ -25,5 +30,17 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginVertical: 10
+  },
+  followButton: {
+    backgroundColor: colors.placeholder,
+    alignItems: 'center',
+    borderRadius: 4,
+    width: '50%'
+  },
+  unfollowButton: {
+    backgroundColor: colors.error,
+    alignItems: 'center',
+    borderRadius: 4,
+    width: '50%'
   }
 });
