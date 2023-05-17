@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { func, shape } from 'prop-types';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { fetchPlans, fetchUsersByUsername } from '../../requests';
 import { isEmpty } from '../../utils';
@@ -16,12 +17,44 @@ import SearchTrainingPlans from './search_plans_layout';
 export default function ExploreScreen({ navigation }) {
   // Training Plans
   const [plans, setPlans] = useState([]);
+  const [usersActive, setUsersActive] = useState(true);
+  const [usersStyle, setUsersStyle] = useState(styles.viewSwitchActive);
+  const [plansStyle, setPlansStyle] = useState(styles.viewSwitchInactive);
   const [filteredPlans, setFilteredPlans] = useState([]);
+  const [usernames, setUsernames] = useState([]);
+  const [filteredUsernames, setFilteredUsernames] = useState([]);
+  const [state] = useStateValue();
   const [plansQuery, setPlansQuery] = useState({
     title: '',
     difficulty: 'ANY',
     tag: 'ANY'
   });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      async function fetchData() {
+        fetchPlans('')
+          .then((response) => response.json())
+          .then((fetchedPlans) => {
+            setPlans(fetchedPlans);
+            setFilteredPlans(fetchedPlans);
+          });
+
+        fetchUsersByUsername('')
+          .then((response) => response.json())
+          .then((fetchedUsernames) => {
+            setUsernames(fetchedUsernames.message);
+            setFilteredUsernames(fetchedUsernames.message);
+          });
+      }
+      fetchData();
+      return () => {
+        console.log('Screen was unfocused');
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
 
   const filterData = (searchQuery) => plans.filter((plan) => hasSelectedFilters(searchQuery, plan));
 
@@ -48,9 +81,6 @@ export default function ExploreScreen({ navigation }) {
   };
 
   // Users
-  const [usernames, setUsernames] = useState([]);
-  const [filteredUsernames, setFilteredUsernames] = useState([]);
-  const [state] = useStateValue();
 
   const handleOnUsernameChange = (newUsernameQuery) => {
     setFilteredUsernames(
@@ -62,9 +92,6 @@ export default function ExploreScreen({ navigation }) {
   };
 
   // View Switching
-  const [usersActive, setUsersActive] = useState(true);
-  const [usersStyle, setUsersStyle] = useState(styles.viewSwitchActive);
-  const [plansStyle, setPlansStyle] = useState(styles.viewSwitchInactive);
 
   const focusUsers = () => {
     setUsersActive(true);
@@ -83,28 +110,27 @@ export default function ExploreScreen({ navigation }) {
   const nothing = (username) => {
     navigation.navigate(texts.SearchedProfile.name, { username });
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      fetchPlans('')
-        .then((response) => response.json())
-        .then((fetchedPlans) => {
-          setPlans(fetchedPlans);
-          setFilteredPlans(fetchedPlans);
-        });
-
-      fetchUsersByUsername('')
-        .then((response) => response.json())
-        .then((fetchedUsernames) => {
-          setUsernames(fetchedUsernames.message);
-          setFilteredUsernames(fetchedUsernames.message);
-        });
-    }
-    fetchData();
-    /*
-    const dataInterval = setInterval(() => console.log('Hola'), 5 * 1000);
-
-    return () => clearInterval(dataInterval); */
+  const [refreshingUsers, setRefreshingUsers] = useState(false);
+  const onRefreshUsers = React.useCallback(async () => {
+    setRefreshingUsers(true);
+    await fetchUsersByUsername('')
+      .then((response) => response.json())
+      .then((fetchedUsernames) => {
+        setUsernames(fetchedUsernames.message);
+        setFilteredUsernames(fetchedUsernames.message);
+      });
+    setRefreshingUsers(false);
+  }, []);
+  const [refreshingPlans, setRefreshingPlans] = useState(false);
+  const onRefreshPlans = React.useCallback(async () => {
+    setRefreshingPlans(true);
+    await fetchPlans('')
+      .then((response) => response.json())
+      .then((fetchedPlans) => {
+        setPlans(fetchedPlans);
+        setFilteredPlans(fetchedPlans);
+      });
+    setRefreshingPlans(false);
   }, []);
 
   return (
@@ -126,6 +152,8 @@ export default function ExploreScreen({ navigation }) {
           handleOnTitleChange={handleOnTitleChange}
           handleOnDifficultyChange={handleOnDifficultyChange}
           handleOnTrainingTypeChange={handleOnTrainingTypeChange}
+          refreshing={refreshingPlans}
+          onRefresh={onRefreshPlans}
         />
       )}
       {usersActive && (
@@ -133,6 +161,8 @@ export default function ExploreScreen({ navigation }) {
           handleItemPress={nothing}
           data={filteredUsernames}
           handleOnSearchChange={handleOnUsernameChange}
+          refreshing={refreshingUsers}
+          onRefresh={onRefreshUsers}
         />
       )}
     </>

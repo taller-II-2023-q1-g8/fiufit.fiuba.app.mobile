@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Image,
+  RefreshControl
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { string, func, array } from 'prop-types';
+import { string, func, array, bool } from 'prop-types';
 
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
@@ -53,7 +61,7 @@ function ItemSeparatorView() {
   );
 }
 
-export default function SearchUsers({ data, handleOnSearchChange, handleItemPress }) {
+export default function SearchUsers({ data, handleOnSearchChange, handleItemPress, refreshing, onRefresh }) {
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -63,6 +71,7 @@ export default function SearchUsers({ data, handleOnSearchChange, handleItemPres
           data={data}
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </KeyboardAvoidingView>
     </View>
@@ -77,5 +86,7 @@ Item.propTypes = {
 SearchUsers.propTypes = {
   data: array.isRequired,
   handleItemPress: func,
-  handleOnSearchChange: func
+  handleOnSearchChange: func,
+  refreshing: bool,
+  onRefresh: func
 };

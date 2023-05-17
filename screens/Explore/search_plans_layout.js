@@ -1,7 +1,15 @@
 import React from 'react';
-import { KeyboardAvoidingView, Text, TouchableOpacity, View, FlatList, Image } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Image,
+  RefreshControl
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { array, func, object } from 'prop-types';
+import { array, bool, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import texts from '../../texts';
@@ -57,7 +65,9 @@ export default function SearchTrainingPlans({
   handleOnTitleChange,
   handleOnDifficultyChange,
   handleItemPress,
-  handleOnTrainingTypeChange
+  handleOnTrainingTypeChange,
+  refreshing,
+  onRefresh
 }) {
   return (
     <View style={styles.container}>
@@ -86,6 +96,7 @@ export default function SearchTrainingPlans({
           data={data}
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </KeyboardAvoidingView>
     </View>
@@ -102,5 +113,7 @@ SearchTrainingPlans.propTypes = {
   handleItemPress: func,
   handleOnTitleChange: func,
   handleOnDifficultyChange: func,
-  handleOnTrainingTypeChange: func
+  handleOnTrainingTypeChange: func,
+  refreshing: bool,
+  onRefresh: func
 };
