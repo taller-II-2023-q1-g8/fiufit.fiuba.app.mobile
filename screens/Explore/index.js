@@ -114,6 +114,7 @@ export default function ExploreScreen({ navigation }) {
           Planes
         </Text>
       </View>
+      <View style={styles.separator} />
       {!isEmpty(plans) && !usersActive && (
         <SearchTrainingPlans
           handleItemPress={handleItemPress}

@@ -12,24 +12,35 @@ export const styles = StyleSheet.create({
   viewSwitchInactive: {
     // backgroundColor: '#666666',
     backgroundColor: colors.dark_purple,
+    fontSize: 18,
     color: colors.white,
     padding: 10,
+    height: 45,
     width: '48%',
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 5
+    borderTopRightRadius: 55,
+    alignSelf: 'center',
+    marginHorizontal: 2,
+    borderTopLeftRadius: 15
   },
   viewSwitchActive: {
+    marginHorizontal: 2,
     // borderBottomWidth: 0,
     // borderColor: '#CACACA',
     // borderWidth: 1.5,
     backgroundColor: colors.purple,
+    fontSize: 18,
     color: 'white',
     padding: 10,
+    height: 50,
     width: '48%',
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 5
+    borderTopRightRadius: 55,
+    borderTopLeftRadius: 15
   },
-
+  separator: {
+    height: 7,
+    width: '100%',
+    backgroundColor: colors.purple
+  },
   container: {
     backgroundColor: colors.white,
     width: '100%',
