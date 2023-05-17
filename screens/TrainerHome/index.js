@@ -11,10 +11,10 @@ export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
   const [loading, setLoading] = useState(true);
+  console.log('A');
   useEffect(() => {
     async function fetchData() {
       // Deberiamos hacer un fetch de los training plans del trainer.
-      // Haganme mas facil en endpoint!
       const trainers = await fetchTrainersID();
       const trainersJson = await trainers.json();
       const id = trainersJson.find((trainer) => trainer.external_id === state.user.username);

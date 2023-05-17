@@ -80,12 +80,12 @@ export default function CreateGoalContainer({ navigation }) {
     const getGoalResponse = await fetchGoalByID(createGoalJson.message);
     const getGoalJson = await getGoalResponse.json();
 
-    const newState = state.userGoals.push(getGoalJson.message);
+    const newState = state.userGoals;
+    newState.push(getGoalJson.message);
     dispatch({
       type: 'addNewGoal',
-      newGoal: newState
+      userGoals: newState
     });
-
     navigation.navigate(texts.PersonalGoals.name);
   };
 

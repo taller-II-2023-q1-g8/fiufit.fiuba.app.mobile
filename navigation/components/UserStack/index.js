@@ -55,7 +55,7 @@ export default function UserStackContainer({ email }) {
       case 'addNewGoal':
         return {
           ...state,
-          userGoals: action.newGoal
+          userGoals: action.userGoals
         };
       default:
         return state;

@@ -101,6 +101,10 @@ export default function ExploreScreen({ navigation }) {
         });
     }
     fetchData();
+    /*
+    const dataInterval = setInterval(() => console.log('Hola'), 5 * 1000);
+
+    return () => clearInterval(dataInterval); */
   }, []);
 
   return (

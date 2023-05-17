@@ -10,11 +10,22 @@ import texts from '../../texts';
 
 import Home from './layout';
 
+const sortGoals = (userGoals) => {
+  const sortedGoals = userGoals
+    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
+    .filter((goal) => goal.status === 'in_progress');
+  const now = new Date();
+
+  // de las más cercanas a expirar, muestro 3
+  const closestGoals = sortedGoals.filter((goal, index) => index < 3 || new Date(goal.deadline) < now);
+  return closestGoals;
+};
 export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [state, dispatch] = useStateValue();
   const [goals, setGoals] = useState(state.userGoals);
-
+  // console.log('abc');
+  /*
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
@@ -36,6 +47,7 @@ export default function HomeScreen({ navigation }) {
     }
     fetchData();
   }, []);
+  */
 
   const handleSignOutPress = async () => {
     setLoading(true);
@@ -50,7 +62,6 @@ export default function HomeScreen({ navigation }) {
       setLoading(false);
       return;
     }
-    Alert.alert('Log out', 'Saliste correctamente');
     setLoading(false);
   };
 
