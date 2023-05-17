@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 
 import { fetchPlans } from '../../requests';
@@ -6,65 +7,87 @@ import { isEmpty } from '../../utils';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
 
+import { styles } from './styles';
+import { hasSelectedFilters } from './filtering';
 import SearchTrainingPlans from './layout';
 
 export default function SearchPlansScreen({ navigation }) {
-  const [difficultySearch, setDifficultySearch] = useState('ANY');
-  const [trainingTagSearch, setTrainingTagSearch] = useState('ANY');
-  const [titleSearch, setTitleSearch] = useState('');
-  const [data, setData] = useState([]);
+  // View Switching
+  const [usersActive, setUsersActive] = useState(true);
+  const [usersStyle, setUsersStyle] = useState(styles.viewSwitchActive);
+  const [plansStyle, setPlansStyle] = useState(styles.viewSwitchInactive);
+
+  const focusUsers = () => {
+    setUsersActive(true);
+    setUsersStyle(styles.viewSwitchActive);
+    setPlansStyle(styles.viewSwitchInactive);
+  };
+
+  const focusPlans = () => {
+    setUsersActive(false);
+    setUsersStyle(styles.viewSwitchInactive);
+    setPlansStyle(styles.viewSwitchActive);
+  };
+
+  // Training Plans
+  const [plans, setPlans] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [query, setQuery] = useState({
+    title: '',
+    difficulty: 'ANY',
+    tag: 'ANY'
+  });
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetchPlans('');
-      const json = await response.json();
-      setData(json);
-      setSearchResults(json.map((plan) => plan));
+      fetchPlans('')
+        .then((response) => response.json())
+        .then((fetchedPlans) => {
+          setPlans(fetchedPlans);
+          setSearchResults(fetchedPlans);
+        });
     }
     fetchData();
   }, []);
 
-  const hasSelectedDifficulty = (difficulty, plan) => difficulty === 'ANY' || difficulty === plan.difficulty;
-  const hasSelectedTag = (tag, plan) => tag === 'ANY' || plan.tags.includes(tag);
+  const filterData = (searchQuery) => plans.filter((plan) => hasSelectedFilters(searchQuery, plan));
 
-  const hasSelectedFilters = (plan, name, difficulty, tag) =>
-    plan.title.includes(name) && hasSelectedDifficulty(difficulty, plan) && hasSelectedTag(tag, plan);
-
-  const filterByName = (plan, name) => hasSelectedFilters(plan, name, difficultySearch, trainingTagSearch);
-
-  const filterByDifficulty = (plan, difficulty) =>
-    hasSelectedFilters(plan, titleSearch, difficulty, trainingTagSearch);
-
-  const filterByTrainingTag = (plan, trainingTag) =>
-    hasSelectedFilters(plan, titleSearch, difficultySearch, trainingTag);
-
-  const filterData = (filterToApllied, filterToUse = () => {}) =>
-    data.filter((plan) => filterToUse(plan, filterToApllied)).map((plan) => plan.title);
-
-  const handleOnTitleChange = (titleToSearch) => {
-    setTitleSearch(titleToSearch);
-    setSearchResults(filterData(titleToSearch, filterByName));
+  const handleOnTitleChange = (newTitleSearch) => {
+    const newQuery = { ...query, title: newTitleSearch };
+    setQuery(newQuery);
+    setSearchResults(filterData(newQuery));
   };
 
-  const handleOnDifficultyChange = (difficultyToSearch) => {
-    setDifficultySearch(difficultyToSearch);
-    setSearchResults(filterData(difficultyToSearch, filterByDifficulty));
+  const handleOnDifficultyChange = (newDifficultySearch) => {
+    const newQuery = { ...query, difficulty: newDifficultySearch };
+    setQuery(newQuery);
+    setSearchResults(filterData(newQuery));
   };
 
-  const handleOnTrainingTypeChange = (trainingTagToSearch) => {
-    setTrainingTagSearch(trainingTagToSearch);
-    setSearchResults(filterData(trainingTagToSearch, filterByTrainingTag));
+  const handleOnTrainingTypeChange = (newTagSearch) => {
+    const newQuery = { ...query, tag: newTagSearch };
+    setQuery(newQuery);
+    setSearchResults(filterData(newQuery));
   };
 
   const handleItemPress = (planID) => {
     navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
   };
 
+  // Users
+
   return (
     <>
-      <Loader loading={isEmpty(data)} />
-      {!isEmpty(data) && (
+      <Loader loading={isEmpty(plans)} />
+      <View style={styles.usersOrPlansSwitchContainer}>
+        <Text style={usersStyle} onPress={focusUsers}>
+          Usuarios
+        </Text>
+        <Text style={plansStyle} onPress={focusPlans}>
+          Planes
+        </Text>
+      </View>
+      {!isEmpty(plans) && !usersActive && (
         <SearchTrainingPlans
           handleItemPress={handleItemPress}
           data={searchResults}

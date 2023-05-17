@@ -41,7 +41,7 @@ function ItemSeparatorView() {
 const difficultyOptions = [
   { label: 'Cualquiera', value: 'ANY' },
   { label: 'Fácil', value: 'EASY' },
-  { label: 'Intermedio', value: 'MEDIUM' },
+  { label: 'Intermedio', value: 'NORMAL' },
   { label: 'Difícil', value: 'HARD' }
 ];
 

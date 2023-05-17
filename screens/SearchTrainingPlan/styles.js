@@ -3,6 +3,31 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
+  usersOrPlansSwitchContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 30
+  },
+  viewSwitchInactive: {
+    backgroundColor: '#666666',
+    color: colors.white,
+    padding: 10,
+    width: '45%',
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 5
+  },
+  viewSwitchActive: {
+    borderBottomWidth: 0,
+    borderColor: '#CACACA',
+    borderWidth: 1.5,
+    backgroundColor: colors.white,
+    padding: 10,
+    width: '45%',
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 5
+  },
+
   container: {
     backgroundColor: colors.white,
     width: '100%',
