@@ -37,6 +37,16 @@ DotMenu.propTypes = {
   handleSignOutPress: func.isRequired
 };
 
+const sortGoals = (userGoals) => {
+  const sortedGoals = userGoals
+    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
+    .filter((goal) => goal.status === 'in_progress');
+  const now = new Date();
+
+  // de las más cercanas a expirar, muestro 3
+  const closestGoals = sortedGoals.filter((goal, index) => index < 3 || new Date(goal.deadline) < now);
+  return closestGoals;
+};
 export default function Home({ goals, handleSignOutPress, loading, handleTrainerHome }) {
   return (
     <MenuProvider>
@@ -50,7 +60,7 @@ export default function Home({ goals, handleSignOutPress, loading, handleTrainer
           </View>
           <KeyboardAvoidingView style={styles.formContainer} enabled>
             <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
-            {loading ? null : goals.map((goal) => Goal({ goal }))}
+            {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
           </KeyboardAvoidingView>
         </ScrollView>
       </View>
