@@ -8,20 +8,18 @@ import { registerRequest } from '../../requests';
 import { auth } from '../../firebaseConfig';
 
 import Register from './layout';
-import { getFields, getStepsData } from './utils';
+import { fillErrors, formatDate, getFields, getStepsData, nextStep, prevStep, thereIsAnError } from './utils';
 import { STEP_KEYS } from './constants';
 /*
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10); */
-
-const nextStep = (currentStep) => currentStep + 1;
-const prevStep = (currentStep) => (currentStep > 0 ? currentStep - 1 : 0);
 
 export default function RegisterContainer() {
   const [currentStep, changeCurrentStep] = useState(0);
   const [stepError, setStepError] = useState(false);
   const [loading, setLoading] = useState(false);
   const initialData = {
+    birth_date: '',
     email: '',
     firstname: '',
     gender: '',
@@ -32,17 +30,17 @@ export default function RegisterContainer() {
     username: '',
     weight_in_kg: ''
   };
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState({ ...initialData, gender: 'female' });
   const [errors, setErrors] = useState(initialData);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
-  const thereIsAnError = (keysToFilter) => keysToFilter.find((key) => data[key] === '');
-
-  const fillErrors = (updatedErrors, keysToFilter) =>
-    keysToFilter.forEach((key) => {
-      if (data[key] === '') updatedErrors[key] = 'Campo obligatorio';
-    });
+  const setStepErrors = () => {
+    const updatedErrors = cloneDeep(initialData);
+    fillErrors(updatedErrors, STEP_KEYS[currentStep], data);
+    setErrors(updatedErrors);
+    setStepError(true);
+  };
 
   const handlePrevPress = async () => {
     changeCurrentStep(prevStep(currentStep));
@@ -50,11 +48,8 @@ export default function RegisterContainer() {
 
   const handleNextStepPress = () => {
     setStepError(false);
-    const updatedErrors = cloneDeep(initialData);
-    if (thereIsAnError(STEP_KEYS[currentStep])) {
-      fillErrors(updatedErrors, STEP_KEYS[currentStep]);
-      setErrors(updatedErrors);
-      setStepError(true);
+    if (thereIsAnError(STEP_KEYS[currentStep], data)) {
+      setStepErrors();
       return;
     }
     setErrors(initialData);
@@ -64,12 +59,8 @@ export default function RegisterContainer() {
   const handleSubmitPress = async () => {
     setStepError(false);
 
-    const updatedErrors = cloneDeep(initialData);
-
-    if (thereIsAnError(STEP_KEYS[currentStep])) {
-      fillErrors(updatedErrors, STEP_KEYS[currentStep]);
-      setErrors(updatedErrors);
-      setStepError(true);
+    if (thereIsAnError(STEP_KEYS[currentStep], data)) {
+      setStepErrors();
       return;
     }
     setErrors(initialData);
@@ -78,7 +69,7 @@ export default function RegisterContainer() {
 
     const values = {
       ...data,
-      birth_date: '1995-10-20',
+      birth_date: formatDate(data.birth_date),
       is_federated: false
     };
 
@@ -95,13 +86,7 @@ export default function RegisterContainer() {
     setLoading(false);
   };
 
-  // const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-
-  // const handleOnBirthdateChange = (userBirthdate) => setBirthdate(formatDate(userBirthdate));
-
-  const handleOnGenderChange = (userGender) => setData({ ...data, gender: userGender });
-
-  const fields = getFields(data, errors, handleOnChangeText, handleOnGenderChange);
+  const fields = getFields(data, errors, handleOnChangeText);
 
   const stepData = getStepsData(handleNextStepPress, handlePrevPress, handleSubmitPress);
 

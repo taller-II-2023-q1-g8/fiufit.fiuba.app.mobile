@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { emailFieldType, passwordFieldType, phoneFieldType } from '../../components/Fields/constants';
+import { phoneFieldType, textFieldType } from '../../components/Fields/constants';
 import DateField from '../../components/Fields/DateField';
 import SelectField from '../../components/Fields/SelectField';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 
 const fieldTexts = texts.Fields;
+const federatedRegisterTexts = texts.FederatedRegister;
 
 export const nextStep = (currentStep) => currentStep + 1;
 export const prevStep = (currentStep) => (currentStep > 0 ? currentStep - 1 : 0);
@@ -23,66 +24,32 @@ export const fillErrors = (updatedErrors, keysToFilter, data) =>
 export const getFields = (data, errors, handleOnChangeText) => [
   [
     <TextField
-      key="emailField"
-      name="email"
-      defaultValue={data.email}
-      error={errors.email}
-      keyboardType={emailFieldType}
-      onChangeText={handleOnChangeText}
-      placeholder={fieldTexts.emailPlaceholder}
-      title={fieldTexts.emailTitle}
-    />,
-    <TextField
-      key="usernameField"
-      name="username"
-      defaultValue={data.username}
       error={errors.username}
+      key="usernameField"
+      keyboardType={textFieldType}
+      name="username"
       onChangeText={handleOnChangeText}
       placeholder={fieldTexts.usernamePlaceholder}
       title={fieldTexts.usernameTitle}
     />,
-    <TextField
-      key="passwordField"
-      name="password"
-      defaultValue={data.password}
-      error={errors.password}
-      keyboardType={passwordFieldType}
+    <DateField
+      error={errors.birth_date}
+      key="birthdateField"
+      name="birth_date"
       onChangeText={handleOnChangeText}
-      placeholder={fieldTexts.passwordPlaceholder}
-      title={fieldTexts.passwordTitle}
-    />
-  ],
-  [
-    <TextField
-      key="nameField"
-      name="firstname"
-      defaultValue={data.firstname}
-      error={errors.firstname}
-      onChangeText={handleOnChangeText}
-      placeholder={fieldTexts.namePlaceholder}
-      title={fieldTexts.nameTitle}
-    />,
-    <TextField
-      key="lastnameField"
-      name="lastname"
-      defaultValue={data.lastname}
-      error={errors.lastname}
-      onChangeText={handleOnChangeText}
-      placeholder={fieldTexts.lastnamePlaceholder}
-      title={fieldTexts.lastnameTitle}
+      placeholder={fieldTexts.birthdatePlaceholder}
+      title={fieldTexts.birthdateTitle}
     />,
     <SelectField
+      error={errors.gender}
       key="genderField"
       name="gender"
-      defaultValue={data.gender}
-      error={errors.gender}
       onChangeText={handleOnChangeText}
       title={fieldTexts.genderTitle}
     />,
     <TextField
-      key="phoneField"
       name="phone_number"
-      defaultValue={data.phone_number}
+      key="phoneField"
       error={errors.phone_number}
       keyboardType={phoneFieldType}
       onChangeText={handleOnChangeText}
@@ -91,19 +58,12 @@ export const getFields = (data, errors, handleOnChangeText) => [
     />
   ],
   [
-    <DateField
-      key="birthdateField"
-      title={texts.Fields.birthdateTitle}
-      placeholder={texts.Fields.birthdatePlaceholder}
-      name="birth_date"
-      error={errors.birth_date}
-      onChangeText={handleOnChangeText}
-    />,
     <TextField
       key="heightField"
       name="height_in_cm"
       defaultValue={data.height_in_cm}
       error={errors.height_in_cm}
+      keyboardType={phoneFieldType}
       onChangeText={handleOnChangeText}
       placeholder={fieldTexts.heightPlaceholder}
       title={fieldTexts.heightTitle}
@@ -113,6 +73,7 @@ export const getFields = (data, errors, handleOnChangeText) => [
       name="weight_in_kg"
       defaultValue={data.weight_in_kg}
       error={errors.weight_in_kg}
+      keyboardType={phoneFieldType}
       onChangeText={handleOnChangeText}
       placeholder={fieldTexts.weightPlaceholder}
       title={fieldTexts.weightTitle}
@@ -120,22 +81,15 @@ export const getFields = (data, errors, handleOnChangeText) => [
   ]
 ];
 
-export const getStepsData = (handleNextStepPress, handlePrevPress, handleSubmitPress) => [
+export const getStepsData = (handleNextStepPress, handlePreviousPress, handleSubmitPress) => [
   {
-    label: 'Tu cuenta ',
+    label: federatedRegisterTexts.step1Title,
     nextBtnText: 'Siguiente',
     onNext: handleNextStepPress
   },
   {
-    label: 'Sobre vos ',
-    nextBtnText: 'Siguiente',
-    onNext: handleNextStepPress,
-    onPrevious: handlePrevPress,
-    previousBtnText: 'Anterior'
-  },
-  {
-    label: 'Ejercicio ',
-    onPrevious: handlePrevPress,
+    label: federatedRegisterTexts.step2Title,
+    onPrevious: handlePreviousPress,
     onSubmit: handleSubmitPress,
     previousBtnText: 'Anterior'
   }

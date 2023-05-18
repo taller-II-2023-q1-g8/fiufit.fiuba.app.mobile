@@ -1,128 +1,85 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { cloneDeep } from 'lodash';
 
-import { phoneFieldType, textFieldType } from '../../components/Fields/constants';
 import { fetchUsersByUsername, registerRequest } from '../../requests';
-import DateField from '../../components/Fields/DateField';
-import SelectField from '../../components/Fields/SelectField';
-import TextField from '../../components/Fields/TextField';
-import texts from '../../texts';
 import { auth } from '../../firebaseConfig';
 
 import FederatedRegister from './layout';
+import { STEP_KEYS } from './constants';
+import { fillErrors, formatDate, getFields, getStepsData, nextStep, prevStep, thereIsAnError } from './utils';
 /*
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10); */
 
-const fieldTexts = texts.Fields;
-
 export default function FederatedRegisterContainer() {
   const [currentStep, changeCurrentStep] = useState(0);
-  const [birthdate, setBirthdate] = useState('');
-  const [birthdateError, setBirthdateError] = useState('');
-  const [gender, setGender] = useState('');
-  const [genderError, setGenderError] = useState('');
+  const [stepError, setStepError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [phone, setPhone] = useState('');
-  const [phoneError, setPhoneError] = useState('');
-  const [username, setUsername] = useState('');
-  const [usernameError, setUsernameError] = useState('');
-  const [height, setHeight] = useState(0);
-  const [weight, setWeight] = useState(0);
-  const [heightError, setHeightError] = useState('');
-  const [weightError, setWeightError] = useState('');
-  const [step1Error, setStep1Error] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
-  const resetErrors = () => {
-    setBirthdateError('');
-    setUsernameError('');
-    setGenderError('');
-    setPhoneError('');
+  const initialData = {
+    birth_date: '',
+    gender: '',
+    height_in_cm: '',
+    phone_number: '',
+    username: '',
+    weight_in_kg: ''
+  };
+  const [data, setData] = useState({ ...initialData, gender: 'female' });
+  const [errors, setErrors] = useState(initialData);
+
+  const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
+
+  const setStepErrors = () => {
+    const updatedErrors = cloneDeep(initialData);
+    fillErrors(updatedErrors, STEP_KEYS[currentStep], data);
+    setErrors(updatedErrors);
+    setStepError(true);
   };
 
-  const resetFieldValues = () => {
-    setBirthdate('');
-    setGender('');
-    setUsername('');
-    setPhone('');
-  };
+  const handleNextStepPress = async () => {
+    setStepError(false);
 
-  useEffect(
-    () => () => {
-      resetFieldValues();
-      resetErrors();
-    },
-    []
-  );
-  const handleNextPress = async () => {
-    resetErrors();
-    setStep1Error(false);
-    let mayAdvance = true;
-    if (!username) {
-      setUsernameError('Nombre de usuario obligatorio');
-      mayAdvance = false;
-    }
-    const response = await fetchUsersByUsername(username);
-    const json = await response.json();
-    if (json.message != null) {
-      setUsernameError('Nombre de usuario en uso');
-      mayAdvance = false;
+    if (thereIsAnError(STEP_KEYS[currentStep], data)) {
+      setStepErrors();
+      return;
     }
 
-    if (!phone) {
-      setPhoneError('Número de teléfono obligatorio');
-      mayAdvance = false;
+    const response = await fetchUsersByUsername(data.username);
+    if (!response.ok) {
+      setErrors({ ...initialData, username: 'Nombre de usuario en uso' });
+      setStepError(true);
+      return;
     }
-    if (!birthdate) {
-      setBirthdateError('Fecha de nacimiento obligatoria');
-      mayAdvance = false;
-    }
-    if (mayAdvance) {
-      changeCurrentStep(currentStep + 1);
-    } else {
-      setStep1Error(true);
-    }
+
+    setErrors(initialData);
+
+    changeCurrentStep(nextStep(currentStep));
   };
-  const handlePreviousPress = () => {
-    changeCurrentStep(currentStep - 1);
+
+  const handlePreviousStepPress = () => {
+    changeCurrentStep(prevStep(currentStep));
+    setData(initialData);
+    setErrors(initialData);
   };
-  const handleSubmitPress = async () => {
-    resetErrors();
-    setSubmitError(false);
-    let maySubmit = true;
-    if (!height) {
-      setHeightError('Es obligatorio ingresar altura');
-      maySubmit = false;
-    }
-    if (!weight) {
-      setWeightError('Es obligatorio ingresar peso');
-      maySubmit = false;
-    }
-    if (!maySubmit) return setSubmitError(true);
+
+  const registerUser = async () => {
     setLoading(true);
     const user = await GoogleSignin.getCurrentUser();
     const values = {
-      username,
+      ...data,
+      birth_date: formatDate(data.birth_date),
       firstname: user.user.givenName,
-      gender,
       email: user.user.email,
-      phone_number: phone,
       lastname: user.user.familyName,
-      birth_date: birthdate,
-      password: '',
-      weight_in_kg: weight,
-      height_in_cm: height,
       is_federated: true
     };
-    // Ver como necesita el back weight y height
-    // console.log(values);
+
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await registerRequest(values);
-      // console.log(response);
       if (response.ok) {
         Alert.alert('Bienvenido', 'Registro exitoso');
         const googleCredential = GoogleAuthProvider.credential(user.idToken);
@@ -135,77 +92,28 @@ export default function FederatedRegisterContainer() {
     setLoading(false);
   };
 
-  const formatDate = (date) => `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const handleSubmitPress = async () => {
+    setStepError(false);
+    if (thereIsAnError(STEP_KEYS[currentStep], data)) {
+      setStepErrors();
+      return;
+    }
+    setErrors(initialData);
 
-  const handleOnBirthdateChange = (userBirthdate) => setBirthdate(formatDate(userBirthdate));
-  const handleOnGenderChange = (userGender) => setGender(userGender);
-  const handleOnPhoneChange = (userPhone) => setPhone(userPhone);
-  const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
-  const handleOnHeightChange = (userHeight) => setHeight(parseInt(userHeight, 10));
-  const handleOnWeightChange = (userWeight) => setWeight(parseInt(userWeight, 10));
-  const step1 = [
-    <TextField
-      key="usernameField"
-      error={usernameError}
-      keyboardType={textFieldType}
-      onChangeText={handleOnUsernameChange}
-      placeholder={fieldTexts.usernamePlaceholder}
-      title={fieldTexts.usernameTitle}
-    />,
-    <DateField
-      key="birthdateField"
-      title={texts.Fields.birthdateTitle}
-      placeholder={texts.Fields.birthdatePlaceholder}
-      error={birthdateError}
-      onChangeText={handleOnBirthdateChange}
-    />,
-    <SelectField
-      key="genderField"
-      error={genderError}
-      onChangeText={handleOnGenderChange}
-      title={fieldTexts.genderTitle}
-    />,
-    <TextField
-      key="phoneField"
-      error={phoneError}
-      keyboardType={phoneFieldType}
-      onChangeText={handleOnPhoneChange}
-      placeholder={fieldTexts.phonePlaceholder}
-      title={fieldTexts.phoneTitle}
-    />
-  ];
-  const step2 = [
-    <TextField
-      key="heightField"
-      defaultValue={height}
-      error={heightError}
-      keyboardType={phoneFieldType}
-      onChangeText={handleOnHeightChange}
-      placeholder={fieldTexts.heightPlaceholder}
-      title={fieldTexts.heightTitle}
-    />,
-    <TextField
-      key="weightField"
-      defaultValue={weight}
-      error={weightError}
-      keyboardType={phoneFieldType}
-      onChangeText={handleOnWeightChange}
-      placeholder={fieldTexts.weightPlaceholder}
-      title={fieldTexts.weightTitle}
-    />
-  ];
+    registerUser();
+  };
+
+  const fields = getFields(data, errors, handleOnChangeText);
+
+  const stepData = getStepsData(handleNextStepPress, handlePreviousStepPress, handleSubmitPress);
 
   return (
     <FederatedRegister
-      step1={step1}
-      step2={step2}
-      step1Error={step1Error}
-      submitError={submitError}
-      handleNextPress={handleNextPress}
-      handlePreviousPress={handlePreviousPress}
       currentStep={currentStep}
-      handleSubmitPress={handleSubmitPress}
       loading={loading}
+      stepError={stepError}
+      stepsData={stepData}
+      stepsFields={fields}
     />
   );
 }
