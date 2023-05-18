@@ -11,6 +11,7 @@ function TextField({
   defaultValue = '',
   error,
   keyboardType = textFieldType,
+  name,
   onChangeText,
   placeholder,
   title
@@ -23,12 +24,13 @@ function TextField({
       <Text style={{ ...styles.fieldTitle, ...(error && styles.errorTitle) }}>{title}</Text>
       <View style={styles.passwordInputContainer}>
         <TextInput
-          // defaultValue={String(defaultValue)}
           autoCapitalize="none"
+          id={name}
+          name={name}
           keyboardType={keyboardType}
           defaultValue={defaultValue}
           secureTextEntry={hidePassword}
-          onChangeText={onChangeText}
+          onChangeText={(value) => onChangeText(name, value)}
           placeholder={placeholder}
           {...commonFieldProps(error)}
         />
@@ -53,7 +55,8 @@ TextField.propTypes = {
   keyboardType: string.isRequired,
   onChangeText: func.isRequired,
   placeholder: string.isRequired,
-  title: string.isRequired
+  title: string.isRequired,
+  name: string
 };
 
 export default TextField;

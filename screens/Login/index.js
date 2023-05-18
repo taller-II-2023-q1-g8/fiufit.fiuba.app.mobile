@@ -3,6 +3,7 @@ import { func, shape } from 'prop-types';
 import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
 import React, { useState } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { cloneDeep } from 'lodash';
 
 import TextField from '../../components/Fields/TextField';
 import {
@@ -23,35 +24,45 @@ GoogleSignin.configure({
   webClientId: '587864716594-rieevghh6j6gi2m10lhb835u4ndn0631.apps.googleusercontent.com',
   offlineAccess: true
 });
+
 export default function LoginContainer({ navigation }) {
   const [loading, setLoading] = useState(false);
-  const [mailError, setMailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const initialData = { email: '', password: '' };
+  const [data, setData] = useState(initialData);
+  const [errors, setErrors] = useState(initialData);
+
+  const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
+
+  const thereIsAnError = () => Object.keys(errors).find((key) => data[key] === '');
+
+  const fillErrors = (updatedErrors) =>
+    Object.keys(errors).forEach((key) => {
+      if (data[key] === '') updatedErrors[key] = 'Campo obligatorio';
+    });
+
   const handleSubmitPress = async () => {
-    setMailError('');
-    setPasswordError('');
-    if (!email) {
-      setMailError('Email obligatorio');
+    const updatedErrors = cloneDeep(initialData);
+
+    if (thereIsAnError()) {
+      fillErrors(updatedErrors);
+      setErrors(updatedErrors);
       return;
     }
-    if (!password) {
-      setPasswordError('Contraseña obligatoria');
-      return;
-    }
+
     setLoading(true);
     try {
       // Se deberia encriptar la password
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (error) {
       Alert.alert('Error', error.message);
     }
     setLoading(false);
   };
+
   const handleRegister = () => {
     navigation.navigate(texts.Register.name);
   };
+
   const handleForgotPassword = () => {
     navigation.navigate(texts.ForgotPassword.name);
   };
@@ -77,17 +88,16 @@ export default function LoginContainer({ navigation }) {
     }
     setLoading(false);
   };
-  const handleOnEmailChange = (userMail) => setEmail(userMail);
-  const handleOnPasswordChange = (userPassword) => setPassword(userPassword);
 
   const fields = [
     {
       key: EMAIL_KEY,
       field: (
         <TextField
-          error={mailError}
+          error={errors.email}
           keyboardType={emailFieldType}
-          onChangeText={handleOnEmailChange}
+          name="email"
+          onChangeText={handleOnChangeText}
           placeholder={fieldTexts.emailPlaceholder}
           title={fieldTexts.emailTitle}
         />
@@ -97,9 +107,10 @@ export default function LoginContainer({ navigation }) {
       key: PASSWORD_KEY,
       field: (
         <TextField
-          error={passwordError}
+          error={errors.password}
           keyboardType={passwordFieldType}
-          onChangeText={handleOnPasswordChange}
+          name="password"
+          onChangeText={handleOnChangeText}
           placeholder={fieldTexts.passwordPlaceholder}
           title={fieldTexts.passwordTitle}
         />
@@ -111,9 +122,9 @@ export default function LoginContainer({ navigation }) {
     <Login
       fields={fields}
       handleForgotPassword={() => handleForgotPassword()}
+      handleGmailLogin={handleGmailLogin}
       handleRegister={() => handleRegister()}
       handleSubmitPress={handleSubmitPress}
-      handleGmailLogin={handleGmailLogin}
       loading={loading}
     />
   );
