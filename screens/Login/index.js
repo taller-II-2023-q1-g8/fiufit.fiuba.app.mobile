@@ -51,7 +51,13 @@ export default function LoginContainer({ navigation }) {
 
     setLoading(true);
     try {
-      // Se deberia encriptar la password
+      const response = await fetchUserByEmail(data.email);
+      const json = await response.json();
+      if (json.message.is_admin) {
+        Alert.alert('admins cant login to the app');
+        setLoading(false);
+        return;
+      }
       await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (error) {
       Alert.alert('Error', error.message);
