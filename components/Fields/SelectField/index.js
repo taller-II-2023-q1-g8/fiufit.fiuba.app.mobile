@@ -5,12 +5,12 @@ import React, { useState } from 'react';
 
 import styles from '../styles';
 
-function SelectField({ defaultValue, onChangeText, error, title }) {
+function SelectField({ defaultValue, onChangeText, name, error, title }) {
   const defSelectedValue = defaultValue == null ? 'femaile' : defaultValue;
   const [selectedValue, setSelectedValue] = useState(defSelectedValue);
 
   const handleOnValueChange = (newSelectedValue) => {
-    onChangeText(newSelectedValue);
+    onChangeText(name, newSelectedValue);
     setSelectedValue(newSelectedValue);
   };
 
@@ -36,8 +36,9 @@ function SelectField({ defaultValue, onChangeText, error, title }) {
 
 SelectField.propTypes = {
   defaultValue: string,
-  onChangeText: func.isRequired,
   error: string.isRequired,
+  name: string,
+  onChangeText: func.isRequired,
   title: string.isRequired
 };
 

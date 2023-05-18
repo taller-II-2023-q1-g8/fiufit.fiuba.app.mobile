@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { colors } from '../../../colors';
 import styles from '../styles';
 
-function DateField({ onChangeText, title, placeholder, error }) {
+function DateField({ onChangeText, name, title, placeholder, error }) {
   const [date, setDate] = useState(undefined);
   const [show, setShow] = useState(false);
 
@@ -14,7 +14,7 @@ function DateField({ onChangeText, title, placeholder, error }) {
     setShow(false);
     const currentDate = selectedValue || new Date();
     setDate(currentDate);
-    onChangeText(currentDate);
+    onChangeText(name, selectedValue);
   };
 
   const showDatePicker = () => {
@@ -46,10 +46,11 @@ function DateField({ onChangeText, title, placeholder, error }) {
 }
 
 DateField.propTypes = {
-  title: string.isRequired,
-  placeholder: string.isRequired,
+  error: string.isRequired,
+  name: string,
   onChangeText: func.isRequired,
-  error: string.isRequired
+  placeholder: string.isRequired,
+  title: string.isRequired
 };
 
 export default DateField;
