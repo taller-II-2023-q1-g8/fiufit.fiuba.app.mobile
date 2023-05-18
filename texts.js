@@ -29,9 +29,15 @@ const texts = {
     name: 'Home',
     title: 'Inicio',
     closeGoalsTitle: 'Tus Metas Cercanas',
+    yourFollowingTitle: 'Que hicieron tus amigos',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'
+  },
+  Feed: {
+    name: 'Feed',
+    title: 'Social',
+    yourFollowingTitle: 'Que hicieron tus amigos'
   },
   TrainerHome: {
     name: 'Trainer Home',

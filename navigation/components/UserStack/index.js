@@ -73,7 +73,7 @@ export default function UserStackContainer({ email }) {
       color = 'red';
     } else if (route.name === texts.UserProfileStack.name)
       iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
-
+    else if (route.name === texts.Feed.name) iconName = focused ? ICONS.PEOPLE : ICONS.FOCUSED_PEOPLE;
     return <Ionicons name={iconName} size={size} color={color} />;
   };
 
