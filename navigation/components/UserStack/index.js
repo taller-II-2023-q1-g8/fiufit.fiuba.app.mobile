@@ -4,7 +4,7 @@ import { string } from 'prop-types';
 
 import texts from '../../../texts';
 import ICONS from '../../constants';
-import { fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
+import { fetchFollowedUsersByUsername, fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
 
 import UserStack from './layout';
 
@@ -18,14 +18,18 @@ export default function UserStackContainer({ email }) {
   const fetchUser = async () => {
     const response = await fetchUserByEmail(email);
     const json = await response.json();
-    const goals = await fetchUserGoalsByUsername(json.message.username);
+    const username = await json.message.username;
+    const goals = await fetchUserGoalsByUsername(username);
     const goalsJson = await goals.json();
+    const followed = await fetchFollowedUsersByUsername(username);
+    const followedJson = await followed.json();
 
     const initialState = {
       user: json.message,
       athleteScreen: true,
       plansData: [],
-      userGoals: goalsJson.message
+      userGoals: goalsJson.message,
+      followedUsers: followedJson.message
     };
     setData(initialState);
     setLoading(false);
@@ -56,6 +60,16 @@ export default function UserStackContainer({ email }) {
         return {
           ...state,
           userGoals: action.userGoals
+        };
+      case 'addFollowedUser':
+        return {
+          ...state,
+          followedUsers: action.followedUsers
+        };
+      case 'removeFollowedUser':
+        return {
+          ...state,
+          followedUsers: action.followedUsers
         };
       default:
         return state;

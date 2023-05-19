@@ -9,7 +9,14 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
-export default function SearchedProfile({ data, profPicUrl, loading, handleFollowPress, following }) {
+export default function SearchedProfile({
+  data,
+  profPicUrl,
+  loading,
+  handleFollowPress,
+  handleUnfollowPress,
+  following
+}) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
       <Loader loading={loading} />
@@ -29,10 +36,14 @@ export default function SearchedProfile({ data, profPicUrl, loading, handleFollo
               width: '75%'
             }}
           >
-            <Text style={styles.username}>{data.firstname + (data.lastname || '')}</Text>
+            <Text style={styles.username}>{`${data.firstname} ${data.lastname || ''}`}</Text>
 
             {following ? (
-              <TouchableOpacity style={styles.unfollowButton} activeOpacity={0.5} onPress={handleFollowPress}>
+              <TouchableOpacity
+                style={styles.unfollowButton}
+                activeOpacity={0.5}
+                onPress={handleUnfollowPress}
+              >
                 <Text style={styles.follow}>Dejar</Text>
               </TouchableOpacity>
             ) : (
@@ -74,5 +85,6 @@ SearchedProfile.propTypes = {
   profPicUrl: string,
   loading: bool,
   handleFollowPress: func,
+  handleUnfollowPress: func,
   following: bool
 };

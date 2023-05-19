@@ -87,3 +87,16 @@ export const fetchPlansByTrainerID = async (id) =>
     mode: 'cors',
     body: JSON.stringify(id)
   });
+
+export const fetchFollowedUsersByUsername = async (username) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/user/followed/${username}`);
+
+export const followUser = async (followerUsername, followedUsername) =>
+  fetch(`https://api-gateway-k1nl.onrender.com/user/follow/${followerUsername}/${followedUsername}`, {
+    method: 'POST'
+  });
+
+export const unfollowUser = async (followerUsername, followedUsername) =>
+  fetch(`https://api-gateway-k1nl.onrender.com/user/follow/${followerUsername}/${followedUsername}`, {
+    method: 'DELETE'
+  });
