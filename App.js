@@ -1,8 +1,8 @@
 import React from 'react';
 import 'expo-dev-client';
 
-import RootNavigation from './navigation';
 import './firebaseConfig';
+import RootNavigation from './src/navigation';
 
 // console.disableYellowBox = true;
 
