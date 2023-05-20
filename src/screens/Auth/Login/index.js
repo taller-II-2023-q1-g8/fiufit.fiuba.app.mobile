@@ -1,9 +1,15 @@
 import { Alert } from 'react-native';
 import { func, shape } from 'prop-types';
-import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
-import React, { useState } from 'react';
+import {
+  signInWithEmailAndPassword,
+  signInWithCredential,
+  GoogleAuthProvider,
+  signInAnonymously
+} from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { cloneDeep } from 'lodash';
+import * as LocalAuthentication from 'expo-local-authentication';
 
 import TextField from '../../../components/Fields/TextField';
 import {
@@ -30,6 +36,54 @@ export default function LoginContainer({ navigation }) {
   const initialData = { email: '', password: '' };
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState(initialData);
+  const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
+
+  const handleBiometricLogin = async () => {
+    const result = await LocalAuthentication.authenticateAsync('Biometric Login');
+    console.log({ result });
+    // if (result.success) {
+    //   console.log('Biometric authentication successful');
+    //   // Biometric authentication successful
+    //   // Check if the user exists in Firebase
+    //   const { currentUser } = auth;
+    //   if (currentUser) {
+    //     console.log('User is already signed in');
+    //     // User is already signed in, proceed with the app
+    //     // For example, navigate to the home screen
+    //   } else {
+    //     // User is not signed in, create a new Firebase user using anonymous authentication
+    //     signInAnonymously()
+    //       .then((userCredential) => {
+    //         console.log('User successfully logged in');
+    //         // User successfully logged in
+    //         // Handle the logged-in user
+    //       })
+    //       .catch((_error) => {
+    //         console.log('Firebase authentication error');
+    //         // Handle Firebase authentication error
+    //       });
+    //   }
+    // } else {
+    //   console.log('biometric authentification failed');
+    //   // Biometric authentication failed or canceled
+    //   if (result.error) {
+    //     console.log('biometric authentification error');
+    //     // Handle the error
+    //   }
+    // }
+  };
+
+  const checkBiometricAvailability = async () => {
+    // if the user has the required hardware and has biometrics recorded in their OS
+    const hasBiometricAuth =
+      (await LocalAuthentication.hasHardwareAsync()) && (await LocalAuthentication.isEnrolledAsync());
+    setIsBiometricAvailable(hasBiometricAuth);
+    if (hasBiometricAuth) handleBiometricLogin();
+  };
+
+  useEffect(() => {
+    checkBiometricAvailability();
+  }, []);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
