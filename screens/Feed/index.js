@@ -14,6 +14,9 @@ export default function FeedScreen({ navigation }) {
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
+      // Get de training plan completed de tu la gente que seguis.
+      // Si dio algun rating muy bueno a algun plan
+
       setFeed([
         { type: 'training_finished', username: 'pepe', title: 'Plan de la Fiuba', difficulty: 'EASY' },
         { type: 'training_finished', username: 'pepe', title: 'Road To Ingeniero', difficulty: 'MEDIUM' },
@@ -25,11 +28,20 @@ export default function FeedScreen({ navigation }) {
           difficulty: 'MEDIUM'
         }
       ]);
+
       setLoading(false);
     }
     fetchData();
   }, []);
-  return <Feed loading={loading} feed={feed} />;
+  const [refreshingUsers, setRefreshingUsers] = useState(false);
+  const onRefreshUsers = React.useCallback(async () => {
+    setRefreshingUsers(true);
+    // Fetch data
+    console.log('abc');
+    setRefreshingUsers(false);
+  }, []);
+
+  return <Feed loading={loading} feed={feed} refreshing={refreshingUsers} onRefresh={onRefreshUsers} />;
 }
 
 FeedScreen.propTypes = {

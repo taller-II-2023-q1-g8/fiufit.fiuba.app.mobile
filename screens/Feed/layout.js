@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, RefreshControl, ScrollView, Text, View } from 'react-native';
 import { bool, func, array } from 'prop-types';
 
 import texts from '../../texts';
@@ -27,13 +27,17 @@ function FeedItem({ feedItem }) {
       return null;
   }
 }
-export default function Feed({ feed, loading }) {
+export default function Feed({ feed, loading, refreshing, onRefresh }) {
   console.log(feed);
   return (
     <View style={styles.container}>
       <StatusBar />
       <Loader loading={loading} />
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={scrollviewStyle}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
         <View style={styles.homeHeader}>
           <Text style={{ ...styles.title, color: 'white' }}>{feedTexts.title}</Text>
         </View>
@@ -48,5 +52,7 @@ export default function Feed({ feed, loading }) {
 
 Feed.propTypes = {
   feed: array,
-  loading: bool.isRequired
+  loading: bool.isRequired,
+  refreshing: bool.isRequired,
+  onRefresh: func.isRequired
 };
