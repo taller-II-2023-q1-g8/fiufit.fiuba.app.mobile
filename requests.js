@@ -91,6 +91,9 @@ export const fetchPlansByTrainerID = async (id) =>
 export const fetchFollowedUsersByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/user/followed/${username}`);
 
+export const fetchFollowerUsersByUsername = async (username) =>
+  fetchData(`https://api-gateway-k1nl.onrender.com/user/follower/${username}`);
+
 export const followUser = async (followerUsername, followedUsername) =>
   fetch(`https://api-gateway-k1nl.onrender.com/user/follow/${followerUsername}/${followedUsername}`, {
     method: 'POST'

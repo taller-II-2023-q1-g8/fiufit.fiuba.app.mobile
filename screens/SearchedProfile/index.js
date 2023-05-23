@@ -1,7 +1,13 @@
 import { shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-import { fetchUserProfileByUsername, followUser, unfollowUser } from '../../requests';
+import {
+  fetchFollowerUsersByUsername,
+  fetchUserProfileByUsername,
+  followUser,
+  unfollowUser,
+  fetchFollowedUsersByUsername
+} from '../../requests';
 import getProfilePicURL from '../../utils/profilePicURL';
 import { useStateValue } from '../../utils/state/state';
 
@@ -28,9 +34,25 @@ export default function SearchedProfileContainer({ route }) {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetchUserProfileByUsername(username);
-      const json = await response.json();
-      setData(json.message);
+      const userResponse = await fetchUserProfileByUsername(username);
+      const userJson = await userResponse.json();
+      const followersResponse = await fetchFollowerUsersByUsername(username);
+      const followersJson = await followersResponse.json();
+      const followedResponse = await fetchFollowedUsersByUsername(username);
+      const followedJson = await followedResponse.json();
+      console.log('followers:', followersJson.message);
+      console.log('followers:', followersJson.message.length);
+      console.log('followed:', followedJson.message);
+      console.log('a', {
+        ...userJson.message,
+        followers: followersJson.message.length,
+        followed: followedJson.message.length
+      });
+      setData({
+        ...userJson.message,
+        followers: followersJson.message.length,
+        followed: followedJson.message.length
+      });
       // setFollowing(json.message.following?)
     }
     fetchData();

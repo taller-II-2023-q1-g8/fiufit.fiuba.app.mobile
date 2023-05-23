@@ -54,11 +54,11 @@ export default function SearchedProfile({
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
             <View style={{ marginRight: 30 }}>
-              <Text style={{ fontWeight: 'bold' }}>100</Text>
+              <Text style={{ fontWeight: 'bold' }}>{data.followers}</Text>
               <Text style={{ color: colors.gray }}>followers</Text>
             </View>
             <View>
-              <Text style={{ fontWeight: 'bold' }}>200</Text>
+              <Text style={{ fontWeight: 'bold' }}>{data.followed}</Text>
               <Text style={{ color: colors.gray }}>following</Text>
             </View>
           </View>
