@@ -3,25 +3,20 @@ import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
-import { fetchPlansByTrainerID, fetchTrainersID } from '../../requests';
+import { fetchCompletedPlanMetricsByUsername } from '../../requests';
 
 import Feed from './layout';
 
-function getPlansForEachFollower(followedUsers, trainersJson) {
+function getCompletedPlansForEachFollower(followedUsers) {
   return Promise.all(
     followedUsers.map(async (followedUser) => {
       try {
-        const id = trainersJson.find((trainer) => trainer.external_id === followedUser);
-        if (id === undefined) return { username: followedUser, trainer_id: null, plans: null };
-        const idMessage = {
-          trainer_id: id.id
-        };
-        const plansResponse = await fetchPlansByTrainerID(idMessage);
-        const plans = await plansResponse.json();
-        return { username: followedUser, trainer_id: idMessage.trainer_id, plans };
+        const completedPlansResponse = await fetchCompletedPlanMetricsByUsername(followedUser);
+        const completedPlans = await completedPlansResponse.json();
+        return { username: followedUser, completedPlanMetrics: completedPlans };
       } catch (error) {
         console.log(`Error fetching plans for ${followedUser}:`, error);
-        return { username: followedUser, trainer_id: null, plans: null };
+        return { username: followedUser, completedPlanMetrics: null };
       }
     })
   ).then((results) => results.filter((result) => result !== null));
@@ -36,38 +31,39 @@ export default function FeedScreen({ navigation }) {
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
-      // Get de training plan completed de la gente que seguis.
-
+      // Get de los planes para cada usuario que seguís para mostrar información relevante en el feed.
       const { followedUsers } = state;
-      const trainers = await fetchTrainersID();
-      const trainersJson = await trainers.json();
 
-      console.log('sapa', followedUsers);
-      console.log('pasa', trainersJson);
+      console.log('followedUsers', JSON.stringify(followedUsers, null, 2));
 
       try {
-        const plansForEachFollower = await getPlansForEachFollower(followedUsers, trainersJson);
-        console.log('planes por user seguido: ', JSON.stringify(plansForEachFollower, null, 2));
+        const completedPlansForEachFollower = await getCompletedPlansForEachFollower(followedUsers);
+        console.log(
+          'planes completados por user seguido: ',
+          JSON.stringify(completedPlansForEachFollower, null, 2)
+        );
+
+        const now = new Date();
+        const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;
+        const completedPlansFeedItems = [];
+        completedPlansForEachFollower.forEach((u) => {
+          u.completedPlanMetrics.message.forEach((completedPlan) => {
+            if (now - new Date(completedPlan.created_at) < oneWeekInMs) {
+              completedPlansFeedItems.push({
+                type: 'training_plan_completed',
+                username: u.username,
+                title: completedPlan.plan_title,
+                completionDate: completedPlan.created_at
+              });
+            }
+          });
+        });
+
+        console.log('guuuu', JSON.stringify(completedPlansFeedItems, null, 2));
+        setFeed(completedPlansFeedItems);
       } catch (error) {
-        console.log('Error consiguiendo los planes para cada usuario seguido:', error);
+        console.log('Error consiguiendo los planes completados para cada usuario seguido:', error);
       }
-
-      // Si dio algun rating muy bueno a algun plan
-      /* followedUsers.forEach((user) => {
-        const fourOrBetterRatedPlansLastWeek =
-      }) */
-
-      setFeed([
-        { type: 'training_finished', username: 'pepe', title: 'Plan de la Fiuba', difficulty: 'EASY' },
-        { type: 'training_finished', username: 'pepe', title: 'Road To Ingeniero', difficulty: 'MEDIUM' },
-        { type: 'training_finished', username: 'pepe', title: 'Duro como final de AM3', difficulty: 'HARD' },
-        {
-          type: 'training_finished',
-          username: 'pepe',
-          title: 'Fuerte como el café del comedor',
-          difficulty: 'MEDIUM'
-        }
-      ]);
 
       setLoading(false);
     }

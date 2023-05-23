@@ -69,6 +69,26 @@ export const styles = StyleSheet.create({
     top: 25,
     right: 16,
     padding: 8
+  },
+  trainingCompletedContainer: {
+    width: '90%',
+    aspectRatio: 2.8,
+    borderWidth: 2,
+    borderColor: 'black',
+    marginBottom: 20,
+    height: 120
+  },
+  trainingCompletedHeader: {
+    flex: 1,
+    backgroundColor: 'lightblue'
+  },
+  trainingCompletedBody: {
+    flex: 2,
+    backgroundColor: 'lightgray'
+  },
+  border: {
+    height: 1,
+    backgroundColor: 'black'
   }
 });
 

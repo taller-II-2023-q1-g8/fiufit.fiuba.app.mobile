@@ -75,8 +75,14 @@ export const createPlanRequest = async (values) =>
     body: JSON.stringify(values)
   });
 
+export const fetchAthletesID = async () => fetchData(`https://fiufit-plans2.onrender.com/api/v1/athletes`);
+
 export const fetchTrainersID = async () => fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers`);
 
+// ejemplo de id recibida:
+// const id = {
+//     trainer_id: id.id
+// }
 export const fetchPlansByTrainerID = async (id) =>
   fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {
     method: 'POST',
@@ -87,6 +93,36 @@ export const fetchPlansByTrainerID = async (id) =>
     mode: 'cors',
     body: JSON.stringify(id)
   });
+
+// ejemplo de athleteId recibida:
+// const athleteId = 2
+export const fetchCompletedPlansByAthleteID = async (athleteId) =>
+  fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify({
+      athlete_id: athleteId,
+      is_completed: true
+    })
+  });
+
+export const fetchCompletedPlanMetricsByUsername = async (username) =>
+  fetch(
+    `https://api-gateway-k1nl.onrender.com/metrics?
+username=${username}&type=training_plan_completed`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      mode: 'cors'
+    }
+  );
 
 export const fetchFollowedUsersByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/user/followed/${username}`);
