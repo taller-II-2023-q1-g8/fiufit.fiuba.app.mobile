@@ -6,8 +6,8 @@ import { string, func, array } from 'prop-types';
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
 import { colors } from '../../colors';
-import getProfilePicURL from '../../utils/profilePicURL';
 import defaultProfPic from '../../assets/profile-pic-def.png';
+import { getProfilePicURL } from '../../utils';
 
 import { styles } from './styles';
 
