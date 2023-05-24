@@ -1,6 +1,6 @@
 import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import React from 'react';
-import { array, bool, func } from 'prop-types';
+import { array, bool, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
@@ -36,6 +36,7 @@ function ItemSeparatorView() {
 }
 
 export default function TrainerPlanView({ data, loading, handleCalificationPress }) {
+  console.log(`[TrainerPlanView] data: ${JSON.stringify(data)}`);
   return (
     <>
       <Loader loading={loading} />
@@ -44,9 +45,11 @@ export default function TrainerPlanView({ data, loading, handleCalificationPress
           <View style={styles.header}>
             <Image style={styles.profilePicture} source={manPic} />
             <View>
-              <Text style={styles.username}>{data.title}</Text>
+              <Text style={styles.title}>{data.title}</Text>
               <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
                 <View style={{ marginRight: 30 }}>
+                  <Text style={{ color: colors.gray }}>Tags</Text>
+                  <Text style={{ fontWeight: 'bold' }}>{data.tags}</Text>
                   <Text style={{ color: colors.gray }}>Dificultad</Text>
                   <Text style={{ fontWeight: 'bold' }}>{data.difficulty}</Text>
                 </View>
@@ -76,7 +79,7 @@ export default function TrainerPlanView({ data, loading, handleCalificationPress
 }
 
 TrainerPlanView.propTypes = {
-  data: array,
+  data: object,
   loading: bool,
   handleCalificationPress: func
 };

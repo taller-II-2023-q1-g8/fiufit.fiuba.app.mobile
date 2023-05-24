@@ -6,6 +6,7 @@ import texts from '../../texts';
 import { useStateValue } from '../../utils/state/state';
 import GenericSelectField from '../../components/Fields/GenericSelectField';
 import { createPlanRequest } from '../../requests';
+import { textFieldType } from '../../components/Fields/constants';
 
 import CreatePlan from './layout';
 
@@ -54,12 +55,14 @@ export default function CreatePlanContainer({ navigation }) {
     values.trainer_id = externalID;
     console.log('valores: ', values);
     const response = await createPlanRequest(values)
-      .then((r) => {
+      .then(async (r) => {
+        const message = await r.json();
         console.log('PLAN CREATED');
         console.log(r);
+        console.log(message);
         console.log(values);
         const newState = state.plansData;
-        newState.push(values);
+        newState.push(message);
         console.log(newState);
         dispatch({
           type: 'addPlansData',
@@ -73,9 +76,9 @@ export default function CreatePlanContainer({ navigation }) {
   };
 
   const handleOnDifficultyChange = (eType) => setDifficulty(eType);
-  const handleOnTitleChange = (eTitle) => setTitle(eTitle);
-  const handleOnDescriptionChange = (eDescription) => setDescription(eDescription);
-  const handleOnTagsChange = (eTags) => setTags(eTags);
+  const handleOnTitleChange = (name, eTitle) => setTitle(eTitle);
+  const handleOnDescriptionChange = (name, eDescription) => setDescription(eDescription);
+  const handleOnTagsChange = (name, eTags) => setTags(eTags);
 
   const difficulties = [
     { label: 'Facil', value: 'EASY' },
@@ -88,8 +91,9 @@ export default function CreatePlanContainer({ navigation }) {
 
   const titleField = (
     <TextField
-      defaultValue={title}
       error={titleError}
+      keyboardType={textFieldType}
+      name="title"
       onChangeText={handleOnTitleChange}
       placeholder={texts.Fields.planTitlePlaceholder}
       title={texts.Fields.planTitle}
@@ -98,8 +102,9 @@ export default function CreatePlanContainer({ navigation }) {
 
   const descriptionField = (
     <TextField
-      defaultValue={description}
       error={descriptionError}
+      keyboardType={textFieldType}
+      name="description"
       onChangeText={handleOnDescriptionChange}
       placeholder={texts.Fields.planDescriptionPlaceholder}
       title={texts.Fields.planDescription}
@@ -108,8 +113,9 @@ export default function CreatePlanContainer({ navigation }) {
 
   const tagsField = (
     <TextField
-      defaultValue={tags}
       error={tagsError}
+      keyboardType={textFieldType}
+      name="tags"
       onChangeText={handleOnTagsChange}
       placeholder={texts.Fields.planTagsPlaceholder}
       title={texts.Fields.planTags}

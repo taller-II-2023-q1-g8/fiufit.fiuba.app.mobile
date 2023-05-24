@@ -22,7 +22,6 @@ export default function CreatePlan({
           <View>{descriptionField}</View>
           <View>{tagsField}</View>
           <View>{difficultyField}</View>
-          <View>{externalIDField}</View>
           <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
             <Text style={styles.submitButtonText}>{texts.PersonalPlans.submitButtonText}</Text>
           </TouchableOpacity>

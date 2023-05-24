@@ -11,7 +11,6 @@ export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
   const [loading, setLoading] = useState(true);
-  console.log('A');
   useEffect(() => {
     async function fetchData() {
       // Deberiamos hacer un fetch de los training plans del trainer.
@@ -34,11 +33,12 @@ export default function TrainerHomeScreen({ navigation }) {
       });
       setData(plansJson);
       setLoading(false);
+      return plans;
     }
     fetchData();
   }, []);
-  const handleItemPress = (planTitle) => {
-    navigation.navigate(texts.TrainerPlanView.name, { planTitle });
+  const handleItemPress = (itemData) => {
+    navigation.navigate(texts.TrainerPlanView.name, { itemData });
   };
   const handleTrainerHome = () => {
     dispatch({

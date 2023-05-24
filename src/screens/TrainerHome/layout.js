@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { FlatList, Image, KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
-import { string, bool, func, array } from 'prop-types';
+import { string, bool, func, array, object } from 'prop-types';
 
 import texts from '../../texts';
 import manPic from '../../assets/man.jpeg';
@@ -12,9 +12,9 @@ import { styles } from './styles';
 
 const trainerHomeTexts = texts.TrainerHome;
 
-function Item({ handleItemPress, username }) {
+function Item({ handleItemPress, username, itemData }) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(username)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
@@ -51,7 +51,9 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
             <Text>Tus planes:</Text>
             <FlatList
               data={data}
-              renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item.title} />}
+              renderItem={({ item }) => (
+                <Item handleItemPress={handleItemPress} username={item.title} itemData={item} />
+              )}
               ItemSeparatorComponent={ItemSeparatorView}
             />
             <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
@@ -65,7 +67,8 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
 }
 Item.propTypes = {
   handleItemPress: func,
-  username: string
+  username: string,
+  itemData: object
 };
 
 TrainerHome.propTypes = {
