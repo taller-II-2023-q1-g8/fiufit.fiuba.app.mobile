@@ -19,20 +19,19 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
-function Item({ handleItemPress, username }) {
+function Item({ handleItemPress, user }) {
   const [profPicUrl, setProfPicUrl] = useState(null);
-
   const fetchProfPicUrl = async (searchedUsername) => {
     const url = await getProfilePicURL(searchedUsername);
     setProfPicUrl(url);
   };
 
   useEffect(() => {
-    fetchProfPicUrl(username);
-  }, [username]);
+    fetchProfPicUrl(user.username);
+  }, [user]);
 
   return (
-    <TouchableOpacity key={username} activeOpacity={0.8} onPress={() => handleItemPress(username)}>
+    <TouchableOpacity key={user.username} activeOpacity={0.8} onPress={() => handleItemPress(user.username)}>
       <View style={styles.item}>
         {profPicUrl !== null ? (
           <Image source={{ uri: profPicUrl }} style={styles.profilePic} />
@@ -40,8 +39,8 @@ function Item({ handleItemPress, username }) {
           <Image source={defaultProfPic} style={styles.profilePic} />
         )}
         <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{username}</Text>
-          <Text style={styles.profileType}>Trainee</Text>
+          <Text style={styles.profileName}>{user.username}</Text>
+          <Text style={styles.profileType}>{user.role}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -69,7 +68,7 @@ export default function SearchUsers({ data, handleOnSearchChange, handleItemPres
         <SearchField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
         <FlatList
           data={data}
-          renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item} />}
+          renderItem={({ item }) => <Item handleItemPress={handleItemPress} user={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
@@ -80,7 +79,7 @@ export default function SearchUsers({ data, handleOnSearchChange, handleItemPres
 
 Item.propTypes = {
   handleItemPress: func,
-  username: string
+  user: array
 };
 
 SearchUsers.propTypes = {

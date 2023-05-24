@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { fetchPlans, fetchUsersByUsername } from '../../requests';
+import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
 import { isEmpty } from '../../utils';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
@@ -39,13 +39,21 @@ export default function ExploreScreen({ navigation }) {
             setPlans(fetchedPlans);
             setFilteredPlans(fetchedPlans);
           });
-
-        fetchUsersByUsername('')
-          .then((response) => response.json())
-          .then((fetchedUsernames) => {
-            setUsernames(fetchedUsernames.message);
-            setFilteredUsernames(fetchedUsernames.message);
-          });
+        const usersResponse = await fetchUsersByUsername('');
+        const usersJson = await usersResponse.json();
+        const trainersResponse = await fetchTrainersID();
+        const trainersJson = await trainersResponse.json();
+        console.log(trainersJson);
+        // Get de usuarios no traiga admins
+        const users = usersJson.message
+          .filter((username) => username !== state.user.username)
+          .map((username) => ({
+            username,
+            role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+          }));
+        console.log(users);
+        setUsernames(users);
+        setFilteredUsernames(users);
       }
       fetchData();
       return () => {

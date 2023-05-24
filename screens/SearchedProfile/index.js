@@ -6,7 +6,8 @@ import {
   fetchUserProfileByUsername,
   followUser,
   unfollowUser,
-  fetchFollowedUsersByUsername
+  fetchFollowedUsersByUsername,
+  fetchTrainersID
 } from '../../requests';
 import getProfilePicURL from '../../utils/profilePicURL';
 import { useStateValue } from '../../utils/state/state';
@@ -40,18 +41,13 @@ export default function SearchedProfileContainer({ route }) {
       const followersJson = await followersResponse.json();
       const followedResponse = await fetchFollowedUsersByUsername(username);
       const followedJson = await followedResponse.json();
-      console.log('followers:', followersJson.message);
-      console.log('followers:', followersJson.message.length);
-      console.log('followed:', followedJson.message);
-      console.log('a', {
-        ...userJson.message,
-        followers: followersJson.message.length,
-        followed: followedJson.message.length
-      });
+      const trainersResponse = await fetchTrainersID();
+      const trainersJson = await trainersResponse.json();
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
-        followed: followedJson.message.length
+        followed: followedJson.message.length,
+        role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
       });
       // setFollowing(json.message.following?)
     }

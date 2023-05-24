@@ -64,7 +64,7 @@ export default function SearchedProfile({
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Image style={{ width: 20, height: 20 }} source={TrainerIcon} />
-            <Text>Trainee</Text>
+            <Text>{data.role}</Text>
           </View>
         </View>
       </View>
