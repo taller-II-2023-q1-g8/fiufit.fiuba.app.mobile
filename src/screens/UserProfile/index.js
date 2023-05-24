@@ -4,7 +4,7 @@ import { shape, func } from 'prop-types';
 import { fetchUserProfileByUsername } from '../../requests';
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
-import getProfilePicURL from '../../utils/profilePicURL';
+import { getProfilePicURL } from '../../utils';
 
 import UserProfile from './layout';
 

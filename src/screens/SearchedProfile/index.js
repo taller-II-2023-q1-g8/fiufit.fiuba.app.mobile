@@ -2,7 +2,7 @@ import { shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import { fetchUserProfileByUsername } from '../../requests';
-import getProfilePicURL from '../../utils/profilePicURL';
+import { getProfilePicURL } from '../../utils';
 
 import SearchedProfile from './layout';
 

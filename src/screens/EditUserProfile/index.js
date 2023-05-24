@@ -9,8 +9,8 @@ import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import { emailFieldType, phoneFieldType } from '../../components/Fields/constants';
 import SelectField from '../../components/Fields/SelectField';
-import getProfilePicURL from '../../utils/profilePicURL';
 import { storage } from '../../../firebaseConfig';
+import { getProfilePicURL } from '../../utils';
 
 import EditUserProfile from './layout';
 
