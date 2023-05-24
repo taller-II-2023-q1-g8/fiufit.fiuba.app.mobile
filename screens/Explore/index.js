@@ -100,6 +100,13 @@ export default function ExploreScreen({ navigation }) {
     );
   };
 
+  const handleOnRoleChange = (newUserRole) => {
+    if (newUserRole === 'Any') {
+      setFilteredUsernames(usernames);
+    } else {
+      setFilteredUsernames(usernames.filter((user) => user.role === newUserRole));
+    }
+  };
   // View Switching
 
   const focusUsers = () => {
@@ -170,6 +177,7 @@ export default function ExploreScreen({ navigation }) {
           handleItemPress={nothing}
           data={filteredUsernames}
           handleOnSearchChange={handleOnUsernameChange}
+          handleOnRoleChange={handleOnRoleChange}
           refreshing={refreshingUsers}
           onRefresh={onRefreshUsers}
         />

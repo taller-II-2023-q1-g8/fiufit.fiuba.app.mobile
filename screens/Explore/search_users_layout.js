@@ -16,6 +16,7 @@ import SearchField from '../../components/Fields/SearchField';
 import { colors } from '../../colors';
 import getProfilePicURL from '../../utils/profilePicURL';
 import defaultProfPic from '../../assets/profile-pic-def.png';
+import GenericSelectField from '../../components/Fields/GenericSelectField';
 
 import { styles } from './styles';
 
@@ -59,13 +60,33 @@ function ItemSeparatorView() {
     />
   );
 }
+const roleOptions = [
+  { label: 'Cualquiera', value: 'Any' },
+  { label: 'Atleta', value: 'Athlete' },
+  { label: 'Entrenador', value: 'Trainer' }
+];
 
-export default function SearchUsers({ data, handleOnSearchChange, handleItemPress, refreshing, onRefresh }) {
+export default function SearchUsers({
+  data,
+  handleOnSearchChange,
+  handleItemPress,
+  refreshing,
+  onRefresh,
+  handleOnRoleChange
+}) {
   return (
     <View style={styles.container}>
       <StatusBar />
       <KeyboardAvoidingView style={styles.formContainer} enabled>
         <SearchField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
+        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18 }}>Filtros</Text>
+        <GenericSelectField
+          titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
+          containerStyle={{ display: 'flex', flexDirection: 'row' }}
+          title=" Rol"
+          items={roleOptions}
+          onChangeText={handleOnRoleChange}
+        />
         <FlatList
           data={data}
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} user={item} />}
@@ -87,5 +108,6 @@ SearchUsers.propTypes = {
   handleItemPress: func,
   handleOnSearchChange: func,
   refreshing: bool,
-  onRefresh: func
+  onRefresh: func,
+  handleOnRoleChange: func
 };
