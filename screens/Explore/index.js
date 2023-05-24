@@ -93,8 +93,9 @@ export default function ExploreScreen({ navigation }) {
   const handleOnUsernameChange = (newUsernameQuery) => {
     setFilteredUsernames(
       usernames.filter(
-        (username) =>
-          username !== state.user.username && username.toLowerCase().includes(newUsernameQuery.toLowerCase())
+        (user) =>
+          user.username !== state.user.username &&
+          user.username.toLowerCase().includes(newUsernameQuery.toLowerCase())
       )
     );
   };
