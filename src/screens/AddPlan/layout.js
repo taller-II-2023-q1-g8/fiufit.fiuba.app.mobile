@@ -10,7 +10,6 @@ export default function CreatePlan({
   titleField,
   descriptionField,
   tagsField,
-  externalIDField,
   handleSubmitPress
 }) {
   return (
@@ -36,6 +35,5 @@ CreatePlan.propTypes = {
   titleField: object.isRequired,
   descriptionField: object.isRequired,
   tagsField: object.isRequired,
-  externalIDField: object.isRequired,
   handleSubmitPress: func.isRequired
 };

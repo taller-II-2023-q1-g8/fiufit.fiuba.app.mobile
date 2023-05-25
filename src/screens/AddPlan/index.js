@@ -13,28 +13,23 @@ import CreatePlan from './layout';
 export default function CreatePlanContainer({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [difficulty, setDifficulty] = useState('NORMAL');
-  // const [difficultyError, setDifficultyError] = useState('');
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
   const [description, setDescription] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [tags, setTags] = useState('');
   const [tagsError, setTagsError] = useState('');
-  // const [externalIDError, setExternalIDError] = useState('');
-  const externalID = state.user.username;
 
   const resetErrors = () => {
     setTitleError('');
     setDescriptionError('');
     setTagsError('');
-    // setExternalIDError('');
   };
 
   const resetFieldValues = () => {
     setTitle('');
     setDescription('');
     setTags('');
-    // setExternalID('');
   };
 
   useEffect(
@@ -52,25 +47,21 @@ export default function CreatePlanContainer({ navigation }) {
     values.description = description;
     values.difficulty = difficulty;
     values.tags = tags;
-    values.trainer_id = externalID;
-    console.log('PLAN CREATED');
-    const response = await createPlanRequest(values)
-      .then(async (r) => {
-        const message = await r.json();
-        console.log(`response: ${JSON.stringify(r)}`);
-        console.log(`message: ${JSON.stringify(message)}`);
-        console.log(`valores: ${JSON.stringify(values)}`);
-        const newState = state.plansData;
-        newState.push(message);
+    values.trainer_username = state.user.username;
+    console.log(values)
+    createPlanRequest(values)
+      .then(async (res) => {
+        const itemData = await res.json();
+        state.plansData.push(itemData);
         dispatch({
           type: 'addPlansData',
-          plansData: newState
+          plansData: state.plansData
         });
+        navigation.navigate(texts.TrainerPlanView.name, { itemData });
       })
       .catch((error) => {
         console.log('Error:', error);
       });
-    navigation.navigate(texts.TrainerHome.iconTitle);
   };
 
   const handleOnDifficultyChange = (eType) => setDifficulty(eType);
@@ -120,23 +111,12 @@ export default function CreatePlanContainer({ navigation }) {
     />
   );
 
-  // const externalIDField = (
-  //   <TextField
-  //     defaultValue={externalID}
-  //     error={externalIDError}
-  //     onChangeText={handleOnExternalIDChange}
-  //     placeholder={texts.Fields.planExternalIDPlaceholder}
-  //     title={texts.Fields.planExternalID}
-  //   />
-  // );
-
   return (
     <CreatePlan
       difficultyField={difficultiesField}
       titleField={titleField}
       descriptionField={descriptionField}
       tagsField={tagsField}
-      // externalIDField={externalIDField}
       handleSubmitPress={handleSubmitPress}
     />
   );
