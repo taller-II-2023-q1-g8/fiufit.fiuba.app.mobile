@@ -9,7 +9,6 @@ import Loader from '../../../components/Loader';
 import texts from '../../../texts';
 
 import { scrollviewStyle, styles } from './styles';
-import SignInWithBiometricButton from './SignInWithBiometricButton';
 
 const loginTexts = texts.Login;
 
@@ -19,8 +18,6 @@ export default function Login({
   handleRegister,
   handleSubmitPress,
   loading,
-  navigation,
-  setIsLoading,
   handleGmailLogin
 }) {
   return (
@@ -50,7 +47,6 @@ export default function Login({
                 {loginTexts.register}
               </Text>
             </View>
-            <SignInWithBiometricButton navigation={navigation} setIsLoading={setIsLoading} />
           </View>
         </KeyboardAvoidingView>
       </ScrollView>

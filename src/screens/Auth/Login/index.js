@@ -1,4 +1,4 @@
-import { Alert, View } from 'react-native';
+import { Alert } from 'react-native';
 import { func, shape } from 'prop-types';
 import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
 import React, { useState } from 'react';
@@ -17,7 +17,6 @@ import texts from '../../../texts';
 import { fetchUserByEmail } from '../../../requests';
 
 import Login from './layout';
-import SignInWithBiometricButton from './SignInWithBiometricButton';
 
 const fieldTexts = texts.Fields;
 
@@ -133,8 +132,6 @@ export default function LoginContainer({ navigation }) {
       handleRegister={() => handleRegister()}
       handleSubmitPress={handleSubmitPress}
       loading={loading}
-      navigation={navigation}
-      setIsLoading={setLoading}
     />
   );
 }
