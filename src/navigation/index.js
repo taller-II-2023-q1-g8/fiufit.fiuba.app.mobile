@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import * as LocalAuthentication from 'expo-local-authentication';
 
 import { auth } from '../../firebaseConfig';
 import { firebaseObserver, loggedIn } from '../utils/hooks/useAuthentication';
 import Loader from '../components/Loader';
+import { useStateValue } from '../utils/state/state';
 
 import AuthStack from './components/AuthStack';
 import UserStack from './components/UserStack';
@@ -10,32 +12,61 @@ import UserStack from './components/UserStack';
 export default function RootNavigation() {
   const [authenticated, setAuthenticated] = useState(loggedIn());
   const [isLoading, setIsLoading] = useState(true);
+  const { currentUser } = auth;
+  const [isBiometricAuthenticated, setIsBiometricAuthenticated] = useState(false);
+  const [state, dispatch] = useStateValue();
+  const { automaticallyLogged } = state;
+
+  const handleBiometricAuth = async () => {
+    try {
+      const hasBiometricAuth = await LocalAuthentication.hasHardwareAsync();
+      if (!hasBiometricAuth) return;
+
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (!isEnrolled) return;
+
+      const result = await LocalAuthentication.authenticateAsync();
+      if (result.success) {
+        setIsBiometricAuthenticated(true);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     firebaseObserver.subscribe('authStateChanged', (data) => {
       setAuthenticated(data);
-      setIsLoading(false);
     });
+
     return () => {
       firebaseObserver.unsubscribe('authStateChanged');
     };
   }, []);
 
-  const { currentUser } = auth;
-
-  const Stack = authenticated ? (
-    <UserStack email={currentUser.email} token={currentUser.getIdToken()} />
-  ) : (
-    <AuthStack />
-  );
+  useEffect(() => {
+    const showBiometricVerification = authenticated && automaticallyLogged;
+    if (showBiometricVerification === true) handleBiometricAuth();
+    else setIsLoading(false);
+  }, [authenticated]);
 
   /* Esto es porque para que firebase vea si el user esta autenticado o no
    * Tarda unos segundos y si el usuario esta logeado muestra la pantalla de login de todas formas
    * Hasta que termina de cargar firebase, mostramos un texto de loading(Cambiar en el futuro) */
+
+  const shouldAuth = () =>
+    (authenticated && automaticallyLogged && !isBiometricAuthenticated) || !authenticated;
+
   return (
     <>
       <Loader loading={isLoading} />
-      {Stack}
+      {!isLoading &&
+        (shouldAuth() ? (
+          <AuthStack />
+        ) : (
+          <UserStack email={currentUser.email} token={currentUser.getIdToken()} />
+        ))}
     </>
   );
 }

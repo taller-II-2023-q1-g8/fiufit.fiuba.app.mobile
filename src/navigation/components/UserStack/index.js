@@ -1,10 +1,12 @@
+/* eslint-disable react/prop-types */
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useEffect, useState } from 'react';
-import { string } from 'prop-types';
 
 import ICONS from '../../constants';
-import { fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
 import texts from '../../../texts';
+import { useStateValue } from '../../../utils/state/state';
+import { fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
+import { isEmpty } from '../../../utils';
 
 import UserStack from './layout';
 
@@ -14,53 +16,26 @@ export default function UserStackContainer({ email }) {
   // Para tener el token de validacion para hacer requests
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [state, dispatch] = useStateValue();
 
   const fetchUser = async () => {
-    const response = await fetchUserByEmail(email);
-    const json = await response.json();
-    const goals = await fetchUserGoalsByUsername(json.message.username);
-    const goalsJson = await goals.json();
+    const userResponse = await fetchUserByEmail(email);
+    const userJson = await userResponse.json();
+    const goalsResponse = await fetchUserGoalsByUsername(userJson.message.username);
+    const goalsJson = await goalsResponse.json();
+    console.log({ userJson: userJson.message, goalsJson: goalsJson.message });
 
-    const initialState = {
-      user: json.message,
-      athleteScreen: true,
-      plansData: [],
+    dispatch({
+      type: 'setUserData',
+      user: userJson.message,
       userGoals: goalsJson.message
-    };
-    setData(initialState);
+    });
     setLoading(false);
   };
 
   useEffect(() => {
     fetchUser();
   }, []);
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case 'changeUser':
-        return {
-          ...state,
-          user: action.newUser
-        };
-      case 'changeCurrentStack':
-        return {
-          ...state,
-          athleteScreen: action.newScreen
-        };
-      case 'addPlansData':
-        return {
-          ...state,
-          plansData: action.plansData
-        };
-      case 'addNewGoal':
-        return {
-          ...state,
-          userGoals: action.userGoals
-        };
-      default:
-        return state;
-    }
-  };
 
   const tabBarIconsAthlete = (route, { focused, color, size }) => {
     let iconName;
@@ -90,16 +65,9 @@ export default function UserStackContainer({ email }) {
 
   return (
     <UserStack
-      data={data}
       loading={loading}
-      reducer={reducer}
       tabBarIconsAthlete={tabBarIconsAthlete}
       tabBarIconsTrainer={tabBarIconsTrainer}
     />
   );
 }
-
-UserStackContainer.propTypes = {
-  email: string.isRequired
-  // token: object.isRequired
-};
