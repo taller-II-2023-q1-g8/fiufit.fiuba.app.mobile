@@ -48,7 +48,6 @@ export default function CreatePlanContainer({ navigation }) {
     values.difficulty = difficulty;
     values.tags = tags;
     values.trainer_username = state.user.username;
-    console.log(values)
     createPlanRequest(values)
       .then(async (res) => {
         const itemData = await res.json();
