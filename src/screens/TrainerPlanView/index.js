@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { func, shape } from 'prop-types';
 
 import TrainerPlanView from './layout';
 
-export default function TrainerPlanViewContainer(itemDataObject) {
-  const [data, setData] = useState(itemDataObject.route.params.itemData);
+export default function TrainerPlanViewContainer({ route, navigation }) {
+  const [data, setData] = useState(route.params.itemData);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
@@ -18,8 +19,11 @@ export default function TrainerPlanViewContainer(itemDataObject) {
   return <TrainerPlanView data={data} loading={loading} handleAthletePress={handleAthletePress} />;
 }
 
-// TrainerPlanViewContainer.propTypes = {
-//   route: shape({
-//     params: shape.isRequired
-//   }).isRequired
-// };
+TrainerPlanViewContainer.propTypes = {
+  route: shape({
+    params: shape.isRequired
+  }).isRequired,
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};
