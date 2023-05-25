@@ -25,7 +25,7 @@
       },
       "package": "com.santiagobiach.fiuFit"
     },
-    "plugins": [["@react-native-google-signin/google-signin"], ["expo-image-picker"]],
+    "plugins": [["@react-native-google-signin/google-signin"], ["expo-image-picker"], ["expo-local-authentication"]],
     "web": {
       "favicon": "./src/assets/favicon.png"
     },
