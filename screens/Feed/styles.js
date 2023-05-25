@@ -72,23 +72,96 @@ export const styles = StyleSheet.create({
   },
   trainingCompletedContainer: {
     width: '90%',
-    aspectRatio: 2.8,
+    aspectRatio: 1.65,
     borderWidth: 2,
     borderColor: 'black',
     marginBottom: 20,
-    height: 120
+    height: 200
   },
   trainingCompletedHeader: {
-    flex: 1,
+    flex: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'lightblue'
   },
-  trainingCompletedBody: {
-    flex: 2,
-    backgroundColor: 'lightgray'
+  profilePicture: {
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  userPhoto: {
+    width: 47,
+    height: 47,
+    borderRadius: 50
   },
   border: {
     height: 1,
     backgroundColor: 'black'
+  },
+  usernameContainer: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  username: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10
+  },
+  usernameWrapper: {
+    justifyContent: 'center'
+  },
+  usernameText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginTop: 10,
+    marginLeft: 8
+  },
+  dateWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginBottom: 3
+  },
+  dateText: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginRight: 3
+  },
+  trainingCompletedBody: {
+    flex: 5,
+    backgroundColor: 'white',
+    paddingHorizontal: 10
+  },
+  planInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 10,
+    marginTop: 10
+  },
+  planImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 50,
+    marginRight: 5
+  },
+  planDetails: {
+    flex: 1
+  },
+  planName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5
+  },
+  planDifficulty: {
+    fontSize: 14,
+    color: 'gray'
+  },
+  planCompletedText: {
+    fontSize: 12,
+    marginBottom: 2
   }
 });
 

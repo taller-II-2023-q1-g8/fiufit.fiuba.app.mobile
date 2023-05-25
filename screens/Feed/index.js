@@ -53,7 +53,7 @@ export default function FeedScreen({ navigation }) {
                 type: 'training_plan_completed',
                 username: u.username,
                 title: completedPlan.plan_title,
-                completionDate: completedPlan.created_at
+                date: new Date(completedPlan.created_at)
               });
             }
           });
@@ -69,6 +69,11 @@ export default function FeedScreen({ navigation }) {
     }
     fetchData();
   }, []);
+
+  const handleUserProfilePress = (username) => {
+    navigation.navigate(texts.SearchedProfile.name, { username });
+  };
+
   const [refreshingUsers, setRefreshingUsers] = useState(false);
   const onRefreshUsers = React.useCallback(async () => {
     setRefreshingUsers(true);
@@ -77,7 +82,16 @@ export default function FeedScreen({ navigation }) {
     setRefreshingUsers(false);
   }, []);
 
-  return <Feed loading={loading} feed={feed} refreshing={refreshingUsers} onRefresh={onRefreshUsers} />;
+  feed.sort((a, b) => b.date - a.date);
+  return (
+    <Feed
+      loading={loading}
+      feed={feed}
+      refreshing={refreshingUsers}
+      onRefresh={onRefreshUsers}
+      handleUserProfilePress={handleUserProfilePress}
+    />
+  );
 }
 
 FeedScreen.propTypes = {
