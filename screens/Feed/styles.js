@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
   formContainer: {
     paddingHorizontal: 32,
     width: '100%',
-    paddingTop: 8,
+    paddingTop: 20,
     paddingBottom: 32
   },
   logoutButton: {
