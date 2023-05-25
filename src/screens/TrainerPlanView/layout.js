@@ -8,14 +8,14 @@ import Loader from '../../components/Loader';
 
 import { styles } from './styles';
 
-function Item({ handleItemPress, calification }) {
+function Item({ handleItemPress, athlete }) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(calification)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(athlete)}>
       <View style={styles.item}>
         <View style={{ display: 'flex' }}>
-          <Text style={styles.username}>{calification.username}</Text>
-          <Text>Nota: {calification.calification}</Text>
-          <Text style={styles.quality_cal}>{calification.quality_cal}</Text>
+          <Text style={styles.username}>Atleta: {athlete.username}</Text>
+          <Text style={styles.quantity_cal}>Nota: {athlete.calification_score}</Text>
+          <Text style={styles.quality_cal}>Calificacion: {athlete.calification}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -35,8 +35,7 @@ function ItemSeparatorView() {
   );
 }
 
-export default function TrainerPlanView({ data, loading, handleCalificationPress }) {
-  console.log(`[TrainerPlanView] data: ${JSON.stringify(data)}`);
+export default function TrainerPlanView({ data, loading, handleAthletePress }) {
   return (
     <>
       <Loader loading={loading} />
@@ -52,11 +51,12 @@ export default function TrainerPlanView({ data, loading, handleCalificationPress
                   <Text style={{ fontWeight: 'bold' }}>{data.tags}</Text>
                   <Text style={{ color: colors.gray }}>Dificultad</Text>
                   <Text style={{ fontWeight: 'bold' }}>{data.difficulty}</Text>
+                  <Text style={{ color: colors.gray }}>Descripcion</Text>
+                  <Text style={{ width: '80%' }}>{data.description}</Text>
                 </View>
               </View>
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 {/* <Image style={{ width: 20, height: 20 }} source={TrainerIcon} /> */}
-                <Text style={{ width: '80%' }}>{data.description}</Text>
               </View>
             </View>
           </View>
@@ -66,9 +66,7 @@ export default function TrainerPlanView({ data, loading, handleCalificationPress
           <View style={styles.container}>
             <FlatList
               data={data.quality_califactions}
-              renderItem={({ item }) => (
-                <Item handleItemPress={handleCalificationPress} calification={item} />
-              )}
+              renderItem={({ item }) => <Item handleItemPress={handleAthletePress} athlete={item} />}
               ItemSeparatorComponent={ItemSeparatorView}
             />
           </View>
@@ -81,10 +79,10 @@ export default function TrainerPlanView({ data, loading, handleCalificationPress
 TrainerPlanView.propTypes = {
   data: object,
   loading: bool,
-  handleCalificationPress: func
+  handleAthletePress: func
 };
 
 Item.propTypes = {
   handleItemPress: func,
-  calification: array
+  athlete: object
 };

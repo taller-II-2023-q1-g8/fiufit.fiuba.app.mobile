@@ -11,11 +11,11 @@ export default function TrainerPlanViewContainer(itemDataObject) {
     }
     fetchData();
   }, []);
-  const handleCalificationPress = (planTitle) => {
-    console.log(planTitle);
+  const handleAthletePress = (athlete) => {
+    console.log(athlete);
   };
 
-  return <TrainerPlanView data={data} loading={loading} handleCalificationPress={handleCalificationPress} />;
+  return <TrainerPlanView data={data} loading={loading} handleAthletePress={handleAthletePress} />;
 }
 
 // TrainerPlanViewContainer.propTypes = {

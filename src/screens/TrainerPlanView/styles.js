@@ -17,6 +17,9 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold'
   },
+  quantity_cal: {
+    fontSize: 16
+  },
   quality_cal: {
     fontSize: 16
   },

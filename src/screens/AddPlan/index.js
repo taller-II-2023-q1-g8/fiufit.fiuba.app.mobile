@@ -53,17 +53,15 @@ export default function CreatePlanContainer({ navigation }) {
     values.difficulty = difficulty;
     values.tags = tags;
     values.trainer_id = externalID;
-    console.log('valores: ', values);
+    console.log('PLAN CREATED');
     const response = await createPlanRequest(values)
       .then(async (r) => {
         const message = await r.json();
-        console.log('PLAN CREATED');
-        console.log(r);
-        console.log(message);
-        console.log(values);
+        console.log(`response: ${JSON.stringify(r)}`);
+        console.log(`message: ${JSON.stringify(message)}`);
+        console.log(`valores: ${JSON.stringify(values)}`);
         const newState = state.plansData;
         newState.push(message);
-        console.log(newState);
         dispatch({
           type: 'addPlansData',
           plansData: newState

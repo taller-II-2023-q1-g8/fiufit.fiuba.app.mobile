@@ -75,7 +75,21 @@ export const createPlanRequest = async (values) =>
     body: JSON.stringify(values)
   });
 
+export const fetchTrainerByUsername = async (username) =>
+  fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers/usernames?prefix=${username}`);
+
 export const fetchTrainersID = async () => fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers`);
+
+export const fetchPlansByTrainerUsername = async (username) =>
+  fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify({ trainer_username: username })
+  });
 
 export const fetchPlansByTrainerID = async (id) =>
   fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {

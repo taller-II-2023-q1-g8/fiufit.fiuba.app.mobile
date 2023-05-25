@@ -3,7 +3,7 @@ import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../utils/state/state';
 import texts from '../../texts';
-import { fetchPlansByTrainerID, fetchTrainersID } from '../../requests';
+import { fetchPlansByTrainerUsername } from '../../requests';
 
 import TrainerHome from './layout';
 
@@ -13,27 +13,44 @@ export default function TrainerHomeScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
-      // Deberiamos hacer un fetch de los training plans del trainer.
-      const trainers = await fetchTrainersID();
-      const trainersJson = await trainers.json();
-      const id = trainersJson.find((trainer) => trainer.external_id === state.user.username);
-      if (id === undefined) {
-        setData([]);
-        setLoading(false);
-        return;
-      }
-      const idMessage = {
-        trainer_id: id.id
-      };
-      const plans = await fetchPlansByTrainerID(idMessage);
-      const plansJson = await plans.json();
+      const response = await fetchPlansByTrainerUsername(state.user.username);
+      const plans = await response.json();
+
+      await plans.forEach((plan) => {
+        const NO_CALIFICATION = 'No hay calificacion';
+
+        plan.athletes.forEach((athlete) => {
+          athlete.username = athlete.external_id;
+
+          if (athlete.calification_score === -1) {
+            athlete.calification_score = NO_CALIFICATION;
+          }
+
+          if (athlete.calification === '') {
+            athlete.calification = NO_CALIFICATION;
+          }
+        });
+
+        plan.likes = plan.athletes.map((athlete) => athlete.is_liked).reduce((res, a) => res + a, 0);
+        const califications = plan.athletes
+          .map((athlete) => athlete.calification_score)
+          .filter((e) => e !== NO_CALIFICATION);
+
+        if (califications.length > 0) {
+          plan.average_calification = califications.reduce((res, a) => res + a, 0) / califications.length;
+        } else {
+          plan.average_calification = NO_CALIFICATION;
+        }
+
+        plan.quality_califactions = plan.athletes;
+      });
+
       dispatch({
         type: 'addPlansData',
-        plansData: plansJson
+        plansData: plans
       });
-      setData(plansJson);
+      setData(plans);
       setLoading(false);
-      return plans;
     }
     fetchData();
   }, []);
