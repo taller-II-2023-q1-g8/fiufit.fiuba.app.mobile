@@ -4,7 +4,7 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: '#EFEFEF',
     width: '100%',
     height: '100%'
   },
@@ -73,16 +73,18 @@ export const styles = StyleSheet.create({
   trainingCompletedContainer: {
     width: '90%',
     aspectRatio: 1.65,
-    borderWidth: 2,
-    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: 'lightgray',
     marginBottom: 20,
-    height: 200
+    height: 200,
+    overflow: 'hidden'
   },
   trainingCompletedHeader: {
     flex: 2,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'lightblue'
+    backgroundColor: '#B8E9EB'
   },
   profilePicture: {
     width: 60,

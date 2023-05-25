@@ -35,12 +35,16 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.placeholder,
     alignItems: 'center',
     borderRadius: 4,
+    marginLeft: 20,
+    marginRight: 30,
     width: '50%'
   },
   unfollowButton: {
     backgroundColor: colors.error,
     alignItems: 'center',
     borderRadius: 4,
+    marginLeft: 20,
+    marginRight: 30,
     width: '50%'
   }
 });

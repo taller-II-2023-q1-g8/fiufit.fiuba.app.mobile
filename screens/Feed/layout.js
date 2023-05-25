@@ -95,7 +95,9 @@ function TrainingFinished(item, handleUserProfilePress) {
           <View style={styles.planDetails}>
             <Text style={styles.planCompletedText}>Plan Completado!</Text>
             <Text style={styles.planName}>{item.title}</Text>
-            <Text style={styles.planDifficulty}>{item.type}</Text>
+            <Text style={styles.planDifficulty}>Dificultad: Díficil</Text>
+            <Text style={styles.planDifficulty}>Tags: Ejemplo Ejemplo2</Text>
+            <Text style={styles.planDifficulty}>Músculos: Abs</Text>
           </View>
           <Image source={manPic} style={styles.planImage} />
         </View>
@@ -127,7 +129,6 @@ export default function Feed({ feed, loading, refreshing, onRefresh, handleUserP
           <Text style={{ ...styles.title, color: 'white' }}>{feedTexts.title}</Text>
         </View>
         <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <Text style={styles.goalsTitle}>{feedTexts.yourFollowingTitle}</Text>
           {loading ? null : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress))}
         </KeyboardAvoidingView>
       </ScrollView>

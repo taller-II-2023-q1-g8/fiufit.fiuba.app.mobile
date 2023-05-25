@@ -37,7 +37,6 @@ export default function SearchedProfile({
             }}
           >
             <Text style={styles.username}>{`${data.firstname} ${data.lastname || ''}`}</Text>
-
             {following ? (
               <TouchableOpacity
                 style={styles.unfollowButton}

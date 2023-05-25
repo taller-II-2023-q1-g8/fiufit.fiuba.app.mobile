@@ -10,6 +10,7 @@ import texts from '../../../../../texts';
 import FeedScreen from '../../../../../screens/Feed';
 
 import ExploreStack from './components/ExploreStack';
+import FeedStack from './components/FeedStack';
 import UserProfileStack from './components/UserProfileStack';
 
 export default function AthleteStack({ tabBarIcons }) {
@@ -26,7 +27,7 @@ export default function AthleteStack({ tabBarIcons }) {
         })}
       >
         <Tab.Screen component={HomeScreen} name={texts.Home.name} options={{ title: texts.Home.title }} />
-        <Tab.Screen component={FeedScreen} name={texts.Feed.name} options={{ title: texts.Feed.title }} />
+        <Tab.Screen component={FeedStack} name={texts.Feed.name} options={{ title: texts.Feed.title }} />
         <Tab.Screen
           component={ExploreStack}
           name={texts.SearchPlansStack.name}
