@@ -4,13 +4,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes } from 'firebase/storage';
 
 import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import { emailFieldType, phoneFieldType } from '../../components/Fields/constants';
 import SelectField from '../../components/Fields/SelectField';
-import getProfilePicURL from '../../utils/profilePicURL';
 import { storage } from '../../../firebaseConfig';
+import { getProfilePicURL } from '../../utils';
 
 import EditUserProfile from './layout';
 

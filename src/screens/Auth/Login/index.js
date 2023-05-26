@@ -15,6 +15,7 @@ import {
 import { auth } from '../../../../firebaseConfig';
 import texts from '../../../texts';
 import { fetchUserByEmail } from '../../../requests';
+import { useStateValue } from '../../../state';
 
 import Login from './layout';
 
@@ -30,6 +31,7 @@ export default function LoginContainer({ navigation }) {
   const initialData = { email: '', password: '' };
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState(initialData);
+  const [state, dispatch] = useStateValue();
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
@@ -58,6 +60,7 @@ export default function LoginContainer({ navigation }) {
         setLoading(false);
         return;
       }
+      dispatch({ type: 'logIn', automaticallyLogged: 'false' });
       await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -88,6 +91,7 @@ export default function LoginContainer({ navigation }) {
     if (json.message.is_federated) {
       const googleCredential = GoogleAuthProvider.credential(user.idToken);
       // Sign-in the user with the credential
+      dispatch({ type: 'logIn', automaticallyLogged: 'false' });
       await signInWithCredential(auth, googleCredential);
     } else {
       Alert.alert('Ese email ya tiene una cuenta asociada');

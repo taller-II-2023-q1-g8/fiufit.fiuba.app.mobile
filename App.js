@@ -3,6 +3,7 @@ import 'expo-dev-client';
 
 import './firebaseConfig';
 import RootNavigation from './src/navigation';
+import { StateProvider } from './src/state';
 
 // eslint-disable-next-line no-undef
 if (__DEV__) {
@@ -12,5 +13,9 @@ if (__DEV__) {
 }
 
 export default function App() {
-  return <RootNavigation />;
+  return (
+    <StateProvider>
+      <RootNavigation />
+    </StateProvider>
+  );
 }
