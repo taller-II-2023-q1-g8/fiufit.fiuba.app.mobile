@@ -4,9 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import ICONS from '../../constants';
 import texts from '../../../texts';
-import { useStateValue } from '../../../utils/state/state';
+import { useStateValue } from '../../../state';
 import { fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
-import { isEmpty } from '../../../utils';
 
 import UserStack from './layout';
 
@@ -14,7 +13,6 @@ export default function UserStackContainer({ email }) {
   // Token es una promise, hay que ejecutarla en algun momento
   // Cargar aca el usuario en initial state y ejecutar la token promise
   // Para tener el token de validacion para hacer requests
-  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [state, dispatch] = useStateValue();
 
@@ -23,7 +21,6 @@ export default function UserStackContainer({ email }) {
     const userJson = await userResponse.json();
     const goalsResponse = await fetchUserGoalsByUsername(userJson.message.username);
     const goalsJson = await goalsResponse.json();
-    console.log({ userJson: userJson.message, goalsJson: goalsJson.message });
 
     dispatch({
       type: 'setUserData',

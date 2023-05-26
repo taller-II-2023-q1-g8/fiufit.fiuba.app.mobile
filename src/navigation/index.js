@@ -3,8 +3,8 @@ import * as LocalAuthentication from 'expo-local-authentication';
 
 import { auth } from '../../firebaseConfig';
 import { firebaseObserver, loggedIn } from '../utils/hooks/useAuthentication';
+import { useStateValue } from '../state';
 import Loader from '../components/Loader';
-import { useStateValue } from '../utils/state/state';
 
 import AuthStack from './components/AuthStack';
 import UserStack from './components/UserStack';
@@ -14,7 +14,7 @@ export default function RootNavigation() {
   const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = auth;
   const [isBiometricAuthenticated, setIsBiometricAuthenticated] = useState(false);
-  const [state, dispatch] = useStateValue();
+  const [state] = useStateValue();
   const { automaticallyLogged } = state;
 
   const handleBiometricAuth = async () => {
@@ -51,13 +51,12 @@ export default function RootNavigation() {
     else setIsLoading(false);
   }, [authenticated]);
 
-  /* Esto es porque para que firebase vea si el user esta autenticado o no
-   * Tarda unos segundos y si el usuario esta logeado muestra la pantalla de login de todas formas
-   * Hasta que termina de cargar firebase, mostramos un texto de loading(Cambiar en el futuro) */
-
   const shouldAuth = () =>
     (authenticated && automaticallyLogged && !isBiometricAuthenticated) || !authenticated;
 
+  /* Esto es porque para que firebase vea si el user esta autenticado o no
+   * Tarda unos segundos y si el usuario esta logeado muestra la pantalla de login de todas formas
+   * Hasta que termina de cargar firebase, mostramos un texto de loading(Cambiar en el futuro) */
   return (
     <>
       <Loader loading={isLoading} />

@@ -15,7 +15,7 @@ import {
 import { auth } from '../../../../firebaseConfig';
 import texts from '../../../texts';
 import { fetchUserByEmail } from '../../../requests';
-import { useStateValue } from '../../../utils/state/state';
+import { useStateValue } from '../../../state';
 
 import Login from './layout';
 

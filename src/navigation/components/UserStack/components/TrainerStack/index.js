@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import { colors } from '../../../../../colors';
-import { useStateValue } from '../../../../../utils/state/state';
+import { useStateValue } from '../../../../../state';
 import AddPlanScreen from '../../../../../screens/AddPlan';
 import texts from '../../../../../texts';
 

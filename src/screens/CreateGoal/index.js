@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import DateField from '../../components/Fields/DateField';
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 import GenericSelectField from '../../components/Fields/GenericSelectField';
 import { createGoalRequest, fetchGoalByID } from '../../requests';
 
