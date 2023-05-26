@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { fetchPlansByTrainerID, fetchTrainersID } from '../../requests';
 
@@ -11,7 +11,7 @@ export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
   const [loading, setLoading] = useState(true);
-  console.log('A');
+
   useEffect(() => {
     async function fetchData() {
       // Deberiamos hacer un fetch de los training plans del trainer.
@@ -43,7 +43,7 @@ export default function TrainerHomeScreen({ navigation }) {
   const handleTrainerHome = () => {
     dispatch({
       type: 'changeCurrentStack',
-      newScreen: true
+      athleteScreen: true
     });
   };
   return (

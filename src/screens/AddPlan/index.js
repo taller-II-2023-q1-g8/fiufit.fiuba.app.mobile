@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 import GenericSelectField from '../../components/Fields/GenericSelectField';
 import { createPlanRequest } from '../../requests';
 

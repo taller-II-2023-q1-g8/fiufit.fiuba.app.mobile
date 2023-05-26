@@ -6,7 +6,7 @@ import { fetchPlans, fetchUsersByUsername } from '../../requests';
 import { isEmpty } from '../../utils';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 
 import SearchUsers from './search_users_layout';
 import { styles } from './styles';
