@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes } from 'firebase/storage';
 
 import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 import TextField from '../../components/Fields/TextField';
 import texts from '../../texts';
 import { emailFieldType, phoneFieldType } from '../../components/Fields/constants';
