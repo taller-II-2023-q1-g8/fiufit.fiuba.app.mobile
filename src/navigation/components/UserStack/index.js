@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useEffect, useState } from 'react';
+import texts from 'texts';
 
 import ICONS from '../../constants';
-import texts from '../../../texts';
 import { useStateValue } from '../../../state';
 import { fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
 
