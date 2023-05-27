@@ -3,14 +3,11 @@ import { func, shape } from 'prop-types';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import React, { useState } from 'react';
 
-import { EMAIL_KEY, emailFieldType } from '../../../components/Fields/constants';
-import TextField from '../../../components/Fields/TextField';
 import texts from '../../../texts';
 import { auth } from '../../../../firebaseConfig';
 
 import ForgotPassword from './layout';
-
-const fieldTexts = texts.Fields;
+import { getField } from './utils';
 
 export default function ForgotPasswordContainer({ navigation }) {
   const [loading, setLoading] = useState(false);
@@ -39,24 +36,11 @@ export default function ForgotPasswordContainer({ navigation }) {
     setLoading(false);
   };
 
-  const handleOnEmailChange = (userMail) => setEmail(userMail);
+  const handleOnEmailChange = (_, value) => setEmail(value);
 
-  const fields = [
-    {
-      key: EMAIL_KEY,
-      field: (
-        <TextField
-          error={mailError}
-          keyboardType={emailFieldType}
-          onChangeText={handleOnEmailChange}
-          placeholder={fieldTexts.emailPlaceholder}
-          title={fieldTexts.emailTitle}
-        />
-      )
-    }
-  ];
+  const field = getField(handleOnEmailChange, mailError);
 
-  return <ForgotPassword fields={fields} handleSubmitPress={handleSubmitPress} loading={loading} />;
+  return <ForgotPassword emailField={field} handleSubmitPress={handleSubmitPress} loading={loading} />;
 }
 
 ForgotPasswordContainer.propTypes = {

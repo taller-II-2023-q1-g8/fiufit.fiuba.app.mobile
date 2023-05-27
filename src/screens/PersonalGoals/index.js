@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 
 import { useStateValue } from '../../state';
@@ -8,7 +8,11 @@ import { PersonalGoals } from './layout';
 
 export default function PersonalGoalsContainer({ navigation }) {
   const [state] = useStateValue();
-  const [goals] = useState(state.userGoals);
+  const [goals, setGoals] = useState(state.userGoals);
+
+  useEffect(() => {
+    setGoals(state.userGoals);
+  }, [state.userGoals]);
 
   // useEffect(() => {
   //   async function fetchData() {

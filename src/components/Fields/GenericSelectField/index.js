@@ -8,6 +8,7 @@ import styles from '../styles';
 function GenericSelectField({
   onChangeText,
   title,
+  name,
   items,
   titleStyle = styles.fieldTitle,
   fieldInputContainerStyle = styles.fieldInputContainer,
@@ -17,7 +18,7 @@ function GenericSelectField({
   const [selectedValue, setSelectedValue] = useState('');
 
   const handleOnValueChange = (newSelectedValue) => {
-    onChangeText(newSelectedValue);
+    onChangeText(name, newSelectedValue);
     setSelectedValue(newSelectedValue);
   };
 
@@ -40,6 +41,7 @@ function GenericSelectField({
 
 GenericSelectField.propTypes = {
   items: array.isRequired,
+  name: string.isRequired,
   onChangeText: func.isRequired,
   title: string.isRequired,
   titleStyle: object.isRequired,
