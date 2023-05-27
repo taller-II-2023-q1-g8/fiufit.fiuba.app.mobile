@@ -42,7 +42,7 @@ export default function TrainerHomeScreen({ navigation }) {
           plan.average_calification = NO_CALIFICATION;
         }
 
-        plan.quality_califactions = plan.athletes;
+        plan.athletes_that_favorited = plan.athletes;
       });
 
       dispatch({

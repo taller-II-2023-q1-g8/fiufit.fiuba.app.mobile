@@ -65,7 +65,7 @@ export default function TrainerPlanView({ data, loading, handleAthletePress }) {
           <Text>Calificacion promedio: {data.average_calification}</Text>
           <View style={styles.container}>
             <FlatList
-              data={data.quality_califactions}
+              data={data.athletes_that_favorited}
               renderItem={({ item }) => <Item handleItemPress={handleAthletePress} athlete={item} />}
               ItemSeparatorComponent={ItemSeparatorView}
             />
