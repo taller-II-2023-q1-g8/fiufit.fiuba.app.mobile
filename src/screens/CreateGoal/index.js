@@ -11,6 +11,7 @@ import { getFields } from './utils';
 
 export default function CreateGoalContainer({ navigation }) {
   const [state, dispatch] = useStateValue();
+  const [loading, setLoading] = useState(false);
   const initialData = {
     type: 'max_weight_lifted_in_exercise',
     exercise_title: '',
@@ -25,6 +26,7 @@ export default function CreateGoalContainer({ navigation }) {
   const thereIsAnError = (values) => Object.keys(values).find((key) => values[key] === '');
 
   const handleSubmitPress = async () => {
+    setLoading(true);
     const currentDate = new Date();
     const currentDatetimeISO = currentDate.toISOString();
 
@@ -42,28 +44,36 @@ export default function CreateGoalContainer({ navigation }) {
     }
 
     // Falta implementar errores
-    if (thereIsAnError(values)) return;
+    if (thereIsAnError(values)) {
+      setLoading(false);
+      return;
+    }
 
     const createGoalResponse = await createGoalRequest(values);
-    if (!createGoalResponse.ok) return;
+    if (!createGoalResponse.ok) {
+      setLoading(false);
+      return;
+    }
     const createGoalJson = await createGoalResponse.json();
     const getGoalResponse = await fetchGoalByID(createGoalJson.message);
-    if (!getGoalResponse.ok) return;
+    if (!getGoalResponse.ok) {
+      setLoading(false);
+      return;
+    }
     const getGoalJson = await getGoalResponse.json();
 
-    const newState = state.userGoals;
-    newState.push(getGoalJson.message);
     dispatch({
       type: 'addNewGoal',
-      userGoals: newState
+      newGoal: getGoalJson.message
     });
 
+    setLoading(false);
     navigation.navigate(texts.PersonalGoals.name);
   };
 
   const fields = getFields(data, handleOnChangeText);
 
-  return <CreateGoal fields={fields} handleSubmitPress={handleSubmitPress} />;
+  return <CreateGoal loading={loading} fields={fields} handleSubmitPress={handleSubmitPress} />;
 }
 
 CreateGoalContainer.propTypes = {
