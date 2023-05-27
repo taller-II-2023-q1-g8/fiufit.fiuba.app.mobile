@@ -3,9 +3,19 @@ import 'expo-dev-client';
 
 import './firebaseConfig';
 import RootNavigation from './src/navigation';
+import { StateProvider } from './src/state';
 
-// console.disableYellowBox = true;
+// eslint-disable-next-line no-undef
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => {
+    console.log('Reactotron Configured');
+  });
+}
 
 export default function App() {
-  return <RootNavigation />;
+  return (
+    <StateProvider>
+      <RootNavigation />
+    </StateProvider>
+  );
 }

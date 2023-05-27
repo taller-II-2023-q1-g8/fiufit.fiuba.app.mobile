@@ -6,21 +6,21 @@ import { fetchPlans, fetchUsersByUsername } from '../../requests';
 import { isEmpty } from '../../utils';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 
 import SearchUsers from './search_users_layout';
 import { styles } from './styles';
 import { hasSelectedFilters } from './filtering';
 import SearchTrainingPlans from './search_plans_layout';
+import { getFilters } from './utils';
 
 export default function ExploreScreen({ navigation }) {
-  // Training Plans
   const [plans, setPlans] = useState([]);
   const [filteredPlans, setFilteredPlans] = useState([]);
   const [plansQuery, setPlansQuery] = useState({
-    title: '',
     difficulty: 'ANY',
-    tag: 'ANY'
+    tag: 'ANY',
+    title: ''
   });
 
   const filterData = (searchQuery) => plans.filter((plan) => hasSelectedFilters(searchQuery, plan));
@@ -31,14 +31,8 @@ export default function ExploreScreen({ navigation }) {
     setFilteredPlans(filterData(newQuery));
   };
 
-  const handleOnDifficultyChange = (newDifficultySearch) => {
-    const newQuery = { ...plansQuery, difficulty: newDifficultySearch };
-    setPlansQuery(newQuery);
-    setFilteredPlans(filterData(newQuery));
-  };
-
-  const handleOnTrainingTypeChange = (newTagSearch) => {
-    const newQuery = { ...plansQuery, tag: newTagSearch };
+  const handleOnChange = (key, newDifficultySearch) => {
+    const newQuery = { ...plansQuery, [key]: newDifficultySearch };
     setPlansQuery(newQuery);
     setFilteredPlans(filterData(newQuery));
   };
@@ -107,6 +101,8 @@ export default function ExploreScreen({ navigation }) {
     return () => clearInterval(dataInterval); */
   }, []);
 
+  const filters = getFilters(handleOnChange);
+
   return (
     <>
       <Loader loading={isEmpty(plans)} />
@@ -121,11 +117,10 @@ export default function ExploreScreen({ navigation }) {
       <View style={styles.separator} />
       {!isEmpty(plans) && !usersActive && (
         <SearchTrainingPlans
+          filters={filters}
           handleItemPress={handleItemPress}
           data={filteredPlans}
           handleOnTitleChange={handleOnTitleChange}
-          handleOnDifficultyChange={handleOnDifficultyChange}
-          handleOnTrainingTypeChange={handleOnTrainingTypeChange}
         />
       )}
       {usersActive && (

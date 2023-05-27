@@ -5,20 +5,13 @@ import React, { useState } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { cloneDeep } from 'lodash';
 
-import TextField from '../../../components/Fields/TextField';
-import {
-  EMAIL_KEY,
-  emailFieldType,
-  PASSWORD_KEY,
-  passwordFieldType
-} from '../../../components/Fields/constants';
 import { auth } from '../../../../firebaseConfig';
 import texts from '../../../texts';
 import { fetchUserByEmail } from '../../../requests';
+import { useStateValue } from '../../../state';
 
 import Login from './layout';
-
-const fieldTexts = texts.Fields;
+import { getFields } from './utils';
 
 GoogleSignin.configure({
   webClientId: '587864716594-rieevghh6j6gi2m10lhb835u4ndn0631.apps.googleusercontent.com',
@@ -30,6 +23,7 @@ export default function LoginContainer({ navigation }) {
   const initialData = { email: '', password: '' };
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState(initialData);
+  const [state, dispatch] = useStateValue();
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
@@ -58,6 +52,7 @@ export default function LoginContainer({ navigation }) {
         setLoading(false);
         return;
       }
+      dispatch({ type: 'logIn', automaticallyLogged: 'false' });
       await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -88,6 +83,7 @@ export default function LoginContainer({ navigation }) {
     if (json.message.is_federated) {
       const googleCredential = GoogleAuthProvider.credential(user.idToken);
       // Sign-in the user with the credential
+      dispatch({ type: 'logIn', automaticallyLogged: 'false' });
       await signInWithCredential(auth, googleCredential);
     } else {
       Alert.alert('Ese email ya tiene una cuenta asociada');
@@ -95,34 +91,7 @@ export default function LoginContainer({ navigation }) {
     setLoading(false);
   };
 
-  const fields = [
-    {
-      key: EMAIL_KEY,
-      field: (
-        <TextField
-          error={errors.email}
-          keyboardType={emailFieldType}
-          name="email"
-          onChangeText={handleOnChangeText}
-          placeholder={fieldTexts.emailPlaceholder}
-          title={fieldTexts.emailTitle}
-        />
-      )
-    },
-    {
-      key: PASSWORD_KEY,
-      field: (
-        <TextField
-          error={errors.password}
-          keyboardType={passwordFieldType}
-          name="password"
-          onChangeText={handleOnChangeText}
-          placeholder={fieldTexts.passwordPlaceholder}
-          title={fieldTexts.passwordTitle}
-        />
-      )
-    }
-  ];
+  const fields = getFields(handleOnChangeText, errors);
 
   return (
     <Login

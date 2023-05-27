@@ -4,21 +4,20 @@ import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes } from 'firebase/storage';
 
 import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
-import { useStateValue } from '../../utils/state/state';
-import TextField from '../../components/Fields/TextField';
-import texts from '../../texts';
-import { emailFieldType, phoneFieldType } from '../../components/Fields/constants';
-import SelectField from '../../components/Fields/SelectField';
-import getProfilePicURL from '../../utils/profilePicURL';
+import { useStateValue } from '../../state';
 import { storage } from '../../../firebaseConfig';
+import { getProfilePicURL } from '../../utils';
 
 import EditUserProfile from './layout';
+import { getFields } from './utils';
 
 export default function EditUserProfileContainer() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [state] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
@@ -39,12 +38,6 @@ export default function EditUserProfileContainer() {
     fetchData();
   }, []);
 
-  const [email, setEmail] = useState(data.email || '');
-  const [gender, setGender] = useState(data.gender || '');
-  const [name, setName] = useState(data.firstname || '');
-  const [phone, setPhone] = useState(data.phone || '');
-  const [username, setUsername] = useState(data.username || '');
-
   const handlePickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -52,7 +45,7 @@ export default function EditUserProfileContainer() {
       allowsEditing: true
     });
 
-    const cloudProfPicPath = 'profile-pics'.concat('/', username, '.jpg');
+    const cloudProfPicPath = 'profile-pics'.concat('/', data.username, '.jpg');
     const cloudProfilePicRef = ref(storage, cloudProfPicPath);
     if (!result.cancelled) {
       try {
@@ -67,99 +60,23 @@ export default function EditUserProfileContainer() {
     }
   };
 
-  useEffect(() => {
-    if (Object.keys(data).length > 0) {
-      setEmail(data.email || '');
-      setGender(data.gender || '');
-      setName(data.firstname || '');
-      setPhone(data.phone || '');
-      setUsername(data.username || '');
-    }
-  }, [data]);
-
   const handleSubmitPress = async () => {
     setLoading(true);
 
-    const values = {
-      username: username || '',
-      firstname: name || '',
-      gender: gender || '',
-      email: email || '',
-      phone_number: phone || '',
-      lastname: data.lastname || '',
-      birth_date: data.birth_date || '',
-      password: data.password || '',
-      is_federated: data.is_federated || false,
-      weight_in_kg: data.weight_in_kg || 0,
-      height_in_cm: data.height_in_cm || 0
-    };
+    const values = { ...data };
+
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await updateUserInformationRequest(values);
-      if (response.ok) {
-        Alert.alert('Actualizado correctamente!', '');
-      } else Alert.alert('Error', 'Intente nuevamente');
+      if (response.ok) Alert.alert('Actualizado correctamente!', '');
+      else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
       // console.log(error);
     }
     setLoading(false);
   };
 
-  const handleOnEmailChange = (userMail) => setEmail(userMail);
-  const handleOnGenderChange = (userGender) => setGender(userGender);
-  const handleOnNameChange = (userName) => setName(userName);
-  const handleOnPhoneChange = (userPhone) => setPhone(userPhone);
-  const handleOnUsernameChange = (userUsername) => setUsername(userUsername);
-  const fieldTexts = texts.Fields;
-
-  const fields = [
-    <TextField
-      key="nameField"
-      defaultValue={name}
-      onChangeText={handleOnNameChange}
-      placeholder={fieldTexts.namePlaceholder}
-      title={fieldTexts.nameTitle}
-    />,
-    <TextField
-      key="usernameField"
-      defaultValue={username}
-      onChangeText={handleOnUsernameChange}
-      placeholder={fieldTexts.usernamePlaceholder}
-      title={fieldTexts.usernameTitle}
-    />,
-    <TextField
-      key="emailField"
-      defaultValue={email}
-      keyboardType={emailFieldType}
-      onChangeText={handleOnEmailChange}
-      placeholder={fieldTexts.emailPlaceholder}
-      title={fieldTexts.emailTitle}
-    />,
-    <SelectField
-      key="genderField"
-      defaultValue={gender}
-      onChangeText={handleOnGenderChange}
-      title={fieldTexts.genderTitle}
-    />,
-    <TextField
-      key="phoneField"
-      defaultValue={phone}
-      keyboardType={phoneFieldType}
-      onChangeText={handleOnPhoneChange}
-      placeholder={fieldTexts.phonePlaceholder}
-      title={fieldTexts.phoneTitle}
-    />
-  ];
-
-  /* return (
-      <EditUserProfile
-          handlePickImage={handlePickImage}
-          image={image}
-          handleSubmitPress={handleSubmitPress}
-          fields={fields}
-          loading={loading}
-      />
-  ); */
+  const fields = getFields(data, handleOnChangeText);
 
   return (
     <EditUserProfile

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Alert } from 'react-native';
+import React, { useState } from 'react';
 import { func, shape } from 'prop-types';
 import { signOut } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import { auth } from '../../../firebaseConfig';
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 import texts from '../../texts';
 
 import Home from './layout';
@@ -64,7 +63,7 @@ export default function HomeScreen({ navigation }) {
   const handleTrainerHome = () => {
     dispatch({
       type: 'changeCurrentStack',
-      newScreen: false
+      athleteScreen: false
     });
   };
   return (

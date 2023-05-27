@@ -1,39 +1,36 @@
 import { Text, View, ScrollView, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { func, object } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 
 import { scrollviewStyle, styles } from '../Auth/Register/styles';
 import texts from '../../texts';
+import Loader from '../../components/Loader';
 
-export default function CreatePlan({
-  difficultyField,
-  titleField,
-  descriptionField,
-  tagsField,
-  handleSubmitPress
-}) {
+export default function CreatePlan({ fields, handleSubmitPress, loading }) {
   return (
-    <View style={styles.container}>
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
-        <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <Text style={styles.title}>{texts.CreatePlan.createPlanTitle}</Text>
-          <View>{titleField}</View>
-          <View>{descriptionField}</View>
-          <View>{tagsField}</View>
-          <View>{difficultyField}</View>
-          <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
-            <Text style={styles.submitButtonText}>{texts.PersonalPlans.submitButtonText}</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ScrollView>
-    </View>
+    <>
+      <Loader loading={loading} />
+      {!loading && (
+        <View style={styles.container}>
+          <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
+            <KeyboardAvoidingView style={styles.formContainer} enabled>
+              <Text style={styles.title}>{texts.CreatePlan.createPlanTitle}</Text>
+              {fields.map((field) => (
+                <View>{field}</View>
+              ))}
+              <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleSubmitPress}>
+                <Text style={styles.submitButtonText}>{texts.PersonalPlans.submitButtonText}</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </View>
+      )}
+    </>
   );
 }
 
 CreatePlan.propTypes = {
-  difficultyField: object.isRequired,
-  titleField: object.isRequired,
-  descriptionField: object.isRequired,
-  tagsField: object.isRequired,
-  handleSubmitPress: func.isRequired
+  fields: array,
+  handleSubmitPress: func,
+  loading: bool
 };

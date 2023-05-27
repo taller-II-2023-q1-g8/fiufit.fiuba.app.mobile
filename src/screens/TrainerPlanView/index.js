@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 
-import { useStateValue } from '../../utils/state/state';
+import { useStateValue } from '../../state';
 import texts from '../../texts';
 
 import TrainerPlanView from './layout';
