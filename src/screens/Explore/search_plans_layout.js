@@ -6,7 +6,6 @@ import { array, func, object } from 'prop-types';
 import manPic from '../../assets/man.jpeg';
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
-import GenericSelectField from '../../components/Fields/GenericSelectField';
 import { colors } from '../../colors';
 
 import { styles } from './styles';
@@ -38,27 +37,7 @@ function ItemSeparatorView() {
   );
 }
 
-const difficultyOptions = [
-  { label: 'Cualquiera', value: 'ANY' },
-  { label: 'Fácil', value: 'EASY' },
-  { label: 'Intermedio', value: 'NORMAL' },
-  { label: 'Difícil', value: 'HARD' }
-];
-
-const trainingTypeOptions = [
-  { label: 'Cualquiera', value: 'ANY' },
-  { label: 'Brazos', value: 'ARMS' },
-  { label: 'Pecho', value: 'CHEST' },
-  { label: 'Piernas', value: 'LEGS' }
-];
-
-export default function SearchTrainingPlans({
-  data,
-  handleOnTitleChange,
-  handleOnDifficultyChange,
-  handleItemPress,
-  handleOnTrainingTypeChange
-}) {
+export default function SearchTrainingPlans({ data, filters, handleOnTitleChange, handleItemPress }) {
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -68,20 +47,7 @@ export default function SearchTrainingPlans({
           placeholder={texts.Fields.searchTrainingPlansPlaceholder}
         />
         <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18 }}>Filtros</Text>
-        <GenericSelectField
-          titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
-          containerStyle={{ display: 'flex', flexDirection: 'row' }}
-          title=" Dificultad"
-          items={difficultyOptions}
-          onChangeText={handleOnDifficultyChange}
-        />
-        <GenericSelectField
-          titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
-          containerStyle={{ display: 'flex', flexDirection: 'row' }}
-          title=" Tipo de Entrenamiento"
-          items={trainingTypeOptions}
-          onChangeText={handleOnTrainingTypeChange}
-        />
+        {filters}
         <FlatList
           data={data}
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
@@ -101,6 +67,5 @@ SearchTrainingPlans.propTypes = {
   data: array.isRequired,
   handleItemPress: func,
   handleOnTitleChange: func,
-  handleOnDifficultyChange: func,
-  handleOnTrainingTypeChange: func
+  filters: array
 };
