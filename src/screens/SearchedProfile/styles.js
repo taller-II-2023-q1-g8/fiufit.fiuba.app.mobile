@@ -1,10 +1,15 @@
 import { StyleSheet } from 'react-native';
 
+import { colors } from '../../colors';
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 20
+  },
+  follow: {
+    fontSize: 18
   },
   header: {
     alignItems: 'center',
@@ -25,5 +30,21 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginVertical: 10
+  },
+  followButton: {
+    backgroundColor: colors.placeholder,
+    alignItems: 'center',
+    borderRadius: 4,
+    marginLeft: 20,
+    marginRight: 30,
+    width: '50%'
+  },
+  unfollowButton: {
+    backgroundColor: colors.error,
+    alignItems: 'center',
+    borderRadius: 4,
+    marginLeft: 20,
+    marginRight: 30,
+    width: '50%'
   }
 });

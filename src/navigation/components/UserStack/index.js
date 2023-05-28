@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import ICONS from '../../constants';
 import texts from '../../../texts';
 import { useStateValue } from '../../../state';
-import { fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
+import { fetchFollowedUsersByUsername, fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
 
 import UserStack from './layout';
 
@@ -21,11 +21,16 @@ export default function UserStackContainer({ email }) {
     const userJson = await userResponse.json();
     const goalsResponse = await fetchUserGoalsByUsername(userJson.message.username);
     const goalsJson = await goalsResponse.json();
+    const followed = await fetchFollowedUsersByUsername(userJson.message.username);
+    const followedJson = await followed.json();
+
+    console.log('b', userJson.message);
 
     dispatch({
       type: 'setUserData',
       user: userJson.message,
-      userGoals: goalsJson.message
+      userGoals: goalsJson.message,
+      followedUsers: followedJson.message
     });
     setLoading(false);
   };
@@ -45,7 +50,7 @@ export default function UserStackContainer({ email }) {
       color = 'red';
     } else if (route.name === texts.UserProfileStack.name)
       iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
-
+    else if (route.name === texts.Feed.name) iconName = focused ? ICONS.PEOPLE : ICONS.FOCUSED_PEOPLE;
     return <Ionicons name={iconName} size={size} color={color} />;
   };
 

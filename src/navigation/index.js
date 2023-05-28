@@ -15,7 +15,6 @@ export default function RootNavigation() {
   const { currentUser } = auth;
   const [isBiometricAuthenticated, setIsBiometricAuthenticated] = useState(false);
   const [state] = useStateValue();
-  const { automaticallyLogged } = state;
 
   const handleBiometricAuth = async () => {
     try {
@@ -46,13 +45,13 @@ export default function RootNavigation() {
   }, []);
 
   useEffect(() => {
-    const showBiometricVerification = authenticated && automaticallyLogged;
+    const showBiometricVerification = authenticated && state.automaticallyLogged;
     if (showBiometricVerification === true) handleBiometricAuth();
     else setIsLoading(false);
   }, [authenticated]);
 
   const shouldAuth = () =>
-    (authenticated && automaticallyLogged && !isBiometricAuthenticated) || !authenticated;
+    (authenticated && state.automaticallyLogged === true && !isBiometricAuthenticated) || !authenticated;
 
   /* Esto es porque para que firebase vea si el user esta autenticado o no
    * Tarda unos segundos y si el usuario esta logeado muestra la pantalla de login de todas formas

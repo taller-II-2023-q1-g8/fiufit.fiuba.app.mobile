@@ -1,6 +1,6 @@
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { bool, object, string } from 'prop-types';
+import { bool, object, string, func } from 'prop-types';
 
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
@@ -9,7 +9,14 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
-export default function SearchedProfile({ data, profPicUrl, loading }) {
+export default function SearchedProfile({
+  data,
+  profPicUrl,
+  loading,
+  handleFollowPress,
+  handleUnfollowPress,
+  following
+}) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
       <Loader loading={loading} />
@@ -20,20 +27,43 @@ export default function SearchedProfile({ data, profPicUrl, loading }) {
           <Image source={defaultProfPic} style={styles.profilePicture} />
         )}
         <View>
-          <Text style={styles.username}>{data.firstname + (data.lastname || '')}</Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              marginVertical: 10,
+              justifyContent: 'space-between',
+              width: '75%'
+            }}
+          >
+            <Text style={styles.username}>{`${data.firstname} ${data.lastname || ''}`}</Text>
+            {following ? (
+              <TouchableOpacity
+                style={styles.unfollowButton}
+                activeOpacity={0.5}
+                onPress={handleUnfollowPress}
+              >
+                <Text style={styles.follow}>Dejar</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity style={styles.followButton} activeOpacity={0.5} onPress={handleFollowPress}>
+                <Text style={styles.follow}>Seguir</Text>
+              </TouchableOpacity>
+            )}
+          </View>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
             <View style={{ marginRight: 30 }}>
-              <Text style={{ fontWeight: 'bold' }}>100</Text>
+              <Text style={{ fontWeight: 'bold' }}>{data.followers}</Text>
               <Text style={{ color: colors.gray }}>followers</Text>
             </View>
             <View>
-              <Text style={{ fontWeight: 'bold' }}>200</Text>
+              <Text style={{ fontWeight: 'bold' }}>{data.followed}</Text>
               <Text style={{ color: colors.gray }}>following</Text>
             </View>
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Image style={{ width: 20, height: 20 }} source={TrainerIcon} />
-            <Text>Trainee</Text>
+            <Text>{data.role}</Text>
           </View>
         </View>
       </View>
@@ -52,5 +82,8 @@ export default function SearchedProfile({ data, profPicUrl, loading }) {
 SearchedProfile.propTypes = {
   data: object,
   profPicUrl: string,
-  loading: bool
+  loading: bool,
+  handleFollowPress: func,
+  handleUnfollowPress: func,
+  following: bool
 };

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
 
-import { fetchUserProfileByUsername } from '../../requests';
+import {
+  fetchFollowedUsersByUsername,
+  fetchFollowerUsersByUsername,
+  fetchUserProfileByUsername
+} from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { getProfilePicURL } from '../../utils';
@@ -26,9 +30,17 @@ export default function UserProfileContainer({ navigation }) {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetchUserProfileByUsername(state.user.username);
-      const json = await response.json();
-      setData(json.message);
+      const userResponse = await fetchUserProfileByUsername(state.user.username);
+      const userJson = await userResponse.json();
+      const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
+      const followersJson = await followersResponse.json();
+      const followedResponse = await fetchFollowedUsersByUsername(state.user.username);
+      const followedJson = await followedResponse.json();
+      setData({
+        ...userJson.message,
+        followers: followersJson.message.length,
+        followed: followedJson.message.length
+      });
     }
     fetchData();
   }, []);

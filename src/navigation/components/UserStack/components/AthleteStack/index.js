@@ -7,9 +7,11 @@ import { colors } from '../../../../../colors';
 import { useStateValue } from '../../../../../state';
 import HomeScreen from '../../../../../screens/Home';
 import texts from '../../../../../texts';
+import FeedScreen from '../../../../../screens/Feed';
 
 import ExploreStack from './components/ExploreStack';
 import UserProfileStack from './components/UserProfileStack';
+import FeedStack from './components/FeedStack';
 
 export default function AthleteStack({ tabBarIcons }) {
   const Tab = createBottomTabNavigator();
@@ -25,6 +27,7 @@ export default function AthleteStack({ tabBarIcons }) {
         })}
       >
         <Tab.Screen component={HomeScreen} name={texts.Home.name} options={{ title: texts.Home.title }} />
+        <Tab.Screen component={FeedStack} name={texts.Feed.name} options={{ title: texts.Feed.title }} />
         <Tab.Screen
           component={ExploreStack}
           name={texts.SearchPlansStack.name}

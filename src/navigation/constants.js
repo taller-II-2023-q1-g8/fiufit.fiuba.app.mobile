@@ -6,7 +6,9 @@ const ICONS = {
   FOCUSED_PERSON: 'person-outline',
   HOME: 'home',
   LIST: 'search',
-  PERSON: 'person'
+  PERSON: 'person',
+  PEOPLE: 'people',
+  FOCUSED_PEOPLE: 'people-outline'
 };
 
 export default ICONS;

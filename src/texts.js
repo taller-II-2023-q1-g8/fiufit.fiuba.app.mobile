@@ -33,6 +33,11 @@ const texts = {
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'
   },
+  Feed: {
+    name: 'Feed',
+    title: 'Social',
+    yourFollowingTitle: 'Que hicieron tus amigos'
+  },
   TrainerHome: {
     name: 'Trainer Home',
     homeTitle: 'Inicio de Trainer',

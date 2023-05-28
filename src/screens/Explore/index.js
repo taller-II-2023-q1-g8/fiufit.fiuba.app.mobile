@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { func, shape } from 'prop-types';
+import { useFocusEffect } from '@react-navigation/native';
 
-import { fetchPlans, fetchUsersByUsername } from '../../requests';
+import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
 import { isEmpty } from '../../utils';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
@@ -49,10 +50,19 @@ export default function ExploreScreen({ navigation }) {
   const handleOnUsernameChange = (newUsernameQuery) => {
     setFilteredUsernames(
       usernames.filter(
-        (username) =>
-          username !== state.user.username && username.toLowerCase().includes(newUsernameQuery.toLowerCase())
+        (user) =>
+          user.username !== state.user.username &&
+          user.username.toLowerCase().includes(newUsernameQuery.toLowerCase())
       )
     );
+  };
+
+  const handleOnRoleChange = (newUserRole) => {
+    if (newUserRole === 'Any') {
+      setFilteredUsernames(usernames);
+    } else {
+      setFilteredUsernames(usernames.filter((user) => user.role === newUserRole));
+    }
   };
 
   // View Switching
@@ -78,27 +88,61 @@ export default function ExploreScreen({ navigation }) {
     navigation.navigate(texts.SearchedProfile.name, { username });
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      fetchPlans('')
-        .then((response) => response.json())
-        .then((fetchedPlans) => {
-          setPlans(fetchedPlans);
-          setFilteredPlans(fetchedPlans);
-        });
+  useFocusEffect(
+    React.useCallback(() => {
+      async function fetchData() {
+        fetchPlans('')
+          .then((response) => response.json())
+          .then((fetchedPlans) => {
+            setPlans(fetchedPlans);
+            setFilteredPlans(fetchedPlans);
+          });
+        const usersResponse = await fetchUsersByUsername('');
+        const usersJson = await usersResponse.json();
+        const trainersResponse = await fetchTrainersID();
+        const trainersJson = await trainersResponse.json();
+        console.log(trainersJson);
+        // Get de usuarios no traiga admins
+        const users = usersJson.message
+          .filter((username) => username !== state.user.username)
+          .map((username) => ({
+            username,
+            role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+          }));
+        console.log(users);
+        setUsernames(users);
+        setFilteredUsernames(users);
+      }
+      fetchData();
+      return () => {
+        console.log('Screen was unfocused');
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
 
-      fetchUsersByUsername('')
-        .then((response) => response.json())
-        .then((fetchedUsernames) => {
-          setUsernames(fetchedUsernames.message);
-          setFilteredUsernames(fetchedUsernames.message);
-        });
-    }
-    fetchData();
-    /*
-    const dataInterval = setInterval(() => console.log('Hola'), 5 * 1000);
-
-    return () => clearInterval(dataInterval); */
+  const [refreshingUsers, setRefreshingUsers] = useState(false);
+  const onRefreshUsers = React.useCallback(async () => {
+    setRefreshingUsers(true);
+    await fetchUsersByUsername('')
+      .then((response) => response.json())
+      .then((fetchedUsernames) => {
+        setUsernames(fetchedUsernames.message);
+        setFilteredUsernames(fetchedUsernames.message);
+      });
+    setRefreshingUsers(false);
+  }, []);
+  const [refreshingPlans, setRefreshingPlans] = useState(false);
+  const onRefreshPlans = React.useCallback(async () => {
+    setRefreshingPlans(true);
+    await fetchPlans('')
+      .then((response) => response.json())
+      .then((fetchedPlans) => {
+        setPlans(fetchedPlans);
+        setFilteredPlans(fetchedPlans);
+      });
+    setRefreshingPlans(false);
   }, []);
 
   const filters = getFilters(handleOnChange);
@@ -121,6 +165,8 @@ export default function ExploreScreen({ navigation }) {
           handleItemPress={handleItemPress}
           data={filteredPlans}
           handleOnTitleChange={handleOnTitleChange}
+          refreshing={refreshingPlans}
+          onRefresh={onRefreshPlans}
         />
       )}
       {usersActive && (
@@ -128,6 +174,8 @@ export default function ExploreScreen({ navigation }) {
           handleItemPress={nothing}
           data={filteredUsernames}
           handleOnSearchChange={handleOnUsernameChange}
+          refreshing={refreshingUsers}
+          onRefresh={onRefreshUsers}
         />
       )}
     </>

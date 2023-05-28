@@ -22,6 +22,9 @@ export const reducer = (state, action) => {
     case 'addPlansData': {
       return { ...state, plansData: [...state.plansData, action.newPlansData] };
     }
+    case 'updateFollowedUsers': {
+      return { ...state, followedUsers: action.followedUsers };
+    }
     default:
       return state;
   }

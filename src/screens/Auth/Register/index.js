@@ -70,7 +70,8 @@ export default function RegisterContainer() {
     const values = {
       ...data,
       birth_date: formatDate(data.birth_date),
-      is_federated: false
+      is_federated: false,
+      is_admin: false
     };
 
     try {
