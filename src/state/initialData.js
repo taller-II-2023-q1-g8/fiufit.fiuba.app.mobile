@@ -3,5 +3,6 @@ export const initialState = {
   automaticallyLogged: true,
   plansData: [],
   user: '',
-  userGoals: ''
+  userGoals: '',
+  followedUsers: ''
 };

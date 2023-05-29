@@ -30,12 +30,12 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
           <Text style={styles.username}>{data.firstname + (data.lastname || '')}</Text>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
             <View style={{ marginRight: 30 }}>
-              <Text style={{ fontWeight: 'bold' }}>100</Text>
               <Text style={{ color: colors.gray }}>followers</Text>
+              <Text style={{ fontWeight: 'bold' }}>{data.followers}</Text>
             </View>
             <View>
-              <Text style={{ fontWeight: 'bold' }}>200</Text>
               <Text style={{ color: colors.gray }}>following</Text>
+              <Text style={{ fontWeight: 'bold' }}>{data.followed}</Text>
             </View>
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
