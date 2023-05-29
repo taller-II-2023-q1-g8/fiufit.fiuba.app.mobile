@@ -5,6 +5,7 @@ import SearchedProfileContainer from '../../../../../../../screens/SearchedProfi
 import TrainerHomeScreen from '../../../../../../../screens/TrainerHome';
 import TrainerPlanViewContainer from '../../../../../../../screens/TrainerPlanView';
 import texts from '../../../../../../../texts';
+import ChooseExercisesScreen from '../../../../../../../screens/AddExcercise';
 
 export default function TrainerPlanStack() {
   const Stack = createNativeStackNavigator();
@@ -23,6 +24,11 @@ export default function TrainerPlanStack() {
       <Stack.Screen
         name={texts.SearchedProfile.name}
         component={SearchedProfileContainer}
+        options={{ title: '' }}
+      />
+      <Stack.Screen
+        name={texts.ChooseExercises.name}
+        component={ChooseExercisesScreen}
         options={{ title: '' }}
       />
     </Stack.Navigator>

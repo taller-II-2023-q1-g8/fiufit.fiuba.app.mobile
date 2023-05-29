@@ -3,6 +3,14 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
+  submitButton: {
+    backgroundColor: colors.soft_red,
+    alignItems: 'center',
+    borderRadius: 4,
+    marginBottom: 15,
+    marginVertical: 10,
+    marginRight: 5
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

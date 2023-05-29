@@ -4,5 +4,6 @@ export const colors = {
   dark_purple: '#3F3F91',
   error: '#B00020',
   gray: 'gray',
-  white: 'white'
+  white: 'white',
+  soft_red: '#f5aca4'
 };

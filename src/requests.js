@@ -32,6 +32,20 @@ export const registerRequest = async (values) =>
 
 export const fetchPlans = async () => fetchData('https://fiufit-plans2.onrender.com/api/v1/plans');
 
+export const fetchExercises = async () => fetchData('https://fiufit-plans2.onrender.com/api/v1/exercises');
+
+export const removeExerciseFromPlan = async (planID, exerciseID) =>
+  fetch(`https://fiufit-plans2.onrender.com/api/v1/plans/${planID}/exercises/${exerciseID}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors'
+  });
+export const fetchPlanExercises = async (planID) =>
+  fetchData(`https://fiufit-plans2.onrender.com/api/v1/plans/${planID}/exercises`);
+
 export const fetchUsersByUsername = async (username) =>
   fetchData(`https://api-gateway-k1nl.onrender.com/user/usernames?prefix=${username}`);
 
@@ -79,6 +93,17 @@ export const fetchTrainerByUsername = async (username) =>
   fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers/usernames?prefix=${username}`);
 
 export const fetchTrainersID = async () => fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers`);
+
+export const AddExcerciseToPlanRequest = async (planID, exerciseID, values) =>
+  fetch(`https://fiufit-plans2.onrender.com/api/v1/plans/${planID}/exercises/${exerciseID}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify(values)
+  });
 
 export const fetchPlansByTrainerUsername = async (username) =>
   fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {

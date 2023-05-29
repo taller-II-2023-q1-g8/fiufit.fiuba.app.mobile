@@ -35,24 +35,33 @@ function ItemSeparatorView() {
   );
 }
 
-export default function TrainerPlanView({ data, loading, handleAthletePress }) {
+export default function TrainerPlanView({ data, loading, handleAthletePress, handleAddExecrsiePress }) {
   return (
     <>
       <Loader loading={loading} />
       {!loading && (
         <View style={styles.container}>
           <View style={styles.header}>
-            <Image style={styles.profilePicture} source={manPic} />
+            <View>
+              <Image style={styles.profilePicture} source={manPic} />
+              <TouchableOpacity
+                style={styles.submitButton}
+                activeOpacity={0.5}
+                onPress={handleAddExecrsiePress}
+              >
+                <Text style={styles.submitButtonText}>Agregar ejercicios</Text>
+              </TouchableOpacity>
+            </View>
             <View>
               <Text style={styles.title}>{data.title}</Text>
               <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
                 <View style={{ marginRight: 30 }}>
+                  <Text style={{ color: colors.gray }}>Descripcion</Text>
+                  <Text style={{ width: '80%' }}>{data.description}</Text>
                   <Text style={{ color: colors.gray }}>Tags</Text>
                   <Text style={{ fontWeight: 'bold' }}>{data.tags}</Text>
                   <Text style={{ color: colors.gray }}>Dificultad</Text>
                   <Text style={{ fontWeight: 'bold' }}>{data.difficulty}</Text>
-                  <Text style={{ color: colors.gray }}>Descripcion</Text>
-                  <Text style={{ width: '80%' }}>{data.description}</Text>
                 </View>
               </View>
               <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -79,7 +88,8 @@ export default function TrainerPlanView({ data, loading, handleAthletePress }) {
 TrainerPlanView.propTypes = {
   data: object,
   loading: bool,
-  handleAthletePress: func
+  handleAthletePress: func,
+  handleAddExecrsiePress: func
 };
 
 Item.propTypes = {

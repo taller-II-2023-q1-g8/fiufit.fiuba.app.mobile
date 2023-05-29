@@ -15,6 +15,7 @@ module.exports = {
     'no-unused-vars': 1,
     'prettier/prettier': ['error', { printWidth: 110, singleQuote: true }],
     'react/jsx-no-bind': 'off',
+    'react/jsx-boolean-value': 'warn',
     'no-invalid-this': 'off',
     'consistent-return': 'off',
     'no-return-assign': 'off',
@@ -27,7 +28,7 @@ module.exports = {
     'react/prop-types': [2, { ignore: ['style', 'children', 'dispatch'] }],
     'react/prefer-stateless-function': 'off',
     'import/order': [
-      'error',
+      'warn',
       {
         'newlines-between': 'always',
         groups: ['external', ['builtin', 'internal'], 'parent', 'sibling', 'index']
