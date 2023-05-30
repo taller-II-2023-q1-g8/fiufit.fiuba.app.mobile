@@ -14,7 +14,6 @@ export default function FeedStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name={texts.Feed.name} component={Feed} options={{ title: '', headerShown: false }} />
-      <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }

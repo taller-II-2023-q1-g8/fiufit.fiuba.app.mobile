@@ -17,22 +17,6 @@ export default function ExploreStack() {
         component={SearchPlansScreen}
         options={{ title: '', headerShown: false }}
       />
-      <Stack.Screen
-        name={texts.SearchedTrainingPlan.name}
-        component={SearchedTrainingPlan}
-        options={{ title: '' }}
-      />
-      <Stack.Screen
-        name={texts.TrainingInProgress.name}
-        component={TrainingInProgress}
-        options={{ title: '' }}
-      />
-      {/* <Stack.Screen
-        name={texts.SearchUsers.name}
-        component={SearchUsersScreen}
-        options={{ title: '', headerShown: false }}
-      /> */}
-      <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }

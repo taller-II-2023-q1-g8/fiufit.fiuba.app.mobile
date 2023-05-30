@@ -5,6 +5,7 @@ import EditUserProfile from '../../../../../../../screens/EditUserProfile';
 import UserProfile from '../../../../../../../screens/UserProfile';
 import PersonalGoals from '../../../../../../../screens/PersonalGoals';
 import CreateGoal from '../../../../../../../screens/CreateGoal';
+import TabViewExample from '../../../../../../../screens/FollowersScreen';
 import texts from '../../../../../../../texts';
 
 function PersonalGoalsScreens() {
@@ -30,6 +31,11 @@ export default function UserProfileStack() {
         name={texts.EditUserProfile.name}
         component={EditUserProfile}
         options={{ title: 'Tu Perfil' }}
+      />
+      <Stack.Screen
+        name={texts.FollowersScreen.name}
+        component={TabViewExample}
+        options={{ title: '', headerShown: false }}
       />
       <Stack.Screen
         component={PersonalGoalsScreens}

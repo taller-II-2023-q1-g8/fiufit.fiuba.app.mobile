@@ -1,36 +1,29 @@
-import { bool, func } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 import React from 'react';
 
 import Loader from '../../../components/Loader';
+import CreatePlan from '../../../screens/AddPlan/layout';
 
 import AthleteStack from './components/AthleteStack';
 import TrainerStack from './components/TrainerStack';
 
-export default function UserStack({ loading, tabBarIconsAthlete, tabBarIconsTrainer }) {
+export default function UserStack({ loading }) {
   return (
     <>
       <Loader loading={loading} />
-      {!loading && (
-        <AuxStack tabBarIconsAthlete={tabBarIconsAthlete} tabBarIconsTrainer={tabBarIconsTrainer} />
-      )}
+      {!loading && <AuxStack />}
     </>
   );
 }
 
-function AuxStack({ tabBarIconsAthlete, tabBarIconsTrainer }) {
+function AuxStack() {
   return (
     <>
-      <AthleteStack tabBarIcons={tabBarIconsAthlete} />
-      <TrainerStack tabBarIcons={tabBarIconsTrainer} />
+      <AthleteStack />
+      <TrainerStack />
     </>
   );
 }
-AuxStack.propTypes = {
-  tabBarIconsAthlete: func.isRequired,
-  tabBarIconsTrainer: func.isRequired
-};
 UserStack.propTypes = {
-  loading: bool.isRequired,
-  tabBarIconsAthlete: func.isRequired,
-  tabBarIconsTrainer: func.isRequired
+  loading: bool
 };

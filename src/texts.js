@@ -55,6 +55,9 @@ const texts = {
     homeTitle: 'Tu perfil',
     submitButtonText: 'Modificar perfil'
   },
+  FollowersScreen: {
+    name: 'Followers'
+  },
   SearchUsers: {
     name: 'Search Users',
     searchUsersTitle: 'Busca usuarios',

@@ -46,7 +46,7 @@ export default function UserProfileContainer({ navigation }) {
   }, []);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoals.name);
-
+  const handleFollowers = () => navigation.navigate(texts.FollowersScreen.name);
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
   return (
     <UserProfile
@@ -55,6 +55,7 @@ export default function UserProfileContainer({ navigation }) {
       profPicUrl={profPicUrl}
       loading={loading}
       handleAddStat={handleAddStat}
+      handleFollowers={handleFollowers}
     />
   );
 }

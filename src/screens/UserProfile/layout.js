@@ -10,7 +10,14 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 
 import { styles } from './styles';
 
-export default function UserProfile({ data, handleEditProfile, profPicUrl, loading, handleAddStat }) {
+export default function UserProfile({
+  data,
+  handleEditProfile,
+  profPicUrl,
+  loading,
+  handleAddStat,
+  handleFollowers
+}) {
   return Object.keys(data).length !== 0 ? (
     <View style={styles.container}>
       <Loader loading={loading} />
@@ -29,14 +36,16 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
         <View>
           <Text style={styles.username}>{data.firstname + (data.lastname || '')}</Text>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
-            <View style={{ marginRight: 30 }}>
-              <Text style={{ color: colors.gray }}>followers</Text>
-              <Text style={{ fontWeight: 'bold' }}>{data.followers}</Text>
-            </View>
-            <View>
-              <Text style={{ color: colors.gray }}>following</Text>
-              <Text style={{ fontWeight: 'bold' }}>{data.followed}</Text>
-            </View>
+            <TouchableOpacity activeOpacity={0.5} onPress={handleFollowers}>
+              <View style={{ marginRight: 30 }}>
+                <Text style={{ color: colors.gray }}>followers</Text>
+                <Text style={{ fontWeight: 'bold' }}>{data.followers}</Text>
+              </View>
+              <View>
+                <Text style={{ color: colors.gray }}>following</Text>
+                <Text style={{ fontWeight: 'bold' }}>{data.followed}</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Image style={{ width: 20, height: 20, marginRight: 2 }} source={TrainerIcon} />
@@ -90,5 +99,6 @@ UserProfile.propTypes = {
   handleAddStat: func,
   handleEditProfile: func,
   profPicUrl: string,
-  loading: bool
+  loading: bool,
+  handleFollowers: func
 };
