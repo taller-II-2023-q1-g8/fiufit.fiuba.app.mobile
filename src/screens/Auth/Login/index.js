@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { func, shape } from 'prop-types';
 import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { cloneDeep } from 'lodash';
 
@@ -24,6 +24,10 @@ export default function LoginContainer({ navigation }) {
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState(initialData);
   const [state, dispatch] = useStateValue();
+
+  useEffect(() => {
+    dispatch({ type: 'resetValues' });
+  }, []);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 

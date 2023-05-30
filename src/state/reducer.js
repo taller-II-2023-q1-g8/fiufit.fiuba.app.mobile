@@ -1,6 +1,8 @@
 import { cloneDeep } from 'lodash';
 
-const updatesValuesActionTypes = ['changeCurrentStack', 'logIn', 'setUserData'];
+import { initialState } from './initialData';
+
+const updatesValuesActionTypes = ['changeCurrentStack', 'logIn', 'setUserData']; // updateFollowedUsers
 
 const shouldUpdateValues = (type) => updatesValuesActionTypes.includes(type);
 
@@ -22,8 +24,12 @@ export const reducer = (state, action) => {
     case 'addPlansData': {
       return { ...state, plansData: [...state.plansData, action.newPlansData] };
     }
+    // Este caso se podría eliminar, agregando este action.type en updatesValuesActionTypes
     case 'updateFollowedUsers': {
       return { ...state, followedUsers: action.followedUsers };
+    }
+    case 'resetValues': {
+      return initialState;
     }
     default:
       return state;
