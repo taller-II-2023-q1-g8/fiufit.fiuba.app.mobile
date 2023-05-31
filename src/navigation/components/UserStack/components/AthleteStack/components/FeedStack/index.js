@@ -1,19 +1,55 @@
-import React from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem
+} from '@react-navigation/drawer';
+import { func, shape, object } from 'prop-types';
+import { Text } from 'react-native';
 
-import SearchedTrainingPlan from '../../../../../../../screens/SearchedTrainingPlan';
-import SearchPlansScreen from '../../../../../../../screens/Explore';
-// import SearchUsersScreen from '../../../../../../../screens/SearchUsers';
-import SearchedProfile from '../../../../../../../screens/SearchedProfile';
 import Feed from '../../../../../../../screens/Feed';
-import TrainingInProgress from '../../../../../../../screens/TrainingInProgress';
 import texts from '../../../../../../../texts';
+import { useStateValue } from '../../../../../../../state';
 
-export default function FeedStack() {
-  const Stack = createNativeStackNavigator();
+function ItemCustom(name, handleItemPress) {
+  return <DrawerItem label={name} onPress={() => handleItemPress(name)} />;
+}
+function CustomDrawerContent({ props, handleItemPress }) {
+  const [state] = useStateValue();
   return (
-    <Stack.Navigator>
-      <Stack.Screen name={texts.Feed.name} component={Feed} options={{ title: '', headerShown: false }} />
-    </Stack.Navigator>
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <Text> Seguidos </Text>
+      {state.followedUsers.map((user) => ItemCustom(user, handleItemPress))}
+    </DrawerContentScrollView>
   );
 }
+export default function FeedStack({ navigation }) {
+  const Drawer = createDrawerNavigator();
+  const nothing = (username) => {
+    navigation.navigate(texts.SearchedProfile.name, { username });
+  };
+  const CDC = React.useCallback(
+    (props, handleItemPress) => (
+      <CustomDrawerContent props={{ ...props }} handleItemPress={handleItemPress} />
+    ),
+    []
+  );
+  return (
+    <Drawer.Navigator useLegacyImplementation drawerContent={(props) => CDC(props, nothing)}>
+      <Drawer.Screen name={texts.Feed.name} component={Feed} options={{ title: '', headerShown: false }} />
+    </Drawer.Navigator>
+  );
+}
+
+FeedStack.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};
+
+CustomDrawerContent.propTypes = {
+  handleItemPress: func,
+  props: object
+};
