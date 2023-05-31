@@ -33,11 +33,6 @@ export default function UserProfileStack() {
         options={{ title: 'Tu Perfil' }}
       />
       <Stack.Screen
-        name={texts.FollowersScreen.name}
-        component={TabViewExample}
-        options={{ title: '', headerShown: false }}
-      />
-      <Stack.Screen
         component={PersonalGoalsScreens}
         name={texts.PersonalGoals.name}
         options={{ title: '', headerShown: false }}

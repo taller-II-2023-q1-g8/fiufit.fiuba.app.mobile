@@ -11,6 +11,7 @@ import { Text } from 'react-native';
 import Feed from '../../../../../../../screens/Feed';
 import texts from '../../../../../../../texts';
 import { useStateValue } from '../../../../../../../state';
+import TabViewExample from '../../../../../../../screens/FollowersScreen';
 
 function ItemCustom(name, handleItemPress) {
   return <DrawerItem label={name} onPress={() => handleItemPress(name)} />;
@@ -38,7 +39,17 @@ export default function FeedStack({ navigation }) {
   );
   return (
     <Drawer.Navigator useLegacyImplementation drawerContent={(props) => CDC(props, nothing)}>
-      <Drawer.Screen name={texts.Feed.name} component={Feed} options={{ title: '', headerShown: false }} />
+      <Drawer.Screen
+        name={texts.Feed.name}
+        component={Feed}
+        options={{ title: 'Feed', headerShown: false }}
+      />
+
+      <Drawer.Screen
+        name={texts.FollowersScreen.name}
+        component={TabViewExample}
+        options={{ title: 'Seguidores', headerShown: false }}
+      />
     </Drawer.Navigator>
   );
 }
