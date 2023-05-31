@@ -11,34 +11,21 @@ import { Text } from 'react-native';
 import Feed from '../../../../../../../screens/Feed';
 import texts from '../../../../../../../texts';
 import { useStateValue } from '../../../../../../../state';
-import TabViewExample from '../../../../../../../screens/FollowersScreen';
+import FollowersScreen from '../../../../../../../screens/FollowersScreen';
 
-function ItemCustom(name, handleItemPress) {
-  return <DrawerItem label={name} onPress={() => handleItemPress(name)} />;
-}
-function CustomDrawerContent({ props, handleItemPress }) {
+function CustomDrawerContent({ props }) {
   const [state] = useStateValue();
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      <Text> Seguidos </Text>
-      {state.followedUsers.map((user) => ItemCustom(user, handleItemPress))}
     </DrawerContentScrollView>
   );
 }
 export default function FeedStack({ navigation }) {
   const Drawer = createDrawerNavigator();
-  const nothing = (username) => {
-    navigation.navigate(texts.SearchedProfile.name, { username });
-  };
-  const CDC = React.useCallback(
-    (props, handleItemPress) => (
-      <CustomDrawerContent props={{ ...props }} handleItemPress={handleItemPress} />
-    ),
-    []
-  );
+  const CDC = React.useCallback((props) => <CustomDrawerContent props={{ ...props }} />, []);
   return (
-    <Drawer.Navigator useLegacyImplementation drawerContent={(props) => CDC(props, nothing)}>
+    <Drawer.Navigator useLegacyImplementation drawerContent={(props) => CDC(props)}>
       <Drawer.Screen
         name={texts.Feed.name}
         component={Feed}
@@ -47,7 +34,7 @@ export default function FeedStack({ navigation }) {
 
       <Drawer.Screen
         name={texts.FollowersScreen.name}
-        component={TabViewExample}
+        component={FollowersScreen}
         options={{ title: 'Seguidores', headerShown: false }}
       />
     </Drawer.Navigator>
@@ -61,6 +48,5 @@ FeedStack.propTypes = {
 };
 
 CustomDrawerContent.propTypes = {
-  handleItemPress: func,
   props: object
 };

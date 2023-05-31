@@ -1,35 +1,70 @@
-import * as React from 'react';
-import { View, useWindowDimensions } from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import React, { useEffect, useState } from 'react';
+import { func, shape } from 'prop-types';
 
-function FirstRoute() {
-  return <View style={{ flex: 1, backgroundColor: '#ff4081' }} />;
-}
+import { fetchFollowerUsersByUsername, fetchTrainersID } from '../../requests';
+import { useStateValue } from '../../state';
+import texts from '../../texts';
 
-function SecondRoute() {
-  return <View style={{ flex: 1, backgroundColor: '#673ab7' }} />;
-}
+import FollowInfo from './layout';
 
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute
-});
-
-export default function TabViewExample() {
-  const layout = useWindowDimensions();
-
+export default function FollowersScreen({ navigation }) {
+  const [state] = useStateValue();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'First' },
-    { key: 'second', title: 'Second' }
+    { key: 'first', title: 'Tus seguidos' },
+    { key: 'second', title: 'Tus seguidores' }
   ]);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
+      const followersJson = await followersResponse.json();
+      const trainersResponse = await fetchTrainersID();
+      const trainersJson = await trainersResponse.json();
+      console.log(trainersJson);
+      // Get de usuarios no traiga admins
+      const followers = followersJson.message
+        .filter((username) => username !== state.user.username)
+        .map((username) => ({
+          username,
+          role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+        }));
+      const followed = state.followedUsers
+        .filter((username) => username !== state.user.username)
+        .map((username) => ({
+          username,
+          role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+        }));
+      setData({
+        followers,
+        followed
+      });
+
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+  const nothing = (username) => {
+    navigation.navigate(texts.SearchedProfile.name, { username });
+  };
 
   return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
+    <FollowInfo
+      loading={loading}
+      index={index}
+      routes={routes}
+      setIndex={setIndex}
+      data={data}
+      handleItemPress={nothing}
     />
   );
 }
+
+FollowersScreen.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};
