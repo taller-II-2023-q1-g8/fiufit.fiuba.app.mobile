@@ -1,13 +1,31 @@
+import React from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import texts from '../../../texts';
 import ICONS from '../../constants';
 
-export const getAthleteTabBarIcon = (name) => {
-  if (name === texts.Home.name) return ICONS.HOME;
-  if (name === texts.SearchUsers.name) return ICONS.LIST;
-  if (name === texts.SearchTrainingPlans.name) return ICONS.LIST;
-  if (name === texts.UserProfile.name) return ICONS.PERSON;
+export const tabBarIconsAthlete = (route, { focused, color, size }) => {
+  let iconName;
+
+  if (route.name === texts.Home.name) iconName = focused ? ICONS.HOME : ICONS.FOCUSED_HOME;
+  else if (route.name === texts.SearchUsersStack.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
+  else if (route.name === texts.SearchPlansStack.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
+  else if (route.name === texts.AddPlan.name) {
+    iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
+    color = 'red';
+  } else if (route.name === texts.UserProfileStack.name)
+    iconName = focused ? ICONS.PERSON : ICONS.FOCUSED_PERSON;
+  else if (route.name === texts.Feed.name) iconName = focused ? ICONS.PEOPLE : ICONS.FOCUSED_PEOPLE;
+  return <Ionicons name={iconName} size={size} color={color} />;
 };
 
-export const getTrainerTabBarIcon = (name) => {
-  if (name === texts.TrainerHome.iconTitle) return ICONS.HOME;
+export const tabBarIconsTrainer = (route, { focused, color, size }) => {
+  let iconName;
+
+  if (route.name === texts.TrainerHome.iconTitle) iconName = focused ? ICONS.HOME : ICONS.FOCUSED_HOME;
+  else if (route.name === texts.AddPlan.name) {
+    iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
+    color = 'red';
+  }
+  return <Ionicons name={iconName} size={size} color={color} />;
 };

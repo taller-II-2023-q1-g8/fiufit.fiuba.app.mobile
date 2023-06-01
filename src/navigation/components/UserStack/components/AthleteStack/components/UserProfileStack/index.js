@@ -5,6 +5,7 @@ import EditUserProfile from '../../../../../../../screens/EditUserProfile';
 import UserProfile from '../../../../../../../screens/UserProfile';
 import PersonalGoals from '../../../../../../../screens/PersonalGoals';
 import CreateGoal from '../../../../../../../screens/CreateGoal';
+import TabViewExample from '../../../../../../../screens/FollowersScreen';
 import texts from '../../../../../../../texts';
 
 function PersonalGoalsScreens() {

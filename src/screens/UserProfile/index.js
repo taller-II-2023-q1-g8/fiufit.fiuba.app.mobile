@@ -46,7 +46,6 @@ export default function UserProfileContainer({ navigation }) {
   }, []);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoals.name);
-
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
   return (
     <UserProfile

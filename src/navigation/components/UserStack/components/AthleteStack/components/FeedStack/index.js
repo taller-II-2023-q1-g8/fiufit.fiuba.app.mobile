@@ -1,20 +1,52 @@
-import React from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem
+} from '@react-navigation/drawer';
+import { func, shape, object } from 'prop-types';
+import { Text } from 'react-native';
 
-import SearchedTrainingPlan from '../../../../../../../screens/SearchedTrainingPlan';
-import SearchPlansScreen from '../../../../../../../screens/Explore';
-// import SearchUsersScreen from '../../../../../../../screens/SearchUsers';
-import SearchedProfile from '../../../../../../../screens/SearchedProfile';
 import Feed from '../../../../../../../screens/Feed';
-import TrainingInProgress from '../../../../../../../screens/TrainingInProgress';
 import texts from '../../../../../../../texts';
+import { useStateValue } from '../../../../../../../state';
+import FollowersScreen from '../../../../../../../screens/FollowersScreen';
 
-export default function FeedStack() {
-  const Stack = createNativeStackNavigator();
+function CustomDrawerContent({ props }) {
+  const [state] = useStateValue();
   return (
-    <Stack.Navigator>
-      <Stack.Screen name={texts.Feed.name} component={Feed} options={{ title: '', headerShown: false }} />
-      <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
-    </Stack.Navigator>
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
   );
 }
+export default function FeedStack({ navigation }) {
+  const Drawer = createDrawerNavigator();
+  const CDC = React.useCallback((props) => <CustomDrawerContent props={{ ...props }} />, []);
+  return (
+    <Drawer.Navigator useLegacyImplementation drawerContent={(props) => CDC(props)}>
+      <Drawer.Screen
+        name={texts.Feed.name}
+        component={Feed}
+        options={{ title: 'Feed', headerShown: false }}
+      />
+
+      <Drawer.Screen
+        name={texts.FollowersScreen.name}
+        component={FollowersScreen}
+        options={{ title: 'Seguidores', headerShown: false }}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+FeedStack.propTypes = {
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};
+
+CustomDrawerContent.propTypes = {
+  props: object
+};

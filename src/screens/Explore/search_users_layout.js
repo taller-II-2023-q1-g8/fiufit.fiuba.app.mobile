@@ -20,9 +20,8 @@ import GenericSelectField from '../../components/Fields/GenericSelectField';
 
 import { styles } from './styles';
 
-function Item({ handleItemPress, user }) {
+export function Item({ handleItemPress, user }) {
   const [profPicUrl, setProfPicUrl] = useState(null);
-
   const fetchProfPicUrl = async (searchedUsername) => {
     const url = await getProfilePicURL(searchedUsername);
     setProfPicUrl(url);
@@ -49,7 +48,7 @@ function Item({ handleItemPress, user }) {
   );
 }
 
-function ItemSeparatorView() {
+export function ItemSeparatorView() {
   return (
     <View
       style={{
