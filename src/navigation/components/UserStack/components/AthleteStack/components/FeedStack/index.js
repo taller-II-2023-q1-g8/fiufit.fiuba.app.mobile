@@ -12,6 +12,7 @@ import Feed from '../../../../../../../screens/Feed';
 import texts from '../../../../../../../texts';
 import { useStateValue } from '../../../../../../../state';
 import FollowersScreen from '../../../../../../../screens/FollowersScreen';
+import MessagingScreen from '../../../../../../../screens/Messaging';
 
 function CustomDrawerContent({ props }) {
   const [state] = useStateValue();
@@ -26,16 +27,17 @@ export default function FeedStack({ navigation }) {
   const CDC = React.useCallback((props) => <CustomDrawerContent props={{ ...props }} />, []);
   return (
     <Drawer.Navigator useLegacyImplementation drawerContent={(props) => CDC(props)}>
-      <Drawer.Screen
-        name={texts.Feed.name}
-        component={Feed}
-        options={{ title: 'Feed', headerShown: false }}
-      />
+      <Drawer.Screen name={texts.Feed.name} component={Feed} options={{ title: 'Feed', headerShown: true }} />
 
       <Drawer.Screen
         name={texts.FollowersScreen.name}
         component={FollowersScreen}
-        options={{ title: 'Seguidores', headerShown: false }}
+        options={{ title: 'Seguidores', headerShown: true }}
+      />
+      <Drawer.Screen
+        name={texts.MessagingScreen.name}
+        component={MessagingScreen}
+        options={{ title: 'Mensajes', headerShown: true }}
       />
     </Drawer.Navigator>
   );

@@ -12,10 +12,12 @@ import { tabBarIconsAthlete } from '../../utils';
 import SearchedProfile from '../../../../../screens/SearchedProfile';
 import SearchedTrainingPlan from '../../../../../screens/SearchedTrainingPlan';
 import TrainingInProgress from '../../../../../screens/TrainingInProgress';
+import PrivateMessage from '../../../../../screens/PrivateMessage';
 
 import ExploreStack from './components/ExploreStack';
 import UserProfileStack from './components/UserProfileStack';
 import FeedStack from './components/FeedStack';
+import { MPHeader } from './layout';
 
 function TabStack() {
   const Tab = createBottomTabNavigator();
@@ -51,6 +53,7 @@ export default function AthleteStack() {
       <Stack.Navigator>
         <Stack.Screen name="Tab Stack" component={TabStack} options={{ title: '', headerShown: false }} />
         <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
+        <Stack.Screen name={texts.PrivateMessage.name} component={PrivateMessage} options={MPHeader} />
         <Stack.Screen
           name={texts.SearchedTrainingPlan.name}
           component={SearchedTrainingPlan}

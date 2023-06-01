@@ -58,6 +58,9 @@ const texts = {
   FollowersScreen: {
     name: 'Followers'
   },
+  MessagingScreen: {
+    name: 'Messaging'
+  },
   SearchUsers: {
     name: 'Search Users',
     searchUsersTitle: 'Busca usuarios',
@@ -91,6 +94,9 @@ const texts = {
   PersonalPlans: {
     name: 'PersonalPlans',
     submitButtonText: 'Guardar'
+  },
+  PrivateMessage: {
+    name: 'PrivateMessage'
   },
   EditUserProfile: {
     name: 'EditUserProfile'
