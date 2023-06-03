@@ -84,6 +84,7 @@ export default function SearchUsers({
         <GenericSelectField
           titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
           containerStyle={{ display: 'flex', flexDirection: 'row' }}
+          name="a"
           title=" Rol"
           items={roleOptions}
           onChangeText={handleOnRoleChange}

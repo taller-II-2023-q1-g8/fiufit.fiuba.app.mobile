@@ -57,7 +57,9 @@ export default function ExploreScreen({ navigation }) {
     );
   };
 
-  const handleOnRoleChange = (newUserRole) => {
+  const handleOnRoleChange = (name, newUserRole) => {
+    console.log(usernames);
+    console.log(newUserRole);
     if (newUserRole === 'Any') {
       setFilteredUsernames(usernames);
     } else {
@@ -176,6 +178,7 @@ export default function ExploreScreen({ navigation }) {
           handleOnSearchChange={handleOnUsernameChange}
           refreshing={refreshingUsers}
           onRefresh={onRefreshUsers}
+          handleOnRoleChange={handleOnRoleChange}
         />
       )}
     </>
