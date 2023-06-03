@@ -1,4 +1,4 @@
-import { shape } from 'prop-types';
+import { func, shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -7,14 +7,18 @@ import {
   followUser,
   unfollowUser,
   fetchFollowedUsersByUsername,
-  fetchTrainersID
+  fetchTrainersID,
+  fetchPlansByTrainerID,
+  fetchCompletedPlanMetricsByUsername
 } from '../../requests';
 import { getProfilePicURL } from '../../utils';
 import { useStateValue } from '../../state';
+import Loader from '../../components/Loader';
+import texts from '../../texts';
 
 import SearchedProfile from './layout';
 
-export default function SearchedProfileContainer({ route }) {
+export default function SearchedProfileContainer({ route, navigation }) {
   const [data, setData] = useState({});
   const { username } = route.params;
   const [state, dispatch] = useStateValue();
@@ -25,7 +29,6 @@ export default function SearchedProfileContainer({ route }) {
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(username);
     setProfPicUrl(url);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -34,6 +37,7 @@ export default function SearchedProfileContainer({ route }) {
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       const userResponse = await fetchUserProfileByUsername(username);
       const userJson = await userResponse.json();
       const followersResponse = await fetchFollowerUsersByUsername(username);
@@ -42,13 +46,49 @@ export default function SearchedProfileContainer({ route }) {
       const followedJson = await followedResponse.json();
       const trainersResponse = await fetchTrainersID();
       const trainersJson = await trainersResponse.json();
+      const id = trainersJson.find((trainer) => trainer.external_id === username);
+      const completedPlansResponse = await fetchCompletedPlanMetricsByUsername(username);
+      const completedPlans = await completedPlansResponse.json();
+
+      const completedPlansFeedItems = [];
+      completedPlans.message.forEach((completedPlan) => {
+        completedPlansFeedItems.push({
+          type: 'training_plan_completed',
+          username,
+          title: completedPlan.plan_title,
+          date: new Date(completedPlan.created_at)
+        });
+      });
+      completedPlansFeedItems.sort((a, b) => b.date - a.date);
+      if (id === undefined) {
+        // Fetch de planes realizados x usuario
+        setData({
+          ...userJson.message,
+          followers: followersJson.message.length,
+          followed: followedJson.message.length,
+          role: 'Athlete',
+          completedPlans: completedPlansFeedItems
+        });
+
+        setLoading(false);
+        return;
+      }
+      const idMessage = {
+        trainer_id: id.id
+      };
+      const plans = await fetchPlansByTrainerID(idMessage);
+      const plansJson = await plans.json();
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
         followed: followedJson.message.length,
-        role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+        role: 'Trainer',
+        completedPlans: completedPlansFeedItems,
+        createdPlans: plansJson
       });
-      // setFollowing(json.message.following?)
+      await fetchProfPicUrl();
+      console.log('Finished fetching!!');
+      setLoading(false);
     }
     fetchData();
   }, []);
@@ -80,21 +120,32 @@ export default function SearchedProfileContainer({ route }) {
     setLoading(false);
     console.log('Unfollowing', username);
   };
-
+  const handleTrainingPress = (planID) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
+  };
   return (
-    <SearchedProfile
-      data={data}
-      profPicUrl={profPicUrl}
-      loading={loading}
-      handleFollowPress={handleFollowPress}
-      handleUnfollowPress={handleUnfollowPress}
-      following={following}
-    />
+    <>
+      <Loader loading={loading} />
+      {loading ? null : (
+        <SearchedProfile
+          data={data}
+          loading={loading}
+          handleFollowPress={handleFollowPress}
+          following={following}
+          handleUnfollowPress={handleUnfollowPress}
+          profPicUrl={profPicUrl}
+          handleTrainingPress={handleTrainingPress}
+        />
+      )}
+    </>
   );
 }
 
 SearchedProfileContainer.propTypes = {
   route: shape({
     params: shape.isRequired
+  }).isRequired,
+  navigation: shape({
+    navigate: func.isRequired
   }).isRequired
 };

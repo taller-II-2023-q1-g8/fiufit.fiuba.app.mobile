@@ -16,6 +16,7 @@ module.exports = {
     'prettier/prettier': ['error', { printWidth: 110, singleQuote: true }],
     'react/jsx-no-bind': 'off',
     'no-invalid-this': 'off',
+    'no-underscore-dangle': 'off',
     'consistent-return': 'off',
     'no-return-assign': 'off',
     'no-param-reassign': 'off',
