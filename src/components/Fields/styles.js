@@ -61,15 +61,11 @@ const styles = StyleSheet.create({
   searchField: {
     marginLeft: 10,
     alignItems: 'center',
+    color: colors.white,
     display: 'flex',
     flexDirection: 'row',
     fontSize: 16,
-    width: '100%',
-    ...Platform.select({
-      web: {
-        outlineStyle: 'none'
-      }
-    })
+    width: '100%'
   }
 });
 

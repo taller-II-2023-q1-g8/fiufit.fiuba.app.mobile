@@ -4,9 +4,9 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20
+    height: '100%',
+    padding: 20,
+    marginTop: 40
   },
   header: {
     alignItems: 'center',
@@ -15,28 +15,34 @@ export const styles = StyleSheet.create({
   },
   username: {
     fontSize: 18,
+    color: colors.white,
     fontWeight: 'bold'
   },
   profilePicture: {
-    borderRadius: 50,
-    height: 110,
+    alignSelf: 'flex-start',
+    borderRadius: 20,
+    height: 150,
     marginRight: 20,
     width: 110
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginVertical: 10
+    marginVertical: 10,
+    color: colors.white
   },
   startButton: {
+    backgroundColor: colors.transparent,
     alignItems: 'center',
-    backgroundColor: colors.main,
     borderRadius: 4,
-    marginBottom: 24
+    borderWidth: 1,
+    borderColor: colors.white,
+    paddingHorizontal: 10,
+    paddingVertical: 10
   },
   startButtonText: {
-    color: 'white',
+    color: colors.white,
     fontSize: 16,
-    paddingVertical: 8
+    fontWeight: 'bold'
   }
 });

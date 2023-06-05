@@ -85,11 +85,13 @@ export const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 17,
+    color: colors.white,
     fontWeight: '600',
     paddingLeft: 10
   },
   profileType: {
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   }
 });
 

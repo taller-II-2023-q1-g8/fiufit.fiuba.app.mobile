@@ -43,8 +43,15 @@ export default function AthleteStack() {
   const Stack = createNativeStackNavigator();
   return state.athleteScreen ? (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={() => ({ headerShown: false })}>
-        <Stack.Screen name="Tab Stack" component={TabStack} />
+      <Stack.Navigator
+        screenOptions={() => ({
+          headerTintColor: colors.white,
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerTitleAlign: 'center',
+          headerStyle: { backgroundColor: colors.header }
+        })}
+      >
+        <Stack.Screen name="Tab Stack" component={TabStack} options={{ headerShown: false }} />
         <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} />
         <Stack.Screen name={texts.SearchedTrainingPlan.name} component={SearchedTrainingPlan} />
         <Stack.Screen name={texts.TrainingInProgress.name} component={TrainingInProgress} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import { func, shape } from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -9,6 +9,7 @@ import Loader from '../../components/Loader';
 import texts from '../../texts';
 import { useStateValue } from '../../state';
 import { colors } from '../../colors';
+import BackgroundImage from '../../assets/Background.jpg';
 
 import SearchUsers from './search_users_layout';
 import { styles } from './styles';
@@ -152,25 +153,27 @@ export default function ExploreScreen({ navigation }) {
         </Text>
       </View>
       <View style={styles.separator} />
-      {!isEmpty(plans) && !usersActive && (
-        <SearchTrainingPlans
-          filters={filters}
-          handleItemPress={handleItemPress}
-          data={filteredPlans}
-          handleOnTitleChange={handleOnTitleChange}
-          refreshing={refreshingPlans}
-          onRefresh={onRefreshPlans}
-        />
-      )}
-      {usersActive && (
-        <SearchUsers
-          handleItemPress={nothing}
-          data={filteredUsernames}
-          handleOnSearchChange={handleOnUsernameChange}
-          refreshing={refreshingUsers}
-          onRefresh={onRefreshUsers}
-        />
-      )}
+      <ImageBackground source={BackgroundImage}>
+        {!isEmpty(plans) && !usersActive && (
+          <SearchTrainingPlans
+            filters={filters}
+            handleItemPress={handleItemPress}
+            data={filteredPlans}
+            handleOnTitleChange={handleOnTitleChange}
+            refreshing={refreshingPlans}
+            onRefresh={onRefreshPlans}
+          />
+        )}
+        {usersActive && (
+          <SearchUsers
+            handleItemPress={nothing}
+            data={filteredUsernames}
+            handleOnSearchChange={handleOnUsernameChange}
+            refreshing={refreshingUsers}
+            onRefresh={onRefreshUsers}
+          />
+        )}
+      </ImageBackground>
     </View>
   );
 }

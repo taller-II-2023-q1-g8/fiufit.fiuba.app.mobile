@@ -62,12 +62,12 @@ const texts = {
     submitButtonText: 'Buscar'
   },
   SearchedProfile: {
-    name: 'SeachedProfile',
+    name: 'Usuario buscado',
     searchUsersTitle: 'Busca usuarios',
     submitButtonText: 'Buscar'
   },
   SearchedTrainingPlan: {
-    name: 'SearchedTrainingPlan',
+    name: 'Plan buscado',
     searchUsersTitle: 'Busca planes',
     submitButtonText: 'Buscar'
   },

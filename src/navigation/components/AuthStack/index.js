@@ -11,21 +11,21 @@ import texts from '../../../texts';
 
 const Stack = createNativeStackNavigator();
 
-const options = {
-  headerTintColor: colors.white,
-  headerTitleStyle: { fontWeight: 'bold' },
-  headerTitleAlign: 'center',
-  headerStyle: { backgroundColor: colors.header }
-};
-
 export default function AuthStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={() => ({
+          headerTintColor: colors.white,
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerTitleAlign: 'center',
+          headerStyle: { backgroundColor: colors.header }
+        })}
+      >
         <Stack.Screen component={Login} name={texts.Login.name} options={{ headerShown: false }} />
-        <Stack.Screen component={Register} name={texts.Register.name} options={options} />
-        <Stack.Screen component={FederatedRegister} name={texts.FederatedRegister.name} options={options} />
-        <Stack.Screen component={ForgotPassword} name={texts.ForgotPassword.name} options={options} />
+        <Stack.Screen component={Register} name={texts.Register.name} />
+        <Stack.Screen component={FederatedRegister} name={texts.FederatedRegister.name} />
+        <Stack.Screen component={ForgotPassword} name={texts.ForgotPassword.name} />
       </Stack.Navigator>
     </NavigationContainer>
   );

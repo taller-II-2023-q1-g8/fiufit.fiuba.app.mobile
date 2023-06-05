@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {
-  KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
-  View,
   FlatList,
   Image,
-  ImageBackground,
-  RefreshControl
+  KeyboardAvoidingView,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { string, func, array, bool } from 'prop-types';
+import { func, array, bool } from 'prop-types';
 
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
@@ -18,7 +17,6 @@ import { colors } from '../../colors';
 import defaultProfPic from '../../assets/profile-pic-def.png';
 import { getProfilePicURL } from '../../utils';
 import GenericSelectField from '../../components/Fields/GenericSelectField';
-import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';
 
@@ -78,33 +76,26 @@ export default function SearchUsers({
   handleOnRoleChange
 }) {
   return (
-    <ImageBackground source={BackgroundImage}>
-      <View style={styles.container}>
-        <StatusBar />
-        <KeyboardAvoidingView style={styles.formContainer} enabled>
-          <SearchField
-            onChangeText={handleOnSearchChange}
-            placeholder={texts.Fields.searchUsersPlaceholder}
-          />
-          <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18, color: colors.white }}>
-            Filtros
-          </Text>
-          <GenericSelectField
-            titleStyle={{ fontWeight: 'bold', paddingTop: 18, color: colors.white }}
-            containerStyle={{ display: 'flex', flexDirection: 'row' }}
-            title=" Rol"
-            items={roleOptions}
-            onChangeText={handleOnRoleChange}
-          />
-          <FlatList
-            data={data}
-            renderItem={({ item }) => <Item handleItemPress={handleItemPress} user={item} />}
-            ItemSeparatorComponent={ItemSeparatorView}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-          />
-        </KeyboardAvoidingView>
-      </View>
-    </ImageBackground>
+    <View style={styles.container}>
+      <StatusBar />
+      <KeyboardAvoidingView style={styles.formContainer} enabled>
+        <SearchField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
+        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18, color: colors.white }}>Filtros</Text>
+        <GenericSelectField
+          titleStyle={{ fontWeight: 'bold', paddingTop: 18, color: colors.white }}
+          containerStyle={{ display: 'flex', flexDirection: 'row' }}
+          title=" Rol"
+          items={roleOptions}
+          onChangeText={handleOnRoleChange}
+        />
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <Item handleItemPress={handleItemPress} user={item} />}
+          ItemSeparatorComponent={ItemSeparatorView}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        />
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
