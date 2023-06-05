@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     marginBottom: 24
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center',
     borderRadius: 4,
     marginBottom: 24

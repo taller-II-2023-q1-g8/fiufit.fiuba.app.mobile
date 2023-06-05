@@ -12,16 +12,18 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   fieldTitle: {
+    color: 'white',
     fontSize: 16,
     fontWeight: '400',
     marginBottom: 12
   },
   fieldInputContainer: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     borderColor: '#C1C7D0',
     borderRadius: 4,
     borderWidth: 1,
+    color: 'white',
     display: 'flex',
     flexDirection: 'row',
     fontSize: 16,
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   error: {
-    borderColor: '#CC3300',
+    borderColor: colors.error,
     borderWidth: 2
   },
   errorTitle: {
@@ -53,6 +55,7 @@ const styles = StyleSheet.create({
   },
   hidePasswordIcon: {
     height: 20,
+    tintColor: 'white',
     width: 20
   },
   searchField: {

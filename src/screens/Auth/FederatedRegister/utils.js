@@ -84,13 +84,11 @@ export const getFields = (data, errors, handleOnChangeText) => [
 export const getStepsData = (handleNextStepPress, handlePreviousPress, handleSubmitPress) => [
   {
     label: federatedRegisterTexts.step1Title,
-    nextBtnText: 'Siguiente',
     onNext: handleNextStepPress
   },
   {
     label: federatedRegisterTexts.step2Title,
     onPrevious: handlePreviousPress,
-    onSubmit: handleSubmitPress,
-    previousBtnText: 'Anterior'
+    onSubmit: handleSubmitPress
   }
 ];

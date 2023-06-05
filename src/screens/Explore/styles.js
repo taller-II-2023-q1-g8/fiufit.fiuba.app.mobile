@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     // borderBottomWidth: 0,
     // borderColor: '#CACACA',
     // borderWidth: 1.5,
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     fontSize: 18,
     color: 'white',
     padding: 10,
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   separator: {
     height: 7,
     width: '100%',
-    backgroundColor: colors.purple
+    backgroundColor: colors.main
   },
   container: {
     backgroundColor: colors.white,
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     width: '100%'
   },
   usernameContainer: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center'
   },
   username: {
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
     padding: 10
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center',
     borderRadius: 2
   },

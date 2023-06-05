@@ -11,7 +11,7 @@ export const EMAIL_KEY = 'email';
 export const PASSWORD_KEY = 'password';
 
 export const commonFieldProps = (error) => ({
-  placeholderTextColor: colors.placeholder,
+  placeholderTextColor: error ? colors.error : colors.placeholder,
   returnKeyType: 'next',
   style: { ...styles.fieldInputContainer, ...(error && styles.error) },
   underlineColorAndroid: 'transparent'

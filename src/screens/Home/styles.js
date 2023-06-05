@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     marginBottom: 16
   },
   homeHeader: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     width: '100%',
     // height: 70,
     flexDirection: 'row',
@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center',
     borderRadius: 4,
     marginBottom: 24,

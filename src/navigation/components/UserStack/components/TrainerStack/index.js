@@ -19,7 +19,7 @@ export default function TrainerStack() {
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: (icon) => tabBarIconsTrainer(route, icon),
-          tabBarActiveTintColor: colors.purple,
+          tabBarActiveTintColor: colors.main,
           tabBarInactiveTintColor: colors.gray
         })}
       >

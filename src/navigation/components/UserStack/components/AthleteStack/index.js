@@ -24,7 +24,7 @@ function TabStack() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: (icon) => tabBarIconsAthlete(route, icon),
-        tabBarActiveTintColor: colors.purple,
+        tabBarActiveTintColor: colors.main,
         tabBarInactiveTintColor: colors.gray
       })}
     >

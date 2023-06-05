@@ -123,20 +123,16 @@ export const getFields = (data, errors, handleOnChangeText) => [
 export const getStepsData = (handleNextStepPress, handlePrevPress, handleSubmitPress) => [
   {
     label: 'Tu cuenta ',
-    nextBtnText: 'Siguiente',
     onNext: handleNextStepPress
   },
   {
     label: 'Sobre vos ',
-    nextBtnText: 'Siguiente',
     onNext: handleNextStepPress,
-    onPrevious: handlePrevPress,
-    previousBtnText: 'Anterior'
+    onPrevious: handlePrevPress
   },
   {
     label: 'Ejercicio ',
     onPrevious: handlePrevPress,
-    onSubmit: handleSubmitPress,
-    previousBtnText: 'Anterior'
+    onSubmit: handleSubmitPress
   }
 ];
