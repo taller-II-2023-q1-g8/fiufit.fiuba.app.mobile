@@ -1,12 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Text, View, ImageBackground } from 'react-native';
 import { bool, func, array } from 'prop-types';
 import { MenuProvider, MenuOption, MenuOptions, Menu, MenuTrigger } from 'react-native-popup-menu';
 
 import texts from '../../texts';
 import Loader from '../../components/Loader';
 import { Goal } from '../PersonalGoals/layout';
+import BackgroundImage from '../../assets/Background.jpg';
 
 import { scrollviewStyle, styles } from './styles';
 
@@ -50,20 +51,22 @@ const sortGoals = (userGoals) => {
 export default function Home({ goals, handleSignOutPress, loading, handleTrainerHome }) {
   return (
     <MenuProvider>
-      <View style={styles.container}>
-        <StatusBar />
-        <Loader loading={loading} />
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
-          <View style={styles.homeHeader}>
-            <Text style={{ ...styles.title, color: 'white' }}>{homeTexts.title}</Text>
-            <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
-          </View>
-          <KeyboardAvoidingView style={styles.formContainer} enabled>
-            <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
-            {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
-          </KeyboardAvoidingView>
-        </ScrollView>
-      </View>
+      <ImageBackground source={BackgroundImage} resizeMode="cover">
+        <View style={styles.container}>
+          <StatusBar />
+          <Loader loading={loading} />
+          <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
+            <View style={styles.homeHeader}>
+              <Text style={{ ...styles.title, color: 'white' }}>{homeTexts.title}</Text>
+              <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
+            </View>
+            <KeyboardAvoidingView style={styles.formContainer} enabled>
+              <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
+              {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </View>
+      </ImageBackground>
     </MenuProvider>
   );
 }

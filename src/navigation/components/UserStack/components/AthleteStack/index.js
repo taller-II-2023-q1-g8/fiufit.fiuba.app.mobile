@@ -22,45 +22,32 @@ function TabStack() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        tabBarShowLabel: false,
         headerShown: false,
         tabBarIcon: (icon) => tabBarIconsAthlete(route, icon),
+        tabBarStyle: { backgroundColor: colors.header, height: 60 },
         tabBarActiveTintColor: colors.main,
         tabBarInactiveTintColor: colors.gray
       })}
     >
-      <Tab.Screen component={HomeScreen} name={texts.Home.name} options={{ title: texts.Home.title }} />
-      <Tab.Screen component={FeedStack} name={texts.Feed.name} options={{ title: texts.Feed.title }} />
-      <Tab.Screen
-        component={ExploreStack}
-        name={texts.SearchPlansStack.name}
-        options={{ title: texts.Explore.title }}
-      />
-      <Tab.Screen
-        component={UserProfileStack}
-        name={texts.UserProfileStack.name}
-        options={{ title: texts.UserProfileStack.title }}
-      />
+      <Tab.Screen component={HomeScreen} name={texts.Home.name} />
+      <Tab.Screen component={FeedStack} name={texts.Feed.name} />
+      <Tab.Screen component={ExploreStack} name={texts.SearchPlansStack.name} />
+      <Tab.Screen component={UserProfileStack} name={texts.UserProfileStack.name} />
     </Tab.Navigator>
   );
 }
+
 export default function AthleteStack() {
   const [state] = useStateValue();
   const Stack = createNativeStackNavigator();
   return state.athleteScreen ? (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Tab Stack" component={TabStack} options={{ title: '', headerShown: false }} />
-        <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
-        <Stack.Screen
-          name={texts.SearchedTrainingPlan.name}
-          component={SearchedTrainingPlan}
-          options={{ title: '' }}
-        />
-        <Stack.Screen
-          name={texts.TrainingInProgress.name}
-          component={TrainingInProgress}
-          options={{ title: '' }}
-        />
+      <Stack.Navigator screenOptions={() => ({ headerShown: false })}>
+        <Stack.Screen name="Tab Stack" component={TabStack} />
+        <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} />
+        <Stack.Screen name={texts.SearchedTrainingPlan.name} component={SearchedTrainingPlan} />
+        <Stack.Screen name={texts.TrainingInProgress.name} component={TrainingInProgress} />
       </Stack.Navigator>
     </NavigationContainer>
   ) : null;

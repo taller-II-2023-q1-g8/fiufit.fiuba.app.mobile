@@ -4,7 +4,6 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#EFEFEF',
     width: '100%',
     height: '100%'
   },
@@ -32,15 +31,12 @@ export const styles = StyleSheet.create({
     marginBottom: 16
   },
   homeHeader: {
-    backgroundColor: colors.main,
-    width: '100%',
-    // height: 70,
+    backgroundColor: colors.header,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 42,
-    paddingTop: 20,
-    paddingBottom: 5
+    paddingVertical: 15
   },
   title: {
     fontSize: 32,

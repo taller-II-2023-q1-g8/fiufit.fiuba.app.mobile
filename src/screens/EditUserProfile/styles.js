@@ -4,7 +4,6 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
     width: '100%',
     height: '100%'
   },

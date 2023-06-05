@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   fieldTitle: {
-    color: 'white',
+    color: colors.white,
     fontSize: 16,
     fontWeight: '400',
     marginBottom: 12
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     alignItems: 'center',
     display: 'flex',
-    borderColor: 'transparent',
     flexDirection: 'row',
     fontSize: 16,
     width: '100%',
@@ -71,19 +70,6 @@ const styles = StyleSheet.create({
         outlineStyle: 'none'
       }
     })
-  },
-  searchContainer: {
-    verticalAlign: 'baseline',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#C1C7D0',
-    borderRadius: 4,
-    borderWidth: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    fontSize: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    width: '100%'
   }
 });
 

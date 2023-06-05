@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { func, shape } from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { isEmpty } from '../../utils';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
 import { useStateValue } from '../../state';
+import { colors } from '../../colors';
 
 import SearchUsers from './search_users_layout';
 import { styles } from './styles';
@@ -55,14 +56,6 @@ export default function ExploreScreen({ navigation }) {
           user.username.toLowerCase().includes(newUsernameQuery.toLowerCase())
       )
     );
-  };
-
-  const handleOnRoleChange = (newUserRole) => {
-    if (newUserRole === 'Any') {
-      setFilteredUsernames(usernames);
-    } else {
-      setFilteredUsernames(usernames.filter((user) => user.role === newUserRole));
-    }
   };
 
   // View Switching
@@ -148,7 +141,7 @@ export default function ExploreScreen({ navigation }) {
   const filters = getFilters(handleOnChange);
 
   return (
-    <>
+    <View style={{ backgroundColor: colors.header }}>
       <Loader loading={isEmpty(plans)} />
       <View style={styles.usersOrPlansSwitchContainer}>
         <Text style={usersStyle} onPress={focusUsers}>
@@ -178,7 +171,7 @@ export default function ExploreScreen({ navigation }) {
           onRefresh={onRefreshUsers}
         />
       )}
-    </>
+    </View>
   );
 }
 
