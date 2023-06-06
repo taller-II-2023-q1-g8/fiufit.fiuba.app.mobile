@@ -23,8 +23,10 @@ export const styles = StyleSheet.create({
     marginBottom: 24
   },
   submitButton: {
-    backgroundColor: colors.main,
+    backgroundColor: 'transparent',
     alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 2,
     borderRadius: 4,
     marginBottom: 24
   },

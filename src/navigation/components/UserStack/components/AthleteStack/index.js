@@ -22,12 +22,12 @@ function TabStack() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarShowLabel: false,
         headerShown: false,
-        tabBarIcon: (icon) => tabBarIconsAthlete(route, icon),
-        tabBarStyle: { backgroundColor: colors.header, height: 60 },
         tabBarActiveTintColor: colors.main,
-        tabBarInactiveTintColor: colors.gray
+        tabBarIcon: (icon) => tabBarIconsAthlete(route, icon),
+        tabBarInactiveTintColor: colors.gray,
+        tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: colors.header, height: 60 }
       })}
     >
       <Tab.Screen component={HomeScreen} name={texts.Home.name} />

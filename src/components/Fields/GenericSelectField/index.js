@@ -36,7 +36,6 @@ function GenericSelectField({
           <Picker.Item label={item.label} value={item.value} />
         ))}
       </Picker>
-      <Text style={styles.errorDescription} />
     </View>
   );
 }

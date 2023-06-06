@@ -20,7 +20,8 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '500',
     paddingTop: 20,
-    marginBottom: 24
+    marginBottom: 24,
+    color: colors.white
   },
   submitButton: {
     backgroundColor: colors.main,
@@ -50,10 +51,12 @@ export const styles = StyleSheet.create({
   profileName: {
     fontSize: 17,
     fontWeight: '600',
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   },
   profileType: {
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   }
 });
 

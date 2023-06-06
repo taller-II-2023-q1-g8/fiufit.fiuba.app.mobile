@@ -39,9 +39,10 @@ DotMenu.propTypes = {
 };
 
 const sortGoals = (userGoals) => {
-  const sortedGoals = userGoals
-    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
-    .filter((goal) => goal.status === 'in_progress');
+  const sortedGoals =
+    userGoals
+      .sort?.((a, b) => new Date(a.deadline) - new Date(b.deadline))
+      .filter((goal) => goal.status === 'in_progress') || [];
   const now = new Date();
 
   // de las más cercanas a expirar, muestro 3

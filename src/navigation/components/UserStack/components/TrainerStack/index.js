@@ -18,17 +18,15 @@ export default function TrainerStack() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
-          tabBarIcon: (icon) => tabBarIconsTrainer(route, icon),
           tabBarActiveTintColor: colors.main,
-          tabBarInactiveTintColor: colors.gray
+          tabBarIcon: (icon) => tabBarIconsTrainer(route, icon),
+          tabBarInactiveTintColor: colors.gray,
+          tabBarShowLabel: false,
+          tabBarStyle: { backgroundColor: colors.header, height: 60 }
         })}
       >
         <Tab.Screen component={TrainerPlanStack} name={texts.TrainerHome.iconTitle} />
-        <Tab.Screen
-          component={AddPlanScreen}
-          name={texts.AddPlan.name}
-          options={{ title: texts.AddPlan.title }}
-        />
+        <Tab.Screen component={AddPlanScreen} name={texts.AddPlan.name} />
       </Tab.Navigator>
     </NavigationContainer>
   );
