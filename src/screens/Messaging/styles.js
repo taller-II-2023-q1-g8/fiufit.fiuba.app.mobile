@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 import { colors } from '../../colors';
+
+const { width, height } = Dimensions.get('window');
+const modalWidth = width - 40; // Adjust the width as per your requirements
+const modalHeight = height - 80; // Adjust the height as per your requirements
 
 export const styles = StyleSheet.create({
   container: {
@@ -73,5 +77,24 @@ export const styles = StyleSheet.create({
   },
   timeOfLastMsg: {
     paddingLeft: 10
+  },
+  modalContainer: {
+    position: 'absolute',
+    top: (height - modalHeight) / 2 + 35,
+    left: (width - modalWidth) / 2,
+    width: modalWidth,
+    height: modalHeight - 90,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Semi-transparent background
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+    borderRadius: 10,
+    zIndex: 9999
+  },
+  searchContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    width: '100%'
   }
 });

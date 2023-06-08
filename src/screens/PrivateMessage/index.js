@@ -8,7 +8,9 @@ import {
   limit,
   onSnapshot,
   addDoc,
-  Timestamp
+  Timestamp,
+  doc,
+  updateDoc
 } from 'firebase/firestore';
 
 import { useStateValue } from '../../state';
@@ -36,8 +38,8 @@ export default function MessagingContainer({ route }) {
     const q = query(messagesRef, orderBy('createdAt'), limit(100));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const updatedMessages = [];
-      snapshot.forEach((doc) => {
-        const message = { id: doc.id, data: doc.data() };
+      snapshot.forEach((docu) => {
+        const message = { id: docu.id, data: docu.data() };
         updatedMessages.push(message);
       });
       setMessages(updatedMessages);
@@ -72,6 +74,14 @@ export default function MessagingContainer({ route }) {
       .then(() => {
         inputRef.current.clear();
         setInputText('');
+        const conversationDocRef = doc(db, 'conversations', convID);
+        updateDoc(conversationDocRef, { lastMessageTime: now })
+          .then(() => {
+            console.log('Last message time updated successfully');
+          })
+          .catch((error) => {
+            console.error('Error updating last message time:', error);
+          });
       })
       .catch((error) => {
         console.error('Error sending message:', error);
