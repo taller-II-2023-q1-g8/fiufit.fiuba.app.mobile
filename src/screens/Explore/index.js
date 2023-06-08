@@ -59,6 +59,16 @@ export default function ExploreScreen({ navigation }) {
     );
   };
 
+  const handleOnRoleChange = (name, newUserRole) => {
+    console.log(usernames);
+    console.log(newUserRole);
+    if (newUserRole === 'Any') {
+      setFilteredUsernames(usernames);
+    } else {
+      setFilteredUsernames(usernames.filter((user) => user.role === newUserRole));
+    }
+  };
+
   // View Switching
   const [usersActive, setUsersActive] = useState(true);
   const [usersStyle, setUsersStyle] = useState(styles.viewSwitchActive);
@@ -168,6 +178,7 @@ export default function ExploreScreen({ navigation }) {
             handleOnSearchChange={handleOnUsernameChange}
             refreshing={refreshingUsers}
             onRefresh={onRefreshUsers}
+            handleOnRoleChange={handleOnRoleChange}
           />
         )}
       </ImageBackground>
