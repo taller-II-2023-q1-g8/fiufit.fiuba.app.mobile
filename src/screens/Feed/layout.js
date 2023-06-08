@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import {
   Image,
@@ -111,6 +112,7 @@ function FeedItem({ feedItem }, handleUserProfilePress) {
       return null;
   }
 }
+
 export default function Feed({ feed, loading, refreshing, onRefresh, handleUserProfilePress }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
