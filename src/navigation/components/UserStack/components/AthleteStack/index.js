@@ -1,21 +1,20 @@
-import { func } from 'prop-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import { colors } from '../../../../../colors';
+import { tabBarIconsAthlete } from '../../utils';
 import { useStateValue } from '../../../../../state';
 import HomeScreen from '../../../../../screens/Home';
-import texts from '../../../../../texts';
-import { tabBarIconsAthlete } from '../../utils';
 import SearchedProfile from '../../../../../screens/SearchedProfile';
 import SearchedTrainingPlan from '../../../../../screens/SearchedTrainingPlan';
+import texts from '../../../../../texts';
 import TrainingInProgress from '../../../../../screens/TrainingInProgress';
 
 import ExploreStack from './components/ExploreStack';
-import UserProfileStack from './components/UserProfileStack';
 import FeedStack from './components/FeedStack';
+import UserProfileStack from './components/UserProfileStack';
 
 function TabStack() {
   const Tab = createBottomTabNavigator();

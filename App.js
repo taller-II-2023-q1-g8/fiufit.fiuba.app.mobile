@@ -1,14 +1,15 @@
-import React from 'react';
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 import 'expo-dev-client';
+import React from 'react';
 
 import './firebaseConfig';
-import RootNavigation from './src/navigation';
 import { StateProvider } from './src/state';
+import RootNavigation from './src/navigation';
 
-// eslint-disable-next-line no-undef
 if (__DEV__) {
   import('./ReactotronConfig').then(() => {
-    console.log('Reactotron Configured');
+    console.info('Reactotron Configured');
   });
 }
 

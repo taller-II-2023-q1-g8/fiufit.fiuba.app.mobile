@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
 import {
+  Image,
+  ImageBackground,
   KeyboardAvoidingView,
   RefreshControl,
   ScrollView,
   Text,
-  View,
-  Image,
   TouchableOpacity,
-  ImageBackground
+  View
 } from 'react-native';
-import { bool, func, array } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 
-import texts from '../../texts';
+import { getProfilePicURL } from '../../utils';
+import BackgroundImage from '../../assets/Background.jpg';
+import defaultProfPic from '../../assets/profile-pic-def.png';
 import Loader from '../../components/Loader';
 import manPic from '../../assets/man.jpeg';
-import { getProfilePicURL } from '../../utils';
-import defaultProfPic from '../../assets/profile-pic-def.png';
-import BackgroundImage from '../../assets/Background.jpg';
+import texts from '../../texts';
 
 import { scrollviewStyle, styles } from './styles';
 
@@ -104,7 +104,6 @@ function TrainingFinished(item, handleUserProfilePress) {
   );
 }
 function FeedItem({ feedItem }, handleUserProfilePress) {
-  console.log(feedItem);
   switch (feedItem.type) {
     case 'training_plan_completed':
       return TrainingFinished(feedItem, handleUserProfilePress);
@@ -113,7 +112,6 @@ function FeedItem({ feedItem }, handleUserProfilePress) {
   }
 }
 export default function Feed({ feed, loading, refreshing, onRefresh, handleUserProfilePress }) {
-  console.log(feed);
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>

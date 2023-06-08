@@ -1,8 +1,7 @@
-import { array, bool, func } from 'prop-types';
+import { bool } from 'prop-types';
 import React from 'react';
 
 import Loader from '../../../components/Loader';
-import CreatePlan from '../../../screens/AddPlan/layout';
 
 import AthleteStack from './components/AthleteStack';
 import TrainerStack from './components/TrainerStack';

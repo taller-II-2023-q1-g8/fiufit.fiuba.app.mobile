@@ -1,13 +1,12 @@
-import React from 'react';
+import { array, func, number, bool, object } from 'prop-types';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { SceneMap, TabView } from 'react-native-tab-view';
-import { array, func, number, bool, object } from 'prop-types';
+import React from 'react';
 
-import Loader from '../../components/Loader';
 import { Item, ItemSeparatorView } from '../Explore/search_users_layout';
+import Loader from '../../components/Loader';
 
 function UserList(data, handleItemPress) {
-  console.log(data);
   return (
     <View style={{ flex: 1 }}>
       <FlatList

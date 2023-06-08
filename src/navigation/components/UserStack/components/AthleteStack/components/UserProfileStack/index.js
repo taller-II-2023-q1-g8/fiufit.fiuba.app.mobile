@@ -1,13 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react-native';
 
-import EditUserProfile from '../../../../../../../screens/EditUserProfile';
-import UserProfile from '../../../../../../../screens/UserProfile';
-import PersonalGoals from '../../../../../../../screens/PersonalGoals';
-import CreateGoal from '../../../../../../../screens/CreateGoal';
-import TabViewExample from '../../../../../../../screens/FollowersScreen';
-import texts from '../../../../../../../texts';
 import { colors } from '../../../../../../../colors';
+import CreateGoal from '../../../../../../../screens/CreateGoal';
+import EditUserProfile from '../../../../../../../screens/EditUserProfile';
+import PersonalGoals from '../../../../../../../screens/PersonalGoals';
+import texts from '../../../../../../../texts';
+import UserProfile from '../../../../../../../screens/UserProfile';
 
 function PersonalGoalsStack() {
   const Stack = createNativeStackNavigator();
