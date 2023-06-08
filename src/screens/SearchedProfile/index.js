@@ -1,5 +1,6 @@
 import { func, shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { ImageBackground, Text, View } from 'react-native';
 
 import {
   fetchFollowedUsersByUsername,
@@ -8,8 +9,6 @@ import {
   fetchUserProfileByUsername,
   followUser,
   unfollowUser,
-  fetchFollowedUsersByUsername,
-  fetchTrainersID,
   fetchPlansByTrainerID,
   fetchCompletedPlanMetricsByUsername
 } from '../../requests';
@@ -17,6 +16,8 @@ import { getProfilePicURL } from '../../utils';
 import { useStateValue } from '../../state';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
+import BackgroundImage from '../../assets/Background.jpg';
+import { styles } from '../Feed/styles';
 
 import SearchedProfile from './layout';
 
@@ -124,20 +125,22 @@ export default function SearchedProfileContainer({ route, navigation }) {
     navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
   };
   return (
-    <>
-      <Loader loading={loading} />
-      {loading ? null : (
-        <SearchedProfile
-          data={data}
-          loading={loading}
-          handleFollowPress={handleFollowPress}
-          following={following}
-          handleUnfollowPress={handleUnfollowPress}
-          profPicUrl={profPicUrl}
-          handleTrainingPress={handleTrainingPress}
-        />
-      )}
-    </>
+    <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <View style={styles.container}>
+        <Loader loading={loading} />
+        {loading ? null : (
+          <SearchedProfile
+            data={data}
+            loading={loading}
+            handleFollowPress={handleFollowPress}
+            following={following}
+            handleUnfollowPress={handleUnfollowPress}
+            profPicUrl={profPicUrl}
+            handleTrainingPress={handleTrainingPress}
+          />
+        )}
+      </View>
+    </ImageBackground>
   );
 }
 

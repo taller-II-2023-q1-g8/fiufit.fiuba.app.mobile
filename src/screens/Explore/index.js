@@ -59,7 +59,6 @@ export default function ExploreScreen({ navigation }) {
     );
   };
 
-
   const handleOnRoleChange = (name, newUserRole) => {
     console.log(usernames);
     console.log(newUserRole);
@@ -163,25 +162,25 @@ export default function ExploreScreen({ navigation }) {
       <View style={styles.separator} />
       <ImageBackground source={BackgroundImage}>
         {!isEmpty(plans) && !usersActive && (
-        <SearchTrainingPlans
-          filters={filters}
-          handleItemPress={handleItemPress}
-          data={filteredPlans}
-          handleOnTitleChange={handleOnTitleChange}
-          refreshing={refreshingPlans}
-          onRefresh={onRefreshPlans}
-        />
-      )}
-      {usersActive && (
-        <SearchUsers
-          handleItemPress={nothing}
-          data={filteredUsernames}
-          handleOnSearchChange={handleOnUsernameChange}
-          refreshing={refreshingUsers}
-          onRefresh={onRefreshUsers}
-          handleOnRoleChange={handleOnRoleChange}
-        />
-      )}
+          <SearchTrainingPlans
+            filters={filters}
+            handleItemPress={handleItemPress}
+            data={filteredPlans}
+            handleOnTitleChange={handleOnTitleChange}
+            refreshing={refreshingPlans}
+            onRefresh={onRefreshPlans}
+          />
+        )}
+        {usersActive && (
+          <SearchUsers
+            handleItemPress={nothing}
+            data={filteredUsernames}
+            handleOnSearchChange={handleOnUsernameChange}
+            refreshing={refreshingUsers}
+            onRefresh={onRefreshUsers}
+            handleOnRoleChange={handleOnRoleChange}
+          />
+        )}
       </ImageBackground>
     </View>
   );

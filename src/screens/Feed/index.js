@@ -1,7 +1,6 @@
 import { func, shape } from 'prop-types';
 import React, { useState, useEffect } from 'react';
 
-import { fetchCompletedPlanMetricsByUsername } from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { fetchCompletedPlanMetricsByUsername, fetchPlansByTrainerID, fetchTrainersID } from '../../requests';

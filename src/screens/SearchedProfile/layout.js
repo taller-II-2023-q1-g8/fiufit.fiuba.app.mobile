@@ -296,24 +296,17 @@ function SearchedProfile({
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
             <View style={{ marginRight: 30 }}>
-              <Text style={{ fontWeight: 'bold' }}>{data.followers}</Text>
-              <Text style={{ color: colors.gray }}>followers</Text>
-
+              <Text style={styles.followersText}>{data.followers}</Text>
+              <Text style={styles.followersText}>followers</Text>
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: 10, marginTop: 3 }}>
-              <View style={{ marginRight: 30 }}>
-                <Text style={{ fontWeight: 'bold', color: colors.main }}>{data.followers}</Text>
-                <Text style={{ color: colors.main }}>followers</Text>
-              </View>
-              <View>
-                <Text style={{ fontWeight: 'bold', color: colors.main }}>{data.followed}</Text>
-                <Text style={{ color: colors.main }}>following</Text>
-              </View>
+            <View>
+              <Text style={styles.followersText}>{data.followed}</Text>
+              <Text style={styles.followersText}>following</Text>
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} />
-              <Text style={{ color: colors.white }}>{data.role}</Text>
-            </View>
+          </View>
+          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} />
+            <Text style={{ color: colors.white }}>{data.role}</Text>
           </View>
         </View>
       </Animated.View>
@@ -344,7 +337,9 @@ function SearchedProfile({
             <Text style={styles.planDifficulty}>Tags: Ejemplo Ejemplo2</Text>
             <Text style={styles.planDifficulty}>Músculos: Abs</Text>
           </View>
-          <Image source={manPic} style={styles.planImage} />
+          <TouchableOpacity activeOpacity={0.8} onPress={() => console.log(item)}>
+            <Image source={manPic} style={styles.planImage} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -476,16 +471,6 @@ function SearchedProfile({
       {renderTabView()}
       {renderHeader()}
     </View>
-        <Text style={styles.title}>Estadísticas</Text>
-        <Text style={{ color: colors.white }}>...</Text>
-        <Text style={styles.title}>Training</Text>
-        <Text style={{ color: colors.white }}>...</Text>
-        <Text style={styles.title}>Photos</Text>
-        <Text style={{ color: colors.white }}>...</Text>
-      </View>
-    </ImageBackground>
-  ) : (
-    <Loader loading={data.length === 0} />
   );
 }
 

@@ -6,36 +6,27 @@ const HeaderHeight = 300;
 const TabBarHeight = 48;
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
-    padding: 20,
-    height: '100%'
+    flex: 1
   },
-  followText: {
-    color: colors.white,
-    fontSize: 14
-  },
-  unfollowText: {
-    color: colors.white,
-    fontSize: 14
+  follow: {
+    fontSize: 18,
+    color: colors.white
   },
   header: {
     top: 0,
     height: HeaderHeight,
     width: '100%',
-    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute'
   },
-  label: { fontSize: 16, color: '#222' },
-  tab: { elevation: 0, shadowOpacity: 0, backgroundColor: '#61d5ea', height: TabBarHeight },
-  indicator: { backgroundColor: '#222' },
+  label: { fontSize: 16, color: colors.white },
+  tab: { elevation: 0, shadowOpacity: 0, backgroundColor: colors.main, height: TabBarHeight },
+  indicator: { backgroundColor: colors.white },
   username: {
-    color: colors.white,
-    alignSelf: 'baseline',
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: colors.white
   },
   profilePicture: {
     borderRadius: 50,
@@ -44,30 +35,31 @@ export const styles = StyleSheet.create({
     width: 110
   },
   title: {
-    color: colors.white,
     fontSize: 22,
     fontWeight: 'bold',
-    marginVertical: 10
+    marginVertical: 10,
+    color: colors.white
   },
   followButton: {
-    backgroundColor: colors.transparent,
+    backgroundColor: colors.placeholder,
     alignItems: 'center',
     borderRadius: 4,
-    borderWidth: 1,
-    borderColor: colors.white,
-    paddingHorizontal: 10,
-    paddingVertical: 5
+    marginLeft: 20,
+    marginRight: 30,
+    width: '50%'
   },
   unfollowButton: {
     backgroundColor: colors.error,
     alignItems: 'center',
     borderRadius: 4,
-    borderWidth: 1,
-    borderColor: colors.white,
-    paddingHorizontal: 10,
-    paddingVertical: 5
+    marginLeft: 20,
+    marginRight: 30,
+    width: '50%'
   },
-
+  followersText: {
+    fontWeight: 'bold',
+    color: colors.white
+  },
   trainingCompletedContainer: {
     width: '90%',
     aspectRatio: 1.65,
@@ -116,7 +108,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     marginTop: 10,
-    marginLeft: 8
+    marginLeft: 8,
+    color: colors.white
   },
   dateWrapper: {
     flex: 1,
@@ -132,7 +125,7 @@ export const styles = StyleSheet.create({
   },
   trainingCompletedBody: {
     flex: 5,
-    backgroundColor: 'white',
+    backgroundColor: colors.feed_items,
     paddingHorizontal: 10
   },
   planInfoContainer: {
@@ -148,25 +141,32 @@ export const styles = StyleSheet.create({
     marginRight: 5
   },
   planDetails: {
-    flex: 1
+    flex: 1,
+    color: colors.white
   },
   planName: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5
+    marginBottom: 5,
+    color: colors.white
   },
   planDifficulty: {
     fontSize: 14,
-    color: 'gray'
+    color: colors.white
   },
   planCompletedText: {
     fontSize: 12,
-    marginBottom: 2
+    marginBottom: 2,
+    color: colors.white
   },
   item: {
     display: 'flex',
     flexDirection: 'row',
-    paddingVertical: 10
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: 'lightgray',
+    backgroundColor: colors.feed_items
   },
   profilePic: {
     width: 50,
@@ -176,9 +176,11 @@ export const styles = StyleSheet.create({
   profileName: {
     fontSize: 17,
     fontWeight: '600',
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   },
   profileType: {
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   }
 });
