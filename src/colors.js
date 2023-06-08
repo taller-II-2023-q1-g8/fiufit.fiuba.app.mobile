@@ -1,8 +1,9 @@
 export const colors = {
-  placeholder: '#8b9cb5',
-  purple: '#6666FF',
-  dark_purple: '#3F3F91',
   error: '#B00020',
-  gray: 'gray',
+  gray: '#B9B0B0',
+  header: '#000621',
+  main_soft: '#C16400',
+  main: '#FF8A0D',
+  placeholder: '#8b9cb5',
   white: 'white'
 };

@@ -8,9 +8,16 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
+    padding: 20,
+    height: '100%'
   },
-  follow: {
-    fontSize: 18
+  followText: {
+    color: colors.white,
+    fontSize: 14
+  },
+  unfollowText: {
+    color: colors.white,
+    fontSize: 14
   },
   header: {
     top: 0,
@@ -25,6 +32,8 @@ export const styles = StyleSheet.create({
   tab: { elevation: 0, shadowOpacity: 0, backgroundColor: '#61d5ea', height: TabBarHeight },
   indicator: { backgroundColor: '#222' },
   username: {
+    color: colors.white,
+    alignSelf: 'baseline',
     fontSize: 18,
     fontWeight: 'bold'
   },
@@ -35,25 +44,28 @@ export const styles = StyleSheet.create({
     width: 110
   },
   title: {
+    color: colors.white,
     fontSize: 22,
     fontWeight: 'bold',
     marginVertical: 10
   },
   followButton: {
-    backgroundColor: colors.placeholder,
+    backgroundColor: colors.transparent,
     alignItems: 'center',
     borderRadius: 4,
-    marginLeft: 20,
-    marginRight: 30,
-    width: '50%'
+    borderWidth: 1,
+    borderColor: colors.white,
+    paddingHorizontal: 10,
+    paddingVertical: 5
   },
   unfollowButton: {
     backgroundColor: colors.error,
     alignItems: 'center',
     borderRadius: 4,
-    marginLeft: 20,
-    marginRight: 30,
-    width: '50%'
+    borderWidth: 1,
+    borderColor: colors.white,
+    paddingHorizontal: 10,
+    paddingVertical: 5
   },
 
   trainingCompletedContainer: {

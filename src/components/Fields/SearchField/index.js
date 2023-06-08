@@ -9,8 +9,8 @@ import { colors } from '../../../colors';
 
 function SearchField({ onChangeText, placeholder }) {
   return (
-    <View style={styles.searchContainer}>
-      <Ionicons name="search" size={20} />
+    <View style={styles.fieldInputContainer}>
+      <Ionicons name="search" size={20} color={colors.white} />
       <TextInput
         autoCapitalize="none"
         keyboardType={textFieldType}

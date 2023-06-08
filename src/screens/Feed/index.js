@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { func, shape } from 'prop-types';
+import React, { useState, useEffect } from 'react';
 
+import { fetchCompletedPlanMetricsByUsername } from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { fetchCompletedPlanMetricsByUsername, fetchPlansByTrainerID, fetchTrainersID } from '../../requests';
@@ -45,8 +46,7 @@ function getCreatedPlansForEachFollower(followedUsers, trainersList) {
 
 export default function FeedScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
-  const [state, dispatch] = useStateValue();
-  const [following, setFollowing] = useState(state.following);
+  const [state] = useStateValue();
   const [feed, setFeed] = useState([]);
 
   useEffect(() => {

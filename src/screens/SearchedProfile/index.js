@@ -2,7 +2,9 @@ import { func, shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import {
+  fetchFollowedUsersByUsername,
   fetchFollowerUsersByUsername,
+  fetchTrainersID,
   fetchUserProfileByUsername,
   followUser,
   unfollowUser,
@@ -104,7 +106,6 @@ export default function SearchedProfileContainer({ route, navigation }) {
     });
     setFollowing(true);
     setLoading(false);
-    console.log('Following', username);
   };
 
   const handleUnfollowPress = async () => {
@@ -118,7 +119,6 @@ export default function SearchedProfileContainer({ route, navigation }) {
     });
     setFollowing(false);
     setLoading(false);
-    console.log('Unfollowing', username);
   };
   const handleTrainingPress = (planID) => {
     navigation.navigate(texts.SearchedTrainingPlan.name, { planID });

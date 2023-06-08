@@ -28,7 +28,7 @@ function MaxWeightLiftedInExercise({ goal }) {
   const deadlineStr = deadline.toLocaleDateString('es-ES', deadline);
 
   return (
-    <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: 'white', padding: 10 }}>
+    <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: colors.white, padding: 10 }}>
       <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0 }}>
         Máximo Peso Levantado en {goal.exercise_title}
       </Text>
@@ -77,7 +77,7 @@ function TrainingPlanCompletion({ goal }) {
   }
 
   return (
-    <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: 'white', padding: 10 }}>
+    <View style={{ borderWidth: 1, borderColor: '#C1C7D0', backgroundColor: colors.white, padding: 10 }}>
       <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0 }}>
         Planes de Entrenamiento Completados
       </Text>
@@ -120,12 +120,12 @@ export function PersonalGoals({ goals, handleAddGoal }) {
             fontWeight: 'bold',
             fontSize: 20,
             paddingHorizontal: 10,
-            backgroundColor: colors.purple,
+            backgroundColor: colors.main,
             borderRadius: 10
           }}
           onPress={handleAddGoal}
         >
-          <Text style={{ color: 'white', padding: 3 }}>Agregar</Text>
+          <Text style={{ color: colors.white, padding: 3 }}>Agregar</Text>
         </TouchableOpacity>
       </View>
       {goals.map((goal) => Goal({ goal }))}

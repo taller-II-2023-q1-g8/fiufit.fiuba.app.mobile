@@ -4,7 +4,6 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
     width: '100%',
     height: '100%'
   },
@@ -32,35 +31,33 @@ export const styles = StyleSheet.create({
     marginBottom: 16
   },
   homeHeader: {
-    backgroundColor: colors.purple,
-    width: '100%',
-    // height: 70,
+    backgroundColor: colors.header,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 42,
-    paddingTop: 20,
-    paddingBottom: 5
+    paddingVertical: 15
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold'
   },
   goalsTitle: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: 'bold',
+    color: colors.white,
     alignItems: 'center',
-    marginBottom: 10
+    marginVertical: 10
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center',
     borderRadius: 4,
     marginBottom: 24,
     marginTop: 24
   },
   submitButtonText: {
-    color: 'white',
+    color: colors.white,
     paddingVertical: 8,
     fontSize: 16
   },

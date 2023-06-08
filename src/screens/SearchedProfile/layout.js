@@ -298,15 +298,22 @@ function SearchedProfile({
             <View style={{ marginRight: 30 }}>
               <Text style={{ fontWeight: 'bold' }}>{data.followers}</Text>
               <Text style={{ color: colors.gray }}>followers</Text>
+
             </View>
-            <View>
-              <Text style={{ fontWeight: 'bold' }}>{data.followed}</Text>
-              <Text style={{ color: colors.gray }}>following</Text>
+            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: 10, marginTop: 3 }}>
+              <View style={{ marginRight: 30 }}>
+                <Text style={{ fontWeight: 'bold', color: colors.main }}>{data.followers}</Text>
+                <Text style={{ color: colors.main }}>followers</Text>
+              </View>
+              <View>
+                <Text style={{ fontWeight: 'bold', color: colors.main }}>{data.followed}</Text>
+                <Text style={{ color: colors.main }}>following</Text>
+              </View>
             </View>
-          </View>
-          <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <Image style={{ width: 20, height: 20 }} source={TrainerIcon} />
-            <Text>{data.role}</Text>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} />
+              <Text style={{ color: colors.white }}>{data.role}</Text>
+            </View>
           </View>
         </View>
       </Animated.View>
@@ -469,6 +476,16 @@ function SearchedProfile({
       {renderTabView()}
       {renderHeader()}
     </View>
+        <Text style={styles.title}>Estadísticas</Text>
+        <Text style={{ color: colors.white }}>...</Text>
+        <Text style={styles.title}>Training</Text>
+        <Text style={{ color: colors.white }}>...</Text>
+        <Text style={styles.title}>Photos</Text>
+        <Text style={{ color: colors.white }}>...</Text>
+      </View>
+    </ImageBackground>
+  ) : (
+    <Loader loading={data.length === 0} />
   );
 }
 

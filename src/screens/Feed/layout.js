@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {
+  Image,
+  ImageBackground,
   KeyboardAvoidingView,
   RefreshControl,
   ScrollView,
   Text,
-  View,
-  Image,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { bool, func, array } from 'prop-types';
+import { array, bool, func } from 'prop-types';
 
-import texts from '../../texts';
+import { colors } from '../../colors';
+import { getProfilePicURL } from '../../utils';
+import BackgroundImage from '../../assets/Background.jpg';
+import defaultProfPic from '../../assets/profile-pic-def.png';
 import Loader from '../../components/Loader';
 import manPic from '../../assets/man.jpeg';
-import { getProfilePicURL } from '../../utils';
-import defaultProfPic from '../../assets/profile-pic-def.png';
+import texts from '../../texts';
 
 import { scrollviewStyle, styles } from './styles';
 
 const feedTexts = texts.Feed;
-
-function handleAux() {
-  console.log('woo');
-}
 
 function dateToDisplayString(date) {
   const now = new Date();
@@ -106,7 +104,6 @@ function TrainingFinished(item, handleUserProfilePress) {
   );
 }
 function FeedItem({ feedItem }, handleUserProfilePress) {
-  console.log(feedItem);
   switch (feedItem.type) {
     case 'training_plan_completed':
       return TrainingFinished(feedItem, handleUserProfilePress);
@@ -115,24 +112,24 @@ function FeedItem({ feedItem }, handleUserProfilePress) {
   }
 }
 export default function Feed({ feed, loading, refreshing, onRefresh, handleUserProfilePress }) {
-  console.log(feed);
   return (
-    <View style={styles.container}>
-      <StatusBar />
-      <Loader loading={loading} />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={scrollviewStyle}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      >
-        <View style={styles.homeHeader}>
-          <Text style={{ ...styles.title, color: 'white' }}>{feedTexts.title}</Text>
-        </View>
-        <KeyboardAvoidingView style={styles.formContainer} enabled>
-          {loading ? null : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress))}
-        </KeyboardAvoidingView>
-      </ScrollView>
-    </View>
+    <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <View style={styles.container}>
+        <Loader loading={loading} />
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={scrollviewStyle}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
+          <View style={styles.homeHeader}>
+            <Text style={{ ...styles.title, color: colors.white }}>{feedTexts.title}</Text>
+          </View>
+          <KeyboardAvoidingView style={styles.formContainer} enabled>
+            {loading ? null : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress))}
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 }
 

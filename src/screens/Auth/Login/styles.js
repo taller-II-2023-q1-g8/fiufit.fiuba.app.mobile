@@ -4,14 +4,12 @@ import { colors } from '../../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
     width: '100%',
     height: '100%'
   },
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
-    // gap: 24,
     justifyContent: 'center',
     paddingHorizontal: 32,
     paddingVertical: 16,
@@ -20,18 +18,21 @@ export const styles = StyleSheet.create({
   title: {
     alignSelf: 'center',
     fontSize: 22,
+    color: colors.white,
     fontWeight: '500',
-    paddingTop: 20,
+    paddingTop: 60,
     marginBottom: 24 // because of gap not working :/
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: 'transparent',
     alignItems: 'center',
+    borderColor: colors.white,
+    borderWidth: 2,
     borderRadius: 4,
     marginBottom: 24 // because of gap not working :/
   },
   submitButtonText: {
-    color: 'white',
+    color: colors.white,
     paddingVertical: 8,
     fontSize: 16
   },
@@ -42,16 +43,17 @@ export const styles = StyleSheet.create({
   },
   needAccountText: {
     fontSize: 16,
+    color: colors.white,
     marginRight: 8 // because of gap not working :/
   },
   forgotPassword: {
-    color: colors.purple,
+    color: colors.main,
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 16 // because of gap not working :/
   },
   registerButton: {
-    color: colors.purple,
+    color: colors.main,
     fontSize: 16,
     fontWeight: 'bold'
   },

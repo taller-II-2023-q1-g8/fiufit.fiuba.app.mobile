@@ -4,7 +4,6 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
     width: '100%',
     height: '100%'
   },
@@ -24,13 +23,15 @@ export const styles = StyleSheet.create({
     marginBottom: 24
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: 'transparent',
     alignItems: 'center',
+    borderColor: colors.white,
+    borderWidth: 2,
     borderRadius: 4,
     marginBottom: 24
   },
   submitButtonText: {
-    color: 'white',
+    color: colors.white,
     paddingVertical: 8,
     fontSize: 16
   },
@@ -56,7 +57,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'flex-end'
   },
   overlayText: {
-    color: 'white',
+    color: colors.white,
     fontSize: 20,
     fontWeight: 'bold'
   }

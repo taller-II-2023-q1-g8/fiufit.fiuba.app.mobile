@@ -1,27 +1,19 @@
 import React from 'react';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem
-} from '@react-navigation/drawer';
-import { func, shape, object } from 'prop-types';
-import { Text } from 'react-native';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { object } from 'prop-types';
 
 import Feed from '../../../../../../../screens/Feed';
-import texts from '../../../../../../../texts';
-import { useStateValue } from '../../../../../../../state';
 import FollowersScreen from '../../../../../../../screens/FollowersScreen';
+import texts from '../../../../../../../texts';
 
 function CustomDrawerContent({ props }) {
-  const [state] = useStateValue();
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
     </DrawerContentScrollView>
   );
 }
-export default function FeedStack({ navigation }) {
+export default function FeedStack() {
   const Drawer = createDrawerNavigator();
   const CDC = React.useCallback((props) => <CustomDrawerContent props={{ ...props }} />, []);
   return (
@@ -40,12 +32,6 @@ export default function FeedStack({ navigation }) {
     </Drawer.Navigator>
   );
 }
-
-FeedStack.propTypes = {
-  navigation: shape({
-    navigate: func.isRequired
-  }).isRequired
-};
 
 CustomDrawerContent.propTypes = {
   props: object
