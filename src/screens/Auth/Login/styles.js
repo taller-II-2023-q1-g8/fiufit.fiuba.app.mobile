@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   title: {
     alignSelf: 'center',
     fontSize: 22,
-    color: 'white',
+    color: colors.white,
     fontWeight: '500',
     paddingTop: 60,
     marginBottom: 24 // because of gap not working :/
@@ -26,13 +26,13 @@ export const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: 'transparent',
     alignItems: 'center',
-    borderColor: 'white',
+    borderColor: colors.white,
     borderWidth: 2,
     borderRadius: 4,
     marginBottom: 24 // because of gap not working :/
   },
   submitButtonText: {
-    color: 'white',
+    color: colors.white,
     paddingVertical: 8,
     fontSize: 16
   },
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
   },
   needAccountText: {
     fontSize: 16,
-    color: 'white',
+    color: colors.white,
     marginRight: 8 // because of gap not working :/
   },
   forgotPassword: {

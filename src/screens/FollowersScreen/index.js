@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
 import { fetchFollowerUsersByUsername, fetchTrainersID } from '../../requests';
 import { useStateValue } from '../../state';
@@ -24,7 +24,6 @@ export default function FollowersScreen({ navigation }) {
       const followersJson = await followersResponse.json();
       const trainersResponse = await fetchTrainersID();
       const trainersJson = await trainersResponse.json();
-      console.log(trainersJson);
       // Get de usuarios no traiga admins
       const followers = followersJson.message
         .filter((username) => username !== state.user.username)

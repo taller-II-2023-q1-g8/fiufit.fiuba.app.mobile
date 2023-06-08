@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.main,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 55,
-    color: 'white',
+    color: colors.white,
     fontSize: 18,
     fontWeight: 'bold',
     marginHorizontal: 2,
@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   username: {
-    color: 'white',
+    color: colors.white,
     padding: 10
   },
   submitButton: {

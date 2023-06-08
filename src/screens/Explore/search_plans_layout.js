@@ -8,7 +8,6 @@ import {
   Image,
   RefreshControl
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { array, bool, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
@@ -55,7 +54,6 @@ export default function SearchTrainingPlans({
 }) {
   return (
     <View style={styles.container}>
-      <StatusBar />
       <KeyboardAvoidingView style={styles.formContainer} enabled>
         <SearchField
           onChangeText={handleOnTitleChange}

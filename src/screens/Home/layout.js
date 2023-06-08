@@ -1,13 +1,13 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView, ScrollView, Text, View, ImageBackground } from 'react-native';
 import { bool, func, array } from 'prop-types';
 import { MenuProvider, MenuOption, MenuOptions, Menu, MenuTrigger } from 'react-native-popup-menu';
 
-import texts from '../../texts';
-import Loader from '../../components/Loader';
+import { colors } from '../../colors';
 import { Goal } from '../PersonalGoals/layout';
 import BackgroundImage from '../../assets/Background.jpg';
+import Loader from '../../components/Loader';
+import texts from '../../texts';
 
 import { scrollviewStyle, styles } from './styles';
 
@@ -18,7 +18,7 @@ function DotMenu({ handleTrainerHome, handleSignOutPress }) {
     <View>
       <Menu>
         <MenuTrigger>
-          <Text style={{ fontSize: 20, color: 'white' }}>• • •</Text>
+          <Text style={{ fontSize: 20, color: colors.white }}>• • •</Text>
         </MenuTrigger>
         <MenuOptions>
           <MenuOption onSelect={() => handleTrainerHome()}>
@@ -54,11 +54,10 @@ export default function Home({ goals, handleSignOutPress, loading, handleTrainer
     <MenuProvider>
       <ImageBackground source={BackgroundImage} resizeMode="cover">
         <View style={styles.container}>
-          <StatusBar />
           <Loader loading={loading} />
           <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
             <View style={styles.homeHeader}>
-              <Text style={{ ...styles.title, color: 'white' }}>{homeTexts.title}</Text>
+              <Text style={{ ...styles.title, color: colors.white }}>{homeTexts.title}</Text>
               <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
             </View>
             <KeyboardAvoidingView style={styles.formContainer} enabled>

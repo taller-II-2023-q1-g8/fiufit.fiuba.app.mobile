@@ -26,13 +26,13 @@ export const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: 'transparent',
     alignItems: 'center',
-    borderColor: 'white',
+    borderColor: colors.white,
     borderWidth: 2,
     borderRadius: 4,
     marginBottom: 24
   },
   submitButtonText: {
-    color: 'white',
+    color: colors.white,
     paddingVertical: 8,
     fontSize: 16
   }

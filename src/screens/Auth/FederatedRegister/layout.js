@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { View, KeyboardAvoidingView, ScrollView, ImageBackground } from 'react-native';
 import { array, bool, number } from 'prop-types';
 
@@ -13,7 +12,6 @@ export default function FederatedRegister({ currentStep, loading, stepError, ste
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
-        <StatusBar />
         <Loader loading={loading} />
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
           <KeyboardAvoidingView style={styles.formContainer} enabled>

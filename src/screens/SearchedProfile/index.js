@@ -2,12 +2,12 @@ import { shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import {
+  fetchFollowedUsersByUsername,
   fetchFollowerUsersByUsername,
+  fetchTrainersID,
   fetchUserProfileByUsername,
   followUser,
-  unfollowUser,
-  fetchFollowedUsersByUsername,
-  fetchTrainersID
+  unfollowUser
 } from '../../requests';
 import { getProfilePicURL } from '../../utils';
 import { useStateValue } from '../../state';
@@ -64,7 +64,6 @@ export default function SearchedProfileContainer({ route }) {
     });
     setFollowing(true);
     setLoading(false);
-    console.log('Following', username);
   };
 
   const handleUnfollowPress = async () => {
@@ -78,7 +77,6 @@ export default function SearchedProfileContainer({ route }) {
     });
     setFollowing(false);
     setLoading(false);
-    console.log('Unfollowing', username);
   };
 
   return (

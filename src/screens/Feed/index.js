@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import { func, shape } from 'prop-types';
+import React, { useState, useEffect } from 'react';
 
+import { fetchCompletedPlanMetricsByUsername } from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
-import { fetchCompletedPlanMetricsByUsername } from '../../requests';
 
 import Feed from './layout';
 
@@ -24,8 +24,7 @@ function getCompletedPlansForEachFollower(followedUsers) {
 
 export default function FeedScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
-  const [state, dispatch] = useStateValue();
-  const [following, setFollowing] = useState(state.following);
+  const [state] = useStateValue();
   const [feed, setFeed] = useState([]);
 
   useEffect(() => {
@@ -36,10 +35,6 @@ export default function FeedScreen({ navigation }) {
 
       try {
         const completedPlansForEachFollower = await getCompletedPlansForEachFollower(followedUsers);
-        console.log(
-          'planes completados por user seguido: ',
-          JSON.stringify(completedPlansForEachFollower, null, 2)
-        );
 
         const now = new Date();
         const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;

@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {
   Image,
   ImageBackground,
@@ -33,7 +32,6 @@ export default function Login({
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
-        <StatusBar />
         <Loader loading={loading} />
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
           <KeyboardAvoidingView style={styles.formContainer} enabled>
