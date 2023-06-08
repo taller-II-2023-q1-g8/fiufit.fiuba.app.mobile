@@ -48,7 +48,12 @@ const texts = {
     homeTitle: 'Tu perfil',
     submitButtonText: 'Modificar perfil'
   },
-  FollowersScreen: { name: 'Followers' },
+  FollowersScreen: {
+    name: 'Followers'
+  },
+  MessagingScreen: {
+    name: 'Messaging'
+  },
   SearchUsers: {
     name: 'Search Users',
     submitButtonText: 'Buscar'
@@ -78,10 +83,23 @@ const texts = {
     name: 'PersonalPlans',
     submitButtonText: 'Guardar'
   },
-  EditUserProfile: { name: 'Editar perfil' },
-  CreateGoal: { name: 'CreateGoal', title: 'Agregá una Meta' },
-  CreatePlan: { name: 'CreatePlan', title: 'Creá un Plan' },
-  Explore: { title: 'Explorar' },
+  PrivateMessage: {
+    name: 'PrivateMessage'
+  },
+  EditUserProfile: {
+    name: 'EditUserProfile'
+  },
+  CreateGoal: {
+    name: 'CreateGoal',
+    createGoalTitle: 'Agregá una Meta'
+  },
+  CreatePlan: {
+    name: 'CreatePlan',
+    createPlanTitle: 'Creá un Plan'
+  },
+  Explore: {
+    title: 'Explorar'
+  },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
     birthdatePlaceholder: 'Seleccioná tu fecha de nacimiento',

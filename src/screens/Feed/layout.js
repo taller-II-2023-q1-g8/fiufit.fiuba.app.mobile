@@ -23,7 +23,9 @@ import { scrollviewStyle, styles } from './styles';
 
 const feedTexts = texts.Feed;
 
-function dateToDisplayString(date) {
+
+
+export function dateToDisplayString(date) {
   const now = new Date();
   const milisegundosPasados = now - date;
   const segundosPasados = Math.floor(milisegundosPasados / 1000);
@@ -121,9 +123,6 @@ export default function Feed({ feed, loading, refreshing, onRefresh, handleUserP
           contentContainerStyle={scrollviewStyle}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-          <View style={styles.homeHeader}>
-            <Text style={{ ...styles.title, color: colors.white }}>{feedTexts.title}</Text>
-          </View>
           <KeyboardAvoidingView style={styles.formContainer} enabled>
             {loading ? null : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress))}
           </KeyboardAvoidingView>

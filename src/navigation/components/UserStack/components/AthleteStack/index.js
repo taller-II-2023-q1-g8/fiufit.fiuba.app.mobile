@@ -11,9 +11,11 @@ import SearchedProfile from '../../../../../screens/SearchedProfile';
 import SearchedTrainingPlan from '../../../../../screens/SearchedTrainingPlan';
 import texts from '../../../../../texts';
 import TrainingInProgress from '../../../../../screens/TrainingInProgress';
+import PrivateMessage from '../../../../../screens/PrivateMessage';
 
 import ExploreStack from './components/ExploreStack';
 import FeedStack from './components/FeedStack';
+import { MPHeader } from './layout';
 import UserProfileStack from './components/UserProfileStack';
 
 function TabStack() {
@@ -42,18 +44,25 @@ export default function AthleteStack() {
   const Stack = createNativeStackNavigator();
   return state.athleteScreen ? (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={() => ({
+      <Stack.Navigator screenOptions={() => ({
           headerTintColor: colors.white,
           headerTitleStyle: { fontWeight: 'bold' },
           headerTitleAlign: 'center',
           headerStyle: { backgroundColor: colors.header }
-        })}
-      >
-        <Stack.Screen name="Tab Stack" component={TabStack} options={{ headerShown: false }} />
-        <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} />
-        <Stack.Screen name={texts.SearchedTrainingPlan.name} component={SearchedTrainingPlan} />
-        <Stack.Screen name={texts.TrainingInProgress.name} component={TrainingInProgress} />
+        })}>
+        <Stack.Screen name="Tab Stack" component={TabStack} options={{ title: '', headerShown: false }} />
+        <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
+        <Stack.Screen name={texts.PrivateMessage.name} component={PrivateMessage} options={MPHeader} />
+        <Stack.Screen
+          name={texts.SearchedTrainingPlan.name}
+          component={SearchedTrainingPlan}
+          options={{ title: '' }}
+        />
+        <Stack.Screen
+          name={texts.TrainingInProgress.name}
+          component={TrainingInProgress}
+          options={{ title: '' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   ) : null;
