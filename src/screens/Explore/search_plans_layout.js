@@ -61,10 +61,11 @@ export default function SearchTrainingPlans({
           onChangeText={handleOnTitleChange}
           placeholder={texts.Fields.searchTrainingPlansPlaceholder}
         />
-        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18 }}>Filtros</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18, color: colors.white }}>Filtros</Text>
         {filters}
         <FlatList
           data={data}
+          scrollv
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

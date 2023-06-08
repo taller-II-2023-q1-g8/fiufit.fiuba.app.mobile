@@ -120,7 +120,7 @@ export function PersonalGoals({ goals, handleAddGoal }) {
             fontWeight: 'bold',
             fontSize: 20,
             paddingHorizontal: 10,
-            backgroundColor: colors.purple,
+            backgroundColor: colors.main,
             borderRadius: 10
           }}
           onPress={handleAddGoal}

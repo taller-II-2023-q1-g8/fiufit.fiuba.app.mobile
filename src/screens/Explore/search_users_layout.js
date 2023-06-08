@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {
-  KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
-  View,
   FlatList,
   Image,
-  RefreshControl
+  KeyboardAvoidingView,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { string, func, array, bool } from 'prop-types';
+import { func, array, bool } from 'prop-types';
 
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
@@ -80,9 +80,9 @@ export default function SearchUsers({
       <StatusBar />
       <KeyboardAvoidingView style={styles.formContainer} enabled>
         <SearchField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
-        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18 }}>Filtros</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18, color: colors.white }}>Filtros</Text>
         <GenericSelectField
-          titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
+          titleStyle={{ fontWeight: 'bold', paddingTop: 18, color: colors.white }}
           containerStyle={{ display: 'flex', flexDirection: 'row' }}
           title=" Rol"
           items={roleOptions}

@@ -4,7 +4,6 @@ import { colors } from '../../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
     width: '100%',
     height: '100%'
   },
@@ -18,14 +17,17 @@ export const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'center',
+    color: colors.white,
     fontSize: 22,
     fontWeight: '500',
     paddingTop: 20,
     marginBottom: 24
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: 'transparent',
     alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 2,
     borderRadius: 4,
     marginBottom: 24
   },

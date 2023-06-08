@@ -2,29 +2,22 @@ const texts = {
   Login: {
     name: 'Login',
     forgotYourPasswordQuestion: '¿Olvidaste tu contraseña?',
-    loginTitle: 'Iniciá sesión con tu cuenta',
+    title: 'Iniciá sesión con tu cuenta',
     needAccount: '¿No tienes una cuenta?',
     register: 'Registrate',
     submitButtonText: 'Ingresar'
   },
-  Register: {
-    name: 'Register',
-    registerTitle: 'Registrate',
-    submitButtonText: 'Registrarse'
-  },
+  Register: { name: 'Registrate' },
   FederatedRegister: {
-    name: 'FederatedRegister',
-    federatedRegisterTitle: 'Ultimos pasos',
-    submitButtonText: 'Registrarse',
+    name: 'Registro Federado',
     step1Title: 'Sobre vos',
     step2Title: 'Ejercicio'
   },
   ForgotPassword: {
-    name: 'Forgot Password',
-    forgotPasswordTitle: 'Reinicia tu contraseña',
+    name: '¿Olvidaste tu contraseña?',
     submitButtonText: 'Enviar email de reinicio'
   },
-  AddPlan: { name: 'Add Plan', title: 'Create Plan' },
+  AddPlan: { name: 'Agregar Plan', title: 'Crear Plan' },
   Home: {
     name: 'Home',
     title: 'Inicio',
@@ -55,57 +48,40 @@ const texts = {
     homeTitle: 'Tu perfil',
     submitButtonText: 'Modificar perfil'
   },
-  FollowersScreen: {
-    name: 'Followers'
-  },
+  FollowersScreen: { name: 'Followers' },
   SearchUsers: {
     name: 'Search Users',
-    searchUsersTitle: 'Busca usuarios',
     submitButtonText: 'Buscar'
   },
   SearchTrainingPlans: {
     name: 'Search Plans',
-    searchTrainingPlansTitle: 'Busca planes',
     submitButtonText: 'Buscar'
   },
   SearchedProfile: {
-    name: 'SeachedProfile',
-    searchUsersTitle: 'Busca usuarios',
+    name: 'Usuario buscado',
     submitButtonText: 'Buscar'
   },
   SearchedTrainingPlan: {
-    name: 'SearchedTrainingPlan',
-    searchUsersTitle: 'Busca planes',
+    name: 'Plan buscado',
     submitButtonText: 'Buscar'
   },
   TrainingInProgress: {
     name: 'TrainingInProgress',
-    searchUsersTitle: 'Plan en Progreso',
     submitButtonText: 'Plan en Progreso'
   },
+  PersonalGoalsStack: { name: 'Metas' },
   PersonalGoals: {
-    name: 'PersonalGoals',
-    personalMetricsTitle: 'Métricas personales',
+    name: 'Metas1',
     submitButtonText: 'Guardar'
   },
   PersonalPlans: {
     name: 'PersonalPlans',
     submitButtonText: 'Guardar'
   },
-  EditUserProfile: {
-    name: 'EditUserProfile'
-  },
-  CreateGoal: {
-    name: 'CreateGoal',
-    createGoalTitle: 'Agregá una Meta'
-  },
-  CreatePlan: {
-    name: 'CreatePlan',
-    createPlanTitle: 'Creá un Plan'
-  },
-  Explore: {
-    title: 'Explorar'
-  },
+  EditUserProfile: { name: 'Editar perfil' },
+  CreateGoal: { name: 'CreateGoal', title: 'Agregá una Meta' },
+  CreatePlan: { name: 'CreatePlan', title: 'Creá un Plan' },
+  Explore: { title: 'Explorar' },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
     birthdatePlaceholder: 'Seleccioná tu fecha de nacimiento',
@@ -144,9 +120,6 @@ const texts = {
     planTags: 'Tags',
     planExternalIDPlaceholder: 'ID del Trainer',
     planExternalID: 'ID del Trainer'
-  },
-  App: {
-    headerTitle: 'fiuFIT'
   },
   Commons: {
     focusedIcon: '-outline'
