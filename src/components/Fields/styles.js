@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderColor: '#C1C7D0',
     borderRadius: 4,
     borderWidth: 1,
-    color: 'white',
+    color: colors.white,
     display: 'flex',
     flexDirection: 'row',
     fontSize: 16,
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   hidePasswordIcon: {
     height: 20,
-    tintColor: 'white',
+    tintColor: colors.white,
     width: 20
   },
   searchField: {

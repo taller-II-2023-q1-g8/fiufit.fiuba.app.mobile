@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 import 'expo-dev-client';
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 import './firebaseConfig';
 import { StateProvider } from './src/state';
@@ -15,7 +16,8 @@ if (__DEV__) {
 
 export default function App() {
   return (
-    <StateProvider>
+    <StateProvider hidden>
+      <StatusBar hidden />
       <RootNavigation />
     </StateProvider>
   );

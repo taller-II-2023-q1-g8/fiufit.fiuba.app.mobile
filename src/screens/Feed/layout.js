@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import {
   Image,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import { array, bool, func } from 'prop-types';
 
+import { colors } from '../../colors';
 import { getProfilePicURL } from '../../utils';
 import BackgroundImage from '../../assets/Background.jpg';
 import defaultProfPic from '../../assets/profile-pic-def.png';
@@ -115,7 +115,6 @@ export default function Feed({ feed, loading, refreshing, onRefresh, handleUserP
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
-        <StatusBar />
         <Loader loading={loading} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
@@ -123,7 +122,7 @@ export default function Feed({ feed, loading, refreshing, onRefresh, handleUserP
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           <View style={styles.homeHeader}>
-            <Text style={{ ...styles.title, color: 'white' }}>{feedTexts.title}</Text>
+            <Text style={{ ...styles.title, color: colors.white }}>{feedTexts.title}</Text>
           </View>
           <KeyboardAvoidingView style={styles.formContainer} enabled>
             {loading ? null : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress))}

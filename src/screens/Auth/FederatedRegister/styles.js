@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     marginBottom: 24
   },
   submitButtonText: {
-    color: 'white',
+    color: colors.white,
     fontSize: 16,
     paddingVertical: 8
   }

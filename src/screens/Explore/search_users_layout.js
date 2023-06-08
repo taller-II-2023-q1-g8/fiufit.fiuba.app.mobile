@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { func, array, bool } from 'prop-types';
 
 import texts from '../../texts';
@@ -77,7 +76,6 @@ export default function SearchUsers({
 }) {
   return (
     <View style={styles.container}>
-      <StatusBar />
       <KeyboardAvoidingView style={styles.formContainer} enabled>
         <SearchField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
         <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18, color: colors.white }}>Filtros</Text>

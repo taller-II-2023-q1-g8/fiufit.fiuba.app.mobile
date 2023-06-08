@@ -1,6 +1,5 @@
 import React from 'react';
 import { bool, func, object } from 'prop-types';
-import { StatusBar } from 'expo-status-bar';
 import {
   ImageBackground,
   KeyboardAvoidingView,
@@ -22,7 +21,6 @@ export default function ForgotPassword({ emailField, handleSubmitPress, loading 
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
-        <StatusBar />
         <Loader loading={loading} />
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
           <KeyboardAvoidingView style={styles.formContainer} enabled>

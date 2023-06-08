@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {
   FlatList,
   Image,
@@ -54,7 +53,6 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
       {!loading && (
         <ImageBackground source={BackgroundImage}>
           <View style={styles.container}>
-            <StatusBar />
             <KeyboardAvoidingView style={styles.formContainer} enabled>
               <Text style={styles.title}>{trainerHomeTexts.homeTitle}</Text>
               <Text style={{ color: colors.white }}>Bienvenido al inicio de entrenadores, {username}!</Text>
