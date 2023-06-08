@@ -1,19 +1,23 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react-native';
 
-import EditUserProfile from '../../../../../../../screens/EditUserProfile';
-import UserProfile from '../../../../../../../screens/UserProfile';
-import PersonalGoals from '../../../../../../../screens/PersonalGoals';
+import { colors } from '../../../../../../../colors';
 import CreateGoal from '../../../../../../../screens/CreateGoal';
-import TabViewExample from '../../../../../../../screens/FollowersScreen';
+import EditUserProfile from '../../../../../../../screens/EditUserProfile';
+import PersonalGoals from '../../../../../../../screens/PersonalGoals';
 import texts from '../../../../../../../texts';
+import UserProfile from '../../../../../../../screens/UserProfile';
 
-function PersonalGoalsScreens() {
+function PersonalGoalsStack() {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator>
-      <Stack.Screen name={texts.PersonalGoals.name} component={PersonalGoals} />
-      <Stack.Screen name={texts.CreateGoal.name} component={CreateGoal} />
+      <Stack.Screen
+        name={texts.PersonalGoals.name}
+        component={PersonalGoals}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name={texts.CreateGoal.name} component={CreateGoal} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -21,22 +25,17 @@ function PersonalGoalsScreens() {
 export default function UserProfileStack() {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        component={UserProfile}
-        name={texts.UserProfile.name}
-        options={{ title: '', headerShown: false }}
-      />
-      <Stack.Screen
-        name={texts.EditUserProfile.name}
-        component={EditUserProfile}
-        options={{ title: 'Tu Perfil' }}
-      />
-      <Stack.Screen
-        component={PersonalGoalsScreens}
-        name={texts.PersonalGoals.name}
-        options={{ title: '', headerShown: false }}
-      />
+    <Stack.Navigator
+      screenOptions={() => ({
+        headerTintColor: colors.white,
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center',
+        headerStyle: { backgroundColor: colors.header }
+      })}
+    >
+      <Stack.Screen component={UserProfile} name={texts.UserProfile.name} options={{ headerShown: false }} />
+      <Stack.Screen name={texts.EditUserProfile.name} component={EditUserProfile} />
+      <Stack.Screen component={PersonalGoalsStack} name={texts.PersonalGoalsStack.name} />
     </Stack.Navigator>
   );
 }

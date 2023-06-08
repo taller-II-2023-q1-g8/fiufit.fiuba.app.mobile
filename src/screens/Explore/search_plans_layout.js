@@ -8,7 +8,6 @@ import {
   Image,
   RefreshControl
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { array, bool, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
@@ -55,16 +54,16 @@ export default function SearchTrainingPlans({
 }) {
   return (
     <View style={styles.container}>
-      <StatusBar />
       <KeyboardAvoidingView style={styles.formContainer} enabled>
         <SearchField
           onChangeText={handleOnTitleChange}
           placeholder={texts.Fields.searchTrainingPlansPlaceholder}
         />
-        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18 }}>Filtros</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18, color: colors.white }}>Filtros</Text>
         {filters}
         <FlatList
           data={data}
+          scrollv
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

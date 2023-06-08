@@ -1,12 +1,20 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { FlatList, Image, KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { string, bool, func, array } from 'prop-types';
 
 import texts from '../../texts';
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import Loader from '../../components/Loader';
+import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';
 
@@ -43,22 +51,23 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
     <>
       <Loader loading={loading} />
       {!loading && (
-        <View style={styles.container}>
-          <StatusBar />
-          <KeyboardAvoidingView style={styles.formContainer} enabled>
-            <Text style={styles.title}>{trainerHomeTexts.homeTitle}</Text>
-            <Text>Bienvenido al inicio de entrenadores, {username}!</Text>
-            <Text>Tus planes:</Text>
-            <FlatList
-              data={data}
-              renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item.title} />}
-              ItemSeparatorComponent={ItemSeparatorView}
-            />
-            <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
-              <Text style={styles.submitButtonText}>Ir a inicio de atleta</Text>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
-        </View>
+        <ImageBackground source={BackgroundImage}>
+          <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.formContainer} enabled>
+              <Text style={styles.title}>{trainerHomeTexts.homeTitle}</Text>
+              <Text style={{ color: colors.white }}>Bienvenido al inicio de entrenadores, {username}!</Text>
+              <Text style={{ color: colors.white }}>Tus planes:</Text>
+              <FlatList
+                data={data}
+                renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item.title} />}
+                ItemSeparatorComponent={ItemSeparatorView}
+              />
+              <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
+                <Text style={styles.submitButtonText}>Ir a inicio de atleta</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
+          </View>
+        </ImageBackground>
       )}
     </>
   );

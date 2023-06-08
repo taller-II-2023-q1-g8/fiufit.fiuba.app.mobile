@@ -9,37 +9,23 @@ import { colors } from '../../../colors';
 import FederatedRegister from '../../../screens/Auth/FederatedRegister';
 import texts from '../../../texts';
 
-const appTexts = texts.App;
 const Stack = createNativeStackNavigator();
-
-const defaultNavigationOptions = {
-  title: appTexts.headerTitle,
-  headerTintColor: colors.white,
-  headerTitleStyle: {
-    fontWeight: 'bold'
-  },
-  headerTitleAlign: 'center',
-  headerStyle: {
-    backgroundColor: colors.purple
-  }
-};
 
 export default function AuthStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen component={Login} name={texts.Login.name} options={defaultNavigationOptions} />
-        <Stack.Screen component={Register} name={texts.Register.name} options={defaultNavigationOptions} />
-        <Stack.Screen
-          component={FederatedRegister}
-          name={texts.FederatedRegister.name}
-          options={defaultNavigationOptions}
-        />
-        <Stack.Screen
-          component={ForgotPassword}
-          name={texts.ForgotPassword.name}
-          options={defaultNavigationOptions}
-        />
+      <Stack.Navigator
+        screenOptions={() => ({
+          headerTintColor: colors.white,
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerTitleAlign: 'center',
+          headerStyle: { backgroundColor: colors.header }
+        })}
+      >
+        <Stack.Screen component={Login} name={texts.Login.name} options={{ headerShown: false }} />
+        <Stack.Screen component={Register} name={texts.Register.name} />
+        <Stack.Screen component={FederatedRegister} name={texts.FederatedRegister.name} />
+        <Stack.Screen component={ForgotPassword} name={texts.ForgotPassword.name} />
       </Stack.Navigator>
     </NavigationContainer>
   );

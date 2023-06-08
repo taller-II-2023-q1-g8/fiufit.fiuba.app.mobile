@@ -10,42 +10,35 @@ export const styles = StyleSheet.create({
     paddingTop: 30
   },
   viewSwitchInactive: {
-    // backgroundColor: '#666666',
-    backgroundColor: colors.dark_purple,
-    fontSize: 18,
-    color: colors.white,
-    padding: 10,
-    height: 45,
-    width: '48%',
-    borderTopRightRadius: 55,
     alignSelf: 'center',
+    backgroundColor: colors.main_soft,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 55,
+    color: colors.white,
+    fontSize: 18,
     marginHorizontal: 2,
-    borderTopLeftRadius: 15
+    padding: 10,
+    width: '48%'
   },
   viewSwitchActive: {
-    marginHorizontal: 2,
-    // borderBottomWidth: 0,
-    // borderColor: '#CACACA',
-    // borderWidth: 1.5,
-    backgroundColor: colors.purple,
-    fontSize: 18,
-    color: 'white',
-    padding: 10,
-    height: 50,
-    width: '48%',
+    backgroundColor: colors.main,
+    borderTopLeftRadius: 15,
     borderTopRightRadius: 55,
-    borderTopLeftRadius: 15
+    color: colors.white,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginHorizontal: 2,
+    padding: 10,
+    width: '48%'
   },
   separator: {
     height: 7,
     width: '100%',
-    backgroundColor: colors.purple
+    backgroundColor: colors.main
   },
   container: {
-    backgroundColor: colors.white,
     width: '100%',
-    height: '100%',
-    flex: 1
+    height: '95%'
   },
   formContainer: {
     display: 'flex',
@@ -57,15 +50,15 @@ export const styles = StyleSheet.create({
     width: '100%'
   },
   usernameContainer: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center'
   },
   username: {
-    color: 'white',
+    color: colors.white,
     padding: 10
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center',
     borderRadius: 2
   },
@@ -92,15 +85,14 @@ export const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 17,
+    color: colors.white,
     fontWeight: '600',
     paddingLeft: 10
   },
   profileType: {
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   }
 });
 
-export const scrollviewStyle = {
-  flex: 1,
-  borderRadius: 2
-};
+export const scrollviewStyle = {};

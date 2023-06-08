@@ -1,6 +1,8 @@
 import { bool } from 'prop-types';
-import React from 'react';
 import { StyleSheet, View, Modal, ActivityIndicator } from 'react-native';
+import React from 'react';
+
+import { colors } from '../../colors';
 
 const styles = StyleSheet.create({
   modalBackground: {
@@ -11,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000040'
   },
   activityIndicatorWrapper: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     height: 100,
     width: 100,
     borderRadius: 10,

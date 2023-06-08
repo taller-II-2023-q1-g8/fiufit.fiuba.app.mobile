@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
+import React, { useEffect, useState } from 'react';
 
 import { auth } from '../../firebaseConfig';
 import { firebaseObserver, loggedIn } from '../utils/hooks/useAuthentication';
