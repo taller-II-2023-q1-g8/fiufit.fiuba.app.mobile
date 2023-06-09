@@ -28,22 +28,31 @@ export default function Explore({
   handleOnUserNameChange,
   handleOnUserRoleChange
 }) {
-  const renderScene = SceneMap({
-    first: () =>
-      SearchUsers({
-        data: dataUsers,
-        handleItemPress: handleUserPress,
-        handleOnRoleChange: handleOnUserRoleChange,
-        handleOnSearchChange: handleOnUserNameChange
-      }),
-    second: () =>
-      SearchTrainingPlans({
-        data: dataPlans,
-        filters: filterPlans,
-        handleItemPress: handlePlanPress,
-        handleOnTitleChange: handleOnPlanTitleChange
-      })
-  });
+  const renderScene = ({ route }) => {
+    console.log(route.key);
+    switch (route.key) {
+      case 'first':
+        return (
+          <SearchUsers
+            data={dataUsers}
+            handleItemPress={handleUserPress}
+            handleOnRoleChange={handleOnUserRoleChange}
+            handleOnSearchChange={handleOnUserNameChange}
+          />
+        );
+      case 'second':
+        return (
+          <SearchTrainingPlans
+            data={dataPlans}
+            handleItemPress={handlePlanPress}
+            handleOnTitleChange={handleOnPlanTitleChange}
+            filters={filterPlans}
+          />
+        );
+      default:
+        return null;
+    }
+  };
   const renderLabel = ({ route, focused }) => (
     <Text style={[styles.label, { opacity: focused ? 1 : 0.5 }]}>{route.title}</Text>
   );

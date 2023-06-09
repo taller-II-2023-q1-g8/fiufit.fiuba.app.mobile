@@ -111,7 +111,6 @@ export default function ExploreScreen({ navigation }) {
   );
 
   const filters = getFilters(handleOnChange);
-
   return (
     <Explore
       setIndex={setIndex}

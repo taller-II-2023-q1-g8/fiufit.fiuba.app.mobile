@@ -44,7 +44,7 @@ function ItemSeparatorView() {
   );
 }
 
-export default function SearchTrainingPlans({ data, filters, handleOnTitleChange, handleItemPress }) {
+function SearchTrainingPlans({ data, filters, handleOnTitleChange, handleItemPress }) {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.formContainer} enabled>
@@ -64,6 +64,7 @@ export default function SearchTrainingPlans({ data, filters, handleOnTitleChange
     </View>
   );
 }
+export default React.memo(SearchTrainingPlans);
 
 Item.propTypes = {
   handleItemPress: func,

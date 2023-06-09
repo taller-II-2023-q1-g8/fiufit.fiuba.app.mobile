@@ -63,11 +63,10 @@ export function ItemSeparatorView() {
 const roleOptions = [
   { label: 'Cualquiera', value: 'Any' },
   { label: 'Atleta', value: 'Athlete' },
-  { label: 'Entrenador', value: 'Trainer' },
-  { label: 'Pbc', value: 'Any' }
+  { label: 'Entrenador', value: 'Trainer' }
 ];
 
-export default function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRoleChange }) {
+function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRoleChange }) {
   console.log('a');
   return (
     <View style={styles.container}>
@@ -91,6 +90,8 @@ export default function SearchUsers({ data, handleOnSearchChange, handleItemPres
     </View>
   );
 }
+
+export default React.memo(SearchUsers);
 
 Item.propTypes = {
   handleItemPress: func,
