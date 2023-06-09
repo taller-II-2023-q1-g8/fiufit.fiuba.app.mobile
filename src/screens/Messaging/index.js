@@ -88,7 +88,7 @@ function MessagingScreen({ navigation }) {
   }
 
   return (
-    <ImageBackground source={BackgroundImage} resizeMode="cover">
+    <ImageBackground source={BackgroundImage} styles={styles.background}>
       <View style={styles.backgroundContainer}>
         <Messaging
           conversations={conversations}

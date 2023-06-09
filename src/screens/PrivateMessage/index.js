@@ -62,6 +62,13 @@ export default function MessagingContainer({ route }) {
   const [inputText, setInputText] = useState('');
   const inputRef = useRef(null);
   function handleSendMessage() {
+    if (/^\s*$/.test(inputText)) {
+      console.log('string only contains whitespace (ie. spaces, tabs or line breaks)');
+      inputRef.current.clear();
+      setInputText('');
+      return;
+    }
+
     console.log('mandar', inputText);
     const now = Timestamp.fromDate(new Date());
     const message = {

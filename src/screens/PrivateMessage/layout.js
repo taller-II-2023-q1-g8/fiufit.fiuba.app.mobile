@@ -1,9 +1,22 @@
-import { Text, View, Image, TouchableOpacity, ScrollView, TextInput, Button } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+  Button,
+  ImageBackground
+} from 'react-native';
 import React, { useState } from 'react';
 import { func, object, string, bool, array } from 'prop-types';
 
 import Loader from '../../components/Loader';
 import defaultProfPic from '../../assets/profile-pic-def.png';
+import BackgroundImage from '../../assets/Background.jpg';
+import sendMsgIcon from '../../assets/send-msg.png';
+import { colors } from '../../colors';
+import Edit from '../../assets/icons/edit.png';
 
 import { styles } from './styles';
 
@@ -34,31 +47,36 @@ export default function PrivateMessage({
   handleSendMessage
 }) {
   return (
-    <View style={styles.container}>
-      <Loader loading={loading} />
-      <ScrollView>
-        {messages.map((message) => (
-          <MessageItem
-            key={message.id}
-            message={message.data}
-            myUsername={myUsername}
-            myProfPicUrl={myProfPicUrl}
-            otherUsername={otherUsername}
-            otherUserProfPicUrl={otherUserProfPicUrl}
+    <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <View style={styles.container}>
+        <Loader loading={loading} />
+        <ScrollView style={styles.scrollViewCont}>
+          {messages.map((message) => (
+            <MessageItem
+              key={message.id}
+              message={message.data}
+              myUsername={myUsername}
+              myProfPicUrl={myProfPicUrl}
+              otherUsername={otherUsername}
+              otherUserProfPicUrl={otherUserProfPicUrl}
+            />
+          ))}
+        </ScrollView>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Mensaje"
+            placeholderTextColor={colors.gray}
+            ref={inputRef}
+            value={inputText}
+            onChangeText={setInputText}
           />
-        ))}
-      </ScrollView>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Type your message..."
-          ref={inputRef}
-          value={inputText}
-          onChangeText={setInputText}
-        />
-        <Button title="Send" onPress={handleSendMessage} />
+          <TouchableOpacity activeOpacity={0.8} onPress={handleSendMessage}>
+            <Image style={styles.sendMsgIcon} source={sendMsgIcon} />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 

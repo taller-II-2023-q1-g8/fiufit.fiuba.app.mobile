@@ -4,9 +4,11 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center'
+    width: '100%',
+    height: '100%'
+  },
+  scrollViewCont: {
+    flexGrow: 1
   },
   inputContainer: {
     flexDirection: 'row',
@@ -21,26 +23,44 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     marginRight: 10,
     paddingHorizontal: 10,
-    borderRadius: 10
+    borderRadius: 10,
+    color: colors.gray
   },
   senderMessageContainer: {
-    backgroundColor: '#DCF8C5',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    backgroundColor: colors.main_soft,
+    marginRight: 18,
+    marginTop: 4,
+    marginLeft: 75,
+    borderRadius: 15
   },
   receiverMessageContainer: {
-    backgroundColor: colors.purple,
-    alignSelf: 'flex-start'
+    backgroundColor: colors.drawer,
+    alignSelf: 'flex-start',
+    marginTop: 4,
+    marginLeft: 10,
+    marginRight: 75,
+    borderRadius: 15
   },
   senderMessageText: {
-    color: 'black'
+    color: 'white',
+    marginRight: 8,
+    marginLeft: 8
   },
   receiverMessageText: {
-    color: 'black'
+    color: 'white',
+    marginRight: 8,
+    marginLeft: 8
   },
   profilePic: {
     width: 30,
     height: 30,
     borderRadius: 15,
     marginRight: 10
+  },
+  sendMsgIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 8
   }
 });
