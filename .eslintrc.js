@@ -17,6 +17,7 @@ module.exports = {
     'react/jsx-no-bind': 'off',
     'react/jsx-boolean-value': 'warn',
     'no-invalid-this': 'off',
+    'no-underscore-dangle': 'off',
     'consistent-return': 'off',
     'no-return-assign': 'off',
     'no-param-reassign': 'off',

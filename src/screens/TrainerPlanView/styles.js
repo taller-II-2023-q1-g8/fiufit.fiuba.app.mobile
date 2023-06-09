@@ -44,12 +44,12 @@ export const styles = StyleSheet.create({
   },
   startButton: {
     alignItems: 'center',
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     borderRadius: 4,
     marginBottom: 24
   },
   startButtonText: {
-    color: 'white',
+    color: colors.white,
     fontSize: 16,
     paddingVertical: 8
   }

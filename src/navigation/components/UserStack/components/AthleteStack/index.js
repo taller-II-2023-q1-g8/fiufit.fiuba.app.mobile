@@ -1,48 +1,71 @@
-import { func } from 'prop-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import { colors } from '../../../../../colors';
+import { tabBarIconsAthlete } from '../../utils';
 import { useStateValue } from '../../../../../state';
 import HomeScreen from '../../../../../screens/Home';
+import SearchedProfile from '../../../../../screens/SearchedProfile';
+import SearchedTrainingPlan from '../../../../../screens/SearchedTrainingPlan';
 import texts from '../../../../../texts';
-import FeedScreen from '../../../../../screens/Feed';
+import TrainingInProgress from '../../../../../screens/TrainingInProgress';
+import PrivateMessage from '../../../../../screens/PrivateMessage';
 
 import ExploreStack from './components/ExploreStack';
-import UserProfileStack from './components/UserProfileStack';
 import FeedStack from './components/FeedStack';
+import { MPHeader } from './layout';
+import UserProfileStack from './components/UserProfileStack';
 
-export default function AthleteStack({ tabBarIcons }) {
+function TabStack() {
   const Tab = createBottomTabNavigator();
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarActiveTintColor: colors.main,
+        tabBarIcon: (icon) => tabBarIconsAthlete(route, icon),
+        tabBarInactiveTintColor: colors.gray,
+        tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: colors.header, height: 60 }
+      })}
+    >
+      <Tab.Screen component={HomeScreen} name={texts.Home.name} />
+      <Tab.Screen component={FeedStack} name={texts.Feed.name} />
+      <Tab.Screen component={ExploreStack} name={texts.SearchPlansStack.name} />
+      <Tab.Screen component={UserProfileStack} name={texts.UserProfileStack.name} />
+    </Tab.Navigator>
+  );
+}
+
+export default function AthleteStack() {
   const [state] = useStateValue();
+  const Stack = createNativeStackNavigator();
   return state.athleteScreen ? (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarIcon: (icon) => tabBarIcons(route, icon),
-          tabBarActiveTintColor: colors.purple,
-          tabBarInactiveTintColor: colors.gray
+      <Stack.Navigator
+        screenOptions={() => ({
+          headerTintColor: colors.white,
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerTitleAlign: 'center',
+          headerStyle: { backgroundColor: colors.header }
         })}
       >
-        <Tab.Screen component={HomeScreen} name={texts.Home.name} options={{ title: texts.Home.title }} />
-        <Tab.Screen component={FeedStack} name={texts.Feed.name} options={{ title: texts.Feed.title }} />
-        <Tab.Screen
-          component={ExploreStack}
-          name={texts.SearchPlansStack.name}
-          options={{ title: texts.Explore.title }}
+        <Stack.Screen name="Tab Stack" component={TabStack} options={{ title: '', headerShown: false }} />
+        <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
+        <Stack.Screen name={texts.PrivateMessage.name} component={PrivateMessage} options={MPHeader} />
+        <Stack.Screen
+          name={texts.SearchedTrainingPlan.name}
+          component={SearchedTrainingPlan}
+          options={{ title: '' }}
         />
-        <Tab.Screen
-          component={UserProfileStack}
-          name={texts.UserProfileStack.name}
-          options={{ title: texts.UserProfileStack.title }}
+        <Stack.Screen
+          name={texts.TrainingInProgress.name}
+          component={TrainingInProgress}
+          options={{ title: '' }}
         />
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   ) : null;
 }
-
-AthleteStack.propTypes = {
-  tabBarIcons: func.isRequired
-};

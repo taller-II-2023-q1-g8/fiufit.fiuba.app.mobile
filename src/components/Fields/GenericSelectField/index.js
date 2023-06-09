@@ -4,6 +4,7 @@ import { View, Text } from 'react-native';
 import React, { useState } from 'react';
 
 import styles from '../styles';
+import { colors } from '../../../colors';
 
 function GenericSelectField({
   onChangeText,
@@ -26,15 +27,15 @@ function GenericSelectField({
     <View style={containerStyle}>
       <Text style={titleStyle}>{title}</Text>
       <Picker
+        dropdownIconColor={colors.white}
+        onValueChange={handleOnValueChange}
         selectedValue={selectedValue}
         style={fieldInputContainerStyle}
-        onValueChange={handleOnValueChange}
       >
         {items.map((item) => (
           <Picker.Item label={item.label} value={item.value} />
         ))}
       </Picker>
-      <Text style={styles.errorDescription} />
     </View>
   );
 }

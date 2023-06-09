@@ -1,20 +1,67 @@
-import React from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerToggleButton
+} from '@react-navigation/drawer';
+import { View } from 'react-native';
+import { object } from 'prop-types';
 
-import SearchedTrainingPlan from '../../../../../../../screens/SearchedTrainingPlan';
-import SearchPlansScreen from '../../../../../../../screens/Explore';
-// import SearchUsersScreen from '../../../../../../../screens/SearchUsers';
-import SearchedProfile from '../../../../../../../screens/SearchedProfile';
 import Feed from '../../../../../../../screens/Feed';
-import TrainingInProgress from '../../../../../../../screens/TrainingInProgress';
+import FollowersScreen from '../../../../../../../screens/FollowersScreen';
+import MessagingScreen from '../../../../../../../screens/Messaging';
 import texts from '../../../../../../../texts';
+import { colors } from '../../../../../../../colors';
 
-export default function FeedStack() {
-  const Stack = createNativeStackNavigator();
+function CustomDrawerContent({ props }) {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name={texts.Feed.name} component={Feed} options={{ title: '', headerShown: false }} />
-      <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
-    </Stack.Navigator>
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
   );
 }
+
+function CustomDrawerToggleButton() {
+  return <DrawerToggleButton tintColor={colors.white} />;
+}
+export default function FeedStack() {
+  const Drawer = createDrawerNavigator();
+  const CDC = React.useCallback((props) => <CustomDrawerContent props={{ ...props }} />, []);
+  return (
+    <Drawer.Navigator
+      useLegacyImplementation
+      screenOptions={{
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: colors.header,
+          elevation: 0,
+          shadowOpacity: 0
+        },
+        headerTitleStyle: { color: colors.white },
+        headerLeft: CustomDrawerToggleButton,
+        drawerStyle: { backgroundColor: colors.drawer },
+        drawerLabelStyle: { color: colors.white },
+        drawerActiveBackgroundColor: colors.header
+      }}
+      drawerContent={(props) => CDC(props)}
+    >
+      <Drawer.Screen name={texts.Feed.name} component={Feed} options={{ title: 'Feed', headerShown: true }} />
+
+      <Drawer.Screen
+        name={texts.FollowersScreen.name}
+        component={FollowersScreen}
+        options={{ title: 'Seguidores', headerShown: true }}
+      />
+      <Drawer.Screen
+        name={texts.MessagingScreen.name}
+        component={MessagingScreen}
+        options={{ title: 'Mensajes', headerShown: true }}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+CustomDrawerContent.propTypes = {
+  props: object
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import GenericSelectField from '../../components/Fields/GenericSelectField';
+import { colors } from '../../colors';
 
 const difficultyOptions = [
   { label: 'Cualquiera', value: 'ANY' },
@@ -23,7 +24,7 @@ export const getFilters = (handleOnChange) => [
     name="difficulty"
     onChangeText={handleOnChange}
     title=" Dificultad"
-    titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
+    titleStyle={{ fontWeight: 'bold', paddingTop: 18, color: colors.white }}
   />,
   <GenericSelectField
     containerStyle={{ display: 'flex', flexDirection: 'row' }}
@@ -31,6 +32,6 @@ export const getFilters = (handleOnChange) => [
     name="tag"
     onChangeText={handleOnChange}
     title=" Tipo de Entrenamiento"
-    titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
+    titleStyle={{ fontWeight: 'bold', paddingTop: 18, color: colors.white }}
   />
 ];

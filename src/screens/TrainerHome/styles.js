@@ -4,7 +4,6 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
     width: '100%',
     height: '100%'
   },
@@ -21,16 +20,17 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '500',
     paddingTop: 20,
-    marginBottom: 24
+    marginBottom: 24,
+    color: colors.white
   },
   submitButton: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center',
     borderRadius: 4,
     marginBottom: 24
   },
   submitButtonText: {
-    color: 'white',
+    color: colors.white,
     paddingVertical: 8,
     fontSize: 16
   },
@@ -51,10 +51,12 @@ export const styles = StyleSheet.create({
   profileName: {
     fontSize: 17,
     fontWeight: '600',
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   },
   profileType: {
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   }
 });
 

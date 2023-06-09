@@ -1,17 +1,17 @@
 import { Alert } from 'react-native';
-import { func, shape } from 'prop-types';
-import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
-import React, { useState } from 'react';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { cloneDeep } from 'lodash';
+import { func, shape } from 'prop-types';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 
 import { auth } from '../../../../firebaseConfig';
-import texts from '../../../texts';
 import { fetchUserByEmail } from '../../../requests';
 import { useStateValue } from '../../../state';
+import texts from '../../../texts';
 
-import Login from './layout';
 import { getFields } from './utils';
+import Login from './layout';
 
 GoogleSignin.configure({
   webClientId: '587864716594-rieevghh6j6gi2m10lhb835u4ndn0631.apps.googleusercontent.com',
@@ -23,7 +23,11 @@ export default function LoginContainer({ navigation }) {
   const initialData = { email: '', password: '' };
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState(initialData);
-  const [state, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
+
+  useEffect(() => {
+    dispatch({ type: 'resetValues' });
+  }, []);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 

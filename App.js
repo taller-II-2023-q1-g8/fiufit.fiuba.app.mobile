@@ -1,20 +1,23 @@
-import React from 'react';
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 import 'expo-dev-client';
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 import './firebaseConfig';
-import RootNavigation from './src/navigation';
 import { StateProvider } from './src/state';
+import RootNavigation from './src/navigation';
 
-// eslint-disable-next-line no-undef
 if (__DEV__) {
   import('./ReactotronConfig').then(() => {
-    console.log('Reactotron Configured');
+    console.info('Reactotron Configured');
   });
 }
 
 export default function App() {
   return (
-    <StateProvider>
+    <StateProvider hidden>
+      <StatusBar hidden />
       <RootNavigation />
     </StateProvider>
   );

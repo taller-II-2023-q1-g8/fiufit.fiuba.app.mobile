@@ -1,4 +1,3 @@
-import { func } from 'prop-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
@@ -7,10 +6,11 @@ import { colors } from '../../../../../colors';
 import { useStateValue } from '../../../../../state';
 import AddPlanScreen from '../../../../../screens/AddPlan';
 import texts from '../../../../../texts';
+import { tabBarIconsTrainer } from '../../utils';
 
 import TrainerPlanStack from './components/TrainerPlansStack';
 
-export default function TrainerStack({ tabBarIcons }) {
+export default function TrainerStack() {
   const [state] = useStateValue();
   const Tab = createBottomTabNavigator();
   return state.athleteScreen ? null : (
@@ -18,22 +18,16 @@ export default function TrainerStack({ tabBarIcons }) {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
-          tabBarIcon: (icon) => tabBarIcons(route, icon),
-          tabBarActiveTintColor: colors.purple,
-          tabBarInactiveTintColor: colors.gray
+          tabBarActiveTintColor: colors.main,
+          tabBarIcon: (icon) => tabBarIconsTrainer(route, icon),
+          tabBarInactiveTintColor: colors.gray,
+          tabBarShowLabel: false,
+          tabBarStyle: { backgroundColor: colors.header, height: 60 }
         })}
       >
         <Tab.Screen component={TrainerPlanStack} name={texts.TrainerHome.iconTitle} />
-        <Tab.Screen
-          component={AddPlanScreen}
-          name={texts.AddPlan.name}
-          options={{ title: texts.AddPlan.title }}
-        />
+        <Tab.Screen component={AddPlanScreen} name={texts.AddPlan.name} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
-
-TrainerStack.propTypes = {
-  tabBarIcons: func.isRequired
-};

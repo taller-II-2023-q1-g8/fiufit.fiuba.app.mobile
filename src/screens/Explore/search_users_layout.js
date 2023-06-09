@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
-  KeyboardAvoidingView,
-  Text,
-  TouchableOpacity,
-  View,
   FlatList,
   Image,
-  RefreshControl
+  KeyboardAvoidingView,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { string, func, array, bool } from 'prop-types';
+import { func, array, bool } from 'prop-types';
 
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
@@ -20,9 +19,8 @@ import GenericSelectField from '../../components/Fields/GenericSelectField';
 
 import { styles } from './styles';
 
-function Item({ handleItemPress, user }) {
+export function Item({ handleItemPress, user }) {
   const [profPicUrl, setProfPicUrl] = useState(null);
-
   const fetchProfPicUrl = async (searchedUsername) => {
     const url = await getProfilePicURL(searchedUsername);
     setProfPicUrl(url);
@@ -49,7 +47,7 @@ function Item({ handleItemPress, user }) {
   );
 }
 
-function ItemSeparatorView() {
+export function ItemSeparatorView() {
   return (
     <View
       style={{
@@ -78,13 +76,13 @@ export default function SearchUsers({
 }) {
   return (
     <View style={styles.container}>
-      <StatusBar />
       <KeyboardAvoidingView style={styles.formContainer} enabled>
         <SearchField onChangeText={handleOnSearchChange} placeholder={texts.Fields.searchUsersPlaceholder} />
-        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18 }}>Filtros</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 18, paddingTop: 18, color: colors.white }}>Filtros</Text>
         <GenericSelectField
-          titleStyle={{ fontWeight: 'bold', paddingTop: 18 }}
+          titleStyle={{ fontWeight: 'bold', paddingTop: 18, color: colors.white }}
           containerStyle={{ display: 'flex', flexDirection: 'row' }}
+          name="a"
           title=" Rol"
           items={roleOptions}
           onChangeText={handleOnRoleChange}
