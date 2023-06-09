@@ -23,8 +23,6 @@ import { scrollviewStyle, styles } from './styles';
 
 const feedTexts = texts.Feed;
 
-
-
 export function dateToDisplayString(date) {
   const now = new Date();
   const milisegundosPasados = now - date;

@@ -1,11 +1,17 @@
 import React from 'react';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerToggleButton
+} from '@react-navigation/drawer';
 import { object } from 'prop-types';
 
 import Feed from '../../../../../../../screens/Feed';
 import FollowersScreen from '../../../../../../../screens/FollowersScreen';
 import MessagingScreen from '../../../../../../../screens/Messaging';
 import texts from '../../../../../../../texts';
+import { colors } from '../../../../../../../colors';
 
 function CustomDrawerContent({ props }) {
   return (
@@ -14,11 +20,28 @@ function CustomDrawerContent({ props }) {
     </DrawerContentScrollView>
   );
 }
+
+function CustomDrawerToggleButton() {
+  return <DrawerToggleButton tintColor={colors.white} />;
+}
 export default function FeedStack() {
   const Drawer = createDrawerNavigator();
   const CDC = React.useCallback((props) => <CustomDrawerContent props={{ ...props }} />, []);
   return (
-    <Drawer.Navigator useLegacyImplementation drawerContent={(props) => CDC(props)}>
+    <Drawer.Navigator
+      useLegacyImplementation
+      screenOptions={{
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: colors.header,
+          elevation: 0,
+          shadowOpacity: 0
+        },
+        headerTitleStyle: { color: colors.white },
+        headerLeft: CustomDrawerToggleButton
+      }}
+      drawerContent={(props) => CDC(props)}
+    >
       <Drawer.Screen name={texts.Feed.name} component={Feed} options={{ title: 'Feed', headerShown: true }} />
 
       <Drawer.Screen

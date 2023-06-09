@@ -44,12 +44,14 @@ export default function AthleteStack() {
   const Stack = createNativeStackNavigator();
   return state.athleteScreen ? (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={() => ({
+      <Stack.Navigator
+        screenOptions={() => ({
           headerTintColor: colors.white,
           headerTitleStyle: { fontWeight: 'bold' },
           headerTitleAlign: 'center',
           headerStyle: { backgroundColor: colors.header }
-        })}>
+        })}
+      >
         <Stack.Screen name="Tab Stack" component={TabStack} options={{ title: '', headerShown: false }} />
         <Stack.Screen name={texts.SearchedProfile.name} component={SearchedProfile} options={{ title: '' }} />
         <Stack.Screen name={texts.PrivateMessage.name} component={PrivateMessage} options={MPHeader} />
