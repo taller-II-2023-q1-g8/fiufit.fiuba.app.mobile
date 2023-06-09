@@ -36,11 +36,13 @@ export default function CreatePlanContainer({ navigation }) {
 
     setLoading(true);
 
-    const values = { ...data, trainer_id: state.user.username };
+    const values = { ...data, trainer_username: state.user.username };
     await createPlanRequest(values)
-      .then((result) => {
+      .then(async (result) => {
         if (!result.ok) return;
-        dispatch({ type: 'addPlansData', newPlanData: values });
+        const itemData = await result.json();
+        dispatch({ type: 'addPlansData', newPlanData: itemData });
+        navigation.navigate(texts.TrainerPlanView.name, { itemData });
       })
       .catch((error) => {
         console.log('Error:', error);
