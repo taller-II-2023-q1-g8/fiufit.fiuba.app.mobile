@@ -1,14 +1,16 @@
 import { func, shape } from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { collection, query, where, getDocs, setDoc, doc, onSnapshot, orderBy } from 'firebase/firestore';
-import { View } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 
 import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { getProfilePicURL } from '../../utils';
 import { db } from '../../../firebaseConfig';
+import BackgroundImage from '../../assets/Background.jpg';
 
 import Messaging, { RecipientSelectionModal } from './layout';
+import { styles } from './styles';
 
 function MessagingScreen({ navigation }) {
   const [conversations, setConversations] = useState([]);
@@ -86,22 +88,24 @@ function MessagingScreen({ navigation }) {
   }
 
   return (
-    <View>
-      <Messaging
-        conversations={conversations}
-        loading={loading}
-        handleOnItemPress={goToConversation}
-        newConversation={newConversation}
-        showRecipientModal={showRecipientModal}
-      />
-      {showRecipientModal && (
-        <RecipientSelectionModal
-          onClose={() => setShowRecipientModal(false)}
+    <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <View style={styles.backgroundContainer}>
+        <Messaging
+          conversations={conversations}
+          loading={loading}
+          handleOnItemPress={goToConversation}
+          newConversation={newConversation}
           showRecipientModal={showRecipientModal}
-          goToConversation={goToConversation}
         />
-      )}
-    </View>
+        {showRecipientModal && (
+          <RecipientSelectionModal
+            onClose={() => setShowRecipientModal(false)}
+            showRecipientModal={showRecipientModal}
+            goToConversation={goToConversation}
+          />
+        )}
+      </View>
+    </ImageBackground>
   );
 }
 

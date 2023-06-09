@@ -5,6 +5,7 @@ import {
   DrawerItemList,
   DrawerToggleButton
 } from '@react-navigation/drawer';
+import { View } from 'react-native';
 import { object } from 'prop-types';
 
 import Feed from '../../../../../../../screens/Feed';
@@ -38,7 +39,10 @@ export default function FeedStack() {
           shadowOpacity: 0
         },
         headerTitleStyle: { color: colors.white },
-        headerLeft: CustomDrawerToggleButton
+        headerLeft: CustomDrawerToggleButton,
+        drawerStyle: { backgroundColor: colors.drawer },
+        drawerLabelStyle: { color: colors.white },
+        drawerActiveBackgroundColor: colors.header
       }}
       drawerContent={(props) => CDC(props)}
     >

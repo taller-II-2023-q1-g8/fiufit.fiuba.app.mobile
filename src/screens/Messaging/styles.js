@@ -7,6 +7,10 @@ const modalWidth = width - 40; // Adjust the width as per your requirements
 const modalHeight = height - 80; // Adjust the height as per your requirements
 
 export const styles = StyleSheet.create({
+  backgroundContainer: {
+    width: '100%',
+    height: '100%'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -30,7 +34,7 @@ export const styles = StyleSheet.create({
     width: '100%'
   },
   usernameContainer: {
-    backgroundColor: colors.purple,
+    backgroundColor: colors.main,
     alignItems: 'center'
   },
   username: {
@@ -73,10 +77,12 @@ export const styles = StyleSheet.create({
   profileName: {
     fontSize: 17,
     fontWeight: '600',
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   },
   timeOfLastMsg: {
-    paddingLeft: 10
+    paddingLeft: 10,
+    color: colors.white
   },
   modalContainer: {
     position: 'absolute',

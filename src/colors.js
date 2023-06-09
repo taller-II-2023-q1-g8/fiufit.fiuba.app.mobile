@@ -6,5 +6,6 @@ export const colors = {
   feed_items: '#01092f',
   main: '#FF8A0D',
   placeholder: '#8b9cb5',
+  drawer: '#072a4b',
   white: 'white'
 };
