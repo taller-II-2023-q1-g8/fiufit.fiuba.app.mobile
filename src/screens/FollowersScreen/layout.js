@@ -44,13 +44,17 @@ function Tabs({ data, index, routes, setIndex, handleItemPress }) {
         {/* eslint-disable-next-line react/prop-types */}
         {props.navigationState.routes.map((route, i) => {
           // eslint-disable-next-line react/prop-types
+          let style = styles.tabItem;
+          if (i % 2 === 1) {
+            style = styles.tabItemOdd;
+          }
+          // eslint-disable-next-line react/prop-types
           const opacity = props.position.interpolate({
             inputRange,
-            outputRange: inputRange.map((inputIndex) => (inputIndex === i ? 1 : 0.5))
+            outputRange: inputRange.map((inputIndex) => (inputIndex === i ? 1 : 0.4))
           });
-
           return (
-            <TouchableOpacity style={styles.tabItem} onPress={() => setIndex(i)}>
+            <TouchableOpacity activeOpacity={0.9} style={style} onPress={() => setIndex(i)}>
               <Animated.Text style={{ opacity, color: colors.white, fontSize: 16, fontWeight: 'bold' }}>
                 {route.title}
               </Animated.Text>
