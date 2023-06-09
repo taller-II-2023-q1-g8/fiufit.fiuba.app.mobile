@@ -63,17 +63,12 @@ export function ItemSeparatorView() {
 const roleOptions = [
   { label: 'Cualquiera', value: 'Any' },
   { label: 'Atleta', value: 'Athlete' },
-  { label: 'Entrenador', value: 'Trainer' }
+  { label: 'Entrenador', value: 'Trainer' },
+  { label: 'Pbc', value: 'Any' }
 ];
 
-export default function SearchUsers({
-  data,
-  handleOnSearchChange,
-  handleItemPress,
-  refreshing,
-  onRefresh,
-  handleOnRoleChange
-}) {
+export default function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRoleChange }) {
+  console.log('a');
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.formContainer} enabled>
@@ -91,7 +86,6 @@ export default function SearchUsers({
           data={data}
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} user={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </KeyboardAvoidingView>
     </View>
@@ -107,7 +101,5 @@ SearchUsers.propTypes = {
   data: array.isRequired,
   handleItemPress: func,
   handleOnSearchChange: func,
-  refreshing: bool,
-  onRefresh: func,
   handleOnRoleChange: func
 };
