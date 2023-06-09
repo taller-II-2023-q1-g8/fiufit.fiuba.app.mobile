@@ -1,20 +1,14 @@
 import React from 'react';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import { useWindowDimensions, View, Text, Animated, ImageBackground } from 'react-native';
-import BackgroundImage from '../../assets/Background.jpg';
 import { number, func, array, object } from 'prop-types';
+
+import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';
 import SearchUsers from './search_users_layout';
 import SearchTrainingPlans from './search_plans_layout';
 
-function UserList() {
-  return (
-    <View>
-      <Text>Hola</Text>
-    </View>
-  );
-}
 export default function Explore({
   index,
   setIndex,
