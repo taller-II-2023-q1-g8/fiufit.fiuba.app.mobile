@@ -1,46 +1,44 @@
 import React, { useEffect, useState } from 'react';
+import { func, shape } from 'prop-types';
+
+import texts from '../../texts';
 
 import TrainerPlanView from './layout';
 
-export default function TrainerPlanViewContainer() {
-  const [data, setData] = useState([]);
+export default function TrainerPlanViewContainer({ route, navigation }) {
+  const [data, setData] = useState(route.params.itemData);
   const [loading, setLoading] = useState(true);
-  // console.log('ROUTE1:', route);
   useEffect(() => {
     async function fetchData() {
-      // const response = await fetchTrainingPlanByTitle(username);
-      // const json = await response.json();
-      // setData(json.message);
-      const planData = {
-        title: 'Duro como final de AM3',
-        difficulty: 'HARD',
-        description: 'Hacé que el volumen de tus brazos no se pueda calcular ni con variable compleja.',
-        created_at: '2021-04-04',
-        updated_at: '2021-04-04',
-        likes: '3',
-        average_calification: '5.1',
-        quality_califactions: [
-          {
-            username: 'Franco Papa',
-            quality_cal: 'Great workout for the arms',
-            calification: 7
-          }
-        ]
-      };
-      setData(planData);
       setLoading(false);
     }
     fetchData();
   }, []);
-  const handleCalificationPress = (/* planTitle */) => {
-    // console.log(planTitle);
+  const handleAthletePress = (athlete) => {
+    const { username } = athlete;
+    navigation.navigate(texts.SearchedProfile.name, { username });
   };
 
-  return <TrainerPlanView data={data} loading={loading} handleCalificationPress={handleCalificationPress} />;
+  const handleAddExecrsiePress = () => {
+    const planID = data.id;
+    navigation.navigate(texts.ChooseExercises.name, { planID });
+  };
+
+  return (
+    <TrainerPlanView
+      data={data}
+      loading={loading}
+      handleAthletePress={handleAthletePress}
+      handleAddExecrsiePress={handleAddExecrsiePress}
+    />
+  );
 }
 
-// TrainerPlanViewContainer.propTypes = {
-//   route: shape({
-//     params: shape.isRequired
-//   }).isRequired
-// };
+TrainerPlanViewContainer.propTypes = {
+  route: shape({
+    params: shape.isRequired
+  }).isRequired,
+  navigation: shape({
+    navigate: func.isRequired
+  }).isRequired
+};

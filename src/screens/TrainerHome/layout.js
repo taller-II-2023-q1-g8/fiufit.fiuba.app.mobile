@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   FlatList,
   Image,
@@ -20,13 +21,13 @@ import { styles } from './styles';
 
 const trainerHomeTexts = texts.TrainerHome;
 
-function Item({ handleItemPress, username }) {
+function Item({ handleItemPress, title, itemData }) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(username)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{username}</Text>
+          <Text style={styles.profileName}>{title}</Text>
           <Text style={styles.profileType}>Plan de Entrenamiento</Text>
         </View>
       </View>
@@ -74,7 +75,8 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
 }
 Item.propTypes = {
   handleItemPress: func,
-  username: string
+  title: string,
+  itemData: object
 };
 
 TrainerHome.propTypes = {

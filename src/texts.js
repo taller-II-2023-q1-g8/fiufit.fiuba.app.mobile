@@ -17,7 +17,8 @@ const texts = {
     name: '¿Olvidaste tu contraseña?',
     submitButtonText: 'Enviar email de reinicio'
   },
-  AddPlan: { name: 'Agregar Plan', title: 'Crear Plan' },
+  AddPlan: { name: 'Add Plan', title: 'Create Plan' },
+  ChooseExercises: { name: 'Choose Exercises', title: 'Choose Exercises' },
   Home: {
     name: 'Home',
     title: 'Inicio',
@@ -120,6 +121,8 @@ const texts = {
     phonePlaceholder: 'Ingresá tu número de teléfono',
     searchUsersPlaceholder: 'Busca usuarios por su username',
     searchTrainingPlansPlaceholder: 'Busca planes de entrenamiento',
+    searchExercisesTitlesPlaceholder: 'Busca ejercicios por titulo',
+    searchExercisesMusclesPlaceholder: 'Busca ejercicios por musculos',
     weightTitle: 'Peso',
     weightPlaceholder: 'Introduzca su peso en kg',
     heightTitle: 'Altura',
