@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { string, bool, func, array } from 'prop-types';
+import { string, bool, func, array, object } from 'prop-types';
 
 import texts from '../../texts';
 import manPic from '../../assets/man.jpeg';

@@ -1,6 +1,6 @@
 export const colors = {
   error: '#B00020',
-  soft_red: '#f5aca4'
+  soft_red: '#f5aca4',
   gray: '#B9B0B0',
   header: '#000621',
   main_soft: '#C16400',
