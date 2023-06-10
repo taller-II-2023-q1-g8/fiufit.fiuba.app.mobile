@@ -84,22 +84,21 @@ export default function FeedScreen({ navigation }) {
             }
           });
         });
+        /*
         createdPlansForEachFollower.forEach((u) => {
           u.createdPlans.forEach((createdPlan) => {
             if (now - new Date(createdPlan.created_at) < oneWeekInMs) {
               console.log(createdPlan);
-              /*
               feedItems.push({
                 type: 'createdPlan',
                 username: u.username,
                 title: createdPlan.title,
                 date: new Date(createdPlan.created_at)
               });
-              */
             }
           });
         });
-
+        */
         setFeed(feedItems);
       } catch (error) {
         console.log('Error consiguiendo los planes completados para cada usuario seguido:', error);
