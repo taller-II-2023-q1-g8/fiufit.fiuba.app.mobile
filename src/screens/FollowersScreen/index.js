@@ -16,7 +16,7 @@ export default function FollowersScreen({ navigation }) {
   ]);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-
+  // Focus effect?
   useEffect(() => {
     async function fetchData() {
       setLoading(true);

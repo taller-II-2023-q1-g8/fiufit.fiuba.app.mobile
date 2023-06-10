@@ -9,6 +9,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 30
   },
+  backgroundContainer: {
+    width: '100%',
+    height: '100%'
+  },
   viewSwitchInactive: {
     alignSelf: 'center',
     backgroundColor: colors.main_soft,
@@ -92,7 +96,14 @@ export const styles = StyleSheet.create({
   profileType: {
     paddingLeft: 10,
     color: colors.white
-  }
+  },
+  label: { fontSize: 16, color: colors.white },
+  tab: {
+    elevation: 0,
+    shadowOpacity: 0,
+    backgroundColor: colors.main
+  },
+  indicator: { backgroundColor: colors.white }
 });
 
 export const scrollviewStyle = {};

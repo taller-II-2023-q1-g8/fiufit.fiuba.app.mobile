@@ -10,7 +10,6 @@ import {
   Pressable,
   TextInput
 } from 'react-native';
-
 import { StatusBar } from 'expo-status-bar';
 import { array, func, object } from 'prop-types';
 
@@ -35,7 +34,7 @@ function Item({ handleItemPress, itemData }) {
         </View>
         <Modal
           animationType="slide"
-          transparent={true}
+          transparent
           visible={modalVisible}
           onRequestClose={() => {
             setModalVisible(!modalVisible);

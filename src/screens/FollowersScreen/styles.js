@@ -30,7 +30,14 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     borderBottomRightRadius: 50,
     borderColor: colors.white
-  }
+  },
+  label: { fontSize: 16, color: colors.white },
+  tab: {
+    elevation: 0,
+    shadowOpacity: 0,
+    backgroundColor: colors.main
+  },
+  indicator: { backgroundColor: colors.white }
 });
 
 export const scrollviewStyle = {

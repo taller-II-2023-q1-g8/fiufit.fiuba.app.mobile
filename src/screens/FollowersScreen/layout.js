@@ -5,9 +5,10 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
-  Animated
+  Animated,
+  Text
 } from 'react-native';
-import { SceneMap, TabView } from 'react-native-tab-view';
+import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import React from 'react';
 
 import { Item, ItemSeparatorView } from '../Explore/search_users_layout';
@@ -17,7 +18,7 @@ import { colors } from '../../colors';
 
 import { styles } from './styles';
 
-function UserList(data, handleItemPress) {
+function UserList({ data, handleItemPress }) {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -28,42 +29,33 @@ function UserList(data, handleItemPress) {
     </View>
   );
 }
+const UserListMemo = React.memo(UserList);
 function Tabs({ data, index, routes, setIndex, handleItemPress }) {
-  const renderScene = SceneMap({
-    first: () => UserList(data.followed, handleItemPress),
-    second: () => UserList(data.followers, handleItemPress)
-  });
+  const renderScene = ({ route }) => {
+    console.log(route.key);
+    switch (route.key) {
+      case 'first':
+        return <UserListMemo data={data.followers} handleItemPress={handleItemPress} />;
+      case 'second':
+        return <UserListMemo data={data.followed} handleItemPress={handleItemPress} />;
+      default:
+        return null;
+    }
+  };
 
   const layout = useWindowDimensions();
-  const renderTabBar = (props) => {
-    // eslint-disable-next-line react/prop-types
-    const inputRange = props.navigationState.routes.map((x, i) => i);
-
-    return (
-      <View style={styles.tabBar}>
-        {/* eslint-disable-next-line react/prop-types */}
-        {props.navigationState.routes.map((route, i) => {
-          // eslint-disable-next-line react/prop-types
-          let style = styles.tabItem;
-          if (i % 2 === 1) {
-            style = styles.tabItemOdd;
-          }
-          // eslint-disable-next-line react/prop-types
-          const opacity = props.position.interpolate({
-            inputRange,
-            outputRange: inputRange.map((inputIndex) => (inputIndex === i ? 1 : 0.4))
-          });
-          return (
-            <TouchableOpacity activeOpacity={0.9} style={style} onPress={() => setIndex(i)}>
-              <Animated.Text style={{ opacity, color: colors.white, fontSize: 16, fontWeight: 'bold' }}>
-                {route.title}
-              </Animated.Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  };
+  const renderLabel = ({ route, focused }) => (
+    <Text style={[styles.label, { opacity: focused ? 1 : 0.5 }]}>{route.title}</Text>
+  );
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorContainerStyle={styles.indicatorContainer}
+      style={styles.tab}
+      renderLabel={renderLabel}
+      indicatorStyle={styles.indicator}
+    />
+  );
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
@@ -108,6 +100,10 @@ Tabs.propTypes = {
   index: number,
   routes: array,
   setIndex: func,
+  data: object,
+  handleItemPress: func
+};
+UserList.propTypes = {
   data: object,
   handleItemPress: func
 };

@@ -66,14 +66,8 @@ const roleOptions = [
   { label: 'Entrenador', value: 'Trainer' }
 ];
 
-export default function SearchUsers({
-  data,
-  handleOnSearchChange,
-  handleItemPress,
-  refreshing,
-  onRefresh,
-  handleOnRoleChange
-}) {
+function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRoleChange }) {
+  console.log('a');
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.formContainer} enabled>
@@ -91,12 +85,13 @@ export default function SearchUsers({
           data={data}
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} user={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </KeyboardAvoidingView>
     </View>
   );
 }
+
+export default React.memo(SearchUsers);
 
 Item.propTypes = {
   handleItemPress: func,
@@ -107,7 +102,5 @@ SearchUsers.propTypes = {
   data: array.isRequired,
   handleItemPress: func,
   handleOnSearchChange: func,
-  refreshing: bool,
-  onRefresh: func,
   handleOnRoleChange: func
 };

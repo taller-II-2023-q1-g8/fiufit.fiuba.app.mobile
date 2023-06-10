@@ -44,14 +44,7 @@ function ItemSeparatorView() {
   );
 }
 
-export default function SearchTrainingPlans({
-  data,
-  filters,
-  handleOnTitleChange,
-  handleItemPress,
-  refreshing,
-  onRefresh
-}) {
+function SearchTrainingPlans({ data, filters, handleOnTitleChange, handleItemPress }) {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.formContainer} enabled>
@@ -66,12 +59,12 @@ export default function SearchTrainingPlans({
           scrollv
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       </KeyboardAvoidingView>
     </View>
   );
 }
+export default React.memo(SearchTrainingPlans);
 
 Item.propTypes = {
   handleItemPress: func,
@@ -82,7 +75,5 @@ SearchTrainingPlans.propTypes = {
   data: array.isRequired,
   handleItemPress: func,
   handleOnTitleChange: func,
-  filters: array,
-  refreshing: bool,
-  onRefresh: func
+  filters: array
 };
