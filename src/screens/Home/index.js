@@ -60,12 +60,14 @@ export default function HomeScreen({ navigation }) {
   const handleSearchUsers = () => {
     navigation.navigate(texts.SearchUsers.name);
   };
+
   const handleTrainerHome = () => {
     dispatch({
       type: 'changeCurrentStack',
       athleteScreen: false
     });
   };
+
   return (
     <Home
       goals={goals}
