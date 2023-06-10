@@ -3,33 +3,42 @@ import { func, shape } from 'prop-types';
 
 import texts from '../../texts';
 
+import { deletePlan } from '../../requests';
+
 import TrainerPlanView from './layout';
 
 export default function TrainerPlanViewContainer({ route, navigation }) {
-  const [data, setData] = useState(route.params.itemData);
+  const [plan, setData] = useState(route.params.itemData);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    async function fetchData() {
-      setLoading(false);
-    }
-    fetchData();
+    setLoading(false);
   }, []);
-  const handleAthletePress = (athlete) => {
-    const { username } = athlete;
-    navigation.navigate(texts.SearchedProfile.name, { username });
+
+  const handleShowStatsPress = () => {
+    navigation.navigate(texts.PlanStats.name, { plan });
   };
 
-  const handleAddExecrsiePress = () => {
-    const planID = data.id;
-    navigation.navigate(texts.ChooseExercises.name, { planID });
+  const handleShowExercisesPress = () => {
+    navigation.navigate(texts.PlanExercises.name, { plan });
+  };
+
+  const handleEditPress = () => {
+    navigation.navigate(texts.EditPlan.name, { plan });
+  };
+
+  const handleDeletePress = () => {
+    deletePlan(plan.id);
+    navigation.navigate(texts.deletePlan.name);
   };
 
   return (
     <TrainerPlanView
-      data={data}
+      plan={plan}
       loading={loading}
-      handleAthletePress={handleAthletePress}
-      handleAddExecrsiePress={handleAddExecrsiePress}
+      handleShowStatsPress={handleShowStatsPress}
+      handleShowExercisesPress={handleShowExercisesPress}
+      handleEditPress={handleEditPress}
+      handleDeletePress={handleDeletePress}
     />
   );
 }

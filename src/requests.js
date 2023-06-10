@@ -43,6 +43,17 @@ export const removeExerciseFromPlan = async (planID, exerciseID) =>
     },
     mode: 'cors'
   });
+
+export const deletePlan = async (planID) =>
+  fetch(`https://fiufit-plans2.onrender.com/api/v1/plans/${planID}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors'
+  });
+
 export const fetchPlanExercises = async (planID) =>
   fetchData(`https://fiufit-plans2.onrender.com/api/v1/plans/${planID}/exercises`);
 
@@ -81,6 +92,17 @@ export const createGoalRequest = async (values) =>
 export const createPlanRequest = async (values) =>
   fetch('https://fiufit-plans2.onrender.com/api/v1/plans', {
     method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify(values)
+  });
+
+export const editPlanRequest = async (values, planID) =>
+  fetch(`https://fiufit-plans2.onrender.com/api/v1/plans/${planID}`, {
+    method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'

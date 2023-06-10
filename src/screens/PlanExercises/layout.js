@@ -108,7 +108,8 @@ function ItemSeparatorView() {
   );
 }
 
-export default function ChooseExercises({
+export default function PlanExercises({
+  plan,
   excersises,
   addedExcersises,
   handleOnTitleChange,
@@ -118,37 +119,51 @@ export default function ChooseExercises({
 }) {
   return (
     <View style={styles.container}>
-      <StatusBar />
-      <KeyboardAvoidingView style={styles.formContainer} enabled>
-        <SearchField
-          onChangeText={handleOnTitleChange}
-          placeholder={texts.Fields.searchExercisesTitlesPlaceholder}
-        />
-        <SearchField
-          onChangeText={handleOnMusclesChange}
-          placeholder={texts.Fields.searchExercisesMusclesPlaceholder}
-        />
-        <View style={styles.item}>
-          <View>
-            <Text style={styles.textStyle}>Ejercicios</Text>
-            <FlatList
-              data={excersises}
-              renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
-              ItemSeparatorComponent={ItemSeparatorView}
-            />
-          </View>
-          <View>
-            <Text style={styles.textStyle}>Agregados</Text>
-            <FlatList
-              data={addedExcersises}
-              renderItem={({ item }) => (
-                <AddedItem handleAddedItemPress={handleAddedItemPress} itemData={item} />
-              )}
-              ItemSeparatorComponent={ItemSeparatorView}
-            />
-          </View>
+      <Image style={styles.banner} source={manPic} />
+      <View style={{ borderColor: 'black', borderWidth: 1, flex: 0.2 }}>
+        <Text style={{ ...styles.title, textAlign: 'center' }}>{plan.title}</Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          borderColor: 'black',
+          borderWidth: 1,
+          justifyContent: 'center'
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <SearchField
+            onChangeText={handleOnTitleChange}
+            placeholder={texts.Fields.searchExercisesTitlesPlaceholder}
+          />
         </View>
-      </KeyboardAvoidingView>
+        <View style={{ flex: 1 }}>
+          <SearchField
+            onChangeText={handleOnMusclesChange}
+            placeholder={texts.Fields.searchExercisesMusclesPlaceholder}
+          />
+        </View>
+      </View>
+      <View style={{ ...styles.item, flex: 0.7 }}>
+        <View>
+          <Text style={styles.textStyle}>Agregar</Text>
+          <FlatList
+            data={excersises}
+            renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
+            ItemSeparatorComponent={ItemSeparatorView}
+          />
+        </View>
+        <View>
+          <Text style={styles.textStyle}>Agregados</Text>
+          <FlatList
+            data={addedExcersises}
+            renderItem={({ item }) => (
+              <AddedItem handleAddedItemPress={handleAddedItemPress} itemData={item} />
+            )}
+            ItemSeparatorComponent={ItemSeparatorView}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -163,7 +178,8 @@ AddedItem.propTypes = {
   itemData: object.isRequired
 };
 
-ChooseExercises.propTypes = {
+PlanExercises.propTypes = {
+  plan: object.isRequired,
   excersises: array.isRequired,
   addedExcersises: array.isRequired,
   handleOnTitleChange: func,

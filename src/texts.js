@@ -18,7 +18,9 @@ const texts = {
     submitButtonText: 'Enviar email de reinicio'
   },
   AddPlan: { name: 'Add Plan', title: 'Create Plan' },
-  ChooseExercises: { name: 'Choose Exercises', title: 'Choose Exercises' },
+  EditPlan: { name: 'Edit Plan', title: 'Edit Plan' },
+  PlanExercises: { name: 'Plan Exercises', title: 'Plan Exercises' },
+  PlanStats: { name: 'Plan Stats', title: 'Plan Stats' },
   Home: {
     name: 'Home',
     title: 'Inicio',
@@ -121,8 +123,8 @@ const texts = {
     phonePlaceholder: 'Ingresá tu número de teléfono',
     searchUsersPlaceholder: 'Busca usuarios por su username',
     searchTrainingPlansPlaceholder: 'Busca planes de entrenamiento',
-    searchExercisesTitlesPlaceholder: 'Busca ejercicios por titulo',
-    searchExercisesMusclesPlaceholder: 'Busca ejercicios por musculos',
+    searchExercisesTitlesPlaceholder: 'titulo',
+    searchExercisesMusclesPlaceholder: 'musculos',
     weightTitle: 'Peso',
     weightPlaceholder: 'Introduzca su peso en kg',
     heightTitle: 'Altura',
