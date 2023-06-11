@@ -2,31 +2,34 @@ import { shape, func } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import texts from '../../texts';
-import { fetchTrainingPlanByID, fetchTrainersID } from '../../requests';
+import { useStateValue } from '../../state';
+import { fetchTrainingPlanByID, fetchAthletesID, addPlanToAthleteAsFavorite } from '../../requests';
 import Loader from '../../components/Loader';
 
 import SearchedTrainingPlan from './layout';
 
 export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const [data, setData] = useState([]);
+  const [state, dispatch] = useStateValue();
+  const [ownAthleteInternalID, setOwnAthleteInternalID] = useState(null);
   const { planID } = route.params;
 
-  const handleStartTraining = () => navigation.navigate(texts.TrainingInProgress.name);
+  const handleStartTraining = () => {
+    addPlanToAthleteAsFavorite(planID, ownAthleteInternalID);
+    navigation.navigate(texts.AthleteTrainingPlan.name);
+  };
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetchTrainingPlanByID(planID);
-      const dataJson = await response.json();
-
-      const trainerInternalID = dataJson.message.trainer.id;
-
-      const trainerIDs = await fetchTrainersID();
-      const trainerIDJson = await trainerIDs.json();
-
-      const trainerExternalID = trainerIDJson.find((trainer) => trainer.id === trainerInternalID).external_id;
-      dataJson.message.trainer_ext_id = trainerExternalID;
-
+      let response = await fetchTrainingPlanByID(planID);
+      let dataJson = await response.json();
+      dataJson.message.trainer_ext_id = dataJson.message.trainer.external_id;
       setData(dataJson.message);
+
+      response = await fetchAthletesID();
+      dataJson = await response.json();
+      console.log(dataJson);
+      setOwnAthleteInternalID(dataJson.find((athlete) => athlete.external_id === state.user.username).id);
     }
     fetchData();
   }, []);

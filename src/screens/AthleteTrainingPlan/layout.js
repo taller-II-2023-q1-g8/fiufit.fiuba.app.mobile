@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function TrainingInProgressContainer() {
+export default function AthleteTrainingPlan() {
   return (
     <View>
-      <Text>TrainingInProgressContainer</Text>
+      <Text>AthleteTrainingPlanScreen</Text>
     </View>
   );
 }

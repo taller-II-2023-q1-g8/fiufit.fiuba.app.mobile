@@ -10,7 +10,7 @@ import HomeScreen from '../../../../../screens/Home';
 import SearchedProfile from '../../../../../screens/SearchedProfile';
 import SearchedTrainingPlan from '../../../../../screens/SearchedTrainingPlan';
 import texts from '../../../../../texts';
-import TrainingInProgress from '../../../../../screens/TrainingInProgress';
+import AthleteTrainingPlanScreen from '../../../../../screens/AthleteTrainingPlan';
 import PrivateMessage from '../../../../../screens/PrivateMessage';
 
 import ExploreStack from './components/ExploreStack';
@@ -61,8 +61,8 @@ export default function AthleteStack() {
           options={{ title: '' }}
         />
         <Stack.Screen
-          name={texts.TrainingInProgress.name}
-          component={TrainingInProgress}
+          name={texts.AthleteTrainingPlan.name}
+          component={AthleteTrainingPlanScreen}
           options={{ title: '' }}
         />
       </Stack.Navigator>

@@ -5,11 +5,12 @@ import React, { useState } from 'react';
 
 import { colors } from '../../colors';
 import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
-import { isEmpty } from '../../utils';
 import { useStateValue } from '../../state';
 import BackgroundImage from '../../assets/Background.jpg';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
+
+import { processFetchedPlans, isEmpty } from '../../utils';
 
 import { getFilters } from './utils';
 import { hasSelectedFilters } from './filtering';
@@ -95,12 +96,12 @@ export default function ExploreScreen({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       async function fetchData() {
-        fetchPlans('')
-          .then((response) => response.json())
-          .then((fetchedPlans) => {
-            setPlans(fetchedPlans);
-            setFilteredPlans(fetchedPlans);
-          });
+        const response = await fetchPlans('');
+        const plans1 = await response.json();
+        await processFetchedPlans(plans1);
+        setPlans(plans1);
+        setFilteredPlans(plans1);
+
         const usersResponse = await fetchUsersByUsername('');
         const usersJson = await usersResponse.json();
         const trainersResponse = await fetchTrainersID();
@@ -137,12 +138,11 @@ export default function ExploreScreen({ navigation }) {
   const [refreshingPlans, setRefreshingPlans] = useState(false);
   const onRefreshPlans = React.useCallback(async () => {
     setRefreshingPlans(true);
-    await fetchPlans('')
-      .then((response) => response.json())
-      .then((fetchedPlans) => {
-        setPlans(fetchedPlans);
-        setFilteredPlans(fetchedPlans);
-      });
+    const response = await fetchPlans('');
+    const plans2 = await response.json();
+    await processFetchedPlans(plans2);
+    setPlans(plans2);
+    setFilteredPlans(plans2);
     setRefreshingPlans(false);
   }, []);
 

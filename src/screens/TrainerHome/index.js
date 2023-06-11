@@ -6,6 +6,7 @@ import texts from '../../texts';
 import { fetchPlansByTrainerUsername } from '../../requests';
 
 import TrainerHome from './layout';
+import { processFetchedPlans } from '../../utils';
 
 export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
@@ -16,34 +17,7 @@ export default function TrainerHomeScreen({ navigation }) {
       const response = await fetchPlansByTrainerUsername(state.user.username);
       const plans = await response.json();
 
-      await plans.forEach((plan) => {
-        const NO_CALIFICATION = 'No hay calificacion';
-
-        plan.athletes.forEach((athlete) => {
-          athlete.username = athlete.external_id;
-
-          if (athlete.calification_score === -1) {
-            athlete.calification_score = NO_CALIFICATION;
-          }
-
-          if (athlete.calification === '') {
-            athlete.calification = NO_CALIFICATION;
-          }
-        });
-
-        plan.likes = plan.athletes.map((athlete) => athlete.is_liked).reduce((res, a) => res + a, 0);
-        const califications = plan.athletes
-          .map((athlete) => athlete.calification_score)
-          .filter((e) => e !== NO_CALIFICATION);
-
-        if (califications.length > 0) {
-          plan.average_calification = califications.reduce((res, a) => res + a, 0) / califications.length;
-        } else {
-          plan.average_calification = NO_CALIFICATION;
-        }
-
-        plan.athletes_that_favorited = plan.athletes;
-      });
+      await processFetchedPlans(plans);
 
       dispatch({
         type: 'addPlansData',

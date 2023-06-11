@@ -73,8 +73,8 @@ const texts = {
     name: 'Plan buscado',
     submitButtonText: 'Buscar'
   },
-  TrainingInProgress: {
-    name: 'TrainingInProgress',
+  AthleteTrainingPlan: {
+    name: 'AthleteTrainingPlan',
     submitButtonText: 'Plan en Progreso'
   },
   PersonalGoalsStack: { name: 'Metas' },

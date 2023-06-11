@@ -47,7 +47,6 @@ export default function EditPlanScreen({ route, navigation }) {
       .then(async (result) => {
         if (!result.ok) return;
         const itemData = await result.json();
-        dispatch({ type: 'addPlansData', newPlanData: itemData });
         navigation.navigate(texts.TrainerPlanView.name, { itemData });
       })
       .catch((error) => {

@@ -24,7 +24,8 @@ function Item({ handleItemPress, itemData }) {
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
           <Text style={styles.profileName}>{itemData.title}</Text>
-          <Text style={styles.profileType}>Plan de Entrenamiento</Text>
+          <Text style={styles.profileType}>Likes: {itemData.likes}</Text>
+          <Text style={styles.profileType}>Calificación: {itemData.average_calification}</Text>
         </View>
       </View>
     </TouchableOpacity>
