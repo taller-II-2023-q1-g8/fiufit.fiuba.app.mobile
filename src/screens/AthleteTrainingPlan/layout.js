@@ -1,5 +1,15 @@
-import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ImageBackground,
+  Modal,
+  Pressable,
+  TextInput
+} from 'react-native';
 
 import { array, bool, func, object } from 'prop-types';
 
@@ -41,7 +51,18 @@ function ItemSeparatorView() {
   );
 }
 
-export default function AthleteTrainingPlan({ plan, loading, handle }) {
+export default function AthleteTrainingPlan({
+  plan,
+  loading,
+  handlePressLike,
+  handlePressCalificate,
+  handlePressRemove,
+  handlePressCompletePlan,
+  handlePressCompleteExercise
+}) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [quantCalif, onChangeQuan] = useState(-1);
+  const [qualCalif, onChangeQual] = useState('');
   return (
     <>
       <Loader loading={loading} />
@@ -91,7 +112,7 @@ export default function AthleteTrainingPlan({ plan, loading, handle }) {
                   backgroundColor: colors.soft_red
                 }}
                 activeOpacity={0.5}
-                onPress={handle}
+                onPress={handlePressLike}
               >
                 <Text style={{ textAlign: 'center' }}>Like</Text>
               </TouchableOpacity>
@@ -104,9 +125,53 @@ export default function AthleteTrainingPlan({ plan, loading, handle }) {
                   backgroundColor: colors.soft_red
                 }}
                 activeOpacity={0.5}
-                onPress={handle}
+                onPress={() => setModalVisible(true)}
               >
                 <Text style={{ textAlign: 'center' }}>Calificar</Text>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                      <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeQuan}
+                        value={quantCalif}
+                        placeholder="Calificación"
+                        keyboardType="numeric"
+                      />
+                      <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeQual}
+                        value={qualCalif}
+                        placeholder="Reseña"
+                        keyboardType="text"
+                      />
+                      <View style={styles.item}>
+                        <Pressable
+                          style={[styles.submitButton]}
+                          onPress={() => {
+                            handlePressCalificate(quantCalif, qualCalif);
+                            setModalVisible(!modalVisible);
+                          }}
+                        >
+                          <Text style={styles.textStyle}>Aceptar</Text>
+                        </Pressable>
+                        <Pressable
+                          style={[styles.submitButton]}
+                          onPress={() => setModalVisible(!modalVisible)}
+                        >
+                          <Text style={styles.textStyle}>Cancel</Text>
+                        </Pressable>
+                      </View>
+                    </View>
+                  </View>
+                </Modal>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
@@ -117,7 +182,7 @@ export default function AthleteTrainingPlan({ plan, loading, handle }) {
                   backgroundColor: colors.soft_red
                 }}
                 activeOpacity={0.5}
-                onPress={handle}
+                onPress={handlePressRemove}
               >
                 <Text style={{ textAlign: 'center' }}>Quitar de favoritos</Text>
               </TouchableOpacity>
@@ -132,14 +197,16 @@ export default function AthleteTrainingPlan({ plan, loading, handle }) {
                   backgroundColor: colors.soft_red
                 }}
                 activeOpacity={0.5}
-                onPress={handle}
+                onPress={() => handlePressCompletePlan()}
               >
                 <Text style={{ textAlign: 'center' }}>Completar</Text>
               </TouchableOpacity>
               <FlatList
                 style={{ flex: 1 }}
                 data={plan.exercises}
-                renderItem={(exercise) => <AddedItem handlePress={handle} exercise={exercise} />}
+                renderItem={(exercise) => (
+                  <AddedItem handlePress={handlePressCompleteExercise} exercise={exercise} />
+                )}
                 ItemSeparatorComponent={ItemSeparatorView}
               />
             </View>
@@ -158,5 +225,9 @@ AddedItem.propTypes = {
 AthleteTrainingPlan.propTypes = {
   plan: object,
   loading: bool,
-  handle: func
+  handlePressLike: func,
+  handlePressCalificate: func,
+  handlePressRemove: func,
+  handlePressCompletePlan: func,
+  handlePressCompleteExercise: func
 };

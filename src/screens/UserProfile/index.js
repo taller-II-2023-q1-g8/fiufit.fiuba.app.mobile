@@ -19,6 +19,7 @@ export default function UserProfileContainer({ navigation }) {
   const [state] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [athleteID, setAthleteID] = useState(null);
 
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
@@ -41,8 +42,8 @@ export default function UserProfileContainer({ navigation }) {
 
       const AthletesResponse = await fetchAthletesID();
       const athletesJson = await AthletesResponse.json();
-      const athleteID = (await athletesJson.find((athlete) => athlete.external_id === state.user.username))
-        .id;
+      const foundAthlete = await athletesJson.find((athlete) => athlete.external_id === state.user.username);
+      setAthleteID(foundAthlete.id);
       const plansResponse = await fetchAthletePlansByID(athleteID);
       const plansJson = await plansResponse.json();
 
@@ -58,7 +59,7 @@ export default function UserProfileContainer({ navigation }) {
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
-  const handlePlanPress = (plan) => navigation.navigate(texts.AthleteTrainingPlan.name, { plan });
+  const handlePlanPress = (plan) => navigation.navigate(texts.AthleteTrainingPlan.name, { plan, athleteID });
 
   return (
     <UserProfile
