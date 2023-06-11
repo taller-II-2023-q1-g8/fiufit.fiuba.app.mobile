@@ -4,7 +4,9 @@ import { shape, func } from 'prop-types';
 import {
   fetchFollowedUsersByUsername,
   fetchFollowerUsersByUsername,
-  fetchUserProfileByUsername
+  fetchUserProfileByUsername,
+  fetchAthletePlansByID,
+  fetchAthletesID
 } from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
@@ -36,10 +38,19 @@ export default function UserProfileContainer({ navigation }) {
       const followersJson = await followersResponse.json();
       const followedResponse = await fetchFollowedUsersByUsername(state.user.username);
       const followedJson = await followedResponse.json();
+
+      const AthletesResponse = await fetchAthletesID();
+      const athletesJson = await AthletesResponse.json();
+      const athleteID = (await athletesJson.find((athlete) => athlete.external_id === state.user.username))
+        .id;
+      const plansResponse = await fetchAthletePlansByID(athleteID);
+      const plansJson = await plansResponse.json();
+
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
-        followed: followedJson.message.length
+        followed: followedJson.message.length,
+        plans: plansJson
       });
     }
     fetchData();
@@ -47,6 +58,8 @@ export default function UserProfileContainer({ navigation }) {
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
+  const handlePlanPress = (plan) => navigation.navigate(texts.AthleteTrainingPlan.name, { plan });
+
   return (
     <UserProfile
       data={data}
@@ -54,6 +67,7 @@ export default function UserProfileContainer({ navigation }) {
       profPicUrl={profPicUrl}
       loading={loading}
       handleAddStat={handleAddStat}
+      handlePlanPress={handlePlanPress}
     />
   );
 }

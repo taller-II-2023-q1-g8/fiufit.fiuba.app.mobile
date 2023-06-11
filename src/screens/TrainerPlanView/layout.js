@@ -11,21 +11,6 @@ import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';
 
-function ItemExercise({ handleItemPress, exercise }) {
-  return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(exercise)}>
-      <View style={styles.item}>
-        <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{exercise.title}</Text>
-          <Text style={styles.profileType}>{`${exercise.muscles}`}</Text>
-          <Text style={styles.profileType}>{`reps: ${exercise.reps}`}</Text>
-          <Text style={styles.profileType}>{`weight: ${exercise.weight}`}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-}
-
 export default function TrainerPlanView({
   plan,
   loading,
@@ -148,9 +133,4 @@ TrainerPlanView.propTypes = {
   handleShowExercisesPress: func,
   handleEditPress: func,
   handleDeletePress: func
-};
-
-ItemExercise.propTypes = {
-  handleItemPress: func,
-  exercise: object
 };

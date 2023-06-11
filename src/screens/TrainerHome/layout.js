@@ -47,6 +47,7 @@ function ItemSeparatorView() {
     />
   );
 }
+
 export default function TrainerHome({ username, handleTrainerHome, data, handleItemPress, loading }) {
   return (
     <>

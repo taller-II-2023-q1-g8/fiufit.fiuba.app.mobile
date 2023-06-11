@@ -81,7 +81,7 @@ function Item({ handleItemPress, itemData }) {
 
 function AddedItem({ handleAddedItemPress, itemData }) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={handleAddedItemPress(itemData.id)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleAddedItemPress(itemData.id)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>

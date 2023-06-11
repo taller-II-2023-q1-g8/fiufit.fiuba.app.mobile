@@ -1,5 +1,5 @@
 import { bool, func, object, string } from 'prop-types';
-import { Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
 import React from 'react';
 
 import Edit from '../../assets/icons/edit.png';
@@ -8,10 +8,46 @@ import TrainerIcon from '../../assets/personal-trainer.png';
 import Loader from '../../components/Loader';
 import defaultProfPic from '../../assets/profile-pic-def.png';
 import BackgroundImage from '../../assets/Background.jpg';
+import manPic from '../../assets/man.jpeg';
 
 import { styles } from './styles';
 
-export default function UserProfile({ data, handleEditProfile, profPicUrl, loading, handleAddStat }) {
+function Item({ handleItemPress, itemData }) {
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
+      <View style={styles.item}>
+        <Image style={styles.profilePic} source={manPic} />
+        <View style={{ display: 'flex' }}>
+          <Text style={{ fontSize: 17, fontWeight: '600', paddingLeft: 10, color: 'white' }}>
+            {itemData.title}
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function ItemSeparatorView() {
+  return (
+    <View
+      style={{
+        height: 0.5,
+        width: '100%',
+        opacity: 0.2,
+        backgroundColor: colors.gray
+      }}
+    />
+  );
+}
+
+export default function UserProfile({
+  data,
+  handleEditProfile,
+  profPicUrl,
+  loading,
+  handleAddStat,
+  handlePlanPress
+}) {
   return Object.keys(data).length !== 0 ? (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
@@ -59,6 +95,7 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
             />
           </TouchableOpacity>
         </View>
+        <Text style={styles.title}>Fotos</Text>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
           <Text style={styles.title}>Metas</Text>
           <TouchableOpacity activeOpacity={0.5} onPress={handleAddStat}>
@@ -80,11 +117,14 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
             </Text>
           </TouchableOpacity>
         </View>
-        <Text style={{ color: colors.white }}>...</Text>
-        <Text style={styles.title}>Entrenamiento</Text>
-        <Text style={{ color: colors.white }}>...</Text>
-        <Text style={styles.title}>Fotos</Text>
-        <Text style={{ color: colors.white }}>...</Text>
+        <View>
+          <Text style={styles.title}>Entrenamientos</Text>
+          <FlatList
+            data={data.plans}
+            renderItem={({ item }) => <Item handleItemPress={handlePlanPress} itemData={item} />}
+            ItemSeparatorComponent={ItemSeparatorView}
+          />
+        </View>
         {/* {Object.keys(data).map((key) => {
         const value = data[key];
         return (
@@ -101,10 +141,16 @@ export default function UserProfile({ data, handleEditProfile, profPicUrl, loadi
   );
 }
 
+Item.propTypes = {
+  handleItemPress: func,
+  itemData: object
+};
+
 UserProfile.propTypes = {
   data: object,
   handleAddStat: func,
   handleEditProfile: func,
+  handlePlanPress: func,
   profPicUrl: string,
   loading: bool
 };

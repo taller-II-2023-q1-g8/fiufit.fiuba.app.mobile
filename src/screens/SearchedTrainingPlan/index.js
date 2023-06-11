@@ -9,44 +9,43 @@ import Loader from '../../components/Loader';
 import SearchedTrainingPlan from './layout';
 
 export default function SearchedTrainingPlanContainer({ route, navigation }) {
-  const [data, setData] = useState([]);
+  const { plan } = route.params;
   const [state, dispatch] = useStateValue();
   const [ownAthleteInternalID, setOwnAthleteInternalID] = useState(null);
-  const { planID } = route.params;
+  const [trainerUsername, setTrainerUsername] = useState(null);
 
   const handleStartTraining = () => {
-    addPlanToAthleteAsFavorite(planID, ownAthleteInternalID);
-    navigation.navigate(texts.AthleteTrainingPlan.name);
+    addPlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
+    navigation.navigate(texts.AthleteTrainingPlan.name, { plan });
   };
 
   useEffect(() => {
     async function fetchData() {
-      let response = await fetchTrainingPlanByID(planID);
+      let response = await fetchTrainingPlanByID(plan.id);
       let dataJson = await response.json();
-      dataJson.message.trainer_ext_id = dataJson.message.trainer.external_id;
-      setData(dataJson.message);
+      setTrainerUsername(dataJson.message.trainer.external_id);
 
       response = await fetchAthletesID();
       dataJson = await response.json();
-      console.log(dataJson);
-      setOwnAthleteInternalID(dataJson.find((athlete) => athlete.external_id === state.user.username).id);
+      const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
+      setOwnAthleteInternalID(myAthlete.id);
     }
     fetchData();
   }, []);
 
   return (
     <>
-      {'title' in data && (
+      {'title' in plan && (
         <SearchedTrainingPlan
-          title={data.title}
-          description={data.description}
-          trainer={data.trainer_ext_id}
-          difficulty={data.difficulty}
-          exercises={data.exercises}
+          title={plan.title}
+          description={plan.description}
+          trainer={trainerUsername}
+          difficulty={plan.difficulty}
+          exercises={plan.exercises}
           handleStartTraining={handleStartTraining}
         />
       )}
-      <Loader loading={!('title' in data)} />
+      <Loader loading={!('title' in plan)} />
     </>
   );
 }

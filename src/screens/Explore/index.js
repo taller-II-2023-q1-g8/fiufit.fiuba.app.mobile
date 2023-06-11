@@ -41,8 +41,8 @@ export default function ExploreScreen({ navigation }) {
     setFilteredPlans(filterData(newQuery));
   };
 
-  const handleItemPress = (planID) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
+  const handleItemPress = (plan) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
   };
 
   // Users

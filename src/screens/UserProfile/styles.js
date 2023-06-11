@@ -13,6 +13,11 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row'
   },
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingVertical: 10
+  },
   username: {
     color: colors.white,
     fontSize: 18,
@@ -23,6 +28,11 @@ export const styles = StyleSheet.create({
     height: 110,
     marginRight: 20,
     width: 110
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
+    borderRadius: 20
   },
   title: {
     marginTop: 30,

@@ -25,6 +25,7 @@ function ItemAthlete({ handleItemPress, athlete }) {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(athlete)}>
       <View style={styles.item}>
+        <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
           <Text style={styles.username}>Atleta: {athlete.username}</Text>
           <Text style={styles.quantity_cal}>Nota: {athlete.calification_score}</Text>
