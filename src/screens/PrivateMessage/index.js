@@ -75,7 +75,8 @@ export default function MessagingContainer({ route }) {
       sender: myUsername,
       receiver: otherUsername,
       createdAt: now,
-      text: inputText
+      text: inputText,
+      viewed: false
     };
     addDoc(messagesRef, message)
       .then(() => {

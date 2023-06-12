@@ -144,6 +144,7 @@ export default function Messaging({
 }) {
   return (
     <View flex={1}>
+      <Loader loading={loading} />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {conversations.map((conversation) => (
           <ConversationItem
