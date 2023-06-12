@@ -1,3 +1,5 @@
+const GATEWAY_URL = 'https://api-gateway-k1nl.onrender.com';
+
 const fetchData = async (url) =>
   fetch(url, {
     method: 'GET',
@@ -9,7 +11,7 @@ const fetchData = async (url) =>
   });
 
 export const updateUserInformationRequest = async (values) =>
-  fetch('https://api-gateway-k1nl.onrender.com/user', {
+  fetch(`${GATEWAY_URL}/user`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -20,7 +22,7 @@ export const updateUserInformationRequest = async (values) =>
   });
 
 export const registerRequest = async (values) =>
-  fetch('https://api-gateway-k1nl.onrender.com/user', {
+  fetch(`${GATEWAY_URL}/user`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -47,28 +49,25 @@ export const fetchPlanExercises = async (planID) =>
   fetchData(`https://fiufit-plans2.onrender.com/api/v1/plans/${planID}/exercises`);
 
 export const fetchUsersByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/user/usernames?prefix=${username}`);
+  fetchData(`${GATEWAY_URL}/user/usernames?prefix=${username}`);
 
-export const fetchUserByEmail = async (email) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/user?email=${email}`);
+export const fetchUserByEmail = async (email) => fetchData(`${GATEWAY_URL}/user?email=${email}`);
 
 export const fetchUserProfileByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/user?username=${username}`);
+  fetchData(`${GATEWAY_URL}/user?username=${username}`);
 
-export const fetchTrainingPlanByID = async (planID) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/plans/${planID}`);
+export const fetchTrainingPlanByID = async (planID) => fetchData(`${GATEWAY_URL}/plans/${planID}`);
 
 export const fetchUserMetricsByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/metrics?username=${username}`);
+  fetchData(`${GATEWAY_URL}/metrics?username=${username}`);
 
 export const fetchUserGoalsByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/goals?username=${username}`);
+  fetchData(`${GATEWAY_URL}/goals?username=${username}`);
 
-export const fetchGoalByID = async (goalID) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/goals/${goalID}`);
+export const fetchGoalByID = async (goalID) => fetchData(`${GATEWAY_URL}/goals/${goalID}`);
 
 export const createGoalRequest = async (values) =>
-  fetch('https://api-gateway-k1nl.onrender.com/goals', {
+  fetch(`${GATEWAY_URL}/goals`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -129,6 +128,17 @@ export const fetchPlansByTrainerID = async (id) =>
     body: JSON.stringify(id)
   });
 
+export const updateDeviceToken = async (username, token) =>
+  fetch(`${GATEWAY_URL}/user/device/${username}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify({ device_token: token })
+  });
+
 // ejemplo de athleteId recibida:
 // const athleteId = 2
 export const fetchCompletedPlansByAthleteID = async (athleteId) =>
@@ -147,7 +157,7 @@ export const fetchCompletedPlansByAthleteID = async (athleteId) =>
 
 export const fetchCompletedPlanMetricsByUsername = async (username) =>
   fetch(
-    `https://api-gateway-k1nl.onrender.com/metrics?
+    `${GATEWAY_URL}/metrics?
 username=${username}&type=training_plan_completed`,
     {
       method: 'GET',
@@ -160,17 +170,17 @@ username=${username}&type=training_plan_completed`,
   );
 
 export const fetchFollowedUsersByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/user/followed/${username}`);
+  fetchData(`${GATEWAY_URL}/user/followed/${username}`);
 
 export const fetchFollowerUsersByUsername = async (username) =>
-  fetchData(`https://api-gateway-k1nl.onrender.com/user/follower/${username}`);
+  fetchData(`${GATEWAY_URL}/user/follower/${username}`);
 
 export const followUser = async (followerUsername, followedUsername) =>
-  fetch(`https://api-gateway-k1nl.onrender.com/user/follow/${followerUsername}/${followedUsername}`, {
+  fetch(`${GATEWAY_URL}/user/follow/${followerUsername}/${followedUsername}`, {
     method: 'POST'
   });
 
 export const unfollowUser = async (followerUsername, followedUsername) =>
-  fetch(`https://api-gateway-k1nl.onrender.com/user/follow/${followerUsername}/${followedUsername}`, {
+  fetch(`${GATEWAY_URL}/user/follow/${followerUsername}/${followedUsername}`, {
     method: 'DELETE'
   });

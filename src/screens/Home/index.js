@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 import { signOut } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import messaging from '@react-native-firebase/messaging';
 
+import { updateDeviceToken } from '../../requests';
 import { auth } from '../../../firebaseConfig';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
@@ -13,6 +15,14 @@ export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [state, dispatch] = useStateValue();
   const [goals, setGoals] = useState(state.userGoals);
+
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then((token) => {
+        updateDeviceToken(state.user.username, token);
+      });
+  });
   /*
   useEffect(() => {
     setLoading(true);

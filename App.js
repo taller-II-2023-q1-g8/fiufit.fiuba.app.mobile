@@ -3,6 +3,7 @@
 import 'expo-dev-client';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import messaging, { firebaseMessaging } from '@react-native-firebase/messaging';
 
 import './firebaseConfig';
 import { StateProvider } from './src/state';
@@ -14,7 +15,13 @@ if (__DEV__) {
   });
 }
 
+async function onMessageReceived(message) {
+  console.log('NOTIFICATION RECEIVED:', message.title);
+  alert(message.notification.body);
+}
+
 export default function App() {
+  messaging().onMessage(onMessageReceived);
   return (
     <StateProvider hidden>
       <StatusBar hidden />
