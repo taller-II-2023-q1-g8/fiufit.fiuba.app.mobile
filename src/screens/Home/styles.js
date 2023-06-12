@@ -49,6 +49,14 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10
   },
+  suggestedPlansT: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: colors.white,
+    alignItems: 'center',
+    marginVertical: 10,
+    marginTop: 30
+  },
   submitButton: {
     backgroundColor: colors.main,
     alignItems: 'center',

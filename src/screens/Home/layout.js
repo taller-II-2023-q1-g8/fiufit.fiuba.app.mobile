@@ -147,7 +147,7 @@ export default function Home({
             <KeyboardAvoidingView style={styles.formContainer} enabled>
               <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
               {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
-              <Text style={styles.goalsTitle}>{homeTexts.suggestedPlansTitle}</Text>
+              <Text style={styles.suggestedPlansT}>{homeTexts.suggestedPlansTitle}</Text>
               {loading
                 ? null
                 : suggestedPlans.map((plan) => (
