@@ -3,13 +3,14 @@ import { shape, func } from 'prop-types';
 
 import texts from '../../texts';
 import { useStateValue } from '../../state';
-import AthleteTrainingPlan from './layout';
 import {
   likePlan,
   removePlanToAthleteAsFavorite,
   createMetricRequest,
   calificatePlan
 } from '../../requests.js';
+
+import AthleteTrainingPlan from './layout';
 
 export default function AthleteTrainingPlanScreen({ route, navigation }) {
   const { plan, athleteID } = route.params;

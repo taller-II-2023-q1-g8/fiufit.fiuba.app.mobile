@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     height: '100%',
     padding: 20,
-    marginTop: 40
+    marginTop: 2
   },
   profileName: {
     fontSize: 17,

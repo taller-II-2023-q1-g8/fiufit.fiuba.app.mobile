@@ -9,7 +9,6 @@ import { useStateValue } from '../../state';
 import BackgroundImage from '../../assets/Background.jpg';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
-
 import { processFetchedPlans, isEmpty } from '../../utils';
 
 import { getFilters } from './utils';

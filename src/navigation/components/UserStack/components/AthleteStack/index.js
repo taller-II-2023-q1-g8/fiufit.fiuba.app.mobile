@@ -12,6 +12,8 @@ import SearchedTrainingPlan from '../../../../../screens/SearchedTrainingPlan';
 import texts from '../../../../../texts';
 import AthleteTrainingPlanScreen from '../../../../../screens/AthleteTrainingPlan';
 import PrivateMessage from '../../../../../screens/PrivateMessage';
+import ExerciseScreen from '../../../../../screens/Exercise';
+import RestScreen from '../../../../../screens/Rest';
 
 import ExploreStack from './components/ExploreStack';
 import FeedStack from './components/FeedStack';
@@ -65,6 +67,8 @@ export default function AthleteStack() {
           component={AthleteTrainingPlanScreen}
           options={{ title: '' }}
         />
+        <Stack.Screen name={texts.Exercise.name} component={ExerciseScreen} options={{ title: '' }} />
+        <Stack.Screen name={texts.Rest.name} component={RestScreen} options={{ title: '' }} />
       </Stack.Navigator>
     </NavigationContainer>
   ) : null;

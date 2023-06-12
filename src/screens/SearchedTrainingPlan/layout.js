@@ -1,6 +1,7 @@
 import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
 import React from 'react';
-import { func, number, object, string } from 'prop-types';
+import { func, number, object, string, bool } from 'prop-types';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
@@ -56,7 +57,10 @@ export default function SearchedTrainingPlan({
   difficulty,
   trainer,
   exercises,
-  handleStartTraining
+  handleStartTraining,
+  favorite,
+  handleFavorite,
+  handleRemoveFavorite
 }) {
   return (
     <ImageBackground source={BackgroundImage}>
@@ -83,18 +87,48 @@ export default function SearchedTrainingPlan({
             </View>
           </View>
         </View>
-        <View style={{ paddingVertical: 10 }}>
-          <TouchableOpacity style={styles.startButton} activeOpacity={0.5} onPress={handleStartTraining}>
-            <Text style={styles.startButtonText}>Empezar!</Text>
-          </TouchableOpacity>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingVertical: 10
+          }}
+        >
+          <Text style={styles.title}>Ejercicios</Text>
+          {favorite ? (
+            <TouchableOpacity activeOpacity={0.5} onPress={handleRemoveFavorite}>
+              <Ionicons
+                name="star"
+                style={{ width: 30, height: 30, tintColor: colors.white }}
+                size={25}
+                color={colors.main}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity activeOpacity={0.5} onPress={handleFavorite}>
+              <Ionicons
+                name="star-outline"
+                style={{ width: 30, height: 30, tintColor: colors.white }}
+                size={25}
+                color={colors.white}
+              />
+            </TouchableOpacity>
+          )}
         </View>
-        <Text style={styles.title}>Ejercicios</Text>
+
         <FlatList
           style={{ flex: 0.5 }}
           data={exercises}
           renderItem={(exercise) => <Item exercise={exercise} />}
           ItemSeparatorComponent={ItemSeparatorView}
         />
+        <View style={{ paddingVertical: 10 }}>
+          <TouchableOpacity style={styles.startButton} activeOpacity={0.5} onPress={handleStartTraining}>
+            <Text style={styles.startButtonText}>Empezar!</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -110,5 +144,8 @@ SearchedTrainingPlan.propTypes = {
   description: string.isRequired,
   difficulty: string.isRequired,
   trainer: number.isRequired,
-  exercises: object.isRequired
+  exercises: object.isRequired,
+  favorite: bool,
+  handleFavorite: func,
+  handleRemoveFavorite: func
 };

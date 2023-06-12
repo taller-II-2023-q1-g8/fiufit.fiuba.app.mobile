@@ -4,9 +4,9 @@ import { func, shape } from 'prop-types';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { fetchPlansByTrainerUsername } from '../../requests';
+import { processFetchedPlans } from '../../utils';
 
 import TrainerHome from './layout';
-import { processFetchedPlans } from '../../utils';
 
 export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();

@@ -1,7 +1,6 @@
 import { getDownloadURL, ref } from 'firebase/storage';
 
 import { storage } from '../../firebaseConfig';
-
 import { fetchPlansByTrainerUsername } from '../requests';
 
 export const isEmpty = (variable) => variable.length <= 0;

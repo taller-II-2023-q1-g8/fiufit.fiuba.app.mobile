@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 
 import texts from '../../texts';
-
 import { deletePlan } from '../../requests';
 
 import TrainerPlanView from './layout';

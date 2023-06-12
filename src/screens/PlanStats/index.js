@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
 
 import texts from '../../texts';
-
 import {
   fetchExercises,
   AddExcerciseToPlanRequest,

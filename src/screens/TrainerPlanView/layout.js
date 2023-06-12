@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
-
 import { array, bool, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import Loader from '../../components/Loader';
-
 import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';

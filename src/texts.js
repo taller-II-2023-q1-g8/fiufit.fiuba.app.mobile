@@ -77,6 +77,10 @@ const texts = {
     name: 'AthleteTrainingPlan',
     submitButtonText: 'Plan en Progreso'
   },
+  Exercise: {
+    name: 'Exercise'
+  },
+  Rest: { name: 'Rest' },
   PersonalGoalsStack: { name: 'Metas' },
   PersonalGoals: {
     name: 'Metas1',

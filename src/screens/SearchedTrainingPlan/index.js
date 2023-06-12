@@ -3,7 +3,12 @@ import React, { useEffect, useState } from 'react';
 
 import texts from '../../texts';
 import { useStateValue } from '../../state';
-import { fetchTrainingPlanByID, fetchAthletesID, addPlanToAthleteAsFavorite } from '../../requests';
+import {
+  fetchTrainingPlanByID,
+  fetchAthletesID,
+  addPlanToAthleteAsFavorite,
+  removePlanToAthleteAsFavorite
+} from '../../requests';
 import Loader from '../../components/Loader';
 
 import SearchedTrainingPlan from './layout';
@@ -13,10 +18,20 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const [state, dispatch] = useStateValue();
   const [ownAthleteInternalID, setOwnAthleteInternalID] = useState(null);
   const [trainerUsername, setTrainerUsername] = useState(null);
+  const [favorite, setFavorite] = useState(null);
 
   const handleStartTraining = () => {
-    addPlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
-    navigation.navigate(texts.AthleteTrainingPlan.name, { plan });
+    navigation.navigate(texts.Exercise.name, { plan });
+  };
+  const handleFavorite = () => {
+    // addPlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
+    setFavorite(true);
+    console.log('Faved');
+  };
+  const handleRemoveFavorite = () => {
+    // removePlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
+    setFavorite(false);
+    console.log('Unfaved');
   };
 
   useEffect(() => {
@@ -24,10 +39,14 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
       let response = await fetchTrainingPlanByID(plan.id);
       let dataJson = await response.json();
       setTrainerUsername(dataJson.message.trainer.external_id);
-
+      dataJson.message.athletes.forEach((athlete) => console.log(athlete));
+      console.log(dataJson);
       response = await fetchAthletesID();
       dataJson = await response.json();
       const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
+      console.log(myAthlete);
+      // Hacer get del endpoint?
+      setFavorite(false);
       setOwnAthleteInternalID(myAthlete.id);
     }
     fetchData();
@@ -43,6 +62,9 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
           difficulty={plan.difficulty}
           exercises={plan.exercises}
           handleStartTraining={handleStartTraining}
+          favorite={favorite}
+          handleRemoveFavorite={handleRemoveFavorite}
+          handleFavorite={handleFavorite}
         />
       )}
       <Loader loading={!('title' in plan)} />

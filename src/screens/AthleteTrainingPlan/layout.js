@@ -10,13 +10,11 @@ import {
   Pressable,
   TextInput
 } from 'react-native';
-
 import { array, bool, func, object } from 'prop-types';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import Loader from '../../components/Loader';
-
 import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';
@@ -130,7 +128,7 @@ export default function AthleteTrainingPlan({
                 <Text style={{ textAlign: 'center' }}>Calificar</Text>
                 <Modal
                   animationType="slide"
-                  transparent={true}
+                  transparent
                   visible={modalVisible}
                   onRequestClose={() => {
                     setModalVisible(!modalVisible);
