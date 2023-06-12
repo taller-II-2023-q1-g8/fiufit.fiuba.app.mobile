@@ -69,7 +69,7 @@ export default function FeedScreen({ navigation }) {
       );
       */
       const createdPlansForEachFollower = await getCreatedPlansForEachFollower(followedUsers, trainersJson);
-      // console.log('planes creados por user seguido: ', JSON.stringify(createdPlansForEachFollower, null, 2));
+      console.log('planes creados por user seguido: ', JSON.stringify(createdPlansForEachFollower, null, 2));
 
       const now = new Date();
       const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;
@@ -92,25 +92,30 @@ export default function FeedScreen({ navigation }) {
           }
         });
       });
-      /*
-        createdPlansForEachFollower.forEach((u) => {
+      createdPlansForEachFollower.forEach((u) => {
+        if (u !== undefined) {
+          console.log(u);
           u.createdPlans.forEach((createdPlan) => {
             if (now - new Date(createdPlan.created_at) < oneWeekInMs) {
               console.log(createdPlan);
               feedItems.push({
-                type: 'createdPlan',
+                type: 'created_plan',
                 username: u.username,
                 title: createdPlan.title,
+                difficulty: createdPlan.difficulty,
+                tags: createdPlan.tags,
+                id: createdPlan.id,
                 date: new Date(createdPlan.created_at)
               });
             }
           });
-        });
-        */
+        }
+      });
       setFeed(feedItems);
       setLoading(false);
     } catch (error) {
       console.log('Error consiguiendo los planes completados para cada usuario seguido:', error);
+      setLoading(false);
     }
   };
 

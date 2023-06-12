@@ -58,7 +58,7 @@ export function dateToDisplayString(date) {
   return 'Hace más de un año';
 }
 
-function TrainingFinished(item, handleUserProfilePress, handlePlanPress) {
+function TrainingFinished(item, handleUserProfilePress, handlePlanPress, type) {
   const [profPicUrl, setProfPicUrl] = useState(null);
   const fetchProfPicUrl = async (searchedUsername) => {
     const url = await getProfilePicURL(searchedUsername);
@@ -94,7 +94,7 @@ function TrainingFinished(item, handleUserProfilePress, handlePlanPress) {
       <View style={styles.trainingCompletedBody}>
         <View style={styles.planInfoContainer}>
           <View style={styles.planDetails}>
-            <Text style={styles.planCompletedText}>Plan Completado!</Text>
+            <Text style={styles.planCompletedText}>{type}</Text>
             <Text style={styles.planName}>{item.title}</Text>
             <Text style={styles.planDifficulty}>Dificultad: {item.difficulty}</Text>
             <Text style={styles.planDifficulty}>Tags: {item.tags}</Text>
@@ -110,7 +110,9 @@ function TrainingFinished(item, handleUserProfilePress, handlePlanPress) {
 function FeedItem({ feedItem }, handleUserProfilePress, handlePlanPress) {
   switch (feedItem.type) {
     case 'training_plan_completed':
-      return TrainingFinished(feedItem, handleUserProfilePress, handlePlanPress);
+      return TrainingFinished(feedItem, handleUserProfilePress, handlePlanPress, 'Plan completado!');
+    case 'created_plan':
+      return TrainingFinished(feedItem, handleUserProfilePress, handlePlanPress, 'Nuevo plan creado!');
     default:
       return null;
   }
