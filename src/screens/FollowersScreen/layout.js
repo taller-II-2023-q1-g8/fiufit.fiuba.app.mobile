@@ -35,9 +35,9 @@ function Tabs({ data, index, routes, setIndex, handleItemPress }) {
     console.log(route.key);
     switch (route.key) {
       case 'first':
-        return <UserListMemo data={data.followers} handleItemPress={handleItemPress} />;
-      case 'second':
         return <UserListMemo data={data.followed} handleItemPress={handleItemPress} />;
+      case 'second':
+        return <UserListMemo data={data.followers} handleItemPress={handleItemPress} />;
       default:
         return null;
     }

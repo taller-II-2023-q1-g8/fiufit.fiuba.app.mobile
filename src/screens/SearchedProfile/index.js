@@ -114,10 +114,12 @@ export default function SearchedProfileContainer({ route, navigation }) {
     await unfollowUser(state.user.username, username);
     let newState = state.followedUsers;
     newState = newState.filter((u) => u !== username);
+    console.log(newState);
     dispatch({
-      type: 'updateFollowedUser',
+      type: 'updateFollowedUsers',
       followedUsers: newState
     });
+    console.log(state.followedUsers);
     setFollowing(false);
     setLoading(false);
   };
