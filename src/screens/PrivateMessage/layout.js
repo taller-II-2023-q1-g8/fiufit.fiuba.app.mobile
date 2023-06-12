@@ -8,7 +8,7 @@ import {
   Button,
   ImageBackground
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { func, object, string, bool, array } from 'prop-types';
 
 import Loader from '../../components/Loader';
@@ -44,13 +44,18 @@ export default function PrivateMessage({
   inputText,
   setInputText,
   inputRef,
-  handleSendMessage
+  handleSendMessage,
+  scrollViewRef
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
         <Loader loading={loading} />
-        <ScrollView style={styles.scrollViewCont}>
+        <ScrollView
+          style={styles.scrollViewCont}
+          ref={scrollViewRef}
+          onContentSizeChange={() => scrollViewRef.current.scrollToEnd()}
+        >
           {messages.map((message) => (
             <MessageItem
               key={message.id}
@@ -98,5 +103,6 @@ PrivateMessage.propTypes = {
   inputText: string,
   setInputText: func.isRequired,
   inputRef: object,
-  handleSendMessage: func.isRequired
+  handleSendMessage: func.isRequired,
+  scrollViewRef: object
 };
