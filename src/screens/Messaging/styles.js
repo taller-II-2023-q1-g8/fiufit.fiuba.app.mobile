@@ -114,7 +114,7 @@ export const styles = StyleSheet.create({
     left: (width - modalWidth) / 2,
     width: modalWidth,
     height: modalHeight - 90,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 0,
