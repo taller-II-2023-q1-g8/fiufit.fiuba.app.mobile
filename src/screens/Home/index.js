@@ -43,6 +43,7 @@ export default function HomeScreen({ navigation }) {
       console.log('wwwww', JSON.stringify(plans, null, 2));
       const numberOfSuggestedPlans = getRandomInt(3, 4);
       console.log('ww', numberOfSuggestedPlans);
+      console.log(plans.slice(0, numberOfSuggestedPlans));
       setSuggestedPlans(plans.slice(0, numberOfSuggestedPlans));
       setLoading(false);
     }
@@ -102,8 +103,8 @@ export default function HomeScreen({ navigation }) {
     });
   };
 
-  const handlePlanPress = (planID) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
+  const handlePlanPress = (plan) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
   };
 
   console.log('suggested', JSON.stringify(suggestedPlans, null, 2));

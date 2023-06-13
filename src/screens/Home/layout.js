@@ -41,7 +41,7 @@ function SuggestedPlan({ plan, handlePress }) {
     <View style={styles.trainingCompletedContainer}>
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => handlePress(plan.id)}
+        onPress={() => handlePress(plan)}
         style={styles.trainingCompletedHeader}
       >
         <View style={styles.profilePicture}>
