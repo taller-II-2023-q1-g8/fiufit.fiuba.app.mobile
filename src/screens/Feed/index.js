@@ -83,6 +83,7 @@ export default function FeedScreen({ navigation }) {
                 type: 'training_plan_completed',
                 username: u.username,
                 title: completedPlan.plan_title,
+                plan: a,
                 difficulty: a.difficulty,
                 tags: a.tags,
                 id: a.id,
@@ -91,7 +92,6 @@ export default function FeedScreen({ navigation }) {
             }
           }
         });
-
       });
       createdPlansForEachFollower.forEach((u) => {
         if (u !== undefined) {
@@ -134,8 +134,8 @@ export default function FeedScreen({ navigation }) {
   const handleUserProfilePress = (username) => {
     navigation.navigate(texts.SearchedProfile.name, { username });
   };
-  const handlePlanPress = (planID) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
+  const handlePlanPress = (plan) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
   };
 
   feed.sort((a, b) => b.date - a.date);
