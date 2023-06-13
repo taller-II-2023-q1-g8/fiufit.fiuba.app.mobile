@@ -81,6 +81,7 @@ const texts = {
     name: 'Exercise'
   },
   Rest: { name: 'Rest' },
+  Rating: { name: 'Rating' },
   PersonalGoalsStack: { name: 'Metas' },
   PersonalGoals: {
     name: 'Metas1',

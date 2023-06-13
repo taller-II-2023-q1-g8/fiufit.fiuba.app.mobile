@@ -17,14 +17,13 @@ export default function ExerciseScreen({ navigation, route }) {
   const { exercises } = route.params.plan;
   const current = exercises[index];
   const [state, dispatch] = useStateValue();
-
+  console.log(route);
   const handleCompleteExercise = (exercise) => {
     const values = {};
     values.type = 'exercise_set_completed';
     values.username = state.user.username;
     const currentDate = new Date();
     const currentDatetimeISO = currentDate.toISOString();
-    console.log(currentDatetimeISO);
     values.created_at = currentDatetimeISO;
     values.exercise_title = exercise.title;
     values.reps = exercise.reps;
@@ -37,7 +36,6 @@ export default function ExerciseScreen({ navigation, route }) {
     values.username = state.user.username;
     const currentDate = new Date();
     const currentDatetimeISO = currentDate.toISOString();
-    console.log(currentDatetimeISO);
     values.created_at = currentDatetimeISO;
     values.plan_title = route.params.plan.title;
     createMetricRequest(values);
@@ -89,7 +87,10 @@ export default function ExerciseScreen({ navigation, route }) {
             onPress={() => {
               handleCompleteExercise(current);
               handleCompletePlan();
-              navigation.goBack();
+              navigation.navigate(texts.Rating.name, {
+                plan: route.params.plan,
+                athleteId: route.params.athleteId
+              });
             }}
             style={{
               backgroundColor: colors.main_soft,

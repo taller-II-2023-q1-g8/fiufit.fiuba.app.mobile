@@ -14,6 +14,7 @@ import AthleteTrainingPlanScreen from '../../../../../screens/AthleteTrainingPla
 import PrivateMessage from '../../../../../screens/PrivateMessage';
 import ExerciseScreen from '../../../../../screens/Exercise';
 import RestScreen from '../../../../../screens/Rest';
+import RatingScreen from '../../../../../screens/Rating';
 
 import ExploreStack from './components/ExploreStack';
 import FeedStack from './components/FeedStack';
@@ -69,6 +70,7 @@ export default function AthleteStack() {
         />
         <Stack.Screen name={texts.Exercise.name} component={ExerciseScreen} options={{ title: '' }} />
         <Stack.Screen name={texts.Rest.name} component={RestScreen} options={{ title: '' }} />
+        <Stack.Screen name={texts.Rating.name} component={RatingScreen} options={{ title: '' }} />
       </Stack.Navigator>
     </NavigationContainer>
   ) : null;

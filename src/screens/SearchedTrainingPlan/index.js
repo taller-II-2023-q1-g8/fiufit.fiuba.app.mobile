@@ -21,7 +21,7 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const [favorite, setFavorite] = useState(null);
 
   const handleStartTraining = () => {
-    navigation.navigate(texts.Exercise.name, { plan });
+    navigation.navigate(texts.Exercise.name, { plan, athleteId: ownAthleteInternalID });
   };
   const handleFavorite = () => {
     // addPlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
