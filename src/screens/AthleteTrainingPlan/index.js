@@ -37,10 +37,11 @@ export default function AthleteTrainingPlanScreen({ route, navigation }) {
   };
 
   const handlePressCompleteExercise = (exercise) => {
+    const date = new Date();
     const values = {};
     values.type = 'exercise_set_completed';
     values.username = state.user.username;
-    values.created_at = Date.now();
+    values.created_at = date.toISOString();
     values.exercise_title = exercise.title;
     values.reps = exercise.reps;
     values.weight_in_kg = exercise.weight;
@@ -48,6 +49,13 @@ export default function AthleteTrainingPlanScreen({ route, navigation }) {
   };
 
   const handlePressCompletePlan = () => {
+    const date = new Date();
+    const values = {};
+    values.type = 'training_plan_completed';
+    values.username = state.user.username;
+    values.created_at = date.toISOString();
+    values.plan_title = plan.title;
+    createMetricRequest(values);
     plan.exercises.forEach((exercise) => {
       handlePressCompleteExercise(exercise);
     });
