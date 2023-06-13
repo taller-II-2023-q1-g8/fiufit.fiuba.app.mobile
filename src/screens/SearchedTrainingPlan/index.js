@@ -18,10 +18,11 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const [state, dispatch] = useStateValue();
   const [ownAthleteInternalID, setOwnAthleteInternalID] = useState(null);
   const [trainerUsername, setTrainerUsername] = useState(null);
+  const [athleteRating, setAthleteRating] = useState(null);
   const [favorite, setFavorite] = useState(null);
 
   const handleStartTraining = () => {
-    navigation.navigate(texts.Exercise.name, { plan, athleteId: ownAthleteInternalID });
+    navigation.navigate(texts.Exercise.name, { plan, athleteId: ownAthleteInternalID, athleteRating });
   };
   const handleFavorite = () => {
     // addPlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
@@ -33,13 +34,17 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
     setFavorite(false);
     console.log('Unfaved');
   };
-
+  const handleRateTraining = () => {
+    navigation.navigate(texts.Rating.name, { plan, athleteId: ownAthleteInternalID, pop: 1, athleteRating });
+  };
   useEffect(() => {
     async function fetchData() {
       let response = await fetchTrainingPlanByID(plan.id);
       let dataJson = await response.json();
       setTrainerUsername(dataJson.message.trainer.external_id);
-      dataJson.message.athletes.forEach((athlete) => console.log(athlete));
+      const rating = dataJson.message.athletes.find((athlete) => athlete.external_id === state.user.username);
+      setAthleteRating(rating);
+      console.log(rating);
       console.log(dataJson);
       response = await fetchAthletesID();
       dataJson = await response.json();
@@ -65,6 +70,7 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
           favorite={favorite}
           handleRemoveFavorite={handleRemoveFavorite}
           handleFavorite={handleFavorite}
+          handleRateTraining={handleRateTraining}
         />
       )}
       <Loader loading={!('title' in plan)} />

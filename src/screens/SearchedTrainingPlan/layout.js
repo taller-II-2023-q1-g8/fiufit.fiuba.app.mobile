@@ -60,7 +60,8 @@ export default function SearchedTrainingPlan({
   handleStartTraining,
   favorite,
   handleFavorite,
-  handleRemoveFavorite
+  handleRemoveFavorite,
+  handleRateTraining
 }) {
   return (
     <ImageBackground source={BackgroundImage}>
@@ -97,25 +98,35 @@ export default function SearchedTrainingPlan({
           }}
         >
           <Text style={styles.title}>Ejercicios</Text>
-          {favorite ? (
-            <TouchableOpacity activeOpacity={0.5} onPress={handleRemoveFavorite}>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity activeOpacity={0.5} onPress={handleRateTraining}>
               <Ionicons
                 name="star"
                 style={{ width: 30, height: 30, tintColor: colors.white }}
                 size={25}
-                color={colors.main}
+                color="#ffb300"
               />
             </TouchableOpacity>
-          ) : (
-            <TouchableOpacity activeOpacity={0.5} onPress={handleFavorite}>
-              <Ionicons
-                name="star-outline"
-                style={{ width: 30, height: 30, tintColor: colors.white }}
-                size={25}
-                color={colors.white}
-              />
-            </TouchableOpacity>
-          )}
+            {favorite ? (
+              <TouchableOpacity activeOpacity={0.5} onPress={handleRemoveFavorite}>
+                <Ionicons
+                  name="heart"
+                  style={{ width: 30, height: 30, tintColor: colors.white }}
+                  size={25}
+                  color={colors.error}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity activeOpacity={0.5} onPress={handleFavorite}>
+                <Ionicons
+                  name="heart-outline"
+                  style={{ width: 30, height: 30, tintColor: colors.white }}
+                  size={25}
+                  color={colors.white}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
 
         <FlatList
@@ -147,5 +158,6 @@ SearchedTrainingPlan.propTypes = {
   exercises: object.isRequired,
   favorite: bool,
   handleFavorite: func,
-  handleRemoveFavorite: func
+  handleRemoveFavorite: func,
+  handleRateTraining: func
 };

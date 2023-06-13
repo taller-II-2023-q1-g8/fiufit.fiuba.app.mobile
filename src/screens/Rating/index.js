@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,17 +16,28 @@ import { func, shape } from 'prop-types';
 import BackgroundImage from '../../assets/Background.jpg';
 import texts from '../../texts';
 import { colors } from '../../colors';
-import { calificatePlan } from '../../requests';
+import { calificatePlan, fetchAthletesID, fetchTrainingPlanByID } from '../../requests';
 import ExerciseScreen from '../Exercise';
 
 import { styles } from './styles';
 
 export default function RatingScreen({ navigation, route }) {
   const starRatingOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  console.log(route.params.athleteRating);
   const [starRating, setStarRating] = useState(null);
   const [inputText, setInputText] = useState('');
   const animatedButtonScale = new Animated.Value(1);
   console.log(route.params.athleteId);
+  useEffect(() => {
+    if (route.params.athleteRating !== undefined) {
+      if (route.params.athleteRating.calification_score >= 0) {
+        setStarRating(route.params.athleteRating.calification_score);
+      }
+      if (route.params.athleteRating.calification.length > 0) {
+        setInputText(route.params.athleteRating.calification);
+      }
+    }
+  }, []);
   const handlePressIn = () => {
     Animated.spring(animatedButtonScale, {
       toValue: 1.5,
@@ -86,7 +97,7 @@ export default function RatingScreen({ navigation, route }) {
           onPress={() => {
             handlePressCalificate(starRating, inputText);
             // Vuelve al ejercicio
-            navigation.pop(2);
+            navigation.pop(route.params.pop);
           }}
           style={{
             backgroundColor: colors.main_soft,
@@ -106,7 +117,32 @@ export default function RatingScreen({ navigation, route }) {
               color: 'white'
             }}
           >
-            Done
+            Calificar
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            // Vuelve al ejercicio
+            navigation.pop(route.params.pop);
+          }}
+          style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: 30,
+            borderRadius: 20,
+            padding: 10,
+            width: 150
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 18,
+              color: 'white'
+            }}
+          >
+            Omitir
           </Text>
         </TouchableOpacity>
       </View>

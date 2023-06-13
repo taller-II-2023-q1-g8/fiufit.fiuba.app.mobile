@@ -89,7 +89,9 @@ export default function ExerciseScreen({ navigation, route }) {
               handleCompletePlan();
               navigation.navigate(texts.Rating.name, {
                 plan: route.params.plan,
-                athleteId: route.params.athleteId
+                athleteId: route.params.athleteId,
+                pop: 2,
+                athleteRating: route.params.athleteRating
               });
             }}
             style={{
@@ -110,7 +112,7 @@ export default function ExerciseScreen({ navigation, route }) {
                 color: 'white'
               }}
             >
-              Finish
+              Terminar
             </Text>
           </TouchableOpacity>
         ) : (
@@ -140,7 +142,7 @@ export default function ExerciseScreen({ navigation, route }) {
                 color: 'white'
               }}
             >
-              Done
+              Siguiente
             </Text>
           </TouchableOpacity>
         )}
