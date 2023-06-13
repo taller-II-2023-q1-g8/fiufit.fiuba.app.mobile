@@ -2,48 +2,78 @@ import { shape, func } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import texts from '../../texts';
-import { fetchTrainingPlanByID, fetchTrainersID } from '../../requests';
+import { useStateValue } from '../../state';
+import {
+  fetchTrainingPlanByID,
+  fetchAthletesID,
+  addPlanToAthleteAsFavorite,
+  removePlanToAthleteAsFavorite
+} from '../../requests';
 import Loader from '../../components/Loader';
 
 import SearchedTrainingPlan from './layout';
 
 export default function SearchedTrainingPlanContainer({ route, navigation }) {
-  const [data, setData] = useState([]);
-  const { planID } = route.params;
+  const { plan } = route.params;
+  const [state, dispatch] = useStateValue();
+  const [ownAthleteInternalID, setOwnAthleteInternalID] = useState(null);
+  const [trainerUsername, setTrainerUsername] = useState(null);
+  const [athleteRating, setAthleteRating] = useState(null);
+  const [favorite, setFavorite] = useState(null);
 
-  const handleStartTraining = () => navigation.navigate(texts.TrainingInProgress.name);
-
+  const handleStartTraining = () => {
+    navigation.navigate(texts.Exercise.name, { plan, athleteId: ownAthleteInternalID, athleteRating });
+  };
+  const handleFavorite = () => {
+    // addPlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
+    setFavorite(true);
+    console.log('Faved');
+  };
+  const handleRemoveFavorite = () => {
+    // removePlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
+    setFavorite(false);
+    console.log('Unfaved');
+  };
+  const handleRateTraining = () => {
+    navigation.navigate(texts.Rating.name, { plan, athleteId: ownAthleteInternalID, pop: 1, athleteRating });
+  };
   useEffect(() => {
     async function fetchData() {
-      const response = await fetchTrainingPlanByID(planID);
-      const dataJson = await response.json();
-
-      const trainerInternalID = dataJson.message.trainer.id;
-
-      const trainerIDs = await fetchTrainersID();
-      const trainerIDJson = await trainerIDs.json();
-
-      const trainerExternalID = trainerIDJson.find((trainer) => trainer.id === trainerInternalID).external_id;
-      dataJson.message.trainer_ext_id = trainerExternalID;
-
-      setData(dataJson.message);
+      let response = await fetchTrainingPlanByID(plan.id);
+      let dataJson = await response.json();
+      setTrainerUsername(dataJson.message.trainer.external_id);
+      const rating = dataJson.message.athletes.find((athlete) => athlete.external_id === state.user.username);
+      setAthleteRating(rating);
+      console.log(rating);
+      console.log(dataJson);
+      response = await fetchAthletesID();
+      dataJson = await response.json();
+      const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
+      console.log(myAthlete);
+      // Hacer get del endpoint?
+      setFavorite(false);
+      setOwnAthleteInternalID(myAthlete.id);
     }
     fetchData();
   }, []);
 
   return (
     <>
-      {'title' in data && (
+      {'title' in plan && (
         <SearchedTrainingPlan
-          title={data.title}
-          description={data.description}
-          trainer={data.trainer_ext_id}
-          difficulty={data.difficulty}
-          exercises={data.exercises}
+          title={plan.title}
+          description={plan.description}
+          trainer={trainerUsername}
+          difficulty={plan.difficulty}
+          exercises={plan.exercises}
           handleStartTraining={handleStartTraining}
+          favorite={favorite}
+          handleRemoveFavorite={handleRemoveFavorite}
+          handleFavorite={handleFavorite}
+          handleRateTraining={handleRateTraining}
         />
       )}
-      <Loader loading={!('title' in data)} />
+      <Loader loading={!('title' in plan)} />
     </>
   );
 }

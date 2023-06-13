@@ -9,10 +9,10 @@ import {
 } from '../../requests';
 
 import { hasSelectedFilters } from './filtering';
-import ChooseExercises from './layout';
+import PlanExercises from './layout';
 
-export default function ChooseExercisesScreen({ route }) {
-  const { planID } = route.params;
+export default function PlanExercisesScreen({ route }) {
+  const { plan } = route.params;
   const [exercises, setExercises] = useState([]);
   const [addedExcersises, setAddedExcersises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
@@ -20,6 +20,25 @@ export default function ChooseExercisesScreen({ route }) {
     title: '',
     muscles: ''
   });
+
+  async function fetchData() {
+    fetchExercises('')
+      .then((response) => response.json())
+      .then((fetchedExercises) => {
+        setExercises(fetchedExercises);
+        setFilteredExercises(fetchedExercises);
+      });
+
+    fetchPlanExercises(plan.id)
+      .then((response) => response.json())
+      .then((fetchedExercises) => {
+        setAddedExcersises(fetchedExercises);
+      });
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const filterData = (searchQuery) =>
     exercises.filter((exercise) => hasSelectedFilters(searchQuery, exercise));
@@ -36,37 +55,20 @@ export default function ChooseExercisesScreen({ route }) {
     setFilteredExercises(filterData(newQuery));
   };
 
-  const handleItemPress = (id, reps, weight) => {
+  const handleItemPress = (exerciseID, reps, weight) => {
     const values = {};
     values.reps = reps;
     values.weight = weight;
-    AddExcerciseToPlanRequest(planID, id, values);
+    AddExcerciseToPlanRequest(plan.id, exerciseID, values);
   };
 
   const handleAddedItemPress = (exerciseID) => {
-    removeExerciseFromPlan(planID, exerciseID);
+    removeExerciseFromPlan(plan.id, exerciseID);
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      fetchExercises('')
-        .then((response) => response.json())
-        .then((fetchedExercises) => {
-          setExercises(fetchedExercises);
-          setFilteredExercises(fetchedExercises);
-        });
-
-      fetchPlanExercises(planID)
-        .then((response) => response.json())
-        .then((fetchedExercises) => {
-          setAddedExcersises(fetchedExercises);
-        });
-    }
-
-    fetchData();
-  }, []);
   return (
-    <ChooseExercises
+    <PlanExercises
+      plan={plan}
       excersises={filteredExercises}
       addedExcersises={addedExcersises}
       handleOnTitleChange={handleOnTitleChange}
@@ -77,7 +79,7 @@ export default function ChooseExercisesScreen({ route }) {
   );
 }
 
-ChooseExercisesScreen.propTypes = {
+PlanExercisesScreen.propTypes = {
   route: shape({
     params: shape.isRequired
   }).isRequired

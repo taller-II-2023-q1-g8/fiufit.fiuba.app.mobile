@@ -58,5 +58,15 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     paddingVertical: 8
+  },
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingVertical: 10
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
+    borderRadius: 20
   }
 });

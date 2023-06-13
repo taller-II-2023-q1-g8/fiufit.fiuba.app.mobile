@@ -37,15 +37,14 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 15
   },
   container: {
-    backgroundColor: colors.white,
-    width: '100%',
-    height: '100%',
-    flex: 1
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 20
   },
   formContainer: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 32,
     paddingVertical: 28,
@@ -88,6 +87,12 @@ export const styles = StyleSheet.create({
   userList: {
     borderWidth: 5,
     flex: 1
+  },
+  banner: {
+    height: 200,
+    marginRight: 0,
+    marginLeft: 0,
+    width: 372
   },
   item: {
     display: 'flex',
