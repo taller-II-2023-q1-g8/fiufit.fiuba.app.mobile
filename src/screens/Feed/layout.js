@@ -34,7 +34,7 @@ export function dateToDisplayString(date) {
   const mesesPasados = Math.floor(diasPasados / 30);
 
   if (segundosPasados <= 0) {
-    return `Hace 0 segundos`;
+    return `Justo Ahora`;
   }
   if (segundosPasados < 60) {
     return `Hace ${segundosPasados} segundos`;

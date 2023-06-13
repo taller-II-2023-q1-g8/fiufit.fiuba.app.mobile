@@ -91,6 +91,7 @@ export default function FeedScreen({ navigation }) {
             }
           }
         });
+
       });
       createdPlansForEachFollower.forEach((u) => {
         if (u !== undefined) {
@@ -115,6 +116,7 @@ export default function FeedScreen({ navigation }) {
       setLoading(false);
     } catch (error) {
       console.log('Error consiguiendo los planes completados para cada usuario seguido:', error);
+
       setLoading(false);
     }
   };

@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
   senderMessageContainer: {
     alignSelf: 'flex-end',
     backgroundColor: colors.main_soft,
-    marginRight: 18,
+    marginRight: 14,
     marginTop: 4,
     marginLeft: 75,
     borderRadius: 15
@@ -38,19 +38,25 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.drawer,
     alignSelf: 'flex-start',
     marginTop: 4,
-    marginLeft: 10,
+    marginLeft: 14,
     marginRight: 75,
     borderRadius: 15
   },
   senderMessageText: {
     color: 'white',
     marginRight: 8,
-    marginLeft: 8
+    marginLeft: 8,
+    fontSize: 16,
+    marginTop: 1,
+    marginBottom: 2
   },
   receiverMessageText: {
     color: 'white',
     marginRight: 8,
-    marginLeft: 8
+    marginLeft: 8,
+    marginTop: 1,
+    marginBottom: 2,
+    fontSize: 16
   },
   profilePic: {
     width: 30,

@@ -75,7 +75,8 @@ export default function MessagingContainer({ route }) {
       sender: myUsername,
       receiver: otherUsername,
       createdAt: now,
-      text: inputText
+      text: inputText,
+      viewed: false
     };
     addDoc(messagesRef, message)
       .then(() => {
@@ -95,6 +96,21 @@ export default function MessagingContainer({ route }) {
       });
   }
 
+  const scrollViewRef = useRef(null);
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollToEnd();
+      }
+    };
+
+    // Scroll to the bottom with a small delay
+    const scrollDelay = setTimeout(scrollToBottom, 100);
+
+    // Clear the timeout on unmount
+    return () => clearTimeout(scrollDelay);
+  }, []);
+
   return (
     <PrivateMessage
       messages={messages}
@@ -107,6 +123,7 @@ export default function MessagingContainer({ route }) {
       setInputText={setInputText}
       inputRef={inputRef}
       handleSendMessage={handleSendMessage}
+      scrollViewRef={scrollViewRef}
     />
   );
 }

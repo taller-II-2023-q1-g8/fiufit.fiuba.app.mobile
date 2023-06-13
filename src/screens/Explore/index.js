@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { colors } from '../../colors';
 import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
-import { isEmpty } from '../../utils';
+import { isEmpty, processFetchedPlans } from '../../utils';
 import { useStateValue } from '../../state';
 import BackgroundImage from '../../assets/Background.jpg';
 import Loader from '../../components/Loader';
@@ -46,8 +46,8 @@ export default function ExploreScreen({ navigation }) {
     setFilteredPlans(filterData(newQuery));
   };
 
-  const handleItemPress = (planID) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
+  const handleItemPress = (plan) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
   };
 
   // Users
@@ -82,12 +82,11 @@ export default function ExploreScreen({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       async function fetchData() {
-        fetchPlans('')
-          .then((response) => response.json())
-          .then((fetchedPlans) => {
-            setPlans(fetchedPlans);
-            setFilteredPlans(fetchedPlans);
-          });
+        const response = await fetchPlans('');
+        const plans1 = await response.json();
+        await processFetchedPlans(plans1);
+        setPlans(plans1);
+        setFilteredPlans(plans1);
         const usersResponse = await fetchUsersByUsername('');
         const usersJson = await usersResponse.json();
         const trainersResponse = await fetchTrainersID();
