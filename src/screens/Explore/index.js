@@ -5,17 +5,18 @@ import React, { useState } from 'react';
 
 import { colors } from '../../colors';
 import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
+import { isEmpty, processFetchedPlans } from '../../utils';
 import { useStateValue } from '../../state';
 import BackgroundImage from '../../assets/Background.jpg';
 import Loader from '../../components/Loader';
 import texts from '../../texts';
-import { processFetchedPlans, isEmpty } from '../../utils';
 
 import { getFilters } from './utils';
 import { hasSelectedFilters } from './filtering';
 import { styles } from './styles';
 import SearchTrainingPlans from './search_plans_layout';
 import SearchUsers from './search_users_layout';
+import Explore from './layout';
 
 export default function ExploreScreen({ navigation }) {
   const [plans, setPlans] = useState([]);
@@ -25,6 +26,11 @@ export default function ExploreScreen({ navigation }) {
     tag: 'ANY',
     title: ''
   });
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Usuarios' },
+    { key: 'second', title: 'Entrenamientos' }
+  ]);
 
   const filterData = (searchQuery) => plans.filter((plan) => hasSelectedFilters(searchQuery, plan));
 
@@ -69,25 +75,6 @@ export default function ExploreScreen({ navigation }) {
     }
   };
 
-  // View Switching
-  const [usersActive, setUsersActive] = useState(true);
-  const [usersStyle, setUsersStyle] = useState(styles.viewSwitchActive);
-  const [plansStyle, setPlansStyle] = useState(styles.viewSwitchInactive);
-
-  const focusUsers = () => {
-    setUsersActive(true);
-    setFilteredPlans(plans);
-    setUsersStyle(styles.viewSwitchActive);
-    setPlansStyle(styles.viewSwitchInactive);
-  };
-
-  const focusPlans = () => {
-    setUsersActive(false);
-    setFilteredUsernames(usernames);
-    setUsersStyle(styles.viewSwitchInactive);
-    setPlansStyle(styles.viewSwitchActive);
-  };
-
   const nothing = (username) => {
     navigation.navigate(texts.SearchedProfile.name, { username });
   };
@@ -100,7 +87,6 @@ export default function ExploreScreen({ navigation }) {
         await processFetchedPlans(plans1);
         setPlans(plans1);
         setFilteredPlans(plans1);
-
         const usersResponse = await fetchUsersByUsername('');
         const usersJson = await usersResponse.json();
         const trainersResponse = await fetchTrainersID();
@@ -123,65 +109,21 @@ export default function ExploreScreen({ navigation }) {
     }, [])
   );
 
-  const [refreshingUsers, setRefreshingUsers] = useState(false);
-  const onRefreshUsers = React.useCallback(async () => {
-    setRefreshingUsers(true);
-    await fetchUsersByUsername('')
-      .then((response) => response.json())
-      .then((fetchedUsernames) => {
-        setUsernames(fetchedUsernames.message);
-        setFilteredUsernames(fetchedUsernames.message);
-      });
-    setRefreshingUsers(false);
-  }, []);
-  const [refreshingPlans, setRefreshingPlans] = useState(false);
-  const onRefreshPlans = React.useCallback(async () => {
-    setRefreshingPlans(true);
-    const response = await fetchPlans('');
-    const plans2 = await response.json();
-    await processFetchedPlans(plans2);
-    setPlans(plans2);
-    setFilteredPlans(plans2);
-    setRefreshingPlans(false);
-  }, []);
-
   const filters = getFilters(handleOnChange);
-
   return (
-    <View style={{ backgroundColor: colors.header }}>
-      <Loader loading={isEmpty(plans)} />
-      <View style={styles.usersOrPlansSwitchContainer}>
-        <Text style={usersStyle} onPress={focusUsers}>
-          Usuarios
-        </Text>
-        <Text style={plansStyle} onPress={focusPlans}>
-          Planes
-        </Text>
-      </View>
-      <View style={styles.separator} />
-      <ImageBackground source={BackgroundImage}>
-        {!isEmpty(plans) && !usersActive && (
-          <SearchTrainingPlans
-            filters={filters}
-            handleItemPress={handleItemPress}
-            data={filteredPlans}
-            handleOnTitleChange={handleOnTitleChange}
-            refreshing={refreshingPlans}
-            onRefresh={onRefreshPlans}
-          />
-        )}
-        {usersActive && (
-          <SearchUsers
-            handleItemPress={nothing}
-            data={filteredUsernames}
-            handleOnSearchChange={handleOnUsernameChange}
-            refreshing={refreshingUsers}
-            onRefresh={onRefreshUsers}
-            handleOnRoleChange={handleOnRoleChange}
-          />
-        )}
-      </ImageBackground>
-    </View>
+    <Explore
+      setIndex={setIndex}
+      index={index}
+      routes={routes}
+      dataPlans={filteredPlans}
+      dataUsers={filteredUsernames}
+      filterPlans={filters}
+      handlePlanPress={handleItemPress}
+      handleUserPress={nothing}
+      handleOnPlanTitleChange={handleOnTitleChange}
+      handleOnUserNameChange={handleOnUsernameChange}
+      handleOnUserRoleChange={handleOnRoleChange}
+    />
   );
 }
 

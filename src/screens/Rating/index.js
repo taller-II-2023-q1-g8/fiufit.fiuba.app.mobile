@@ -67,7 +67,7 @@ export default function RatingScreen({ navigation, route }) {
   return (
     <ImageBackground source={BackgroundImage}>
       <View style={styles.container}>
-        <Text style={styles.heading}>{starRating ? `${starRating}*` : 'Tap to rate'}</Text>
+        <Text style={styles.heading}>{starRating ? `${starRating}*` : 'Toca para calificar'}</Text>
         <View style={styles.stars}>
           {starRatingOptions.map((option) => (
             <TouchableWithoutFeedback

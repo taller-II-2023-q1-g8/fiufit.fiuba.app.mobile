@@ -33,12 +33,11 @@ export default function UserProfileContainer({ navigation }) {
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       const userResponse = await fetchUserProfileByUsername(state.user.username);
       const userJson = await userResponse.json();
       const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
       const followersJson = await followersResponse.json();
-      const followedResponse = await fetchFollowedUsersByUsername(state.user.username);
-      const followedJson = await followedResponse.json();
 
       const AthletesResponse = await fetchAthletesID();
       const athletesJson = await AthletesResponse.json();
@@ -50,16 +49,17 @@ export default function UserProfileContainer({ navigation }) {
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
-        followed: followedJson.message.length,
+        followed: state.followedUsers.length,
         plans: plansJson
       });
+      setLoading(false);
     }
     fetchData();
   }, []);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
-  const handlePlanPress = (plan) => navigation.navigate(texts.AthleteTrainingPlan.name, { plan, athleteID });
+  const handlePlanPress = (plan) => navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
 
   return (
     <UserProfile

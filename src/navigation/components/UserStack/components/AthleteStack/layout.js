@@ -3,6 +3,7 @@ import React from 'react';
 
 import defaultProfPic from '../../../../../assets/profile-pic-def.png';
 import returnArrow from '../../../../../assets/go-back-arrow.png';
+import returnArrowWhite from '../../../../../assets/go-back-arrow-white.png';
 
 import { styles } from './styles';
 
@@ -21,13 +22,15 @@ export const MPHeader = ({ navigation, route }) => {
     headerLeft: () => (
       <View style={styles.headerLeftContainer}>
         <TouchableOpacity onPress={handleGoBack}>
-          <Image source={returnArrow} style={styles.backArrow} />
+          <Image source={returnArrowWhite} style={styles.backArrow} />
         </TouchableOpacity>
-        {otherUserProfPicUrl !== null ? (
-          <Image source={{ uri: otherUserProfPicUrl }} style={styles.profilePic} />
-        ) : (
-          <Image source={defaultProfPic} style={styles.profilePic} />
-        )}
+        <TouchableOpacity onPress={handleGoBack}>
+          {otherUserProfPicUrl !== null ? (
+            <Image source={{ uri: otherUserProfPicUrl }} style={styles.profilePic} />
+          ) : (
+            <Image source={defaultProfPic} style={styles.profilePic} />
+          )}
+        </TouchableOpacity>
       </View>
     )
   };

@@ -6,7 +6,8 @@ import {
   ScrollView,
   Button,
   TouchableWithoutFeedback,
-  Modal
+  Modal,
+  ImageBackground
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { array, bool, func, string, object } from 'prop-types';
@@ -19,6 +20,7 @@ import SearchUsers from '../Explore/search_users_layout';
 import { dateToDisplayString } from '../Feed/layout';
 import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
 import { useStateValue } from '../../state';
+import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';
 
@@ -107,23 +109,23 @@ export function RecipientSelectionModal({ onClose, showRecipientModal, goToConve
   };
 
   return (
-    <View>
-      <Modal visible={showRecipientModal} transparent animationType="fade" onRequestClose={onClose}>
-        <View style={styles.modalContainer}>
-          <View style={styles.searchContainer}>
-            <SearchUsers
-              handleItemPress={goToConversation}
-              data={filteredUsernames}
-              handleOnSearchChange={handleOnUsernameChange}
-              refreshing={refreshingUsers}
-              onRefresh={onRefreshUsers}
-            />
+    <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <View>
+        <Modal visible={showRecipientModal} transparent animationType="fade" onRequestClose={onClose}>
+          <View style={styles.modalContainer}>
+            <View style={styles.searchContainer}>
+              <SearchUsers
+                handleItemPress={goToConversation}
+                data={filteredUsernames}
+                handleOnSearchChange={handleOnUsernameChange}
+                refreshing={refreshingUsers}
+                onRefresh={onRefreshUsers}
+              />
+            </View>
           </View>
-          {/* Render the modal UI for recipient selection */}
-          {/* Include input fields, buttons, or any other necessary UI components */}
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -141,9 +143,9 @@ export default function Messaging({
   showRecipientModal
 }) {
   return (
-    <ScrollView>
-      <View>
-        <Loader loading={loading} />
+    <View flex={1}>
+      <Loader loading={loading} />
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {conversations.map((conversation) => (
           <ConversationItem
             key={conversation.id}
@@ -152,15 +154,11 @@ export default function Messaging({
             handleOnItemPress={handleOnItemPress}
           />
         ))}
-        {!showRecipientModal && (
-          <View style={styles.container}>
-            <TouchableOpacity activeOpacity={0.6} onPress={newConversation}>
-              <Image source={newConvIcon} style={styles.newConvPic} />
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <TouchableOpacity style={styles.opacityButton} activeOpacity={0.6} onPress={newConversation}>
+        <Image source={newConvIcon} style={styles.opacityButtonIcon} />
+      </TouchableOpacity>
+    </View>
   );
 }
 

@@ -12,18 +12,24 @@ import {
 } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import { bool, func, object, string } from 'prop-types';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { collection, orderBy, query, where, getDocs, doc, setDoc } from 'firebase/firestore';
 
 import defaultProfPic from '../../assets/profile-pic-def.png';
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
 import manPic from '../../assets/man.jpeg';
+import msgIcon from '../../assets/msg-icon.png';
+import texts from '../../texts';
+import { db } from '../../../firebaseConfig';
+import { useStateValue } from '../../state';
 
 import { styles } from './styles';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 const TabBarHeight = 48;
-const HeaderHeight = 300;
+const HeaderHeight = 170;
 const SafeStatusBar = Platform.select({
   ios: 44,
   android: StatusBar.currentHeight
@@ -72,7 +78,8 @@ function SearchedProfile({
   handleFollowPress,
   handleUnfollowPress,
   following,
-  handleTrainingPress
+  handleTrainingPress,
+  handleChatPress
 }) {
   /**
    * stats
@@ -299,10 +306,18 @@ function SearchedProfile({
               <Text style={styles.followersText}>{data.followers}</Text>
               <Text style={styles.followersText}>followers</Text>
             </View>
-            <View>
+            <View styles={{ marginRight: 20 }}>
               <Text style={styles.followersText}>{data.followed}</Text>
               <Text style={styles.followersText}>following</Text>
             </View>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => handleChatPress(data.username, profPicUrl)}>
+              <Ionicons
+                name="chatbubble-ellipses-outline"
+                size={40}
+                color={colors.white}
+                style={{ marginLeft: 25 }}
+              />
+            </TouchableOpacity>
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} />
@@ -481,6 +496,7 @@ SearchedProfile.propTypes = {
   handleFollowPress: func,
   handleUnfollowPress: func,
   following: bool,
-  handleTrainingPress: func
+  handleTrainingPress: func,
+  handleChatPress: func
 };
 export default SearchedProfile;

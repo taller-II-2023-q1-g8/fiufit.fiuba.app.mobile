@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { func, shape } from 'prop-types';
 
 import BackgroundImage from '../../assets/Background.jpg';
 import { colors } from '../../colors';
+import ExerciseScreen from '../Exercise';
 
 import { styles } from './styles';
-import { func, shape } from 'prop-types';
-import ExerciseScreen from '../Exercise';
 
 export default function RestScreen({ navigation }) {
   const timer = 0;

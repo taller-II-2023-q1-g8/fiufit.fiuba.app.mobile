@@ -1,6 +1,7 @@
 import { func, shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { ImageBackground, Text, View } from 'react-native';
+import { collection, doc, getDocs, orderBy, query, setDoc, where } from 'firebase/firestore';
 
 import {
   fetchFollowedUsersByUsername,
@@ -18,6 +19,7 @@ import Loader from '../../components/Loader';
 import texts from '../../texts';
 import BackgroundImage from '../../assets/Background.jpg';
 import { styles } from '../Feed/styles';
+import { db } from '../../../firebaseConfig';
 
 import SearchedProfile from './layout';
 
@@ -124,6 +126,52 @@ export default function SearchedProfileContainer({ route, navigation }) {
   const handleTrainingPress = (planID) => {
     navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
   };
+
+  const myUsername = state.user.username;
+  function createConvWithUser(otherUsername) {
+    const convID =
+      myUsername < otherUsername ? `${myUsername}%${otherUsername}` : `${otherUsername}%${myUsername}`;
+    const conversationData = {
+      participants: [myUsername, otherUsername]
+    };
+    const conversationRef = doc(db, 'conversations', convID);
+
+    setDoc(conversationRef, conversationData)
+      .then(() => {
+        const messagesRef = collection(conversationRef, 'messages');
+        const emptyDoc = doc(messagesRef, 'init'); // Create an empty document
+
+        return setDoc(emptyDoc, {});
+      })
+      .then(() => {
+        console.log('Conversation created successfully');
+      })
+      .catch((error) => {
+        console.error('Error creating conversation:', error);
+      });
+  }
+
+  const goToConversation = async (otherUsername, otherUserProfPicUrl) => {
+    const q = query(
+      collection(db, 'conversations'),
+      where('participants', 'array-contains', myUsername),
+      orderBy('lastMessageTime', 'desc')
+    );
+
+    const querySnapshot = await getDocs(q);
+    const conversations = [];
+    querySnapshot.forEach((docu) => {
+      const convData = docu.data();
+      const otherUser = convData.participants.find((u) => u !== myUsername);
+      const conversation = { id: docu.id, data: convData, username: otherUser };
+      conversations.push(conversation);
+    });
+
+    if (conversations.find((conv) => conv.username === otherUsername) === undefined)
+      createConvWithUser(otherUsername);
+    navigation.navigate(texts.PrivateMessage.name, { otherUsername, otherUserProfPicUrl });
+  };
+
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
@@ -137,6 +185,7 @@ export default function SearchedProfileContainer({ route, navigation }) {
             handleUnfollowPress={handleUnfollowPress}
             profPicUrl={profPicUrl}
             handleTrainingPress={handleTrainingPress}
+            handleChatPress={goToConversation}
           />
         )}
       </View>

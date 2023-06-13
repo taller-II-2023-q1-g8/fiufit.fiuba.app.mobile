@@ -25,6 +25,7 @@ const texts = {
     name: 'Home',
     title: 'Inicio',
     closeGoalsTitle: 'Tus Metas Cercanas',
+    suggestedPlansTitle: 'Planes Sugeridos',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',
     searchUsersButtonText: 'Buscar usuarios'

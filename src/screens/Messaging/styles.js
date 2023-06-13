@@ -3,26 +3,50 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { colors } from '../../colors';
 
 const { width, height } = Dimensions.get('window');
-const modalWidth = width - 40; // Adjust the width as per your requirements
-const modalHeight = height - 80; // Adjust the height as per your requirements
+const modalWidth = width - 40;
+const modalHeight = height - 80;
 
 export const styles = StyleSheet.create({
   backgroundContainer: {
     width: '100%',
     height: '100%'
   },
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center'
+  },
+  scrollViewContent: {
+    flexGrow: 1
+  },
+  opacityButton: {
+    position: 'absolute',
+    bottom: 25,
+    right: 25,
+    zIndex: 999
+  },
+  opacityButtonIcon: {
+    width: 60,
+    height: 60,
+    borderRadius: 35
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  msgContainer: {
+    flex: 1
+  },
+  scrollViewContainer: {
+    flex: 1,
+    position: 'relative'
+  },
   newConvOpacity: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: 'blue',
-    justifyContent: 'center',
-    alignItems: 'center'
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    zIndex: 999
   },
   formContainer: {
     display: 'flex',
@@ -72,7 +96,7 @@ export const styles = StyleSheet.create({
     width: 35,
     height: 35,
     borderRadius: 20,
-    opacity: 0.69
+    opacity: 1
   },
   profileName: {
     fontSize: 17,
@@ -90,7 +114,7 @@ export const styles = StyleSheet.create({
     left: (width - modalWidth) / 2,
     width: modalWidth,
     height: modalHeight - 90,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 0,
@@ -99,7 +123,6 @@ export const styles = StyleSheet.create({
   },
   searchContainer: {
     flex: 1,
-    backgroundColor: 'white',
     borderRadius: 10,
     width: '100%'
   }
