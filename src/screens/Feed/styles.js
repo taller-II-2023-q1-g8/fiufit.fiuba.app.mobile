@@ -69,8 +69,8 @@ export const styles = StyleSheet.create({
   trainingCompletedContainer: {
     width: '90%',
     aspectRatio: 1.65,
-    borderWidth: 1,
     borderRadius: 20,
+    borderWidth: 1,
     borderColor: 'lightgray',
     marginBottom: 20,
     height: 200,
@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
     flex: 2,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#B8E9EB'
+    backgroundColor: colors.main_soft
   },
   profilePicture: {
     width: 60,
@@ -114,7 +114,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     marginTop: 10,
-    marginLeft: 8
+    marginLeft: 8,
+    color: colors.white
   },
   dateWrapper: {
     flex: 1,
@@ -126,11 +127,12 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontStyle: 'italic',
     textAlign: 'center',
-    marginRight: 3
+    marginRight: 3,
+    color: colors.white
   },
   trainingCompletedBody: {
     flex: 5,
-    backgroundColor: colors.white,
+    backgroundColor: colors.feed_items,
     paddingHorizontal: 10
   },
   planInfoContainer: {
@@ -151,15 +153,17 @@ export const styles = StyleSheet.create({
   planName: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5
+    marginBottom: 5,
+    color: colors.white
   },
   planDifficulty: {
     fontSize: 14,
-    color: 'gray'
+    color: colors.white
   },
   planCompletedText: {
     fontSize: 12,
-    marginBottom: 2
+    marginBottom: 2,
+    color: colors.white
   }
 });
 
