@@ -139,8 +139,6 @@ export const updateDeviceToken = async (username, token) =>
     body: JSON.stringify({ device_token: token })
   });
 
-// ejemplo de athleteId recibida:
-// const athleteId = 2
 export const fetchCompletedPlansByAthleteID = async (athleteId) =>
   fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {
     method: 'POST',
@@ -183,4 +181,19 @@ export const followUser = async (followerUsername, followedUsername) =>
 export const unfollowUser = async (followerUsername, followedUsername) =>
   fetch(`${GATEWAY_URL}/user/follow/${followerUsername}/${followedUsername}`, {
     method: 'DELETE'
+  });
+
+export const sendMessageNotification = async (sender, receiver, message) =>
+  fetch(`${GATEWAY_URL}/messages/send`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify({
+      sender,
+      receiver,
+      message
+    })
   });
