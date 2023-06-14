@@ -16,8 +16,10 @@ if (__DEV__) {
 }
 
 async function onMessageReceived(message) {
-  console.log('NOTIFICATION RECEIVED:', message.title);
-  alert(message.notification.body);
+  if (!message.notification.title.startsWith('Mensaje de')) {
+    console.log('NOTIFICATION RECEIVED:', message.title);
+    alert(message.notification.body);
+  }
 }
 
 export default function App() {
