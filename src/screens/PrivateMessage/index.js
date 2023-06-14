@@ -18,6 +18,7 @@ import texts from '../../texts';
 import { getProfilePicURL } from '../../utils';
 import { db } from '../../../firebaseConfig';
 import SearchedProfileContainer from '../SearchedProfile';
+import { sendMessageNotification } from '../../requests';
 
 import PrivateMessage from './layout';
 
@@ -82,6 +83,15 @@ export default function MessagingContainer({ route }) {
       .then(() => {
         inputRef.current.clear();
         setInputText('');
+
+        sendMessageNotification(myUsername, otherUsername, message.text)
+          .then(() => {
+            console.log('Notification pushed succesfully');
+          })
+          .catch((error) => {
+            console.error('Error pushing message notification', error);
+          });
+
         const conversationDocRef = doc(db, 'conversations', convID);
         updateDoc(conversationDocRef, { lastMessageTime: now })
           .then(() => {
