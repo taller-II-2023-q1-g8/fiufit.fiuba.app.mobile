@@ -17,6 +17,18 @@ export const getProfilePicURL = async (username) => {
   }
 };
 
+export const getPlanPicURL = async (planID) => {
+  const cloudPlanPicPath = 'plan-pics'.concat('/', planID, '.jpg');
+  const cloudPlanPicRef = ref(storage, cloudPlanPicPath);
+
+  try {
+    const url = await getDownloadURL(cloudPlanPicRef);
+    return url;
+  } catch (error) {
+    return null;
+  }
+};
+
 export async function processFetchedPlans(plans) {
   await plans.forEach((plan) => {
     const NO_CALIFICATION = 'No hay calificaciones';

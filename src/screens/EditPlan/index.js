@@ -1,10 +1,15 @@
 import { func, shape } from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cloneDeep } from 'lodash';
+import * as ImagePicker from 'expo-image-picker';
+import { ref, uploadBytes } from 'firebase/storage';
+import { Alert } from 'react-native';
 
 import texts from '../../texts';
 import { useStateValue } from '../../state';
 import { editPlanRequest } from '../../requests';
+import { getPlanPicURL } from '../../utils';
+import { storage } from '../../../firebaseConfig';
 
 import CreatePlan from './layout';
 import { getFields } from './utils';
@@ -20,7 +25,9 @@ export default function EditPlanScreen({ route, navigation }) {
   };
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState({ title: '', description: '', tags: '', difficulty: '' });
-  const [loading, setLoading] = useState(false);
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [imageLoading, setImageLoading] = useState(true);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
@@ -55,9 +62,49 @@ export default function EditPlanScreen({ route, navigation }) {
     setLoading(false);
   };
 
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(plan.id);
+    setPlanPicUrl(url);
+    setImageLoading(false);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
+  const handlePickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+      allowsEditing: true
+    });
+
+    const cloudPlanPicPath = 'plan-pics'.concat('/', plan.id, '.jpg');
+    const cloudPlanPicRef = ref(storage, cloudPlanPicPath);
+    if (!result.cancelled) {
+      try {
+        const response = await fetch(result.uri);
+        const blob = await response.blob();
+        await uploadBytes(cloudPlanPicRef, blob);
+
+        setPlanPicUrl(result.uri);
+      } catch (error) {
+        Alert.alert("Couldn't upload plan image!");
+      }
+    }
+  };
+
   const fields = getFields(errors, initialData, handleOnChangeText);
 
-  return <CreatePlan fields={fields} handleSubmitPress={handleSubmitPress} loading={loading} />;
+  return (
+    <CreatePlan
+      fields={fields}
+      handleSubmitPress={handleSubmitPress}
+      loading={loading && imageLoading}
+      planPicUrl={planPicUrl}
+      handlePickImage={handlePickImage}
+    />
+  );
 }
 
 EditPlanScreen.propTypes = {

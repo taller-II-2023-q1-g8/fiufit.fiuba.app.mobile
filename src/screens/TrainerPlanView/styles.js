@@ -35,6 +35,13 @@ export const styles = StyleSheet.create({
     marginRight: 20,
     width: 110
   },
+  planPicture: {
+    alignSelf: 'flex-start',
+    borderRadius: 20,
+    height: 110,
+    marginRight: 20,
+    width: 110
+  },
   item: {
     display: 'flex',
     flexDirection: 'row',

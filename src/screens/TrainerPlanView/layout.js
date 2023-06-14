@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Text, View, Image, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
 import { array, bool, func, object } from 'prop-types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,6 +8,7 @@ import { colors } from '../../colors';
 import Loader from '../../components/Loader';
 import BackgroundImage from '../../assets/Background.jpg';
 import TrainerIcon from '../../assets/personal-trainer.png';
+import { getPlanPicURL } from '../../utils';
 
 import { styles } from './styles';
 
@@ -49,11 +50,25 @@ export default function TrainerPlanView({
   handleAthletePress
 }) {
   console.log(plan);
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(plan.id);
+    setPlanPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
   return (
     <ImageBackground source={BackgroundImage}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image style={styles.profilePicture} source={manPic} />
+          {planPicUrl !== null ? (
+            <Image source={{ uri: planPicUrl }} style={styles.planPicture} />
+          ) : (
+            <Image source={manPic} style={styles.planPicture} />
+          )}
           <View>
             <Text style={styles.username}>{plan.title}</Text>
             <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>

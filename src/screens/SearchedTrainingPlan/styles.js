@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   profilePicture: {
     alignSelf: 'flex-start',
     borderRadius: 20,
-    height: 150,
+    height: 110,
     marginRight: 20,
     width: 110
   },

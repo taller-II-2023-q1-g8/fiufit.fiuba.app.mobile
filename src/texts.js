@@ -104,7 +104,8 @@ const texts = {
   },
   CreatePlan: {
     name: 'CreatePlan',
-    createPlanTitle: 'Creá un Plan'
+    createPlanTitle: 'Creá un Plan',
+    title: 'Crear Plan'
   },
   Explore: {
     title: 'Explorar'

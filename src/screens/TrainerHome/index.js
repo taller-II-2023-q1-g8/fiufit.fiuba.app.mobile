@@ -11,8 +11,6 @@ import TrainerHome from './layout';
 export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
-  console.log(' JAAAAAAAAAAAAAAA ', state.plansData);
-  console.log(' JEEEEEEEEEEEEEEE ', data);
   const [loading, setLoading] = useState(true);
 
   async function fetchData() {
@@ -32,9 +30,7 @@ export default function TrainerHomeScreen({ navigation }) {
     fetchData();
   }, []);
   useEffect(() => {
-    console.log('FRULA');
     if (!loading) {
-      console.log('ABCABC');
       const plans = state.plansData;
       setData(plans);
     }

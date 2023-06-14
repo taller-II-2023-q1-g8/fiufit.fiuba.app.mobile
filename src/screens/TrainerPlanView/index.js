@@ -3,9 +3,9 @@ import { func, shape } from 'prop-types';
 
 import texts from '../../texts';
 import { deletePlan } from '../../requests';
+import { useStateValue } from '../../state';
 
 import TrainerPlanView from './layout';
-import { useStateValue } from '../../state';
 
 export default function TrainerPlanViewContainer({ route, navigation }) {
   const [plan, setData] = useState(route.params.itemData);
