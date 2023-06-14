@@ -211,6 +211,16 @@ export const updateDeviceToken = async (username, token) =>
     body: JSON.stringify({ device_token: token })
   });
 
+export const updateLoginTime = async (username) =>
+  fetch(`${GATEWAY_URL}/user/login/${username}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors'
+  });
+
 export const fetchCompletedPlansByAthleteID = async (athleteId) =>
   fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {
     method: 'POST',

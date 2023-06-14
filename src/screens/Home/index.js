@@ -4,7 +4,7 @@ import { signOut } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import messaging from '@react-native-firebase/messaging';
 
-import { updateDeviceToken, fetchPlans } from '../../requests';
+import { updateDeviceToken, fetchPlans, updateLoginTime } from '../../requests';
 import { auth } from '../../../firebaseConfig';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
@@ -23,6 +23,7 @@ export default function HomeScreen({ navigation }) {
       .then((token) => {
         updateDeviceToken(state.user.username, token);
       });
+    updateLoginTime(state.user.username);
   }, []);
   const [suggestedPlans, setSuggestedPlans] = useState([]);
 
