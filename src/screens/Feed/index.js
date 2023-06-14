@@ -91,7 +91,6 @@ export default function FeedScreen({ navigation }) {
             }
           }
         });
-
       });
       createdPlansForEachFollower.forEach((u) => {
         if (u !== undefined) {

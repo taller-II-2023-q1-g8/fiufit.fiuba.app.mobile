@@ -18,6 +18,7 @@ export default function TrainerPlanViewContainer({ route, navigation }) {
   };
 
   const handleShowExercisesPress = () => {
+    console.log(plan);
     navigation.navigate(texts.PlanExercises.name, { plan });
   };
 
