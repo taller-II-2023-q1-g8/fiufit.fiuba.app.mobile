@@ -104,6 +104,7 @@ export default function FeedScreen({ navigation }) {
                 username: u.username,
                 title: createdPlan.title,
                 difficulty: createdPlan.difficulty,
+                plan: createdPlan,
                 tags: createdPlan.tags,
                 id: createdPlan.id,
                 date: new Date(createdPlan.created_at)
