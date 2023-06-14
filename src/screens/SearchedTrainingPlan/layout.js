@@ -7,6 +7,7 @@ import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import TrainerIcon from '../../assets/personal-trainer.png';
 import BackgroundImage from '../../assets/Background.jpg';
+import Loader from '../../components/Loader';
 
 import { styles } from './styles';
 
@@ -61,13 +62,20 @@ export default function SearchedTrainingPlan({
   favorite,
   handleFavorite,
   handleRemoveFavorite,
-  handleRateTraining
+  handleRateTraining,
+  planPicUrl,
+  loading
 }) {
   return (
     <ImageBackground source={BackgroundImage}>
+      <Loader loading={loading} />
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image style={styles.profilePicture} source={manPic} />
+          {planPicUrl !== null ? (
+            <Image source={{ uri: planPicUrl }} style={styles.profilePicture} />
+          ) : (
+            <Image source={manPic} style={styles.profilePicture} />
+          )}
           <View>
             <Text style={styles.username}>{title}</Text>
             <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
@@ -159,5 +167,7 @@ SearchedTrainingPlan.propTypes = {
   favorite: bool,
   handleFavorite: func,
   handleRemoveFavorite: func,
-  handleRateTraining: func
+  handleRateTraining: func,
+  planPicUrl: string,
+  loading: bool
 };

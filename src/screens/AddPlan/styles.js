@@ -49,6 +49,32 @@ export const styles = StyleSheet.create({
     width: '46%',
     borderRadius: 4,
     margin: 10
+  },
+  planPicOpacity: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
+    marginBottom: 20
+  },
+  planPicture: {
+    width: 300,
+    height: 300,
+    borderRadius: 15
+  },
+  overlayContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    alignSelf: 'flex-end'
+  },
+  overlayText: {
+    color: colors.white,
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 });
 

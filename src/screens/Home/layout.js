@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -18,6 +18,7 @@ import Loader from '../../components/Loader';
 import texts from '../../texts';
 import manPic from '../../assets/man.jpeg';
 import { dateToDisplayString } from '../Feed/layout';
+import { getPlanPicURL } from '../../utils';
 
 import { scrollviewStyle, styles } from './styles';
 
@@ -37,6 +38,17 @@ function difficultyToDisplay(dif) {
 function SuggestedPlan({ plan, handlePress }) {
   console.log(JSON.stringify(plan, null, 2));
   console.log(plan.id);
+
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(plan.id);
+    setPlanPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
   return (
     <View style={styles.trainingCompletedContainer}>
       <TouchableOpacity
@@ -45,7 +57,11 @@ function SuggestedPlan({ plan, handlePress }) {
         style={styles.trainingCompletedHeader}
       >
         <View style={styles.profilePicture}>
-          <Image source={manPic} style={styles.userPhoto} />
+          {planPicUrl !== null ? (
+            <Image source={{ uri: planPicUrl }} style={styles.userPhoto} />
+          ) : (
+            <Image source={manPic} style={styles.userPhoto} />
+          )}
         </View>
         <View style={styles.usernameContainer}>
           <View style={styles.usernameWrapper}>
@@ -76,7 +92,7 @@ function SuggestedPlan({ plan, handlePress }) {
             {plan.averageCalification === -1 ? (
               <Text style={styles.planScore}>-/10</Text>
             ) : (
-              <Text style={styles.planScore}>{Number(plan.averageCalification.toFixed(2))}/10</Text>
+              <Text style={styles.planScore}>{Number(plan.averageCalification.toFixed(1))}/10</Text>
             )}
           </View>
         </View>

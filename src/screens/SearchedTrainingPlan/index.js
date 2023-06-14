@@ -10,6 +10,7 @@ import {
   removePlanToAthleteAsFavorite
 } from '../../requests';
 import Loader from '../../components/Loader';
+import { getPlanPicURL } from '../../utils';
 
 import SearchedTrainingPlan from './layout';
 
@@ -20,6 +21,7 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const [trainerUsername, setTrainerUsername] = useState(null);
   const [athleteRating, setAthleteRating] = useState(null);
   const [favorite, setFavorite] = useState(null);
+  const [planPicUrl, setPlanPicUrl] = useState(null);
 
   const handleStartTraining = () => {
     navigation.navigate(texts.Exercise.name, { plan, athleteId: ownAthleteInternalID, athleteRating });
@@ -57,6 +59,17 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
     fetchData();
   }, []);
 
+  const [loading, setLoading] = useState(true);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(plan.id);
+    setPlanPicUrl(url);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
   return (
     <>
       {'title' in plan && (
@@ -71,6 +84,8 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
           handleRemoveFavorite={handleRemoveFavorite}
           handleFavorite={handleFavorite}
           handleRateTraining={handleRateTraining}
+          planPicUrl={planPicUrl}
+          loading={loading}
         />
       )}
       <Loader loading={!('title' in plan)} />

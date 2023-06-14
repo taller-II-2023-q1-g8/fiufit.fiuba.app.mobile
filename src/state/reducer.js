@@ -28,6 +28,9 @@ export const reducer = (state, action) => {
     case 'updateFollowedUsers': {
       return { ...state, followedUsers: action.followedUsers };
     }
+    case 'updatePlansData': {
+      return { ...state, plansData: action.plansData };
+    }
     case 'resetValues': {
       return initialState;
     }

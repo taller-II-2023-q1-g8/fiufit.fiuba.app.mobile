@@ -87,6 +87,11 @@ export const styles = StyleSheet.create({
     height: 50,
     borderRadius: 20
   },
+  planPicture: {
+    width: 50,
+    height: 50,
+    borderRadius: 20
+  },
   profileName: {
     fontSize: 17,
     color: colors.white,

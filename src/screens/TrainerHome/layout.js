@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -15,16 +15,31 @@ import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import Loader from '../../components/Loader';
 import BackgroundImage from '../../assets/Background.jpg';
+import { getPlanPicURL } from '../../utils';
 
 import { styles } from './styles';
 
 const trainerHomeTexts = texts.TrainerHome;
 
 function Item({ handleItemPress, itemData }) {
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(itemData.id);
+    setPlanPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
       <View style={styles.item}>
-        <Image style={styles.profilePic} source={manPic} />
+        {planPicUrl !== null ? (
+          <Image source={{ uri: planPicUrl }} style={styles.profilePic} />
+        ) : (
+          <Image source={manPic} style={styles.profilePic} />
+        )}
         <View style={{ display: 'flex' }}>
           <Text style={styles.profileName}>{itemData.title}</Text>
           <Text style={styles.profileType}>Plan de Entrenamiento</Text>

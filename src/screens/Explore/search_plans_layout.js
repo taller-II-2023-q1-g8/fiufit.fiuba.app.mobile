@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Text,
@@ -14,14 +14,29 @@ import manPic from '../../assets/man.jpeg';
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
 import { colors } from '../../colors';
+import { getPlanPicURL, getProfilePicURL } from '../../utils';
 
 import { styles } from './styles';
 
 function Item({ handleItemPress, plan }) {
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(plan.id);
+    setPlanPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(plan)}>
       <View style={styles.item}>
-        <Image style={styles.profilePic} source={manPic} />
+        {planPicUrl !== null ? (
+          <Image source={{ uri: planPicUrl }} style={styles.planPicture} />
+        ) : (
+          <Image source={manPic} style={styles.planPicture} />
+        )}
         <View style={{ display: 'flex' }}>
           <Text style={styles.profileName}>{plan.title}</Text>
           <Text style={styles.profileType}>Likes: {plan.likes}</Text>

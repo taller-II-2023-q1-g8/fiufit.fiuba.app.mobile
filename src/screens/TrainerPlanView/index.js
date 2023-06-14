@@ -3,11 +3,14 @@ import { func, shape } from 'prop-types';
 
 import texts from '../../texts';
 import { deletePlan } from '../../requests';
+import { useStateValue } from '../../state';
 
 import TrainerPlanView from './layout';
 
 export default function TrainerPlanViewContainer({ route, navigation }) {
   const [plan, setData] = useState(route.params.itemData);
+  const [state, dispatch] = useStateValue();
+  console.log(plan);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);
@@ -18,6 +21,7 @@ export default function TrainerPlanViewContainer({ route, navigation }) {
   };
 
   const handleShowExercisesPress = () => {
+    console.log(plan);
     navigation.navigate(texts.PlanExercises.name, { plan });
   };
 
@@ -26,8 +30,20 @@ export default function TrainerPlanViewContainer({ route, navigation }) {
   };
 
   const handleDeletePress = () => {
+    const newPlanData = [...state.plansData];
+    const prevIndex = state.plansData.findIndex((pl) => pl.id === plan.id);
+    newPlanData.splice(prevIndex, 1);
+    console.log(newPlanData);
+    dispatch({
+      type: 'updatePlansData',
+      plansData: newPlanData
+    });
+    navigation.navigate(texts.TrainerHome.name);
     deletePlan(plan.id);
-    navigation.navigate(texts.deletePlan.name);
+  };
+  const handleAthletePress = (athlete) => {
+    const { username } = athlete;
+    navigation.navigate(texts.SearchedProfile.name, { username });
   };
 
   return (
@@ -38,6 +54,7 @@ export default function TrainerPlanViewContainer({ route, navigation }) {
       handleShowExercisesPress={handleShowExercisesPress}
       handleEditPress={handleEditPress}
       handleDeletePress={handleDeletePress}
+      handleAthletePress={handleAthletePress}
     />
   );
 }

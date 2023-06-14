@@ -8,11 +8,20 @@ import texts from '../../../../../../../texts';
 import PlanExercisesScreen from '../../../../../../../screens/PlanExercises';
 import PlanStatsScreen from '../../../../../../../screens/PlanStats';
 import EditPlanScreen from '../../../../../../../screens/EditPlan';
+import ExercisesInPlanScreen from '../../../../../../../screens/ExercisesInPlan';
+import { colors } from '../../../../../../../colors';
 
 export default function TrainerPlanStack() {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={() => ({
+        headerTintColor: colors.white,
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center',
+        headerStyle: { backgroundColor: colors.header }
+      })}
+    >
       <Stack.Screen
         name={texts.TrainerHome.name}
         component={TrainerHomeScreen}
@@ -29,7 +38,11 @@ export default function TrainerPlanStack() {
         options={{ title: '' }}
       />
       <Stack.Screen name={texts.EditPlan.name} component={EditPlanScreen} options={{ title: '' }} />
-      <Stack.Screen name={texts.PlanExercises.name} component={PlanExercisesScreen} options={{ title: '' }} />
+      <Stack.Screen
+        name={texts.PlanExercises.name}
+        component={ExercisesInPlanScreen}
+        options={{ title: '' }}
+      />
       <Stack.Screen name={texts.PlanStats.name} component={PlanStatsScreen} options={{ title: '' }} />
     </Stack.Navigator>
   );

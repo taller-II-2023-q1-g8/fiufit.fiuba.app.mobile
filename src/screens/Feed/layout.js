@@ -12,7 +12,7 @@ import {
 import { array, bool, func } from 'prop-types';
 
 import { colors } from '../../colors';
-import { getProfilePicURL } from '../../utils';
+import { getPlanPicURL, getProfilePicURL } from '../../utils';
 import BackgroundImage from '../../assets/Background.jpg';
 import defaultProfPic from '../../assets/profile-pic-def.png';
 import Loader from '../../components/Loader';
@@ -69,6 +69,16 @@ function TrainingFinished(item, handleUserProfilePress, handlePlanPress, type) {
     fetchProfPicUrl(item.username);
   }, [item]);
 
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(item.id);
+    setPlanPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
   return (
     <View style={styles.trainingCompletedContainer}>
       <View style={styles.trainingCompletedHeader}>
@@ -100,7 +110,11 @@ function TrainingFinished(item, handleUserProfilePress, handlePlanPress, type) {
             <Text style={styles.planDifficulty}>Tags: {item.tags}</Text>
           </View>
           <TouchableOpacity activeOpacity={0.7} onPress={() => handlePlanPress(item.plan)}>
-            <Image source={manPic} style={styles.planImage} />
+            {planPicUrl !== null ? (
+              <Image source={{ uri: planPicUrl }} style={styles.planImage} />
+            ) : (
+              <Image source={manPic} style={styles.planImage} />
+            )}
           </TouchableOpacity>
         </View>
       </View>
