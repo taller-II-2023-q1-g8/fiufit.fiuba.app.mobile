@@ -68,7 +68,7 @@ function SuggestedPlan({ plan, handlePress }) {
             <Text style={styles.usernameText}>{plan.title}</Text>
           </View>
           <View style={styles.dateWrapper}>
-            <Text style={styles.dateText}>{`Creado ${dateToDisplayString(plan.created_at)}`}</Text>
+            <Text style={styles.dateText}>{`Creado ${dateToDisplayString(new Date(plan.created_at))}`}</Text>
           </View>
         </View>
       </TouchableOpacity>
