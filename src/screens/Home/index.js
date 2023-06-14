@@ -4,11 +4,10 @@ import { signOut } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import messaging from '@react-native-firebase/messaging';
 
-import { updateDeviceToken } from '../../requests';
+import { updateDeviceToken, fetchPlans } from '../../requests';
 import { auth } from '../../../firebaseConfig';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
-import { fetchPlans } from '../../requests';
 import { getRandomInt } from '../../utils';
 
 import Home from './layout';
