@@ -4,10 +4,11 @@ import { cloneDeep } from 'lodash';
 
 import texts from '../../texts';
 import { useStateValue } from '../../state';
-import { createPlanRequest } from '../../requests';
+import { createPlanRequest, fetchTrainingPlanByID } from '../../requests';
 
 import CreatePlan from './layout';
 import { getFields } from './utils';
+import { processFetchedPlans } from '../../utils';
 
 export default function CreatePlanContainer({ navigation }) {
   const [state, dispatch] = useStateValue();
@@ -41,8 +42,15 @@ export default function CreatePlanContainer({ navigation }) {
       .then(async (result) => {
         if (!result.ok) return;
         const itemData = await result.json();
-        dispatch({ type: 'addPlansData', newPlanData: itemData });
-        navigation.navigate(texts.TrainerPlanView.name, { itemData });
+        const { trainer, ...newItemData } = itemData;
+        newItemData.athletes = [];
+        newItemData.exercises = [];
+        const aux = [newItemData];
+        await processFetchedPlans(aux);
+        const i = aux[0];
+        console.log('III', i);
+        navigation.navigate(texts.TrainerPlanView.name, { itemData: i });
+        dispatch({ type: 'addPlansData', newPlansData: aux[0] });
       })
       .catch((error) => {
         console.log('Error:', error);

@@ -11,23 +11,34 @@ import TrainerHome from './layout';
 export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
+  console.log(' JAAAAAAAAAAAAAAA ', state.plansData);
+  console.log(' JEEEEEEEEEEEEEEE ', data);
   const [loading, setLoading] = useState(true);
+
+  async function fetchData() {
+    const response = await fetchPlansByTrainerUsername(state.user.username);
+    const plans = await response.json();
+
+    await processFetchedPlans(plans);
+    setLoading(false);
+    dispatch({
+      type: 'updatePlansData',
+      plansData: plans
+    });
+    // setData(plans);
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetchPlansByTrainerUsername(state.user.username);
-      const plans = await response.json();
-
-      await processFetchedPlans(plans);
-
-      dispatch({
-        type: 'addPlansData',
-        plansData: plans
-      });
-      setData(plans);
-      setLoading(false);
-    }
     fetchData();
   }, []);
+  useEffect(() => {
+    console.log('FRULA');
+    if (!loading) {
+      console.log('ABCABC');
+      const plans = state.plansData;
+      setData(plans);
+    }
+  }, [state.plansData]);
   const handleItemPress = (itemData) => {
     navigation.navigate(texts.TrainerPlanView.name, { itemData });
   };
