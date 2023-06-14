@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash';
 import { func, shape } from 'prop-types';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
+import messaging from '@react-native-firebase/messaging';
 import React, { useEffect, useState } from 'react';
 
 import { auth } from '../../../../firebaseConfig';
@@ -25,8 +26,26 @@ export default function LoginContainer({ navigation }) {
   const [errors, setErrors] = useState(initialData);
   const [, dispatch] = useStateValue();
 
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
+
   useEffect(() => {
     dispatch({ type: 'resetValues' });
+    if (requestUserPermission()) {
+      messaging()
+        .getToken()
+        .then((token) => {
+          console.log('Token: ', token);
+        });
+    }
   }, []);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });

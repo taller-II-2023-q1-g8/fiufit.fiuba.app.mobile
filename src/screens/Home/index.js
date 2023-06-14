@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 import { signOut } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import messaging from '@react-native-firebase/messaging';
 
+import { updateDeviceToken, fetchPlans, updateLoginTime } from '../../requests';
 import { auth } from '../../../firebaseConfig';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
-import { fetchPlans } from '../../requests';
 import { getRandomInt } from '../../utils';
 
 import Home from './layout';
@@ -15,6 +16,15 @@ export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [state, dispatch] = useStateValue();
   const [goals, setGoals] = useState(state.userGoals);
+
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then((token) => {
+        updateDeviceToken(state.user.username, token);
+      });
+    updateLoginTime(state.user.username);
+  }, []);
   const [suggestedPlans, setSuggestedPlans] = useState([]);
 
   function avgCalification(plan) {
@@ -96,6 +106,7 @@ export default function HomeScreen({ navigation }) {
   const handleSearchUsers = () => {
     navigation.navigate(texts.SearchUsers.name);
   };
+
   const handleTrainerHome = () => {
     dispatch({
       type: 'changeCurrentStack',

@@ -109,7 +109,7 @@ function TrainingFinished(item, handleUserProfilePress, handlePlanPress, type) {
             <Text style={styles.planDifficulty}>Dificultad: {item.difficulty}</Text>
             <Text style={styles.planDifficulty}>Tags: {item.tags}</Text>
           </View>
-          <TouchableOpacity activeOpacity={0.7} onPress={() => handlePlanPress(item.id)}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => handlePlanPress(item.plan)}>
             {planPicUrl !== null ? (
               <Image source={{ uri: planPicUrl }} style={styles.planImage} />
             ) : (
