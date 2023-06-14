@@ -1,6 +1,7 @@
-import { Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
 import React from 'react';
-import { func, number, object, string } from 'prop-types';
+import { func, number, object, string, bool } from 'prop-types';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
@@ -20,13 +21,47 @@ function Exercises({ exercises }) {
   ));
 }
 
+function Item({ exercise }) {
+  exercise = exercise.item;
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={() => {}}>
+      <View style={styles.item}>
+        <Image style={styles.profilePic} source={manPic} />
+        <View style={{ display: 'flex' }}>
+          <Text style={styles.profileName}>{exercise.title}</Text>
+          <Text style={styles.profileType}>{`${exercise.muscles}`}</Text>
+          <Text style={styles.profileType}>{`reps: ${exercise.reps}`}</Text>
+          <Text style={styles.profileType}>{`weight: ${exercise.weight}`}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function ItemSeparatorView() {
+  return (
+    <View
+      style={{
+        height: 0.5,
+        width: '100%',
+        opacity: 0.2,
+        backgroundColor: colors.gray
+      }}
+    />
+  );
+}
+
 export default function SearchedTrainingPlan({
   title,
   description,
   difficulty,
   trainer,
   exercises,
-  handleStartTraining
+  handleStartTraining,
+  favorite,
+  handleFavorite,
+  handleRemoveFavorite,
+  handleRateTraining
 }) {
   return (
     <ImageBackground source={BackgroundImage}>
@@ -53,8 +88,53 @@ export default function SearchedTrainingPlan({
             </View>
           </View>
         </View>
-        <Text style={styles.title}>Ejercicios</Text>
-        <Exercises exercises={exercises} />
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingVertical: 10
+          }}
+        >
+          <Text style={styles.title}>Ejercicios</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity activeOpacity={0.5} onPress={handleRateTraining}>
+              <Ionicons
+                name="star"
+                style={{ width: 30, height: 30, tintColor: colors.white }}
+                size={25}
+                color="#ffb300"
+              />
+            </TouchableOpacity>
+            {favorite ? (
+              <TouchableOpacity activeOpacity={0.5} onPress={handleRemoveFavorite}>
+                <Ionicons
+                  name="heart"
+                  style={{ width: 30, height: 30, tintColor: colors.white }}
+                  size={25}
+                  color={colors.error}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity activeOpacity={0.5} onPress={handleFavorite}>
+                <Ionicons
+                  name="heart-outline"
+                  style={{ width: 30, height: 30, tintColor: colors.white }}
+                  size={25}
+                  color={colors.white}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+
+        <FlatList
+          style={{ flex: 0.5 }}
+          data={exercises}
+          renderItem={(exercise) => <Item exercise={exercise} />}
+          ItemSeparatorComponent={ItemSeparatorView}
+        />
         <View style={{ paddingVertical: 10 }}>
           <TouchableOpacity style={styles.startButton} activeOpacity={0.5} onPress={handleStartTraining}>
             <Text style={styles.startButtonText}>Empezar!</Text>
@@ -65,11 +145,19 @@ export default function SearchedTrainingPlan({
   );
 }
 
+Item.propTypes = {
+  exercise: object.isRequired
+};
+
 SearchedTrainingPlan.propTypes = {
   handleStartTraining: func.isRequired,
   title: string.isRequired,
   description: string.isRequired,
   difficulty: string.isRequired,
   trainer: number.isRequired,
-  exercises: object.isRequired
+  exercises: object.isRequired,
+  favorite: bool,
+  handleFavorite: func,
+  handleRemoveFavorite: func,
+  handleRateTraining: func
 };

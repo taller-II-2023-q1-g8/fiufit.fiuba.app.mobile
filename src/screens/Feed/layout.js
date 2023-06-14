@@ -34,7 +34,7 @@ export function dateToDisplayString(date) {
   const mesesPasados = Math.floor(diasPasados / 30);
 
   if (segundosPasados <= 0) {
-    return `Hace 0 segundos`;
+    return `Justo Ahora`;
   }
   if (segundosPasados < 60) {
     return `Hace ${segundosPasados} segundos`;
@@ -58,7 +58,7 @@ export function dateToDisplayString(date) {
   return 'Hace más de un año';
 }
 
-function TrainingFinished(item, handleUserProfilePress) {
+function TrainingFinished(item, handleUserProfilePress, handlePlanPress, type) {
   const [profPicUrl, setProfPicUrl] = useState(null);
   const fetchProfPicUrl = async (searchedUsername) => {
     const url = await getProfilePicURL(searchedUsername);
@@ -94,27 +94,37 @@ function TrainingFinished(item, handleUserProfilePress) {
       <View style={styles.trainingCompletedBody}>
         <View style={styles.planInfoContainer}>
           <View style={styles.planDetails}>
-            <Text style={styles.planCompletedText}>Plan Completado!</Text>
+            <Text style={styles.planCompletedText}>{type}</Text>
             <Text style={styles.planName}>{item.title}</Text>
-            <Text style={styles.planDifficulty}>Dificultad: Díficil</Text>
-            <Text style={styles.planDifficulty}>Tags: Ejemplo Ejemplo2</Text>
-            <Text style={styles.planDifficulty}>Músculos: Abs</Text>
+            <Text style={styles.planDifficulty}>Dificultad: {item.difficulty}</Text>
+            <Text style={styles.planDifficulty}>Tags: {item.tags}</Text>
           </View>
-          <Image source={manPic} style={styles.planImage} />
+          <TouchableOpacity activeOpacity={0.7} onPress={() => handlePlanPress(item.plan)}>
+            <Image source={manPic} style={styles.planImage} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 }
-function FeedItem({ feedItem }, handleUserProfilePress) {
+function FeedItem({ feedItem }, handleUserProfilePress, handlePlanPress) {
   switch (feedItem.type) {
     case 'training_plan_completed':
-      return TrainingFinished(feedItem, handleUserProfilePress);
+      return TrainingFinished(feedItem, handleUserProfilePress, handlePlanPress, 'Plan completado!');
+    case 'created_plan':
+      return TrainingFinished(feedItem, handleUserProfilePress, handlePlanPress, 'Nuevo plan creado!');
     default:
       return null;
   }
 }
-export default function Feed({ feed, loading, refreshing, onRefresh, handleUserProfilePress }) {
+export default function Feed({
+  feed,
+  loading,
+  refreshing,
+  onRefresh,
+  handleUserProfilePress,
+  handlePlanPress
+}) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
@@ -125,7 +135,9 @@ export default function Feed({ feed, loading, refreshing, onRefresh, handleUserP
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           <KeyboardAvoidingView style={styles.formContainer} enabled>
-            {loading ? null : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress))}
+            {loading
+              ? null
+              : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress, handlePlanPress))}
           </KeyboardAvoidingView>
         </ScrollView>
       </View>
@@ -138,5 +150,6 @@ Feed.propTypes = {
   loading: bool.isRequired,
   refreshing: bool.isRequired,
   onRefresh: func.isRequired,
-  handleUserProfilePress: func
+  handleUserProfilePress: func,
+  handlePlanPress: func
 };

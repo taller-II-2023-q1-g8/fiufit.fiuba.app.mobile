@@ -17,14 +17,15 @@ import { colors } from '../../colors';
 
 import { styles } from './styles';
 
-function Item({ handleItemPress, itemData }) {
+function Item({ handleItemPress, plan }) {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData.id)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(plan)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{itemData.title}</Text>
-          <Text style={styles.profileType}>Plan de Entrenamiento</Text>
+          <Text style={styles.profileName}>{plan.title}</Text>
+          <Text style={styles.profileType}>Likes: {plan.likes}</Text>
+          <Text style={styles.profileType}>Calificación: {plan.average_calification}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -57,7 +58,7 @@ function SearchTrainingPlans({ data, filters, handleOnTitleChange, handleItemPre
         <FlatList
           data={data}
           scrollv
-          renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
+          renderItem={({ item }) => <Item handleItemPress={handleItemPress} plan={item} />}
           ItemSeparatorComponent={ItemSeparatorView}
         />
       </KeyboardAvoidingView>
@@ -68,7 +69,7 @@ export default React.memo(SearchTrainingPlans);
 
 Item.propTypes = {
   handleItemPress: func,
-  itemData: object.isRequired
+  plan: object.isRequired
 };
 
 SearchTrainingPlans.propTypes = {

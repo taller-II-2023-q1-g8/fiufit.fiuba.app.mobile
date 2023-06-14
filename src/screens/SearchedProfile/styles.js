@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { colors } from '../../colors';
 
-const HeaderHeight = 300;
+const HeaderHeight = 170;
 const TabBarHeight = 48;
 export const styles = StyleSheet.create({
   container: {
@@ -18,7 +18,9 @@ export const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute'
+    position: 'absolute',
+    flexDirection: 'row',
+    paddingLeft: 50
   },
   label: { fontSize: 16, color: colors.white },
   tab: { elevation: 0, shadowOpacity: 0, backgroundColor: colors.main, height: TabBarHeight },
@@ -182,5 +184,10 @@ export const styles = StyleSheet.create({
   profileType: {
     paddingLeft: 10,
     color: colors.white
+  },
+  msgIcon: {
+    width: 60,
+    height: 60,
+    marginLeft: 15
   }
 });

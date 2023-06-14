@@ -8,6 +8,8 @@ import { updateDeviceToken } from '../../requests';
 import { auth } from '../../../firebaseConfig';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
+import { fetchPlans } from '../../requests';
+import { getRandomInt } from '../../utils';
 
 import Home from './layout';
 
@@ -22,7 +24,41 @@ export default function HomeScreen({ navigation }) {
       .then((token) => {
         updateDeviceToken(state.user.username, token);
       });
-  });
+  }, []);
+  const [suggestedPlans, setSuggestedPlans] = useState([]);
+
+  function avgCalification(plan) {
+    const { athletes } = plan;
+    if (athletes.length === 0) return -1;
+    const validCalificationsAths = athletes.filter((athlete) => athlete.calification_score >= 0);
+    if (validCalificationsAths.length === 0) return -1;
+    return (
+      validCalificationsAths.reduce((suma, athlete) => suma + athlete.calification_score, 0) /
+      validCalificationsAths.length
+    );
+  }
+
+  useEffect(() => {
+    async function getSuggestedPlans() {
+      setLoading(true);
+      const response = await fetchPlans('');
+      const plans = await response.json();
+      console.log('a', plans);
+      console.log('b', JSON.stringify(plans, null, 2));
+
+      plans.forEach((plan) => {
+        plan.averageCalification = avgCalification(plan);
+      });
+      plans.sort((plan1, plan2) => plan2.averageCalification - plan1.averageCalification);
+      console.log('wwwww', JSON.stringify(plans, null, 2));
+      const numberOfSuggestedPlans = getRandomInt(3, 4);
+      console.log('ww', numberOfSuggestedPlans);
+      console.log(plans.slice(0, numberOfSuggestedPlans));
+      setSuggestedPlans(plans.slice(0, numberOfSuggestedPlans));
+      setLoading(false);
+    }
+    getSuggestedPlans();
+  }, []);
   /*
   useEffect(() => {
     setLoading(true);
@@ -78,14 +114,21 @@ export default function HomeScreen({ navigation }) {
     });
   };
 
+  const handlePlanPress = (plan) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+  };
+
+  console.log('suggested', JSON.stringify(suggestedPlans, null, 2));
   return (
     <Home
+      suggestedPlans={suggestedPlans}
       goals={goals}
       username={state.user.username}
       handleSignOutPress={handleSignOutPress}
       handleTrainerHome={handleTrainerHome}
       handleProfile={() => handleProfile()}
       handleSearchUsers={() => handleSearchUsers}
+      handlePlanPress={handlePlanPress}
       loading={loading}
     />
   );

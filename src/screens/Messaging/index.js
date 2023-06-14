@@ -39,6 +39,7 @@ function MessagingScreen({ navigation }) {
         });
 
         setConversations(fetchedConversations);
+        console.log('ASdasd');
         setLoading(false);
       },
       (error) => {

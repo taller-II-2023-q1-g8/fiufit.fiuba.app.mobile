@@ -10,8 +10,11 @@ import HomeScreen from '../../../../../screens/Home';
 import SearchedProfile from '../../../../../screens/SearchedProfile';
 import SearchedTrainingPlan from '../../../../../screens/SearchedTrainingPlan';
 import texts from '../../../../../texts';
-import TrainingInProgress from '../../../../../screens/TrainingInProgress';
+import AthleteTrainingPlanScreen from '../../../../../screens/AthleteTrainingPlan';
 import PrivateMessage from '../../../../../screens/PrivateMessage';
+import ExerciseScreen from '../../../../../screens/Exercise';
+import RestScreen from '../../../../../screens/Rest';
+import RatingScreen from '../../../../../screens/Rating';
 
 import ExploreStack from './components/ExploreStack';
 import FeedStack from './components/FeedStack';
@@ -61,10 +64,13 @@ export default function AthleteStack() {
           options={{ title: '' }}
         />
         <Stack.Screen
-          name={texts.TrainingInProgress.name}
-          component={TrainingInProgress}
+          name={texts.AthleteTrainingPlan.name}
+          component={AthleteTrainingPlanScreen}
           options={{ title: '' }}
         />
+        <Stack.Screen name={texts.Exercise.name} component={ExerciseScreen} options={{ title: '' }} />
+        <Stack.Screen name={texts.Rest.name} component={RestScreen} options={{ title: '' }} />
+        <Stack.Screen name={texts.Rating.name} component={RatingScreen} options={{ title: '' }} />
       </Stack.Navigator>
     </NavigationContainer>
   ) : null;

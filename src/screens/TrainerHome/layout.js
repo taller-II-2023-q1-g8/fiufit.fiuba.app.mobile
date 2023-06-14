@@ -20,13 +20,13 @@ import { styles } from './styles';
 
 const trainerHomeTexts = texts.TrainerHome;
 
-function Item({ handleItemPress, title, itemData }) {
+function Item({ handleItemPress, itemData }) {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{title}</Text>
+          <Text style={styles.profileName}>{itemData.title}</Text>
           <Text style={styles.profileType}>Plan de Entrenamiento</Text>
         </View>
       </View>
@@ -46,6 +46,7 @@ function ItemSeparatorView() {
     />
   );
 }
+
 export default function TrainerHome({ username, handleTrainerHome, data, handleItemPress, loading }) {
   return (
     <>
@@ -59,7 +60,7 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
               <Text style={{ color: colors.white }}>Tus planes:</Text>
               <FlatList
                 data={data}
-                renderItem={({ item }) => <Item handleItemPress={handleItemPress} username={item.title} />}
+                renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
                 ItemSeparatorComponent={ItemSeparatorView}
               />
               <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
@@ -74,7 +75,6 @@ export default function TrainerHome({ username, handleTrainerHome, data, handleI
 }
 Item.propTypes = {
   handleItemPress: func,
-  title: string,
   itemData: object
 };
 

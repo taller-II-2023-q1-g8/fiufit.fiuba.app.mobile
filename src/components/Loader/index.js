@@ -13,7 +13,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000040'
   },
   activityIndicatorWrapper: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.header,
+    borderColor: colors.white,
+    borderWidth: 1,
     height: 100,
     width: 100,
     borderRadius: 10,
@@ -34,7 +36,7 @@ function Loader(props) {
     <Modal transparent animationType="none" visible={loading}>
       <View style={styles.modalBackground}>
         <View style={styles.activityIndicatorWrapper}>
-          <ActivityIndicator animating color="#000000" size="large" style={styles.activityIndicator} />
+          <ActivityIndicator animating color={colors.white} size="large" style={styles.activityIndicator} />
         </View>
       </View>
     </Modal>
