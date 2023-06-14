@@ -140,6 +140,7 @@ function InputModal({
   exercises,
   handleOnExerciseChange
 }) {
+  console.log(exerciseSelected);
   const handleSubmit = () => {
     if (!exerciseToBeEdited) {
       if (exerciseSelected === '' || weightInputValue === '' || repsInputValue === '') {

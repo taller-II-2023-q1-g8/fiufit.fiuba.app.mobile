@@ -12,11 +12,15 @@ import ExercisesInPlan from './layout';
 
 export default function ExercisesInPlanScreen({ navigation, route }) {
   const { plan } = route.params;
-  console.log(plan);
   const [loading, setLoading] = useState(true);
   const [exercises, setExercises] = useState([]);
   const [addedExcersises, setAddedExcersises] = useState([]);
   const [swipedRow, setSwipedRow] = useState(null);
+  // Modal visibility & input value
+  const [modalVisible, setModalVisible] = useState(false);
+  const [exerciseSelected, setExerciseSelected] = useState();
+  const [repsInputValue, setRepsInputValue] = useState();
+  const [weightInputValue, setWeightInputValue] = useState();
   async function fetchData() {
     const validExercises = [];
     await fetchExercises('')
@@ -47,6 +51,7 @@ export default function ExercisesInPlanScreen({ navigation, route }) {
           });
         });
         setAddedExcersises(exercisesFromPlan);
+        setExerciseSelected(validExercises[0]);
       });
   }
 
@@ -65,17 +70,13 @@ export default function ExercisesInPlanScreen({ navigation, route }) {
     setAddedExcersises([]);
   };
 
-  // Modal visibility & input value
-  const [modalVisible, setModalVisible] = useState(false);
-  const [exerciseSelected, setExerciseSelected] = useState();
-  const [repsInputValue, setRepsInputValue] = useState();
-  const [weightInputValue, setWeightInputValue] = useState();
   const handleAddExercise = (exercise) => {
     const newAddedExercises = [...addedExcersises, exercise];
     // Mandar requests al microservicio despues
     const values = {};
     values.reps = exercise.reps;
     values.weight = exercise.weight;
+    console.log(exercise);
     AddExcerciseToPlanRequest(plan.id, exercise.exercise.id, values);
     setAddedExcersises(newAddedExercises);
     setModalVisible(false);
