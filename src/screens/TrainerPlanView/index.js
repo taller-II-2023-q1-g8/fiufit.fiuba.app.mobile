@@ -41,6 +41,10 @@ export default function TrainerPlanViewContainer({ route, navigation }) {
     navigation.navigate(texts.TrainerHome.name);
     deletePlan(plan.id);
   };
+  const handleAthletePress = (athlete) => {
+    const { username } = athlete;
+    navigation.navigate(texts.SearchedProfile.name, { username });
+  };
 
   return (
     <TrainerPlanView
@@ -50,6 +54,7 @@ export default function TrainerPlanViewContainer({ route, navigation }) {
       handleShowExercisesPress={handleShowExercisesPress}
       handleEditPress={handleEditPress}
       handleDeletePress={handleDeletePress}
+      handleAthletePress={handleAthletePress}
     />
   );
 }
