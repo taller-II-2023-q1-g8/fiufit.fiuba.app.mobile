@@ -4,7 +4,7 @@ import { colors } from '../../colors';
 
 export const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
     height: '100%'
   },
   header: {
@@ -36,6 +36,13 @@ export const styles = StyleSheet.create({
   },
   title: {
     marginTop: 30,
+    color: colors.white,
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginVertical: 10
+  },
+  titleFavs: {
+    marginTop: 60,
     color: colors.white,
     fontSize: 22,
     fontWeight: 'bold',

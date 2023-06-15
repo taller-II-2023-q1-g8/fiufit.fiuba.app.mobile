@@ -1,6 +1,16 @@
 import { bool, func, object, string } from 'prop-types';
-import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+  FlatList,
+  Dimensions,
+  ScrollView
+} from 'react-native';
 import React from 'react';
+import { ContributionGraph, LineChart } from 'react-native-chart-kit';
 
 import Edit from '../../assets/icons/edit.png';
 import { colors } from '../../colors';
@@ -12,6 +22,7 @@ import manPic from '../../assets/man.jpeg';
 
 import { styles } from './styles';
 
+const screenWidth = Dimensions.get('window').width;
 function Item({ handleItemPress, itemData }) {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
@@ -48,9 +59,32 @@ export default function UserProfile({
   handleAddStat,
   handlePlanPress
 }) {
+  console.log('JUAN ', data.plans);
+  const chartConfig = {
+    backgroundGradientFrom: '#01092f',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: '#01092f',
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(255, 175, 26, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false // optional
+  };
+  const dataChart = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(255, 175, 26, ${opacity})`, // optional
+        strokeWidth: 2 // optional
+      }
+    ],
+    legend: ['Rainy Days'] // optional
+  };
+
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Loader loading={loading} />
 
         {loading ? null : (
@@ -107,10 +141,10 @@ export default function UserProfile({
                   style={{
                     ...styles.title,
                     ...{
-                      color: 'red',
+                      color: colors.main_soft,
                       marginHorizontal: 10,
                       paddingHorizontal: 10,
-                      borderColor: 'red',
+                      borderColor: colors.main_soft,
                       borderWidth: 0.5,
                       borderRadius: 50,
                       fontWeight: '400'
@@ -121,18 +155,19 @@ export default function UserProfile({
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text style={{ color: colors.white }}>...</Text>
-            <View>
-              <Text style={styles.title}>Entrenamientos favoritos</Text>
-              <FlatList
-                data={data.plans}
-                renderItem={({ item }) => <Item handleItemPress={handlePlanPress} itemData={item} />}
-                ItemSeparatorComponent={ItemSeparatorView}
-              />
-            </View>
+            <LineChart data={dataChart} width={screenWidth} height={220} chartConfig={chartConfig} />
+            <Text style={styles.titleFavs}>Entrenamientos favoritos</Text>
+            {data.plans !== undefined
+              ? data.plans.map((plan) => (
+                  <>
+                    <Item handleItemPress={handlePlanPress} itemData={plan} />
+                    <ItemSeparatorView />
+                  </>
+                ))
+              : null}
           </>
         )}
-      </View>
+      </ScrollView>
     </ImageBackground>
   );
 }

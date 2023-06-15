@@ -24,7 +24,6 @@ export default function UserProfileContainer({ navigation }) {
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
     setProfPicUrl(url);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -43,15 +42,22 @@ export default function UserProfileContainer({ navigation }) {
       const athletesJson = await AthletesResponse.json();
       const foundAthlete = await athletesJson.find((athlete) => athlete.external_id === state.user.username);
       setAthleteID(foundAthlete.id);
-      const plansResponse = await fetchAthletePlansByID(athleteID);
+      const plansResponse = await fetchAthletePlansByID(foundAthlete.id);
       const plansJson = await plansResponse.json();
-
+      const p = [];
+      plansJson.forEach((plan) => {
+        const a = plan.athletes.find((ath) => ath.id === foundAthlete.id);
+        if (a.is_liked) {
+          p.push(plan);
+        }
+      });
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
         followed: state.followedUsers.length,
-        plans: plansJson
+        plans: p
       });
+      console.log('JUANPEPE ', data.plans);
       setLoading(false);
     }
     fetchData();
