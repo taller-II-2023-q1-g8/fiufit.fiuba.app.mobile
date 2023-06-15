@@ -36,9 +36,6 @@ function difficultyToDisplay(dif) {
 }
 
 function SuggestedPlan({ plan, handlePress }) {
-  console.log(JSON.stringify(plan, null, 2));
-  console.log(plan.id);
-
   const [planPicUrl, setPlanPicUrl] = useState(null);
   const fetchPlanPicUrl = async () => {
     const url = await getPlanPicURL(plan.id);
@@ -100,8 +97,67 @@ function SuggestedPlan({ plan, handlePress }) {
     </View>
   );
 }
+function LastPlan({ plan, handlePress }) {
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(plan.id);
+    setPlanPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
+
+  return (
+    <View style={styles.trainingCompletedContainer}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => handlePress(plan.plan)}
+        style={styles.trainingCompletedHeader}
+      >
+        <View style={styles.profilePicture}>
+          {planPicUrl !== null ? (
+            <Image source={{ uri: planPicUrl }} style={styles.userPhoto} />
+          ) : (
+            <Image source={manPic} style={styles.userPhoto} />
+          )}
+        </View>
+        <View style={styles.usernameContainer}>
+          <View style={styles.usernameWrapper}>
+            <Text style={styles.usernameText}>{plan.plan.title}</Text>
+          </View>
+          <View style={styles.dateWrapper}>
+            <Text style={styles.dateText}>{`Realizado ${dateToDisplayString(new Date(plan.date))}`}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <View style={styles.border} />
+      <View style={styles.trainingCompletedBody}>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.label}>Descripción:</Text>
+          <Text style={styles.planDescText}>{plan.plan.description}</Text>
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.bottomLeft}>
+            <Text style={styles.planDifficulty}>Dificultad: </Text>
+            <Text style={styles.planDifficultyText}>{difficultyToDisplay(plan.plan.difficulty)}</Text>
+          </View>
+          <View style={styles.bottomMiddle}>
+            <Text style={styles.planDifficulty}>Tags: </Text>
+            <Text style={styles.planTagsText}>{plan.plan.tags}</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+}
 
 SuggestedPlan.propTypes = {
+  plan: object.isRequired,
+  handlePress: func.isRequired
+};
+
+LastPlan.propTypes = {
   plan: object.isRequired,
   handlePress: func.isRequired
 };
@@ -145,6 +201,7 @@ const sortGoals = (userGoals) => {
 export default function Home({
   goals,
   suggestedPlans,
+  lastPlans,
   handleSignOutPress,
   loading,
   handleTrainerHome,
@@ -153,24 +210,31 @@ export default function Home({
   return (
     <MenuProvider>
       <ImageBackground source={BackgroundImage} resizeMode="cover">
+        <Loader loading={loading} />
+
         <View style={styles.container}>
-          <Loader loading={loading} />
-          <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
-            <View style={styles.homeHeader}>
-              <Text style={{ ...styles.title, color: colors.white }}>{homeTexts.title}</Text>
-              <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
-            </View>
-            <KeyboardAvoidingView style={styles.formContainer} enabled>
-              <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
-              {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
-              <Text style={styles.suggestedPlansT}>{homeTexts.suggestedPlansTitle}</Text>
-              {loading
-                ? null
-                : suggestedPlans.map((plan) => (
-                    <SuggestedPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
-                  ))}
-            </KeyboardAvoidingView>
-          </ScrollView>
+          {loading ? null : (
+            <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
+              <View style={styles.homeHeader}>
+                <Text style={{ ...styles.title, color: colors.white }}>{homeTexts.title}</Text>
+                <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
+              </View>
+              <KeyboardAvoidingView style={styles.formContainer} enabled>
+                <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
+                {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
+                <Text style={styles.suggestedPlansT}>{homeTexts.suggestedPlansTitle}</Text>
+                {loading
+                  ? null
+                  : suggestedPlans.map((plan) => (
+                      <SuggestedPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
+                    ))}
+                <Text style={styles.suggestedPlansT}>{homeTexts.lastPlansTitles}</Text>
+                {lastPlans.map((plan) => (
+                  <LastPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
+                ))}
+              </KeyboardAvoidingView>
+            </ScrollView>
+          )}
         </View>
       </ImageBackground>
     </MenuProvider>
@@ -183,5 +247,6 @@ Home.propTypes = {
   handleSignOutPress: func.isRequired,
   loading: bool.isRequired,
   handleTrainerHome: func.isRequired,
-  handlePlanPress: func.isRequired
+  handlePlanPress: func.isRequired,
+  lastPlans: array
 };
