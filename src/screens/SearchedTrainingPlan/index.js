@@ -7,7 +7,8 @@ import {
   fetchTrainingPlanByID,
   fetchAthletesID,
   addPlanToAthleteAsFavorite,
-  removePlanToAthleteAsFavorite
+  removePlanToAthleteAsFavorite,
+  likePlan
 } from '../../requests';
 import Loader from '../../components/Loader';
 import { getPlanPicURL } from '../../utils';
@@ -26,16 +27,11 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const handleStartTraining = () => {
     navigation.navigate(texts.Exercise.name, { plan, athleteId: ownAthleteInternalID, athleteRating });
   };
-  const handleFavorite = () => {
-    // addPlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
-    setFavorite(true);
-    console.log('Faved');
+  const handlePressLike = () => {
+    setFavorite(!favorite);
+    likePlan(plan.id, ownAthleteInternalID);
   };
-  const handleRemoveFavorite = () => {
-    // removePlanToAthleteAsFavorite(plan.id, ownAthleteInternalID);
-    setFavorite(false);
-    console.log('Unfaved');
-  };
+
   const handleRateTraining = () => {
     navigation.navigate(texts.Rating.name, { plan, athleteId: ownAthleteInternalID, pop: 1, athleteRating });
   };
@@ -47,13 +43,14 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
       const rating = dataJson.message.athletes.find((athlete) => athlete.external_id === state.user.username);
       setAthleteRating(rating);
       console.log(rating);
+      console.log('Juan ignacio', rating.is_liked);
       console.log(dataJson);
       response = await fetchAthletesID();
       dataJson = await response.json();
       const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
       console.log(myAthlete);
       // Hacer get del endpoint?
-      setFavorite(false);
+      setFavorite(rating.is_liked);
       setOwnAthleteInternalID(myAthlete.id);
     }
     fetchData();
@@ -81,8 +78,7 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
           exercises={plan.exercises}
           handleStartTraining={handleStartTraining}
           favorite={favorite}
-          handleRemoveFavorite={handleRemoveFavorite}
-          handleFavorite={handleFavorite}
+          handleLike={handlePressLike}
           handleRateTraining={handleRateTraining}
           planPicUrl={planPicUrl}
           loading={loading}

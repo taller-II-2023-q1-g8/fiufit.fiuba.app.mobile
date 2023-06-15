@@ -60,8 +60,7 @@ export default function SearchedTrainingPlan({
   exercises,
   handleStartTraining,
   favorite,
-  handleFavorite,
-  handleRemoveFavorite,
+  handleLike,
   handleRateTraining,
   planPicUrl,
   loading
@@ -116,7 +115,7 @@ export default function SearchedTrainingPlan({
               />
             </TouchableOpacity>
             {favorite ? (
-              <TouchableOpacity activeOpacity={0.5} onPress={handleRemoveFavorite}>
+              <TouchableOpacity activeOpacity={0.5} onPress={handleLike}>
                 <Ionicons
                   name="heart"
                   style={{ width: 30, height: 30, tintColor: colors.white }}
@@ -125,7 +124,7 @@ export default function SearchedTrainingPlan({
                 />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity activeOpacity={0.5} onPress={handleFavorite}>
+              <TouchableOpacity activeOpacity={0.5} onPress={handleLike}>
                 <Ionicons
                   name="heart-outline"
                   style={{ width: 30, height: 30, tintColor: colors.white }}
@@ -165,8 +164,7 @@ SearchedTrainingPlan.propTypes = {
   trainer: number.isRequired,
   exercises: object.isRequired,
   favorite: bool,
-  handleFavorite: func,
-  handleRemoveFavorite: func,
+  handleLike: func,
   handleRateTraining: func,
   planPicUrl: string,
   loading: bool
