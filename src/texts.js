@@ -28,7 +28,8 @@ const texts = {
     suggestedPlansTitle: 'Planes Sugeridos',
     submitButtonText: 'Salir',
     profileButtonText: 'Ir al perfil',
-    searchUsersButtonText: 'Buscar usuarios'
+    searchUsersButtonText: 'Buscar usuarios',
+    lastPlansTitles: 'Ultimos planes realizados'
   },
   Feed: {
     name: 'Feed',
