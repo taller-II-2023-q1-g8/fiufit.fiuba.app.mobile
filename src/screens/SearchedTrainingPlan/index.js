@@ -42,14 +42,9 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
       setTrainerUsername(dataJson.message.trainer.external_id);
       const rating = dataJson.message.athletes.find((athlete) => athlete.external_id === state.user.username);
       setAthleteRating(rating);
-      console.log(rating);
-      console.log('Juan ignacio', rating.is_liked);
-      console.log(dataJson);
       response = await fetchAthletesID();
       dataJson = await response.json();
       const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
-      console.log(myAthlete);
-      // Hacer get del endpoint?
       setFavorite(rating.is_liked);
       setOwnAthleteInternalID(myAthlete.id);
     }
