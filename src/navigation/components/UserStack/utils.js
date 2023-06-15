@@ -26,6 +26,8 @@ export const tabBarIconsTrainer = (route, { focused, color, size }) => {
   else if (route.name === texts.AddPlan.name) {
     iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
     color = 'red';
+  } else if (route.name === texts.TrainerProfile.name) {
+    iconName = focused ? ICONS.TRAINER_PROFILE : ICONS.FOCUSED_TRAINER_PROFILE;
   }
   return <Ionicons name={iconName} size={size} color={color} />;
 };

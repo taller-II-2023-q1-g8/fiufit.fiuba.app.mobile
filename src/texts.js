@@ -21,6 +21,8 @@ const texts = {
   EditPlan: { name: 'Edit Plan', title: 'Edit Plan' },
   PlanExercises: { name: 'Plan Exercises', title: 'Plan Exercises' },
   PlanStats: { name: 'Plan Stats', title: 'Plan Stats' },
+  TrainerProfile: { name: 'Trainer Profile', title: 'Tu Perfil' },
+  EditTrainerProfile: { name: 'Edit Trainer Profile', title: 'Edita Tu Perfil' },
   Home: {
     name: 'Home',
     title: 'Inicio',
