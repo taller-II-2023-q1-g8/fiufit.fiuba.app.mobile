@@ -59,7 +59,6 @@ export default function UserProfile({
   handleAddStat,
   handlePlanPress
 }) {
-  console.log('JUAN ', data.plans);
   const chartConfig = {
     backgroundGradientFrom: '#01092f',
     backgroundGradientFromOpacity: 0,
@@ -69,17 +68,6 @@ export default function UserProfile({
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional
-  };
-  const dataChart = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(255, 175, 26, ${opacity})`, // optional
-        strokeWidth: 2 // optional
-      }
-    ],
-    legend: ['Rainy Days'] // optional
   };
 
   return (
@@ -155,7 +143,7 @@ export default function UserProfile({
                 </Text>
               </TouchableOpacity>
             </View>
-            <LineChart data={dataChart} width={screenWidth} height={220} chartConfig={chartConfig} />
+            <LineChart data={data.dataChart} width={screenWidth} height={220} chartConfig={chartConfig} />
             <Text style={styles.titleFavs}>Entrenamientos favoritos</Text>
             {data.plans !== undefined
               ? data.plans.map((plan) => (

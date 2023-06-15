@@ -6,7 +6,8 @@ import {
   fetchFollowerUsersByUsername,
   fetchUserProfileByUsername,
   fetchAthletePlansByID,
-  fetchAthletesID
+  fetchAthletesID,
+  fetchCompletedPlanMetricsByUsername
 } from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
@@ -37,7 +38,39 @@ export default function UserProfileContainer({ navigation }) {
       const userJson = await userResponse.json();
       const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
       const followersJson = await followersResponse.json();
+      const completedPlansResponse = await fetchCompletedPlanMetricsByUsername(state.user.username);
+      const completedPlans = await completedPlansResponse.json();
+      console.log(completedPlans);
+      const now = new Date();
+      const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;
+      const labelAux = [0, 1, 2, 3, 4, 5, 6];
+      const label = [];
+      labelAux.forEach((l) => {
+        const b = new Date(Date.now() - 24 * 60 * 60 * 1000 * l);
+        label.push(b.toISOString().split('T')[0]);
+      });
+      label.reverse();
+      const trainingCount = [0, 0, 0, 0, 0, 0, 0];
+      completedPlans.message.forEach((completedPlan) => {
+        if (now - new Date(completedPlan.created_at) < oneWeekInMs) {
+          const b = new Date(completedPlan.created_at).toISOString().split('T')[0];
+          const dia = label.findIndex((l) => l === b);
+          trainingCount[dia] += 1;
+        }
+      });
 
+      const dataChart = {
+        labels: label.map((l) => l.slice(6)),
+        datasets: [
+          {
+            data: trainingCount,
+            color: (opacity = 1) => `rgba(255, 175, 26, ${opacity})`, // optional
+            strokeWidth: 2 // optional
+          }
+        ],
+        legend: ['Cantidad de entrenamientos'] // optional
+      };
+      console.log(dataChart);
       const AthletesResponse = await fetchAthletesID();
       const athletesJson = await AthletesResponse.json();
       const foundAthlete = await athletesJson.find((athlete) => athlete.external_id === state.user.username);
@@ -55,9 +88,9 @@ export default function UserProfileContainer({ navigation }) {
         ...userJson.message,
         followers: followersJson.message.length,
         followed: state.followedUsers.length,
-        plans: p
+        plans: p,
+        dataChart
       });
-      console.log('JUANPEPE ', data.plans);
       setLoading(false);
     }
     fetchData();
