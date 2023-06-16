@@ -19,15 +19,16 @@ import TrainerProfile from './layout';
 
 export default function TrainerProfileContainer({ navigation }) {
   const [data, setData] = useState({});
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
+  const [profPicLoading, setProfPicLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [athleteID, setAthleteID] = useState(null);
 
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
     setProfPicUrl(url);
-    setLoading(false);
+    setProfPicLoading(false);
   };
 
   useEffect(() => {
@@ -80,15 +81,23 @@ export default function TrainerProfileContainer({ navigation }) {
     setLoading(false);
   };
 
+  const handleTrainerHome = () => {
+    dispatch({
+      type: 'changeCurrentStack',
+      athleteScreen: true
+    });
+  };
+
   return (
     <TrainerProfile
       data={data}
       handleEditProfile={handleEditProfile}
       profPicUrl={profPicUrl}
-      loading={loading}
+      loading={loading || profPicLoading}
       handleAddStat={handleAddStat}
       handlePlanPress={handlePlanPress}
       handleSignOutPress={handleSignOutPress}
+      handleTrainerHome={handleTrainerHome}
     />
   );
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { signOut } from 'firebase/auth';
 
 import {
   fetchFollowedUsersByUsername,
@@ -11,20 +13,22 @@ import {
 import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { getProfilePicURL } from '../../utils';
+import { auth } from '../../../firebaseConfig';
 
 import UserProfile from './layout';
 
 export default function UserProfileContainer({ navigation }) {
   const [data, setData] = useState({});
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
+  const [profPicLoading, setProfPicLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [athleteID, setAthleteID] = useState(null);
 
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
     setProfPicUrl(url);
-    setLoading(false);
+    setProfPicLoading(false);
   };
 
   useEffect(() => {
@@ -43,14 +47,21 @@ export default function UserProfileContainer({ navigation }) {
       const athletesJson = await AthletesResponse.json();
       const foundAthlete = await athletesJson.find((athlete) => athlete.external_id === state.user.username);
       setAthleteID(foundAthlete.id);
-      const plansResponse = await fetchAthletePlansByID(athleteID);
+      const plansResponse = await fetchAthletePlansByID(foundAthlete.id);
       const plansJson = await plansResponse.json();
+      const p = [];
+      plansJson.forEach((plan) => {
+        const a = plan.athletes.find((ath) => ath.id === foundAthlete.id);
+        if (a.is_liked) {
+          p.push(plan);
+        }
+      });
 
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
         followed: state.followedUsers.length,
-        plans: plansJson
+        plans: p
       });
       setLoading(false);
     }
@@ -61,14 +72,39 @@ export default function UserProfileContainer({ navigation }) {
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
   const handlePlanPress = (plan) => navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
 
+  const handleTrainerHome = () => {
+    dispatch({
+      type: 'changeCurrentStack',
+      athleteScreen: false
+    });
+  };
+
+  const handleSignOutPress = async () => {
+    setLoading(true);
+    try {
+      // Si la sesion actual es de un usuario federado hay que salir de su cuenta de google
+
+      if (auth.currentUser.providerData[0].providerId === 'google.com') {
+        await GoogleSignin.revokeAccess();
+      }
+      await signOut(auth);
+    } catch (error) {
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+  };
+
   return (
     <UserProfile
       data={data}
       handleEditProfile={handleEditProfile}
       profPicUrl={profPicUrl}
-      loading={loading}
+      loading={loading || profPicLoading}
       handleAddStat={handleAddStat}
       handlePlanPress={handlePlanPress}
+      handleTrainerHome={handleTrainerHome}
+      handleSignOutPress={handleSignOutPress}
     />
   );
 }

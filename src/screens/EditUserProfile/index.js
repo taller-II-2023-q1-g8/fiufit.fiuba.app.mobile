@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes } from 'firebase/storage';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { signOut } from 'firebase/auth';
 
 import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
 import { useStateValue } from '../../state';
-import { storage } from '../../../firebaseConfig';
+import { auth, storage } from '../../../firebaseConfig';
 import { getProfilePicURL } from '../../utils';
 
 import EditUserProfile from './layout';
@@ -13,7 +15,7 @@ import { getFields } from './utils';
 
 export default function EditUserProfileContainer() {
   const [data, setData] = useState({});
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
 

@@ -48,7 +48,8 @@ export default function TrainerProfile({
   loading,
   handleAddStat,
   handlePlanPress,
-  handleSignOutPress
+  handleSignOutPress,
+  handleTrainerHome
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
@@ -106,7 +107,14 @@ export default function TrainerProfile({
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.1}
-                  style={{ alignSelf: 'flex-start', marginLeft: 30 }}
+                  style={{ alignSelf: 'flex-start', marginLeft: 26 }}
+                  onPress={handleTrainerHome}
+                >
+                  <Ionicons name="md-swap-horizontal-outline" size={40} color={colors.white} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.1}
+                  style={{ alignSelf: 'flex-start', marginLeft: 29 }}
                   onPress={handleSignOutPress}
                 >
                   <Ionicons name="md-log-out-outline" size={40} color={colors.white} />
@@ -135,7 +143,7 @@ export default function TrainerProfile({
               </TouchableOpacity>
             </View>
             <Text style={{ color: colors.white }}>...</Text>
-            <View>
+            {/* <View>
               <Text style={styles.title}>Entrenamientos favoritos</Text>
               <FlatList
                 key={data.plans}
@@ -143,7 +151,7 @@ export default function TrainerProfile({
                 renderItem={({ item }) => <Item handleItemPress={handlePlanPress} itemData={item} />}
                 ItemSeparatorComponent={ItemSeparatorView}
               />
-            </View>
+            </View> */}
           </>
         )}
       </View>
@@ -163,5 +171,6 @@ TrainerProfile.propTypes = {
   handlePlanPress: func,
   profPicUrl: string,
   loading: bool,
-  handleSignOutPress: func
+  handleSignOutPress: func,
+  handleTrainerHome: func
 };

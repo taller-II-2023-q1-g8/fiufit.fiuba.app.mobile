@@ -11,7 +11,19 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
     display: 'flex',
+    height: '20%',
     flexDirection: 'row'
+  },
+  headerInfo: {
+    flex: 4,
+    flexDirection: 'row'
+  },
+  headerIcons: {
+    flex: 1,
+    height: '100%',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between'
   },
   item: {
     display: 'flex',
