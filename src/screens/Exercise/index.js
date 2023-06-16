@@ -6,8 +6,9 @@ import BackgroundImage from '../../assets/Background.jpg';
 import manPic from '../../assets/man.jpeg';
 import { colors } from '../../colors';
 import texts from '../../texts';
-import { createMetricRequest } from '../../requests';
+import { createMetricRequest, fetchUserGoalsByUsername } from '../../requests';
 import { useStateValue } from '../../state';
+import Loader from '../../components/Loader';
 
 import { styles } from './styles';
 
@@ -17,6 +18,7 @@ export default function ExerciseScreen({ navigation, route }) {
   const { exercises } = route.params.plan;
   const current = exercises[index];
   const [state, dispatch] = useStateValue();
+  const [loading, setLoading] = useState(false);
   console.log(route);
   const handleCompleteExercise = (exercise) => {
     const values = {};
@@ -42,6 +44,7 @@ export default function ExerciseScreen({ navigation, route }) {
   };
   return (
     <ImageBackground source={BackgroundImage}>
+      <Loader loading={loading} />
       <View style={styles.container}>
         <Image style={{ width: '100%', height: 200 }} source={manPic} />
 
@@ -84,9 +87,17 @@ export default function ExerciseScreen({ navigation, route }) {
         </Text>
         {index + 1 >= exercises.length ? (
           <TouchableOpacity
-            onPress={() => {
-              handleCompleteExercise(current);
-              handleCompletePlan();
+            onPress={async () => {
+              setLoading(true);
+              await handleCompleteExercise(current);
+              await handleCompletePlan();
+              const goalsResponse = await fetchUserGoalsByUsername(state.user.username);
+              const goalsJson = await goalsResponse.json();
+              setLoading(false);
+              dispatch({
+                type: 'updateGoals',
+                newUserGoals: goalsJson.message
+              });
               navigation.navigate(texts.Rating.name, {
                 plan: route.params.plan,
                 athleteId: route.params.athleteId,

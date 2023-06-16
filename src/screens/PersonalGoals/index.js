@@ -13,7 +13,6 @@ export default function PersonalGoalsContainer({ navigation }) {
   useEffect(() => {
     setGoals(state.userGoals);
   }, [state.userGoals]);
-  console.log('a', goals);
   // useEffect(() => {
   //   async function fetchData() {
   //     const response = await fetchUserGoalsByUsername(state.user.username);

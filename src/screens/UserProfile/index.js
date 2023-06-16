@@ -8,7 +8,8 @@ import {
   fetchFollowerUsersByUsername,
   fetchUserProfileByUsername,
   fetchAthletePlansByID,
-  fetchAthletesID
+  fetchAthletesID,
+  fetchUserGoalsByUsername
 } from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
@@ -42,7 +43,6 @@ export default function UserProfileContainer({ navigation }) {
       const userJson = await userResponse.json();
       const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
       const followersJson = await followersResponse.json();
-
       const AthletesResponse = await fetchAthletesID();
       const athletesJson = await AthletesResponse.json();
       const foundAthlete = await athletesJson.find((athlete) => athlete.external_id === state.user.username);
