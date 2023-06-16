@@ -8,6 +8,7 @@ import AddPlanScreen from '../../../../../screens/AddPlan';
 import texts from '../../../../../texts';
 import { tabBarIconsTrainer } from '../../utils';
 
+import TrainerProfileStack from './components/TrainerProfileStack';
 import TrainerPlanStack from './components/TrainerPlansStack';
 
 export default function TrainerStack() {
@@ -27,6 +28,7 @@ export default function TrainerStack() {
       >
         <Tab.Screen component={TrainerPlanStack} name={texts.TrainerHome.iconTitle} />
         <Tab.Screen component={AddPlanScreen} name={texts.AddPlan.name} />
+        <Tab.Screen component={TrainerProfileStack} name={texts.TrainerProfile.name} />
       </Tab.Navigator>
     </NavigationContainer>
   );

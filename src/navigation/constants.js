@@ -8,7 +8,9 @@ const ICONS = {
   LIST: 'search',
   PERSON: 'person',
   PEOPLE: 'people',
-  FOCUSED_PEOPLE: 'people-outline'
+  FOCUSED_PEOPLE: 'people-outline',
+  TRAINER_PROFILE: 'person',
+  FOCUSED_TRAINER_PROFILE: 'person-outline'
 };
 
 export default ICONS;

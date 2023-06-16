@@ -64,28 +64,26 @@ function ItemSeparatorView() {
 
 export default function TrainerHome({ username, handleTrainerHome, data, handleItemPress, loading }) {
   return (
-    <>
+    <ImageBackground source={BackgroundImage}>
       <Loader loading={loading} />
       {!loading && (
-        <ImageBackground source={BackgroundImage}>
-          <View style={styles.container}>
-            <KeyboardAvoidingView style={styles.formContainer} enabled>
-              <Text style={styles.title}>{trainerHomeTexts.homeTitle}</Text>
-              <Text style={{ color: colors.white }}>Bienvenido al inicio de entrenadores, {username}!</Text>
-              <Text style={{ color: colors.white }}>Tus planes:</Text>
-              <FlatList
-                data={data}
-                renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
-                ItemSeparatorComponent={ItemSeparatorView}
-              />
-              <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
+        <View style={styles.container}>
+          <KeyboardAvoidingView style={styles.formContainer} enabled>
+            <Text style={styles.title}>{trainerHomeTexts.homeTitle}</Text>
+            <Text style={{ color: colors.white }}>Bienvenido al inicio de entrenadores, {username}!</Text>
+            <Text style={{ color: colors.white }}>Tus planes:</Text>
+            <FlatList
+              data={data}
+              renderItem={({ item }) => <Item handleItemPress={handleItemPress} itemData={item} />}
+              ItemSeparatorComponent={ItemSeparatorView}
+            />
+            {/* <TouchableOpacity style={styles.submitButton} activeOpacity={0.5} onPress={handleTrainerHome}>
                 <Text style={styles.submitButtonText}>Ir a inicio de atleta</Text>
-              </TouchableOpacity>
-            </KeyboardAvoidingView>
-          </View>
-        </ImageBackground>
+              </TouchableOpacity> */}
+          </KeyboardAvoidingView>
+        </View>
       )}
-    </>
+    </ImageBackground>
   );
 }
 Item.propTypes = {

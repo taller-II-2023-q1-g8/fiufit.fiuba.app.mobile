@@ -89,6 +89,9 @@ function TrainingPlanCompletion({ goal }) {
       break;
   }
 
+  const deadline = new Date(goal.deadline);
+  const deadlineStr = deadline.toLocaleDateString('es-ES', deadline);
+
   return (
     <View
       style={{
@@ -103,11 +106,17 @@ function TrainingPlanCompletion({ goal }) {
       <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
         Planes de Entrenamiento Completados
       </Text>
-      <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
-        Objetivo: {goal.goal_num_of_completions}
-      </Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
+          Objetivo: {goal.goal_num_of_completions}
+        </Text>
+        <Text style={{ paddingBottom: 5, paddingRight: 5, color: colors.gray }}>Vencimiento</Text>
+      </View>
       <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-        <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>{goalStatus}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>{goalStatus}</Text>
+          <Text style={{ paddingBottom: 5, paddingRight: 5, color: colors.white }}>{deadlineStr}</Text>
+        </View>
         <View style={{ backgroundColor: '#e8e8e8', width: '100%', height: 10, borderRadius: 4 }}>
           <View
             style={{

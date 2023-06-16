@@ -217,7 +217,6 @@ export default function Home({
             <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
               <View style={styles.homeHeader}>
                 <Text style={{ ...styles.title, color: colors.white }}>{homeTexts.title}</Text>
-                <DotMenu handleTrainerHome={handleTrainerHome} handleSignOutPress={handleSignOutPress} />
               </View>
               <KeyboardAvoidingView style={styles.formContainer} enabled>
                 <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>

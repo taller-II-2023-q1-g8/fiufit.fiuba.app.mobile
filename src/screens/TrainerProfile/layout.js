@@ -1,6 +1,6 @@
 import { bool, func, object, string } from 'prop-types';
 import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Edit from '../../assets/icons/edit.png';
@@ -10,29 +10,14 @@ import Loader from '../../components/Loader';
 import defaultProfPic from '../../assets/profile-pic-def.png';
 import BackgroundImage from '../../assets/Background.jpg';
 import manPic from '../../assets/man.jpeg';
-import { getPlanPicURL } from '../../utils';
 
 import { styles } from './styles';
 
 function Item({ handleItemPress, itemData }) {
-  const [planPicUrl, setPlanPicUrl] = useState(null);
-  const fetchPlanPicUrl = async (id) => {
-    const url = await getPlanPicURL(id);
-    setPlanPicUrl(url);
-  };
-
-  useEffect(() => {
-    fetchPlanPicUrl(itemData.id);
-  }, []);
-
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
       <View style={styles.item}>
-        {planPicUrl !== null ? (
-          <Image source={{ uri: planPicUrl }} style={styles.profilePic} />
-        ) : (
-          <Image source={manPic} style={styles.profilePic} />
-        )}
+        <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>
           <Text style={{ fontSize: 17, fontWeight: '600', paddingLeft: 10, color: 'white' }}>
             {itemData.title}
@@ -56,15 +41,15 @@ function ItemSeparatorView() {
   );
 }
 
-export default function UserProfile({
+export default function TrainerProfile({
   data,
   handleEditProfile,
   profPicUrl,
   loading,
   handleAddStat,
   handlePlanPress,
-  handleTrainerHome,
-  handleSignOutPress
+  handleSignOutPress,
+  handleTrainerHome
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
@@ -137,7 +122,7 @@ export default function UserProfile({
               </View>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <Text style={styles.title}>Metas</Text>
+              <Text style={styles.title}>Métricas</Text>
               <TouchableOpacity activeOpacity={0.5} onPress={handleAddStat}>
                 <Text
                   style={{
@@ -157,12 +142,16 @@ export default function UserProfile({
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text style={styles.title}>Entrenamientos favoritos</Text>
-            <FlatList
-              data={data.plans}
-              renderItem={({ item }) => <Item handleItemPress={handlePlanPress} itemData={item} />}
-              ItemSeparatorComponent={ItemSeparatorView}
-            />
+            <Text style={{ color: colors.white }}>...</Text>
+            {/* <View>
+              <Text style={styles.title}>Entrenamientos favoritos</Text>
+              <FlatList
+                key={data.plans}
+                data={data.plans}
+                renderItem={({ item }) => <Item handleItemPress={handlePlanPress} itemData={item} />}
+                ItemSeparatorComponent={ItemSeparatorView}
+              />
+            </View> */}
           </>
         )}
       </View>
@@ -175,13 +164,13 @@ Item.propTypes = {
   itemData: object
 };
 
-UserProfile.propTypes = {
+TrainerProfile.propTypes = {
   data: object,
   handleAddStat: func,
   handleEditProfile: func,
   handlePlanPress: func,
   profPicUrl: string,
   loading: bool,
-  handleTrainerHome: func,
-  handleSignOutPress: func
+  handleSignOutPress: func,
+  handleTrainerHome: func
 };

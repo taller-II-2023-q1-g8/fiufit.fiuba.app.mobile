@@ -15,9 +15,9 @@ import texts from '../../texts';
 import { getProfilePicURL } from '../../utils';
 import { auth } from '../../../firebaseConfig';
 
-import UserProfile from './layout';
+import TrainerProfile from './layout';
 
-export default function UserProfileContainer({ navigation }) {
+export default function TrainerProfileContainer({ navigation }) {
   const [data, setData] = useState({});
   const [state, dispatch] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
@@ -47,21 +47,14 @@ export default function UserProfileContainer({ navigation }) {
       const athletesJson = await AthletesResponse.json();
       const foundAthlete = await athletesJson.find((athlete) => athlete.external_id === state.user.username);
       setAthleteID(foundAthlete.id);
-      const plansResponse = await fetchAthletePlansByID(foundAthlete.id);
+      const plansResponse = await fetchAthletePlansByID(athleteID);
       const plansJson = await plansResponse.json();
-      const p = [];
-      plansJson.forEach((plan) => {
-        const a = plan.athletes.find((ath) => ath.id === foundAthlete.id);
-        if (a.is_liked) {
-          p.push(plan);
-        }
-      });
 
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
         followed: state.followedUsers.length,
-        plans: p
+        plans: plansJson
       });
       setLoading(false);
     }
@@ -69,15 +62,8 @@ export default function UserProfileContainer({ navigation }) {
   }, []);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
-  const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
+  const handleEditProfile = () => navigation.navigate(texts.EditTrainerProfile.name);
   const handlePlanPress = (plan) => navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
-
-  const handleTrainerHome = () => {
-    dispatch({
-      type: 'changeCurrentStack',
-      athleteScreen: false
-    });
-  };
 
   const handleSignOutPress = async () => {
     setLoading(true);
@@ -95,21 +81,28 @@ export default function UserProfileContainer({ navigation }) {
     setLoading(false);
   };
 
+  const handleTrainerHome = () => {
+    dispatch({
+      type: 'changeCurrentStack',
+      athleteScreen: true
+    });
+  };
+
   return (
-    <UserProfile
+    <TrainerProfile
       data={data}
       handleEditProfile={handleEditProfile}
       profPicUrl={profPicUrl}
       loading={loading || profPicLoading}
       handleAddStat={handleAddStat}
       handlePlanPress={handlePlanPress}
-      handleTrainerHome={handleTrainerHome}
       handleSignOutPress={handleSignOutPress}
+      handleTrainerHome={handleTrainerHome}
     />
   );
 }
 
-UserProfileContainer.propTypes = {
+TrainerProfileContainer.propTypes = {
   navigation: shape({
     navigate: func.isRequired
   }).isRequired
