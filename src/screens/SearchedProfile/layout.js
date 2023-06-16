@@ -329,7 +329,7 @@ function SearchedProfile({
   };
 
   const rednerTab1Item = ({ item, index }) => (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handleTrainingPress(item.id)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handleTrainingPress(item)}>
       <View style={styles.item}>
         <Image style={styles.profilePic} source={manPic} />
         <View style={{ display: 'flex' }}>

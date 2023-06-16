@@ -125,8 +125,8 @@ export default function SearchedProfileContainer({ route, navigation }) {
     setFollowing(false);
     setLoading(false);
   };
-  const handleTrainingPress = (planID) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { planID });
+  const handleTrainingPress = (plan) => {
+    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
   };
 
   const myUsername = state.user.username;
