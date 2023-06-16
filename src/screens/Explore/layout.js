@@ -23,7 +23,6 @@ export default function Explore({
   handleOnUserRoleChange
 }) {
   const renderScene = ({ route }) => {
-    console.log(route.key);
     switch (route.key) {
       case 'first':
         return (
