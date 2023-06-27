@@ -53,25 +53,59 @@ export default function ExploreScreen({ navigation }) {
   // Users
   const [usernames, setUsernames] = useState([]);
   const [filteredUsernames, setFilteredUsernames] = useState([]);
+  const [filterUsers, setFilterUsers] = useState({
+    name: '',
+    rol: 'Any',
+    distance: null
+  });
   const [state] = useStateValue();
 
   const handleOnUsernameChange = (newUsernameQuery) => {
-    setFilteredUsernames(
-      usernames.filter(
-        (user) =>
-          user.username !== state.user.username &&
-          user.username.toLowerCase().includes(newUsernameQuery.toLowerCase())
-      )
-    );
+    const aux = { ...filterUsers, name: newUsernameQuery };
+    setFilterUsers(aux);
+    console.log(aux);
+    if (aux.rol === 'Any') {
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(newUsernameQuery.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(newUsernameQuery.toLowerCase()) &&
+            user.role === aux.rol
+        )
+      );
+    }
   };
 
   const handleOnRoleChange = (name, newUserRole) => {
-    console.log(usernames);
     console.log(newUserRole);
+    const aux = { ...filterUsers, rol: newUserRole };
+    setFilterUsers(aux);
+    console.log(aux);
     if (newUserRole === 'Any') {
-      setFilteredUsernames(usernames);
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(aux.name.toLowerCase())
+        )
+      );
     } else {
-      setFilteredUsernames(usernames.filter((user) => user.role === newUserRole));
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.role === newUserRole &&
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(aux.name.toLowerCase())
+        )
+      );
     }
   };
 
@@ -118,6 +152,7 @@ export default function ExploreScreen({ navigation }) {
       dataPlans={filteredPlans}
       dataUsers={filteredUsernames}
       filterPlans={filters}
+      filterUsers={filterUsers}
       handlePlanPress={handleItemPress}
       handleUserPress={nothing}
       handleOnPlanTitleChange={handleOnTitleChange}

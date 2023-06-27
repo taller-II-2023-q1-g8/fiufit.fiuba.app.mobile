@@ -20,7 +20,8 @@ export default function Explore({
   filterPlans,
   handleOnPlanTitleChange,
   handleOnUserNameChange,
-  handleOnUserRoleChange
+  handleOnUserRoleChange,
+  filterUsers
 }) {
   const renderScene = ({ route }) => {
     switch (route.key) {
@@ -31,6 +32,7 @@ export default function Explore({
             handleItemPress={handleUserPress}
             handleOnRoleChange={handleOnUserRoleChange}
             handleOnSearchChange={handleOnUserNameChange}
+            filterUsers={filterUsers}
           />
         );
       case 'second':
@@ -87,5 +89,6 @@ Explore.propTypes = {
   filterPlans: array,
   handleOnPlanTitleChange: func,
   handleOnUserNameChange: func,
-  handleOnUserRoleChange: func
+  handleOnUserRoleChange: func,
+  filterUsers: object
 };
