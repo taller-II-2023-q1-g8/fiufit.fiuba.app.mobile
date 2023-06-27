@@ -5,6 +5,8 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import React, { useEffect, useState } from 'react';
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
 
 import { auth } from '../../../../firebaseConfig';
 import { fetchUserByEmail } from '../../../requests';
@@ -13,6 +15,8 @@ import texts from '../../../texts';
 
 import { getFields } from './utils';
 import Login from './layout';
+
+const LOCATION_TRACKING = 'location-tracking';
 
 GoogleSignin.configure({
   webClientId: '587864716594-rieevghh6j6gi2m10lhb835u4ndn0631.apps.googleusercontent.com',
@@ -36,7 +40,6 @@ export default function LoginContainer({ navigation }) {
       console.log('Authorization status:', authStatus);
     }
   }
-
   useEffect(() => {
     dispatch({ type: 'resetValues' });
     if (requestUserPermission()) {
@@ -46,6 +49,16 @@ export default function LoginContainer({ navigation }) {
           console.log('Token: ', token);
         });
     }
+  }, []);
+  useEffect(() => {
+    const stopLocation = () => {
+      TaskManager.isTaskRegisteredAsync(LOCATION_TRACKING).then((tracking) => {
+        if (tracking) {
+          Location.stopLocationUpdatesAsync(LOCATION_TRACKING);
+        }
+      });
+    };
+    stopLocation();
   }, []);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });

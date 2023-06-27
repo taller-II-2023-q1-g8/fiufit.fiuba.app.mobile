@@ -94,29 +94,6 @@ export default function HomeScreen({ navigation }) {
     }
     fetchData();
   }, []);
-  /*
-  useEffect(() => {
-    setLoading(true);
-    async function fetchData() {
-      // const response = await fetchUserGoalsByUsername(state.user.username);
-      // const json = await response.json();
-      // console.log('b', json.message);
-
-      // Ordeno las goals del usuario según su deadline
-      const sortedGoals = goals
-        .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
-        .filter((goal) => goal.status === 'in_progress');
-      const now = new Date();
-
-      // de las más cercanas a expirar, muestro 3
-      const closestGoals = sortedGoals.filter((goal, index) => index < 3 || new Date(goal.deadline) < now);
-
-      setGoals(closestGoals);
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
-  */
 
   const handleSignOutPress = async () => {
     setLoading(true);

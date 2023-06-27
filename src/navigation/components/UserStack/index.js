@@ -1,5 +1,6 @@
 import { string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import * as Location from 'expo-location';
 
 import { fetchFollowedUsersByUsername, fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
 import { useStateValue } from '../../../state';
@@ -32,6 +33,33 @@ export default function UserStackContainer({ email }) {
 
   useEffect(() => {
     fetchUser();
+  }, []);
+
+  useEffect(() => {
+    const config = async () => {
+      const resf = await Location.requestForegroundPermissionsAsync();
+      if (resf.status !== 'granted') {
+        console.log('Permission to access location was denied');
+      } else {
+        console.log('Permission to access location granted');
+      }
+    };
+
+    config();
+  }, []);
+  const setLocation = async () => {
+    const location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.BestForNavigation
+    });
+    /* Tue Jun 27 15:17:12 2023: -34.5384222,-58.4816437 */
+    // Luego de fetchear hacer un post a la bdd con username = state.user.username
+    console.log(location.coords.latitude, location.coords.longitude);
+  };
+
+  useEffect(() => {
+    setLocation();
+    const dataInterval = setInterval(() => setLocation(), 120 * 1000);
+    return () => clearInterval(dataInterval);
   }, []);
   return <UserStack loading={loading} />;
 }
