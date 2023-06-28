@@ -12,6 +12,7 @@ export default function UserStackContainer({ email }) {
   // Cargar aca el usuario en initial state y ejecutar la token promise
   // Para tener el token de validacion para hacer requests
   const [loading, setLoading] = useState(true);
+  const [locationGranted, setLocationGranted] = useState(false);
   const [, dispatch] = useStateValue();
 
   const fetchUser = async () => {
@@ -35,32 +36,39 @@ export default function UserStackContainer({ email }) {
     fetchUser();
   }, []);
 
-  useEffect(() => {
-    const config = async () => {
-      const resf = await Location.requestForegroundPermissionsAsync();
-      if (resf.status !== 'granted') {
-        console.log('Permission to access location was denied');
-      } else {
-        console.log('Permission to access location granted');
-      }
-    };
-
-    config();
-  }, []);
   const setLocation = async () => {
     const location = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.BestForNavigation
     });
     /* Tue Jun 27 15:17:12 2023: -34.5384222,-58.4816437 */
+    dispatch({
+      type: 'updateLocation',
+      newLocation: { latitude: location.coords.latitude, longitude: location.coords.longitude }
+    });
     // Luego de fetchear hacer un post a la bdd con username = state.user.username
     console.log(location.coords.latitude, location.coords.longitude);
   };
 
   useEffect(() => {
-    setLocation();
-    const dataInterval = setInterval(() => setLocation(), 120 * 1000);
-    return () => clearInterval(dataInterval);
+    const config = async () => {
+      const resf = await Location.requestForegroundPermissionsAsync();
+      if (resf.status !== 'granted') {
+        console.log('Permission to access location was denied');
+        setLocationGranted(false);
+      } else {
+        console.log('Permission to access location granted');
+        setLocationGranted(true);
+      }
+    };
+    config();
   }, []);
+  useEffect(() => {
+    if (locationGranted) {
+      setLocation();
+      const dataInterval = setInterval(() => setLocation(), 120 * 1000);
+      return () => clearInterval(dataInterval);
+    }
+  }, [locationGranted]);
   return <UserStack loading={loading} />;
 }
 

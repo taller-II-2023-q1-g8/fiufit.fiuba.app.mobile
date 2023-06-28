@@ -1,21 +1,14 @@
 import { func, shape } from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 
-import { colors } from '../../colors';
 import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
-import { isEmpty, processFetchedPlans } from '../../utils';
+import { processFetchedPlans } from '../../utils';
 import { useStateValue } from '../../state';
-import BackgroundImage from '../../assets/Background.jpg';
-import Loader from '../../components/Loader';
 import texts from '../../texts';
 
-import { getFilters } from './utils';
+import { getDistanceFromLatLonInKm, getFilters } from './utils';
 import { hasSelectedFilters } from './filtering';
-import { styles } from './styles';
-import SearchTrainingPlans from './search_plans_layout';
-import SearchUsers from './search_users_layout';
 import Explore from './layout';
 
 export default function ExploreScreen({ navigation }) {
@@ -49,7 +42,6 @@ export default function ExploreScreen({ navigation }) {
   const handleItemPress = (plan) => {
     navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
   };
-
   // Users
   const [usernames, setUsernames] = useState([]);
   const [filteredUsernames, setFilteredUsernames] = useState([]);
@@ -84,6 +76,19 @@ export default function ExploreScreen({ navigation }) {
     }
   };
 
+  const handleOnDistanceChange = (newDistance) => {
+    if (state.userLocation !== undefined) {
+      // Permitio que trackeemos su location
+      const l1 = state.userLocation.latitude;
+      const l2 = state.userLocation.longitude;
+      // Distancia para probar
+      const l3 = 0;
+      const l4 = 0;
+      console.log('Distancia: ', getDistanceFromLatLonInKm(l1, l2, l3, l4));
+    } else {
+      console.log('Primero tenes que habilitar el tracking');
+    }
+  };
   const handleOnRoleChange = (name, newUserRole) => {
     console.log(newUserRole);
     const aux = { ...filterUsers, rol: newUserRole };
@@ -158,6 +163,7 @@ export default function ExploreScreen({ navigation }) {
       handleOnPlanTitleChange={handleOnTitleChange}
       handleOnUserNameChange={handleOnUsernameChange}
       handleOnUserRoleChange={handleOnRoleChange}
+      handleOnDistanceChange={handleOnDistanceChange}
     />
   );
 }

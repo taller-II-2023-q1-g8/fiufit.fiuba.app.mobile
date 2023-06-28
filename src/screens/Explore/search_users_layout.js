@@ -68,8 +68,14 @@ const roleOptions = [
   { label: 'Entrenador', value: 'Trainer' }
 ];
 
-function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRoleChange, filterUsers }) {
-  console.log('a');
+function SearchUsers({
+  data,
+  handleOnSearchChange,
+  handleItemPress,
+  handleOnRoleChange,
+  filterUsers,
+  handleOnDistanceChange
+}) {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.formContainer} enabled>
@@ -88,7 +94,7 @@ function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRole
             title={texts.Explore.distanceTitle}
             placeholder={texts.Explore.distancePlaceholder}
             keyboardType={phoneFieldType}
-            onChangeText={(text) => console.log(text)}
+            onChangeText={handleOnDistanceChange}
           />
         ) : null}
         <FlatList
@@ -113,5 +119,6 @@ SearchUsers.propTypes = {
   handleItemPress: func,
   handleOnSearchChange: func,
   handleOnRoleChange: func,
-  filterUsers: object
+  filterUsers: object,
+  handleOnDistanceChange: func
 };
