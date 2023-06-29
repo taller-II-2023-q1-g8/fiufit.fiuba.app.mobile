@@ -5,164 +5,98 @@ import { colors } from '../../colors';
 export const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '100%'
-  },
-  formContainer: {
-    paddingHorizontal: 32,
-    width: '100%',
-    paddingTop: 20,
-    paddingBottom: 32
-  },
-  logoutButton: {
-    position: 'absolute',
-    top: 25,
-    right: 16,
-    padding: 8
-  },
-  logoutButtonIcon: {
-    width: 38,
-    height: 38
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 16
-  },
-  homeHeader: {
-    backgroundColor: colors.header,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 42,
-    paddingVertical: 15
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold'
-  },
-  goalsTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    marginBottom: 10
-  },
-  submitButton: {
-    backgroundColor: colors.main,
-    alignItems: 'center',
-    borderRadius: 4,
-    marginBottom: 24,
-    marginTop: 24
-  },
-  submitButtonText: {
-    color: colors.white,
-    paddingVertical: 8,
-    fontSize: 16
-  },
-  menu_view: {
-    position: 'absolute',
-    top: 25,
-    right: 16,
-    padding: 8
-  },
-  trainingCompletedContainer: {
-    width: '90%',
-    aspectRatio: 1.65,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'lightgray',
-    marginBottom: 20,
-    height: 200,
-    overflow: 'hidden'
-  },
-  trainingCompletedHeader: {
-    flex: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.main_soft
-  },
-  profilePicture: {
-    width: 60,
-    height: 60,
+    height: '100%',
+    display: 'flex',
     justifyContent: 'center',
+    flexDirection: 'column',
     alignItems: 'center'
   },
-  userPhoto: {
-    width: 47,
-    height: 47,
-    borderRadius: 50
+  infoContainer: {
+    width: '80%',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.white,
+    backgroundColor: colors.header
   },
-  border: {
-    height: 1,
-    backgroundColor: 'black'
-  },
-  usernameContainer: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  username: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 10
-  },
-  usernameWrapper: {
-    justifyContent: 'center'
-  },
-  usernameText: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    marginTop: 10,
-    marginLeft: 8,
-    color: colors.white
-  },
-  dateWrapper: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    marginBottom: 3
-  },
-  dateText: {
-    fontSize: 12,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginRight: 3,
-    color: colors.white
-  },
-  trainingCompletedBody: {
-    flex: 5,
-    backgroundColor: colors.feed_items,
-    paddingHorizontal: 10
-  },
-  planInfoContainer: {
+  stepsContainer: {
+    display: 'flex',
+    alignItems: 'center',
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 10,
-    marginTop: 10
+    justifyContent: 'space-between'
+    // borderWidth: 1,
+    // borderColor: colors.white,
+    // borderBottomWidth: 0,
   },
-  planImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 50,
-    marginRight: 5
+  timeContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+    // borderWidth: 1,
+    // borderColor: colors.white,
+    // borderTopWidth: 0,
   },
-  planDetails: {
-    flex: 1
-  },
-  planName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
+  steps: {
+    padding: 10,
+    textAlign: 'right',
+    width: '65%',
+    fontSize: 50,
     color: colors.white
   },
-  planDifficulty: {
-    fontSize: 14,
+  stepsImg: {
+    marginRight: 35,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  timeImg: {
+    marginRight: 35,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  time: {
+    padding: 10,
+    fontSize: 50,
+    width: '65%',
+    textAlign: 'right',
     color: colors.white
   },
-  planCompletedText: {
-    fontSize: 12,
-    marginBottom: 2,
+  actionButton: {
+    margin: 20,
+    borderRadius: 20,
+    padding: 5
+  },
+
+  startButton: {
+    backgroundColor: 'green'
+  },
+  pauseButton: {
+    backgroundColor: colors.main,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100
+  },
+  stopButton: {
+    backgroundColor: 'red'
+  },
+
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+
+  actionButtonText: {
+    fontSize: 30,
+    padding: 10,
+    color: colors.white
+  },
+
+  errorText: {
+    fontSize: 30,
     color: colors.white
   }
 });
