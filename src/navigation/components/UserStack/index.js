@@ -2,7 +2,12 @@ import { string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
-import { fetchFollowedUsersByUsername, fetchUserByEmail, fetchUserGoalsByUsername } from '../../../requests';
+import {
+  fetchFollowedUsersByUsername,
+  fetchUserByEmail,
+  fetchUserGoalsByUsername,
+  updateUserLocation
+} from '../../../requests';
 import { useStateValue } from '../../../state';
 
 import UserStack from './layout';
@@ -45,7 +50,15 @@ export default function UserStackContainer({ email }) {
       type: 'updateLocation',
       newLocation: { latitude: location.coords.latitude, longitude: location.coords.longitude }
     });
+    const userResponse = await fetchUserByEmail(email);
+    const userJson = await userResponse.json();
     // Luego de fetchear hacer un post a la bdd con username = state.user.username
+    const user = {
+      username: userJson.message.username,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude
+    };
+    const a = await updateUserLocation(user);
     console.log(location.coords.latitude, location.coords.longitude);
   };
 
