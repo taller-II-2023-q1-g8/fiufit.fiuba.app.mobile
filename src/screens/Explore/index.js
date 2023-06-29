@@ -1,21 +1,14 @@
 import { func, shape } from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, ImageBackground } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { colors } from '../../colors';
-import { fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
-import { isEmpty, processFetchedPlans } from '../../utils';
+import { fetchAllUsers, fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
+import { processFetchedPlans } from '../../utils';
 import { useStateValue } from '../../state';
-import BackgroundImage from '../../assets/Background.jpg';
-import Loader from '../../components/Loader';
 import texts from '../../texts';
 
-import { getFilters } from './utils';
+import { getDistanceFromLatLonInKm, getFilters } from './utils';
 import { hasSelectedFilters } from './filtering';
-import { styles } from './styles';
-import SearchTrainingPlans from './search_plans_layout';
-import SearchUsers from './search_users_layout';
 import Explore from './layout';
 
 export default function ExploreScreen({ navigation }) {
@@ -49,36 +42,143 @@ export default function ExploreScreen({ navigation }) {
   const handleItemPress = (plan) => {
     navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
   };
-
   // Users
   const [usernames, setUsernames] = useState([]);
   const [filteredUsernames, setFilteredUsernames] = useState([]);
+  const [filterUsers, setFilterUsers] = useState({
+    name: '',
+    rol: 'Any',
+    distance: Number.MAX_VALUE
+  });
   const [state] = useStateValue();
 
   const handleOnUsernameChange = (newUsernameQuery) => {
-    setFilteredUsernames(
-      usernames.filter(
-        (user) =>
-          user.username !== state.user.username &&
-          user.username.toLowerCase().includes(newUsernameQuery.toLowerCase())
-      )
-    );
+    const aux = { ...filterUsers, name: newUsernameQuery };
+    console.log(filterUsers, aux);
+    setFilterUsers(aux);
+    if (aux.rol === 'Any') {
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(newUsernameQuery.toLowerCase())
+        )
+      );
+    } else if (aux.rol === 'Trainer') {
+      const l1 = state.userLocation.latitude;
+      const l2 = state.userLocation.longitude;
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(newUsernameQuery.toLowerCase()) &&
+            user.role === aux.rol &&
+            getDistanceFromLatLonInKm(l1, l2, user.latitude, user.longitude) < aux.distance
+        )
+      );
+    } else {
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(newUsernameQuery.toLowerCase()) &&
+            user.role === aux.rol
+        )
+      );
+    }
   };
 
-  const handleOnRoleChange = (name, newUserRole) => {
-    console.log(usernames);
-    console.log(newUserRole);
-    if (newUserRole === 'Any') {
-      setFilteredUsernames(usernames);
+  const handleOnDistanceChange = (name, newDistance) => {
+    if (state.userLocation !== undefined) {
+      let distance = newDistance;
+      if (newDistance === '') {
+        distance = Number.MAX_VALUE;
+      }
+      const aux = { ...filterUsers, distance };
+      console.log(filterUsers, aux);
+      setFilterUsers(aux);
+      // Permitio que trackeemos su location
+      const l1 = state.userLocation.latitude;
+      const l2 = state.userLocation.longitude;
+      const a = usernames.filter(
+        (user) =>
+          user.role === filterUsers.rol &&
+          user.username !== state.user.username &&
+          user.username.toLowerCase().includes(filterUsers.name.toLowerCase())
+      );
+      const b = a.filter(
+        (user) => getDistanceFromLatLonInKm(l1, l2, user.latitude, user.longitude) < distance
+      );
+      setFilteredUsernames(b);
     } else {
-      setFilteredUsernames(usernames.filter((user) => user.role === newUserRole));
+      console.log('Primero tenes que habilitar el tracking');
+    }
+  };
+  const handleOnRoleChange = (name, newUserRole) => {
+    console.log(newUserRole);
+    const aux = { ...filterUsers, rol: newUserRole };
+    setFilterUsers(aux);
+    console.log(aux);
+    if (newUserRole === 'Any') {
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(aux.name.toLowerCase())
+        )
+      );
+    } else {
+      setFilteredUsernames(
+        usernames.filter(
+          (user) =>
+            user.role === newUserRole &&
+            user.username !== state.user.username &&
+            user.username.toLowerCase().includes(aux.name.toLowerCase())
+        )
+      );
     }
   };
 
   const nothing = (username) => {
     navigation.navigate(texts.SearchedProfile.name, { username });
   };
-
+  useEffect(() => {
+    if (filterUsers) {
+      console.log(filterUsers);
+      if (filterUsers.rol === 'Any') {
+        setFilteredUsernames(
+          usernames.filter(
+            (user) =>
+              user.username !== state.user.username &&
+              user.username.toLowerCase().includes(filterUsers.name.toLowerCase())
+          )
+        );
+      } else if (filterUsers.rol === 'Trainer') {
+        const l1 = state.userLocation.latitude;
+        const l2 = state.userLocation.longitude;
+        setFilteredUsernames(
+          usernames.filter(
+            (user) =>
+              user.username !== state.user.username &&
+              user.username.toLowerCase().includes(filterUsers.name.toLowerCase()) &&
+              user.role === filterUsers.rol &&
+              getDistanceFromLatLonInKm(l1, l2, user.latitude, user.longitude) < filterUsers.distance
+          )
+        );
+      } else {
+        setFilteredUsernames(
+          usernames.filter(
+            (user) =>
+              user.username !== state.user.username &&
+              user.username.toLowerCase().includes(filterUsers.name.toLowerCase()) &&
+              user.role === filterUsers.rol
+          )
+        );
+      }
+    } else {
+      setFilteredUsernames(usernames);
+    }
+  }, [usernames]);
   useFocusEffect(
     React.useCallback(() => {
       async function fetchData() {
@@ -87,19 +187,22 @@ export default function ExploreScreen({ navigation }) {
         await processFetchedPlans(plans1);
         setPlans(plans1);
         setFilteredPlans(plans1);
-        const usersResponse = await fetchUsersByUsername('');
-        const usersJson = await usersResponse.json();
+        const allUsers = await fetchAllUsers();
+        const allUR = await allUsers.json();
         const trainersResponse = await fetchTrainersID();
         const trainersJson = await trainersResponse.json();
-        // Get de usuarios no traiga admins
-        const users = usersJson.message
-          .filter((username) => username !== state.user.username)
-          .map((username) => ({
-            username,
-            role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+        const allU = allUR.message
+          .filter((user) => user.username !== state.user.username)
+          .map((user) => ({
+            username: user.username,
+            role: trainersJson.find((trainer) => trainer.external_id === user.username)
+              ? 'Trainer'
+              : 'Athlete',
+            latitude: user.latitude,
+            longitude: user.longitude
           }));
-        setUsernames(users);
-        setFilteredUsernames(users);
+        console.log(allU);
+        setUsernames(allU);
       }
       fetchData();
       return () => {
@@ -118,11 +221,13 @@ export default function ExploreScreen({ navigation }) {
       dataPlans={filteredPlans}
       dataUsers={filteredUsernames}
       filterPlans={filters}
+      filterUsers={filterUsers}
       handlePlanPress={handleItemPress}
       handleUserPress={nothing}
       handleOnPlanTitleChange={handleOnTitleChange}
       handleOnUserNameChange={handleOnUsernameChange}
       handleOnUserRoleChange={handleOnRoleChange}
+      handleOnDistanceChange={handleOnDistanceChange}
     />
   );
 }

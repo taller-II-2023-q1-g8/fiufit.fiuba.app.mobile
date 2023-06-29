@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { func, array, bool } from 'prop-types';
+import { func, array, bool, object } from 'prop-types';
 
 import texts from '../../texts';
 import SearchField from '../../components/Fields/SearchField';
@@ -18,6 +18,8 @@ import { getProfilePicURL } from '../../utils';
 import GenericSelectField from '../../components/Fields/GenericSelectField';
 
 import { styles } from './styles';
+import TextField from '../../components/Fields/TextField';
+import { phoneFieldType } from '../../components/Fields/constants';
 
 export function Item({ handleItemPress, user }) {
   const [profPicUrl, setProfPicUrl] = useState(null);
@@ -66,8 +68,14 @@ const roleOptions = [
   { label: 'Entrenador', value: 'Trainer' }
 ];
 
-function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRoleChange }) {
-  console.log('a');
+function SearchUsers({
+  data,
+  handleOnSearchChange,
+  handleItemPress,
+  handleOnRoleChange,
+  filterUsers,
+  handleOnDistanceChange
+}) {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView style={styles.formContainer} enabled>
@@ -81,6 +89,14 @@ function SearchUsers({ data, handleOnSearchChange, handleItemPress, handleOnRole
           items={roleOptions}
           onChangeText={handleOnRoleChange}
         />
+        {filterUsers.rol === 'Trainer' ? (
+          <TextField
+            title={texts.Explore.distanceTitle}
+            placeholder={texts.Explore.distancePlaceholder}
+            keyboardType={phoneFieldType}
+            onChangeText={handleOnDistanceChange}
+          />
+        ) : null}
         <FlatList
           data={data}
           renderItem={({ item }) => <Item handleItemPress={handleItemPress} user={item} />}
@@ -102,5 +118,7 @@ SearchUsers.propTypes = {
   data: array.isRequired,
   handleItemPress: func,
   handleOnSearchChange: func,
-  handleOnRoleChange: func
+  handleOnRoleChange: func,
+  filterUsers: object,
+  handleOnDistanceChange: func
 };

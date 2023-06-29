@@ -34,7 +34,7 @@ export const registerRequest = async (values) =>
 
 export const fetchUsersByUsername = async (username) =>
   fetchData(`${GATEWAY_URL}/user/usernames?prefix=${username}`);
-
+export const fetchAllUsers = async () => fetchData(`${GATEWAY_URL}/user/`);
 export const fetchUserByEmail = async (email) => fetchData(`${GATEWAY_URL}/user?email=${email}`);
 
 export const fetchUserProfileByUsername = async (username) =>
@@ -219,6 +219,20 @@ export const updateLoginTime = async (username) =>
       'Content-Type': 'application/json'
     },
     mode: 'cors'
+  });
+
+export const updateUserLocation = async (user) =>
+  fetch(`${GATEWAY_URL}/user/coordinates/${user.username}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify({
+      longitude: user.longitude,
+      latitude: user.latitude
+    })
   });
 
 export const fetchCompletedPlansByAthleteID = async (athleteId) =>

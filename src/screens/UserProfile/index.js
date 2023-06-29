@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signOut } from 'firebase/auth';
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
 
 import {
   fetchFollowedUsersByUsername,
@@ -17,6 +19,8 @@ import { getProfilePicURL } from '../../utils';
 import { auth } from '../../../firebaseConfig';
 
 import UserProfile from './layout';
+
+const LOCATION_TRACKING = 'location-tracking';
 
 export default function UserProfileContainer({ navigation }) {
   const [data, setData] = useState({});
@@ -87,6 +91,14 @@ export default function UserProfileContainer({ navigation }) {
       if (auth.currentUser.providerData[0].providerId === 'google.com') {
         await GoogleSignin.revokeAccess();
       }
+      const stopLocation = () => {
+        TaskManager.isTaskRegisteredAsync(LOCATION_TRACKING).then((tracking) => {
+          if (tracking) {
+            Location.stopLocationUpdatesAsync(LOCATION_TRACKING);
+          }
+        });
+      };
+      stopLocation();
       await signOut(auth);
     } catch (error) {
       setLoading(false);

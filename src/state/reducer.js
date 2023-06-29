@@ -34,6 +34,9 @@ export const reducer = (state, action) => {
     case 'updateGoals': {
       return { ...state, userGoals: action.newUserGoals };
     }
+    case 'updateLocation': {
+      return { ...state, userLocation: action.newLocation };
+    }
     case 'resetValues': {
       return initialState;
     }

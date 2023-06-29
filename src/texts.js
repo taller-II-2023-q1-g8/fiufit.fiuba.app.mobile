@@ -111,7 +111,9 @@ const texts = {
     title: 'Crear Plan'
   },
   Explore: {
-    title: 'Explorar'
+    title: 'Explorar',
+    distanceTitle: 'Distancia de busqueda',
+    distancePlaceholder: 'Rango en km de busqueda'
   },
   Fields: {
     birthdateTitle: 'Fecha de nacimiento',
