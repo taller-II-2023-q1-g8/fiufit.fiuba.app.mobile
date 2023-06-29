@@ -10,6 +10,7 @@ export const tabBarIconsAthlete = (route, { focused, color, size }) => {
   if (route.name === texts.Home.name) iconName = focused ? ICONS.HOME : ICONS.FOCUSED_HOME;
   else if (route.name === texts.SearchUsersStack.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
   else if (route.name === texts.SearchPlansStack.name) iconName = focused ? ICONS.LIST : ICONS.FOCUSED_LIST;
+  else if (route.name === texts.Walking.name) iconName = focused ? ICONS.WALKING : ICONS.FOCUSED_WALKING;
   else if (route.name === texts.AddPlan.name) {
     iconName = focused ? ICONS.ADD : ICONS.FOCUSED_ADD;
     color = 'red';
