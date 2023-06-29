@@ -24,6 +24,7 @@ function SelectField({ defaultValue, onChangeText, name, error, title }) {
           ...(error && styles.error)
         }}
         onValueChange={handleOnValueChange}
+        mode="dropdown"
       >
         <Picker.Item label="Mujer" value="female" />
         <Picker.Item label="Hombre" value="male" />

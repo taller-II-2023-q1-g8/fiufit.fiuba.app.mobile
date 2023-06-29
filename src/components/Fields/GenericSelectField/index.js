@@ -31,6 +31,7 @@ function GenericSelectField({
         onValueChange={handleOnValueChange}
         selectedValue={selectedValue}
         style={fieldInputContainerStyle}
+        mode="dropdown"
       >
         {items.map((item) => (
           <Picker.Item label={item.label} value={item.value} />
