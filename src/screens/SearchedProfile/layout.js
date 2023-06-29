@@ -456,6 +456,7 @@ function SearchedProfile({
             }
           }}
           style={styles.tab}
+          tabStyle={{ borderRightWidth: 1, borderLeftWidth: 1 }}
           renderLabel={renderLabel}
           indicatorStyle={styles.indicator}
         />

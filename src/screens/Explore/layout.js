@@ -4,6 +4,7 @@ import { useWindowDimensions, View, Text, Animated, ImageBackground } from 'reac
 import { number, func, array, object } from 'prop-types';
 
 import BackgroundImage from '../../assets/Background.jpg';
+import { colors } from '../../colors';
 
 import { styles } from './styles';
 import SearchUsers from './search_users_layout';
@@ -58,6 +59,7 @@ export default function Explore({
       {...props}
       indicatorContainerStyle={styles.indicatorContainer}
       style={styles.tab}
+      tabStyle={{ borderRightWidth: 1, borderLeftWidth: 1 }}
       renderLabel={renderLabel}
       indicatorStyle={styles.indicator}
     />

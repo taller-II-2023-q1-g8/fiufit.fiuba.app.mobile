@@ -54,7 +54,6 @@ export default function ExploreScreen({ navigation }) {
 
   const handleOnUsernameChange = (newUsernameQuery) => {
     const aux = { ...filterUsers, name: newUsernameQuery };
-    console.log(filterUsers, aux);
     setFilterUsers(aux);
     if (aux.rol === 'Any') {
       setFilteredUsernames(
@@ -95,7 +94,6 @@ export default function ExploreScreen({ navigation }) {
         distance = Number.MAX_VALUE;
       }
       const aux = { ...filterUsers, distance };
-      console.log(filterUsers, aux);
       setFilterUsers(aux);
       // Permitio que trackeemos su location
       const l1 = state.userLocation.latitude;
@@ -115,10 +113,8 @@ export default function ExploreScreen({ navigation }) {
     }
   };
   const handleOnRoleChange = (name, newUserRole) => {
-    console.log(newUserRole);
     const aux = { ...filterUsers, rol: newUserRole };
     setFilterUsers(aux);
-    console.log(aux);
     if (newUserRole === 'Any') {
       setFilteredUsernames(
         usernames.filter(
@@ -144,7 +140,6 @@ export default function ExploreScreen({ navigation }) {
   };
   useEffect(() => {
     if (filterUsers) {
-      console.log(filterUsers);
       if (filterUsers.rol === 'Any') {
         setFilteredUsernames(
           usernames.filter(
@@ -201,7 +196,6 @@ export default function ExploreScreen({ navigation }) {
             latitude: user.latitude,
             longitude: user.longitude
           }));
-        console.log(allU);
         setUsernames(allU);
       }
       fetchData();

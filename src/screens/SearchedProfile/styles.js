@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 50
   },
-  label: { fontSize: 16, color: colors.white },
+  label: { fontSize: 16, color: colors.white, fontWeight: 'bold' },
   tab: { elevation: 0, shadowOpacity: 0, backgroundColor: colors.main, height: TabBarHeight },
   indicator: { backgroundColor: colors.white },
   username: {

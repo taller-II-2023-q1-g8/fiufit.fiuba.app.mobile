@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 50,
     borderColor: colors.white
   },
-  label: { fontSize: 16, color: colors.white },
+  label: { fontSize: 16, color: colors.white, fontWeight: 'bold' },
   tab: {
     elevation: 0,
     shadowOpacity: 0,

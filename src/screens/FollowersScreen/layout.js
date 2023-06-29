@@ -53,6 +53,7 @@ function Tabs({ data, index, routes, setIndex, handleItemPress }) {
       indicatorContainerStyle={styles.indicatorContainer}
       style={styles.tab}
       renderLabel={renderLabel}
+      tabStyle={{ borderRightWidth: 1, borderLeftWidth: 1 }}
       indicatorStyle={styles.indicator}
     />
   );
