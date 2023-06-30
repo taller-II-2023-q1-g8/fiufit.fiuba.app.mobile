@@ -18,22 +18,19 @@ export default function WalkingScreen({ navigation }) {
   const [pastStepCount, setPastStepCount] = useState(0);
   const [currentStepCount, setCurrentStepCount] = useState(0);
   const [intervalRef, setIntervalRef] = useState(null);
-
+  const [pedometerRef, setPedometerRef] = useState(null);
   const subscribe = async () => {
-    const isAvailable = await Pedometer.isSupported();
+    const isAvailable = await Pedometer.isAvailableAsync();
     setIsPedometerAvailable(String(isAvailable));
     console.log(isAvailable);
     if (isAvailable) {
       try {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('acasdf');
-          return Pedometer.watchStepCount((result) => {
-            console.log('Abcabc');
-            setCurrentStepCount(result.steps);
-          });
+          console.log('Permissions granted');
+          return;
         }
-        Alert.alert('permission denied');
+        Alert.alert('No podras contar tus pasos');
         setIsPedometerAvailable('false');
       } catch (err) {
         console.warn(err);
@@ -42,7 +39,6 @@ export default function WalkingScreen({ navigation }) {
   };
   useEffect(() => {
     const subscription = subscribe();
-    return () => subscription && subscription.remove();
   }, []);
 
   const updater = () => {
@@ -53,9 +49,22 @@ export default function WalkingScreen({ navigation }) {
     if (activityStatus === 'stopped') {
       setActivityStatus('started');
       setIntervalRef(setInterval(updater, 1000));
+      if (isPedometerAvailable) {
+        setPedometerRef(
+          Pedometer.watchStepCount((result) => {
+            console.log(pastStepCount, result.steps);
+            setCurrentStepCount(result.steps + pastStepCount);
+          })
+        );
+      }
     } else {
       setActivityStatus('stopped');
       clearInterval(intervalRef);
+      if (isPedometerAvailable) {
+        setPastStepCount(currentStepCount);
+        pedometerRef.remove();
+        console.log(currentStepCount);
+      }
     }
   };
 
@@ -70,6 +79,11 @@ export default function WalkingScreen({ navigation }) {
     setTimePassed(0);
     setActivityStatus('stopped');
     clearInterval(intervalRef);
+    if (isPedometerAvailable) {
+      setPastStepCount(0);
+      setCurrentStepCount(0);
+      pedometerRef.remove();
+    }
   };
 
   return (
