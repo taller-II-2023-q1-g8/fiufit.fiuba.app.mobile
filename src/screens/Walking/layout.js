@@ -15,7 +15,8 @@ export default function Walking({
   steps,
   handleButtonPress,
   handleSubmitPress,
-  isPedometerAvailable
+  isPedometerAvailable,
+  distance
 }) {
   let minutes = Math.floor(timePassed / 60);
   let seconds = timePassed % 60;
@@ -23,12 +24,17 @@ export default function Walking({
   if (seconds < 10) seconds = `0${seconds}`;
 
   const timeToDisplay = `${minutes}:${seconds}`;
+  const distanceToDisplay = Math.round(distance * 1000);
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
         {isPedometerAvailable === 'true' && (
           <>
             <View style={styles.infoContainer}>
+              <View style={styles.stepsContainer}>
+                <Text style={styles.steps}>{distanceToDisplay} </Text>
+                <Text style={styles.mts}>(Mts)</Text>
+              </View>
               <View style={styles.stepsContainer}>
                 <Text style={styles.steps}>{steps}</Text>
                 <MaterialCommunityIcons style={styles.stepsImg} name="shoe-print" size={50} color="white" />
@@ -89,5 +95,6 @@ Walking.propTypes = {
   timePassed: number.isRequired,
   handleButtonPress: func.isRequired,
   handleSubmitPress: func.isRequired,
-  isPedometerAvailable: string.isRequired
+  isPedometerAvailable: string.isRequired,
+  distance: number.isRequired
 };

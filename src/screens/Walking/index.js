@@ -2,23 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
 import { Alert, PermissionsAndroid, Text, View } from 'react-native';
 import { Pedometer } from 'expo-sensors';
+import * as Location from 'expo-location';
 
 import { useStateValue } from '../../state';
 import { createMetricRequest } from '../../requests';
 
 import Walking from './layout';
 import { styles } from './styles';
+import { getDistanceFromLatLonInKm } from '../../utils';
 
 export default function WalkingScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [activityStatus, setActivityStatus] = useState('stopped');
   const [timePassed, setTimePassed] = useState(0);
-
+  const [pastLocation, setPastLocation] = useState(null);
+  const [currLocation, setCurrLocation] = useState(null);
+  const [distance, setDistance] = useState(0);
   const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
   const [pastStepCount, setPastStepCount] = useState(0);
   const [currentStepCount, setCurrentStepCount] = useState(0);
   const [intervalRef, setIntervalRef] = useState(null);
   const [pedometerRef, setPedometerRef] = useState(null);
+  const [locationRef, setLocationRef] = useState(null);
   const subscribe = async () => {
     const isAvailable = await Pedometer.isAvailableAsync();
     setIsPedometerAvailable(String(isAvailable));
@@ -37,15 +42,39 @@ export default function WalkingScreen({ navigation }) {
       }
     }
   };
+  const setup = async () => {
+    const location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.BestForNavigation
+    });
+    setPastLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+    console.log('Setup done');
+  };
   useEffect(() => {
+    setup();
     const subscription = subscribe();
   }, []);
-
+  useEffect(() => {
+    if (currLocation !== null) {
+      const l1 = pastLocation.latitude;
+      const l2 = pastLocation.longitude;
+      const l3 = currLocation.latitude;
+      const l4 = currLocation.longitude;
+      const d = getDistanceFromLatLonInKm(l1, l2, l3, l4);
+      console.log(d);
+      // Como no es
+      if (d * 1000 >= 1.5) {
+        console.log('Distancia hasta ahora: ', distance * 1000);
+        console.log('Delta d:', d * 1000);
+        setDistance(distance + d);
+        setPastLocation(currLocation);
+      }
+    }
+  }, [currLocation]);
   const updater = () => {
     setTimePassed((t) => t + 1);
   };
 
-  const handleButtonPress = () => {
+  const handleButtonPress = async () => {
     if (activityStatus === 'stopped') {
       setActivityStatus('started');
       setIntervalRef(setInterval(updater, 1000));
@@ -57,9 +86,22 @@ export default function WalkingScreen({ navigation }) {
           })
         );
       }
+      await setup();
+      const ref = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.BestForNavigation,
+          // distanceInterval: 3,
+          timeInterval: 2000
+        },
+        (loc) => {
+          setCurrLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude });
+        }
+      );
+      setLocationRef(ref);
     } else {
       setActivityStatus('stopped');
       clearInterval(intervalRef);
+      locationRef.remove();
       if (isPedometerAvailable) {
         setPastStepCount(currentStepCount);
         pedometerRef.remove();
@@ -78,7 +120,9 @@ export default function WalkingScreen({ navigation }) {
     });
     setTimePassed(0);
     setActivityStatus('stopped');
+    setDistance(0);
     clearInterval(intervalRef);
+    locationRef.remove();
     if (isPedometerAvailable) {
       setPastStepCount(0);
       setCurrentStepCount(0);
@@ -94,6 +138,7 @@ export default function WalkingScreen({ navigation }) {
       handleButtonPress={handleButtonPress}
       handleSubmitPress={handleSubmitPress}
       isPedometerAvailable={isPedometerAvailable}
+      distance={distance}
     />
   );
 }

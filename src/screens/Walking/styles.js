@@ -49,6 +49,14 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  mts: {
+    marginRight: 35,
+    display: 'flex',
+    fontSize: 20,
+    color: colors.white,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   timeImg: {
     marginRight: 35,
     display: 'flex',
