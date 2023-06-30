@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
-import { Text, View } from 'react-native';
+import { Alert, PermissionsAndroid, Text, View } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 
 import { useStateValue } from '../../state';
@@ -20,13 +20,24 @@ export default function WalkingScreen({ navigation }) {
   const [intervalRef, setIntervalRef] = useState(null);
 
   const subscribe = async () => {
-    const isAvailable = await Pedometer.isAvailableAsync();
+    const isAvailable = await Pedometer.isSupported();
     setIsPedometerAvailable(String(isAvailable));
     console.log(isAvailable);
     if (isAvailable) {
-      return Pedometer.watchStepCount((result) => {
-        setCurrentStepCount(result.steps);
-      });
+      try {
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION);
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('acasdf');
+          return Pedometer.watchStepCount((result) => {
+            console.log('Abcabc');
+            setCurrentStepCount(result.steps);
+          });
+        }
+        Alert.alert('permission denied');
+        setIsPedometerAvailable('false');
+      } catch (err) {
+        console.warn(err);
+      }
     }
   };
   useEffect(() => {
