@@ -17,6 +17,8 @@ export default function CreateGoalContainer({ navigation }) {
     exercise_title: '',
     goal_weight_in_kg: 0,
     goal_num_of_completions: 0,
+    goal_distance_in_meters: 0,
+    goal_num_of_steps: 0,
     deadline: ''
   };
   const [data, setData] = useState(initialData);
@@ -38,11 +40,26 @@ export default function CreateGoalContainer({ navigation }) {
 
     if (data.type === 'max_weight_lifted_in_exercise') {
       delete values.completionPlans;
-    } else {
+      delete values.goal_num_of_steps;
+      delete values.goal_distance_in_meters;
+    } else if (data.type === 'training_plan_completion') {
       delete values.exercise_title;
       delete values.goal_weight_in_kg;
+      delete values.goal_num_of_steps;
+      delete values.goal_distance_in_meters;
+    } else if (data.type === 'total_steps_taken') {
+      delete values.completionPlans;
+      delete values.exercise_title;
+      delete values.goal_weight_in_kg;
+      delete values.goal_distance_in_meters;
+    } else if (data.type === 'total_distance_travelled') {
+      delete values.completionPlans;
+      delete values.exercise_title;
+      delete values.goal_weight_in_kg;
+      delete values.goal_num_of_steps;
     }
 
+    console.log(data);
     // Falta implementar errores
     if (thereIsAnError(values)) {
       setLoading(false);

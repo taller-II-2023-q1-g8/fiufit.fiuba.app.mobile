@@ -69,6 +69,69 @@ function MaxWeightLiftedInExercise({ goal }) {
   );
 }
 
+function TotalStepsTaken({ goal }) {
+  const completionPercentage = goal.completion_percentage;
+  let barColor;
+  let goalStatus;
+
+  switch (goal.status) {
+    case 'in_progress':
+      goalStatus = 'En Progreso';
+      barColor = 'orange';
+      break;
+    case 'completed':
+      goalStatus = 'Completada';
+      barColor = 'green';
+      break;
+    default:
+      goalStatus = 'Fallida';
+      barColor = 'red';
+      break;
+  }
+
+  const deadline = new Date(goal.deadline);
+  const deadlineStr = deadline.toLocaleDateString('es-ES', deadline);
+
+  return (
+    <View
+      style={{
+        borderWidth: 1,
+        borderColor: colors.soft_red,
+        backgroundColor: colors.feed_items,
+        padding: 10,
+        borderRadius: 20,
+        marginBottom: 10
+      }}
+    >
+      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
+        Total de Pasos Dados
+      </Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
+          Objetivo: {goal.goal_num_of_completions}
+        </Text>
+        <Text style={{ paddingBottom: 5, paddingRight: 5, color: colors.gray }}>Vencimiento</Text>
+      </View>
+      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>{goalStatus}</Text>
+          <Text style={{ paddingBottom: 5, paddingRight: 5, color: colors.white }}>{deadlineStr}</Text>
+        </View>
+        <View style={{ backgroundColor: '#e8e8e8', width: '100%', height: 10, borderRadius: 4 }}>
+          <View
+            style={{
+              backgroundColor: barColor,
+              width: `${completionPercentage}%`,
+              height: 10,
+              borderRadius: 4
+            }}
+          />
+        </View>
+      </View>
+    </View>
+  );
+}
+
 function TrainingPlanCompletion({ goal }) {
   const completionPercentage = goal.completion_percentage;
   let barColor;
@@ -132,12 +195,79 @@ function TrainingPlanCompletion({ goal }) {
   );
 }
 
+function TotalDistanceTravelled({ goal }) {
+  const completionPercentage = goal.completion_percentage;
+  let barColor;
+  let goalStatus;
+
+  switch (goal.status) {
+    case 'in_progress':
+      goalStatus = 'En Progreso';
+      barColor = 'orange';
+      break;
+    case 'completed':
+      goalStatus = 'Completada';
+      barColor = 'green';
+      break;
+    default:
+      goalStatus = 'Fallida';
+      barColor = 'red';
+      break;
+  }
+
+  const deadline = new Date(goal.deadline);
+  const deadlineStr = deadline.toLocaleDateString('es-ES', deadline);
+
+  return (
+    <View
+      style={{
+        borderWidth: 1,
+        borderColor: colors.soft_red,
+        backgroundColor: colors.feed_items,
+        padding: 10,
+        borderRadius: 20,
+        marginBottom: 10
+      }}
+    >
+      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
+        Distancia Recorrida
+      </Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
+          Objetivo: {goal.goal_num_of_completions}
+        </Text>
+        <Text style={{ paddingBottom: 5, paddingRight: 5, color: colors.gray }}>Vencimiento</Text>
+      </View>
+      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>{goalStatus}</Text>
+          <Text style={{ paddingBottom: 5, paddingRight: 5, color: colors.white }}>{deadlineStr}</Text>
+        </View>
+        <View style={{ backgroundColor: '#e8e8e8', width: '100%', height: 10, borderRadius: 4 }}>
+          <View
+            style={{
+              backgroundColor: barColor,
+              width: `${completionPercentage}%`,
+              height: 10,
+              borderRadius: 4
+            }}
+          />
+        </View>
+      </View>
+    </View>
+  );
+}
+
 export function Goal({ goal }) {
   switch (goal.type) {
     case 'max_weight_lifted_in_exercise':
       return MaxWeightLiftedInExercise({ goal });
     case 'training_plan_completion':
       return TrainingPlanCompletion({ goal });
+    case 'total_steps_taken':
+      return TotalStepsTaken({ goal });
+    case 'total_distance_travelled':
+      return TotalDistanceTravelled({ goal });
     default:
       return null;
   }
@@ -182,5 +312,13 @@ TrainingPlanCompletion.propTypes = {
 };
 
 MaxWeightLiftedInExercise.propTypes = {
+  goal: object.isRequired
+};
+
+TotalDistanceTravelled.propTypes = {
+  goal: object.isRequired
+};
+
+TotalStepsTaken.propTypes = {
   goal: object.isRequired
 };
