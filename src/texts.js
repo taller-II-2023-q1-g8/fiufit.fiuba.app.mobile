@@ -38,6 +38,10 @@ const texts = {
     title: 'Social',
     yourFollowingTitle: 'Que hicieron tus amigos'
   },
+  Walking: {
+    name: 'Walking',
+    title: 'Caminata'
+  },
   TrainerHome: {
     name: 'Trainer Home',
     homeTitle: 'Inicio de Trainer',

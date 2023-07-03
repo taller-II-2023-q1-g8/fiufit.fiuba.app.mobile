@@ -15,6 +15,7 @@ import PrivateMessage from '../../../../../screens/PrivateMessage';
 import ExerciseScreen from '../../../../../screens/Exercise';
 import RestScreen from '../../../../../screens/Rest';
 import RatingScreen from '../../../../../screens/Rating';
+import WalkingScreen from '../../../../../screens/Walking';
 
 import ExploreStack from './components/ExploreStack';
 import FeedStack from './components/FeedStack';
@@ -36,6 +37,7 @@ function TabStack() {
     >
       <Tab.Screen component={HomeScreen} name={texts.Home.name} />
       <Tab.Screen component={FeedStack} name={texts.Feed.name} />
+      <Tab.Screen component={WalkingScreen} name={texts.Walking.name} />
       <Tab.Screen component={ExploreStack} name={texts.SearchPlansStack.name} />
       <Tab.Screen component={UserProfileStack} name={texts.UserProfileStack.name} />
     </Tab.Navigator>

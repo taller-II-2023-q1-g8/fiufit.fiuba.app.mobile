@@ -32,7 +32,7 @@ export const registerRequest = async (values) =>
     body: JSON.stringify(values)
   });
 
-export const fetchUsersByUsername = async (username) =>
+export const fetchUsersByUsererrorTextname = async (username) =>
   fetchData(`${GATEWAY_URL}/user/usernames?prefix=${username}`);
 export const fetchAllUsers = async () => fetchData(`${GATEWAY_URL}/user/`);
 export const fetchUserByEmail = async (email) => fetchData(`${GATEWAY_URL}/user?email=${email}`);
@@ -62,7 +62,7 @@ export const createGoalRequest = async (values) =>
   });
 
 export const createMetricRequest = async (values) =>
-  fetch('https://api-gateway-k1nl.onrender.com/metrics', {
+  fetch(`${GATEWAY_URL}/metrics`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
