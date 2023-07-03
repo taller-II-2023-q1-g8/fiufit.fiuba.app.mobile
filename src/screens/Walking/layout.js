@@ -16,27 +16,41 @@ export default function Walking({
   handleButtonPress,
   handleSubmitPress,
   isPedometerAvailable,
-  distance
+  distance,
+  isAvailable,
+  isLocationAvailable
 }) {
   let minutes = Math.floor(timePassed / 60);
   let seconds = timePassed % 60;
   if (minutes < 10) minutes = `0${minutes}`;
   if (seconds < 10) seconds = `0${seconds}`;
-
+  let unidad = '(Kms)';
+  let distanceToDisplay = distance.toFixed(2);
+  if (distance * 1000 <= 100) {
+    distanceToDisplay = Math.round(distance * 1000);
+    unidad = '(Mts)';
+  }
   const timeToDisplay = `${minutes}:${seconds}`;
-  const distanceToDisplay = Math.round(distance * 1000);
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
-        {isPedometerAvailable === 'true' && (
+        {isAvailable === 'true' && (
           <>
             <View style={styles.infoContainer}>
               <View style={styles.stepsContainer}>
-                <Text style={styles.steps}>{distanceToDisplay} </Text>
-                <Text style={styles.mts}>(Mts)</Text>
+                {isLocationAvailable === 'true' ? (
+                  <Text style={styles.steps}>{distanceToDisplay} </Text>
+                ) : (
+                  <Text style={styles.steps}>-</Text>
+                )}
+                <Text style={styles.mts}>{unidad}</Text>
               </View>
               <View style={styles.stepsContainer}>
-                <Text style={styles.steps}>{steps}</Text>
+                {isPedometerAvailable === 'true' ? (
+                  <Text style={styles.steps}>{steps}</Text>
+                ) : (
+                  <Text style={styles.steps}>-</Text>
+                )}
                 <MaterialCommunityIcons style={styles.stepsImg} name="shoe-print" size={50} color="white" />
               </View>
               <View style={styles.timeContainer}>
@@ -72,9 +86,9 @@ export default function Walking({
             </View>
           </>
         )}
-        {isPedometerAvailable === 'false' && (
+        {isAvailable === 'false' && (
           <View>
-            <Text style={styles.errorText}>No se puede acceder al podómetro</Text>
+            <Text style={styles.errorText}>No se puede acceder al podómetro ni a la ubicación</Text>
           </View>
         )}
       </View>
@@ -96,5 +110,7 @@ Walking.propTypes = {
   handleButtonPress: func.isRequired,
   handleSubmitPress: func.isRequired,
   isPedometerAvailable: string.isRequired,
-  distance: number.isRequired
+  distance: number.isRequired,
+  isAvailable: string.isRequired,
+  isLocationAvailable: string.isRequired
 };

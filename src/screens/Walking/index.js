@@ -19,29 +19,13 @@ export default function WalkingScreen({ navigation }) {
   const [currLocation, setCurrLocation] = useState(null);
   const [distance, setDistance] = useState(0);
   const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
+  const [isLocationAvailable, setIsLocationAvailable] = useState('checking');
+  const [isAvailable, setIsAvailable] = useState('checking');
   const [pastStepCount, setPastStepCount] = useState(0);
   const [currentStepCount, setCurrentStepCount] = useState(0);
   const [intervalRef, setIntervalRef] = useState(null);
   const [pedometerRef, setPedometerRef] = useState(null);
   const [locationRef, setLocationRef] = useState(null);
-  const subscribe = async () => {
-    const isAvailable = await Pedometer.isAvailableAsync();
-    setIsPedometerAvailable(String(isAvailable));
-    console.log(isAvailable);
-    if (isAvailable) {
-      try {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION);
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('Permissions granted');
-          return;
-        }
-        Alert.alert('No podras contar tus pasos');
-        setIsPedometerAvailable('false');
-      } catch (err) {
-        console.warn(err);
-      }
-    }
-  };
   const setup = async () => {
     const location = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.BestForNavigation
@@ -49,8 +33,47 @@ export default function WalkingScreen({ navigation }) {
     setPastLocation({ latitude: location.coords.latitude, longitude: location.coords.longitude });
     console.log('Setup done');
   };
+  const config = async () => {
+    const resf = await Location.requestForegroundPermissionsAsync();
+    if (resf.status !== 'granted') {
+      console.log('Permission to access location was denied');
+      setIsLocationAvailable('false');
+      return false;
+    }
+    console.log('Permission to access location granted');
+    await setup();
+    setIsLocationAvailable('true');
+    return true;
+  };
+  const subscribe = async () => {
+    const isLocAvailable = await config();
+    console.log(isLocAvailable);
+    const isPedAvailable = await Pedometer.isAvailableAsync();
+    setIsPedometerAvailable(String(isPedAvailable));
+    if (isPedAvailable) {
+      try {
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION);
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Permissions granted');
+          setIsAvailable('true');
+          return;
+        }
+        Alert.alert('No podras contar tus pasos');
+        if (isLocAvailable) {
+          setIsAvailable('true');
+          return;
+        }
+        setIsAvailable('false');
+        setIsPedometerAvailable('false');
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+    if (isLocAvailable) {
+      setIsAvailable('true');
+    }
+  };
   useEffect(() => {
-    setup();
     const subscription = subscribe();
   }, []);
   useEffect(() => {
@@ -91,7 +114,7 @@ export default function WalkingScreen({ navigation }) {
         {
           accuracy: Location.Accuracy.BestForNavigation,
           // distanceInterval: 3,
-          timeInterval: 2000
+          timeInterval: 5000
         },
         (loc) => {
           setCurrLocation({ latitude: loc.coords.latitude, longitude: loc.coords.longitude });
@@ -111,13 +134,24 @@ export default function WalkingScreen({ navigation }) {
   };
 
   const handleSubmitPress = () => {
-    createMetricRequest({
-      type: 'steps_taken',
-      duration_in_seconds: timePassed,
-      step_count: currentStepCount,
-      created_at: new Date().toISOString(),
-      username: state.user.username
-    });
+    if (isPedometerAvailable) {
+      createMetricRequest({
+        type: 'steps_taken',
+        duration_in_seconds: timePassed,
+        step_count: currentStepCount,
+        created_at: new Date().toISOString(),
+        username: state.user.username
+      });
+    }
+    if (isLocationAvailable) {
+      createMetricRequest({
+        type: 'steps_taken',
+        duration_in_seconds: timePassed,
+        distance_in_meters: distance * 1000,
+        created_at: new Date().toISOString(),
+        username: state.user.username
+      });
+    }
     setTimePassed(0);
     setActivityStatus('stopped');
     setDistance(0);
@@ -138,6 +172,8 @@ export default function WalkingScreen({ navigation }) {
       handleButtonPress={handleButtonPress}
       handleSubmitPress={handleSubmitPress}
       isPedometerAvailable={isPedometerAvailable}
+      isLocationAvailable={isLocationAvailable}
+      isAvailable={isAvailable}
       distance={distance}
     />
   );
