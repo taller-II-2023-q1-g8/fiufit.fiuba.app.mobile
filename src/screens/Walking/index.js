@@ -145,7 +145,7 @@ export default function WalkingScreen({ navigation }) {
     }
     if (isLocationAvailable) {
       createMetricRequest({
-        type: 'steps_taken',
+        type: 'distance_travelled',
         duration_in_seconds: timePassed,
         distance_in_meters: distance * 1000,
         created_at: new Date().toISOString(),
