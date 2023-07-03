@@ -51,9 +51,15 @@ function Item({ handleItemPress, itemData }) {
               size={20}
               color="#ffb300"
             />
-            <Text style={{ color: colors.white, fontSize: 15, paddingLeft: 10 }}>
-              {itemData.average_calification} / 10
-            </Text>
+            {typeof itemData.average_calification === 'number' ? (
+              <Text style={{ color: colors.white, fontSize: 15, paddingLeft: 10 }}>
+                {itemData.average_calification} / 10
+              </Text>
+            ) : (
+              <Text style={{ color: colors.white, fontSize: 15, paddingLeft: 10 }}>
+                {itemData.average_calification}
+              </Text>
+            )}
           </View>
         </View>
       </View>

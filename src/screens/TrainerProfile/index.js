@@ -62,16 +62,24 @@ export default function TrainerProfileContainer({ navigation }) {
         // eslint-disable-next-line array-callback-return
         state.plansData.map((plan) => {
           if (typeof plan.average_calification === 'number') {
+            console.log(plan.averageCalification);
             averageCalification += plan.average_calification;
             plansWithCalification += 1;
           }
         });
-        averageCalification /= plansWithCalification;
-        bestCalificationPlan = state.plansData
-          .filter((plan) => typeof plan.average_calification === 'number')
-          .reduce((acc, currentValue) =>
+        if (plansWithCalification > 0) {
+          averageCalification /= plansWithCalification;
+        }
+        bestCalificationPlan = state.plansData.filter(
+          (plan) => typeof plan.average_calification === 'number'
+        );
+        if (bestCalificationPlan.length > 0) {
+          bestCalificationPlan = bestCalificationPlan.reduce((acc, currentValue) =>
             acc.average_calification > currentValue.average_calification ? acc : currentValue
           );
+        } else {
+          bestCalificationPlan = null;
+        }
         mostLikedPlan = state.plansData.reduce((acc, currentValue) =>
           acc.likes > currentValue.likes ? acc : currentValue
         );
