@@ -24,12 +24,14 @@ export default function Walking({
   let seconds = timePassed % 60;
   if (minutes < 10) minutes = `0${minutes}`;
   if (seconds < 10) seconds = `0${seconds}`;
-  let unidad = '(Kms)';
-  let distanceToDisplay = distance.toFixed(2);
+  const unidad = '(Kms)';
+  const distanceToDisplay = distance.toFixed(2);
+  /*
   if (distance * 1000 <= 100) {
     distanceToDisplay = Math.round(distance * 1000);
     unidad = '(Mts)';
   }
+  */
   const timeToDisplay = `${minutes}:${seconds}`;
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
