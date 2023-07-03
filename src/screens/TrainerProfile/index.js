@@ -51,29 +51,31 @@ export default function TrainerProfileContainer({ navigation }) {
       const plansJson = await plansResponse.json();
       console.log(state.plansData);
       let likesTotales = 0;
-      state.plansData.map((plan) => (likesTotales += plan.likes));
-      console.log(likesTotales);
-      const likePromedio = likesTotales / state.plansData.length;
+      let likePromedio = 0;
       let averageCalification = null;
       let plansWithCalification = 0;
-      // eslint-disable-next-line array-callback-return
-      state.plansData.map((plan) => {
-        if (typeof plan.average_calification === 'number') {
-          averageCalification += plan.average_calification;
-          plansWithCalification += 1;
-        }
-      });
-      console.log(averageCalification, plansWithCalification);
-      averageCalification /= plansWithCalification;
-      const bestCalificationPlan = state.plansData
-        .filter((plan) => typeof plan.average_calification === 'number')
-        .reduce((acc, currentValue) =>
-          acc.average_calification > currentValue.average_calification ? acc : currentValue
+      let bestCalificationPlan = null;
+      let mostLikedPlan = null;
+      if (state.plansData.length > 0) {
+        state.plansData.map((plan) => (likesTotales += plan.likes));
+        likePromedio = likesTotales / state.plansData.length;
+        // eslint-disable-next-line array-callback-return
+        state.plansData.map((plan) => {
+          if (typeof plan.average_calification === 'number') {
+            averageCalification += plan.average_calification;
+            plansWithCalification += 1;
+          }
+        });
+        averageCalification /= plansWithCalification;
+        bestCalificationPlan = state.plansData
+          .filter((plan) => typeof plan.average_calification === 'number')
+          .reduce((acc, currentValue) =>
+            acc.average_calification > currentValue.average_calification ? acc : currentValue
+          );
+        mostLikedPlan = state.plansData.reduce((acc, currentValue) =>
+          acc.likes > currentValue.likes ? acc : currentValue
         );
-      const mostLikedPlan = state.plansData.reduce((acc, currentValue) =>
-        acc.likes > currentValue.likes ? acc : currentValue
-      );
-      console.log(mostLikedPlan);
+      }
       setData({
         ...userJson.message,
         followers: followersJson.message.length,

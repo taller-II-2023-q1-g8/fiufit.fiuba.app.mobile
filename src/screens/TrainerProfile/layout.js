@@ -173,14 +173,26 @@ export default function TrainerProfile({
                 size={30}
                 color="#ffb300"
               />
-              <Text style={{ color: colors.white, fontSize: 25, paddingLeft: 10 }}>
-                {data.averageCalification} / 10
-              </Text>
+              {data.averageCalification !== null ? (
+                <Text style={{ color: colors.white, fontSize: 25, paddingLeft: 10 }}>
+                  {data.averageCalification} / 10
+                </Text>
+              ) : (
+                <Text style={{ color: colors.white, fontSize: 25, paddingLeft: 10 }}>-</Text>
+              )}
             </View>
             <Text style={styles.title}>Plan mas likeado</Text>
-            <Item handleItemPress={handlePlanPress} itemData={data.mostLikedPlan} />
+            {data.mostLikedPlan !== null ? (
+              <Item handleItemPress={handlePlanPress} itemData={data.mostLikedPlan} />
+            ) : (
+              <Text style={styles.noPlans}>No tenes planes con likes</Text>
+            )}
             <Text style={styles.title}>Plan mejor calificado</Text>
-            <Item handleItemPress={handlePlanPress} itemData={data.bestCalificationPlan} />
+            {data.bestCalificationPlan !== null ? (
+              <Item handleItemPress={handlePlanPress} itemData={data.bestCalificationPlan} />
+            ) : (
+              <Text style={styles.noPlans}>No tenes planes calificados</Text>
+            )}
           </ScrollView>
         )}
       </View>

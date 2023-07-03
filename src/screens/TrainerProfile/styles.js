@@ -48,6 +48,11 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 10
   },
+  noPlans: {
+    color: colors.white,
+    fontSize: 16,
+    opacity: 0.7
+  },
   profileName: {
     fontSize: 17,
     fontWeight: '600',
