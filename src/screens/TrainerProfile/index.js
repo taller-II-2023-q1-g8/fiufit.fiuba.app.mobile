@@ -49,12 +49,41 @@ export default function TrainerProfileContainer({ navigation }) {
       setAthleteID(foundAthlete.id);
       const plansResponse = await fetchAthletePlansByID(athleteID);
       const plansJson = await plansResponse.json();
-
+      console.log(state.plansData);
+      let likesTotales = 0;
+      state.plansData.map((plan) => (likesTotales += plan.likes));
+      console.log(likesTotales);
+      const likePromedio = likesTotales / state.plansData.length;
+      let averageCalification = null;
+      let plansWithCalification = 0;
+      // eslint-disable-next-line array-callback-return
+      state.plansData.map((plan) => {
+        if (typeof plan.average_calification === 'number') {
+          averageCalification += plan.average_calification;
+          plansWithCalification += 1;
+        }
+      });
+      console.log(averageCalification, plansWithCalification);
+      averageCalification /= plansWithCalification;
+      const bestCalificationPlan = state.plansData
+        .filter((plan) => typeof plan.average_calification === 'number')
+        .reduce((acc, currentValue) =>
+          acc.average_calification > currentValue.average_calification ? acc : currentValue
+        );
+      const mostLikedPlan = state.plansData.reduce((acc, currentValue) =>
+        acc.likes > currentValue.likes ? acc : currentValue
+      );
+      console.log(mostLikedPlan);
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
         followed: state.followedUsers.length,
-        plans: plansJson
+        plans: plansJson,
+        likesTotales,
+        likePromedio,
+        averageCalification,
+        bestCalificationPlan,
+        mostLikedPlan
       });
       setLoading(false);
     }
@@ -63,8 +92,9 @@ export default function TrainerProfileContainer({ navigation }) {
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handleEditProfile = () => navigation.navigate(texts.EditTrainerProfile.name);
-  const handlePlanPress = (plan) => navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
-
+  const handlePlanPress = (itemData) => {
+    navigation.navigate(texts.TrainerPlanView.name, { itemData });
+  };
   const handleSignOutPress = async () => {
     setLoading(true);
     try {

@@ -23,11 +23,6 @@ export default function TrainerPlanStack() {
       })}
     >
       <Stack.Screen
-        name={texts.TrainerHome.name}
-        component={TrainerHomeScreen}
-        options={{ title: '', headerShown: false }}
-      />
-      <Stack.Screen
         name={texts.TrainerPlanView.name}
         component={TrainerPlanViewContainer}
         options={{ title: '' }}
