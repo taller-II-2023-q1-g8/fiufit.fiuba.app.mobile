@@ -75,10 +75,10 @@ export const styles = StyleSheet.create({
     paddingLeft: 10
   },
   actionButton: {
-    margin: 20,
     borderRadius: 20,
-    padding: 5,
-    backgroundColor: 'green'
+    width: '40%',
+    backgroundColor: 'green',
+    alignItems: 'center'
   }
 });
 

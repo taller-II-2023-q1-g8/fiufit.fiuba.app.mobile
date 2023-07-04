@@ -39,8 +39,9 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
     async function fetchData() {
       let response = await fetchTrainingPlanByID(plan.id);
       let dataJson = await response.json();
-      setTrainerUsername(dataJson.message.trainer.external_id);
-      const rating = dataJson.message.athletes.find((athlete) => athlete.external_id === state.user.username);
+      console.log(dataJson);
+      setTrainerUsername(dataJson.trainer.external_id);
+      const rating = dataJson.athletes.find((athlete) => athlete.external_id === state.user.username);
       setAthleteRating(rating);
       response = await fetchAthletesID();
       dataJson = await response.json();

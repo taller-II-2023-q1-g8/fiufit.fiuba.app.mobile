@@ -29,7 +29,6 @@ export default function TrainerProfileContainer({ navigation }) {
   const [profPicLoading, setProfPicLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [athleteID, setAthleteID] = useState(null);
-  const [canVerify, setCanVerify] = useState(null);
 
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
@@ -51,12 +50,9 @@ export default function TrainerProfileContainer({ navigation }) {
       const trainerResponse = await fetchTrainerByUsername(state.user.username);
       const trainerJson = await trainerResponse.json();
       console.log('ALOHA', trainerJson);
-      if (trainerJson.error !== undefined) {
-        setCanVerify(false);
-      } else if (trainerJson.verification === 2) {
-        setCanVerify(false);
-      } else {
-        setCanVerify(true);
+      let trainerVerification = -1;
+      if (trainerJson.verification !== undefined) {
+        trainerVerification = trainerJson.verification;
       }
       /*
        * if trainerJsonerror or verification === verificado
@@ -105,6 +101,7 @@ export default function TrainerProfileContainer({ navigation }) {
           acc.likes > currentValue.likes ? acc : currentValue
         );
       }
+      console.log(trainerVerification);
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
@@ -115,7 +112,8 @@ export default function TrainerProfileContainer({ navigation }) {
         averageCalification,
         bestCalificationPlan,
         mostLikedPlan,
-        trainerId: trainerJson.id
+        trainerId: trainerJson.id,
+        trainerVerification
       });
       setLoading(false);
     }
@@ -181,7 +179,6 @@ export default function TrainerProfileContainer({ navigation }) {
       handleSignOutPress={handleSignOutPress}
       handleTrainerHome={handleTrainerHome}
       handlePickVideo={handlePickVideo}
-      canVerify={canVerify}
     />
   );
 }

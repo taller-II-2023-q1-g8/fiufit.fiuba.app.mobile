@@ -89,8 +89,7 @@ export default function TrainerProfile({
   handlePlanPress,
   handleSignOutPress,
   handleTrainerHome,
-  handlePickVideo,
-  canVerify
+  handlePickVideo
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
@@ -125,6 +124,22 @@ export default function TrainerProfile({
                       source={TrainerIcon}
                     />
                     <Text style={{ color: colors.white }}>Entrenador</Text>
+                    {data.trainerVerification === 2 ? (
+                      <View
+                        style={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          alignSelf: 'center',
+                          backgroundColor: colors.main_soft,
+                          marginLeft: 10
+                        }}
+                      >
+                        <Ionicons name="checkmark" size={20} color={colors.white} />
+                      </View>
+                    ) : null}
                   </View>
                 </View>
               </View>
@@ -161,10 +176,13 @@ export default function TrainerProfile({
                 </TouchableOpacity>
               </View>
             </View>
-            {canVerify ? (
-              <TouchableOpacity style={styles.actionButton} onPress={handlePickVideo}>
-                <Text style={styles.title}> Verificar</Text>
-              </TouchableOpacity>
+            {data.trainerVerification !== 2 && data.trainerVerification !== -1 ? (
+              <>
+                <Text style={styles.title}> Envia tu video para ser verificado</Text>
+                <TouchableOpacity style={styles.actionButton} onPress={handlePickVideo}>
+                  <Text style={{ color: colors.white, fontSize: 20, alignItems: 'center' }}> Verificar</Text>
+                </TouchableOpacity>
+              </>
             ) : null}
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <Text style={styles.title}>Estadísticas</Text>
@@ -226,6 +244,5 @@ TrainerProfile.propTypes = {
   loading: bool,
   handleSignOutPress: func,
   handleTrainerHome: func,
-  handlePickVideo: func,
-  canVerify: bool
+  handlePickVideo: func
 };
