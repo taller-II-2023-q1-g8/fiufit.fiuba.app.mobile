@@ -5,7 +5,7 @@ import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { cloneDeep } from 'lodash';
 
-import { fetchUsersByUsername, registerRequest } from '../../../requests';
+import { fetchUsersByUsername, registerAthlete, registerRequest } from '../../../requests';
 import { auth } from '../../../../firebaseConfig';
 
 import FederatedRegister from './layout';
@@ -81,6 +81,7 @@ export default function FederatedRegisterContainer() {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await registerRequest(values);
       if (response.ok) {
+        const r = await registerAthlete(data.username);
         Alert.alert('Bienvenido', 'Registro exitoso');
         const googleCredential = GoogleAuthProvider.credential(user.idToken);
         // Sign-in the user with the credential

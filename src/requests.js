@@ -137,7 +137,18 @@ export const fetchAthletePlansByID = async (athleteId) =>
       athlete_id: athleteId
     })
   });
-
+export const registerAthlete = async (athleteName) =>
+  fetch('https://fiufit-plans2.onrender.com/api/v1/athletes', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+    body: JSON.stringify({
+      external_id: athleteName
+    })
+  });
 export const fetchAthletesID = async () => fetchData(`https://fiufit-plans2.onrender.com/api/v1/athletes`);
 
 export const fetchTrainersID = async () => fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers`);

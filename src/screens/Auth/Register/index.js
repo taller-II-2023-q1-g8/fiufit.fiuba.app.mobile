@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { cloneDeep } from 'lodash';
 
 import { auth } from '../../../../firebaseConfig';
-import { registerRequest } from '../../../requests';
+import { registerAthlete, registerRequest } from '../../../requests';
 
 import Register from './layout';
 import { fillErrors, formatDate, getFields, getStepsData, nextStep, prevStep, thereIsAnError } from './utils';
@@ -78,6 +78,7 @@ export default function RegisterContainer() {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await registerRequest(values);
       if (response.ok) {
+        const r = await registerAthlete(data.username);
         Alert.alert('Bienvenido', 'Registro exitoso');
         await signInWithEmailAndPassword(auth, data.email, data.password);
       } else Alert.alert('Error', 'Intente nuevamente');
