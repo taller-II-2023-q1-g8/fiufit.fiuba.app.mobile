@@ -1,6 +1,6 @@
 import { bool, func, object, string } from 'prop-types';
-import { Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
-import React from 'react';
+import { Text, View, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Edit from '../../assets/icons/edit.png';
@@ -12,16 +12,55 @@ import BackgroundImage from '../../assets/Background.jpg';
 import manPic from '../../assets/man.jpeg';
 
 import { styles } from './styles';
+import { getPlanPicURL } from '../../utils';
+import { scrollviewStyle } from '../Home/styles';
 
 function Item({ handleItemPress, itemData }) {
+  const [planPicUrl, setPlanPicUrl] = useState(null);
+  const fetchPlanPicUrl = async () => {
+    const url = await getPlanPicURL(itemData.id);
+    setPlanPicUrl(url);
+  };
+
+  useEffect(() => {
+    fetchPlanPicUrl();
+  }, []);
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handleItemPress(itemData)}>
       <View style={styles.item}>
-        <Image style={styles.profilePic} source={manPic} />
+        {planPicUrl !== null ? (
+          <Image source={{ uri: planPicUrl }} style={styles.profilePic} />
+        ) : (
+          <Image source={manPic} style={styles.profilePic} />
+        )}
         <View style={{ display: 'flex' }}>
-          <Text style={{ fontSize: 17, fontWeight: '600', paddingLeft: 10, color: 'white' }}>
-            {itemData.title}
-          </Text>
+          <Text style={styles.profileName}>{itemData.title}</Text>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Ionicons
+              name="heart"
+              style={{ width: 30, height: 30, tintColor: colors.white, paddingLeft: 10 }}
+              size={20}
+              color={colors.error}
+            />
+            <Text style={{ color: colors.white, fontSize: 15, paddingLeft: 10 }}>{itemData.likes}</Text>
+          </View>
+          <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <Ionicons
+              name="star"
+              style={{ width: 30, height: 30, tintColor: colors.white, paddingLeft: 10 }}
+              size={20}
+              color="#ffb300"
+            />
+            {typeof itemData.average_calification === 'number' ? (
+              <Text style={{ color: colors.white, fontSize: 15, paddingLeft: 10 }}>
+                {itemData.average_calification} / 10
+              </Text>
+            ) : (
+              <Text style={{ color: colors.white, fontSize: 15, paddingLeft: 10 }}>
+                {itemData.average_calification}
+              </Text>
+            )}
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -57,7 +96,7 @@ export default function TrainerProfile({
         <Loader loading={loading} />
 
         {loading ? null : (
-          <>
+          <ScrollView contentContainerStyle={scrollviewStyle}>
             <View style={styles.header}>
               <View style={styles.headerInfo}>
                 {profPicUrl !== null ? (
@@ -122,37 +161,45 @@ export default function TrainerProfile({
               </View>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
-              <Text style={styles.title}>Métricas</Text>
-              <TouchableOpacity activeOpacity={0.5} onPress={handleAddStat}>
-                <Text
-                  style={{
-                    ...styles.title,
-                    ...{
-                      color: 'red',
-                      marginHorizontal: 10,
-                      paddingHorizontal: 10,
-                      borderColor: 'red',
-                      borderWidth: 0.5,
-                      borderRadius: 50,
-                      fontWeight: '400'
-                    }
-                  }}
-                >
-                  +
-                </Text>
-              </TouchableOpacity>
+              <Text style={styles.title}>Estadísticas</Text>
             </View>
-            <Text style={{ color: colors.white }}>...</Text>
-            {/* <View>
-              <Text style={styles.title}>Entrenamientos favoritos</Text>
-              <FlatList
-                key={data.plans}
-                data={data.plans}
-                renderItem={({ item }) => <Item handleItemPress={handlePlanPress} itemData={item} />}
-                ItemSeparatorComponent={ItemSeparatorView}
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Ionicons
+                name="heart"
+                style={{ width: 30, height: 30, tintColor: colors.white }}
+                size={30}
+                color={colors.error}
               />
-            </View> */}
-          </>
+              <Text style={{ color: colors.white, fontSize: 25, paddingLeft: 10 }}>{data.likesTotales}</Text>
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <Ionicons
+                name="star"
+                style={{ width: 30, height: 30, tintColor: colors.white }}
+                size={30}
+                color="#ffb300"
+              />
+              {data.averageCalification !== null ? (
+                <Text style={{ color: colors.white, fontSize: 25, paddingLeft: 10 }}>
+                  {data.averageCalification} / 10
+                </Text>
+              ) : (
+                <Text style={{ color: colors.white, fontSize: 25, paddingLeft: 10 }}>-</Text>
+              )}
+            </View>
+            <Text style={styles.title}>Plan mas likeado</Text>
+            {data.mostLikedPlan !== null ? (
+              <Item handleItemPress={handlePlanPress} itemData={data.mostLikedPlan} />
+            ) : (
+              <Text style={styles.noPlans}>No tenes planes con likes</Text>
+            )}
+            <Text style={styles.title}>Plan mejor calificado</Text>
+            {data.bestCalificationPlan !== null ? (
+              <Item handleItemPress={handlePlanPress} itemData={data.bestCalificationPlan} />
+            ) : (
+              <Text style={styles.noPlans}>No tenes planes calificados</Text>
+            )}
+          </ScrollView>
         )}
       </View>
     </ImageBackground>

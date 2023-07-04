@@ -49,12 +49,51 @@ export default function TrainerProfileContainer({ navigation }) {
       setAthleteID(foundAthlete.id);
       const plansResponse = await fetchAthletePlansByID(athleteID);
       const plansJson = await plansResponse.json();
-
+      console.log(state.plansData);
+      let likesTotales = 0;
+      let likePromedio = 0;
+      let averageCalification = null;
+      let plansWithCalification = 0;
+      let bestCalificationPlan = null;
+      let mostLikedPlan = null;
+      if (state.plansData.length > 0) {
+        state.plansData.map((plan) => (likesTotales += plan.likes));
+        likePromedio = likesTotales / state.plansData.length;
+        // eslint-disable-next-line array-callback-return
+        state.plansData.map((plan) => {
+          if (typeof plan.average_calification === 'number') {
+            console.log(plan.averageCalification);
+            averageCalification += plan.average_calification;
+            plansWithCalification += 1;
+          }
+        });
+        if (plansWithCalification > 0) {
+          averageCalification /= plansWithCalification;
+        }
+        bestCalificationPlan = state.plansData.filter(
+          (plan) => typeof plan.average_calification === 'number'
+        );
+        if (bestCalificationPlan.length > 0) {
+          bestCalificationPlan = bestCalificationPlan.reduce((acc, currentValue) =>
+            acc.average_calification > currentValue.average_calification ? acc : currentValue
+          );
+        } else {
+          bestCalificationPlan = null;
+        }
+        mostLikedPlan = state.plansData.reduce((acc, currentValue) =>
+          acc.likes > currentValue.likes ? acc : currentValue
+        );
+      }
       setData({
         ...userJson.message,
         followers: followersJson.message.length,
         followed: state.followedUsers.length,
-        plans: plansJson
+        plans: plansJson,
+        likesTotales,
+        likePromedio,
+        averageCalification,
+        bestCalificationPlan,
+        mostLikedPlan
       });
       setLoading(false);
     }
@@ -63,8 +102,9 @@ export default function TrainerProfileContainer({ navigation }) {
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handleEditProfile = () => navigation.navigate(texts.EditTrainerProfile.name);
-  const handlePlanPress = (plan) => navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
-
+  const handlePlanPress = (itemData) => {
+    navigation.navigate(texts.TrainerPlanView.name, { itemData });
+  };
   const handleSignOutPress = async () => {
     setLoading(true);
     try {

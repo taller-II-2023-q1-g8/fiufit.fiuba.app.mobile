@@ -25,11 +25,6 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between'
   },
-  item: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingVertical: 10
-  },
   username: {
     color: colors.white,
     fontSize: 18,
@@ -52,5 +47,36 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginVertical: 10
+  },
+  noPlans: {
+    color: colors.white,
+    fontSize: 16,
+    opacity: 0.7
+  },
+  profileName: {
+    fontSize: 17,
+    fontWeight: '600',
+    paddingLeft: 10,
+    color: colors.white
+  },
+  profileType: {
+    paddingLeft: 10,
+    color: colors.white
+  },
+
+  item: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: 'lightgray',
+    backgroundColor: colors.feed_items,
+    paddingLeft: 10
   }
 });
+
+export const scrollviewStyle = {
+  flexGrow: 1,
+  padding: 0
+};
