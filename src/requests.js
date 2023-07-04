@@ -166,12 +166,22 @@ export const fetchTrainersID = async () => fetchData(`${GATEWAY_URL}/trainers`);
 
 export const addPlanToAthleteAsFavorite = async (planID, athleteID) =>
   fetch(`${GATEWAY_URL}/plans/${planID}/athletes/${athleteID}`, {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      FiuFitAuth: FIUTFIT_API_KEY
+    }
   });
 
 export const removePlanToAthleteAsFavorite = async (planID, athleteID) =>
   fetch(`${GATEWAY_URL}/plans/${planID}/athletes/${athleteID}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      FiuFitAuth: FIUTFIT_API_KEY
+    }
   });
 
 export const AddExcerciseToPlanRequest = async (planID, exerciseID, values) =>
@@ -188,7 +198,12 @@ export const AddExcerciseToPlanRequest = async (planID, exerciseID, values) =>
 
 export const likePlan = async (planID, athleteID) =>
   fetch(`${GATEWAY_URL}/plans/${planID}/athletes/${athleteID}/likes`, {
-    method: 'PATCH'
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      FiuFitAuth: FIUTFIT_API_KEY
+    }
   });
 
 export const calificatePlan = async (planID, athleteID, values) =>
@@ -203,8 +218,13 @@ export const calificatePlan = async (planID, athleteID, values) =>
     body: JSON.stringify(values)
   });
 export const requestVerification = async (trainerId) =>
-  fetch(`https://fiufit-plans2.onrender.com/api/v1/verifications/${trainerId}/request`, {
-    method: 'PATCH'
+  fetch(`${GATEWAY_URL}/verifications/${trainerId}/request`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      FiuFitAuth: FIUTFIT_API_KEY
+    }
   });
 
 export const fetchPlansByTrainerUsername = async (username) =>
@@ -307,12 +327,22 @@ export const fetchFollowerUsersByUsername = async (username) =>
 
 export const followUser = async (followerUsername, followedUsername) =>
   fetch(`${GATEWAY_URL}/user/follow/${followerUsername}/${followedUsername}`, {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      FiuFitAuth: FIUTFIT_API_KEY
+    }
   });
 
 export const unfollowUser = async (followerUsername, followedUsername) =>
   fetch(`${GATEWAY_URL}/user/follow/${followerUsername}/${followedUsername}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      FiuFitAuth: FIUTFIT_API_KEY
+    }
   });
 
 export const sendMessageNotification = async (sender, receiver, message) =>
