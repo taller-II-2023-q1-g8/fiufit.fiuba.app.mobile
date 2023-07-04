@@ -88,13 +88,14 @@ export default function TrainerProfile({
   handleAddStat,
   handlePlanPress,
   handleSignOutPress,
-  handleTrainerHome
+  handleTrainerHome,
+  handlePickVideo,
+  canVerify
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <Loader loading={loading} />
       <View style={styles.container}>
-        <Loader loading={loading} />
-
         {loading ? null : (
           <ScrollView contentContainerStyle={scrollviewStyle}>
             <View style={styles.header}>
@@ -160,6 +161,11 @@ export default function TrainerProfile({
                 </TouchableOpacity>
               </View>
             </View>
+            {canVerify ? (
+              <TouchableOpacity style={styles.actionButton} onPress={handlePickVideo}>
+                <Text style={styles.title}> Verificar</Text>
+              </TouchableOpacity>
+            ) : null}
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <Text style={styles.title}>Estadísticas</Text>
             </View>
@@ -219,5 +225,7 @@ TrainerProfile.propTypes = {
   profPicUrl: string,
   loading: bool,
   handleSignOutPress: func,
-  handleTrainerHome: func
+  handleTrainerHome: func,
+  handlePickVideo: func,
+  canVerify: bool
 };

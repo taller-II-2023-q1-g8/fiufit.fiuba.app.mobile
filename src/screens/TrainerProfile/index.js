@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { shape, func } from 'prop-types';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signOut } from 'firebase/auth';
+import * as ImagePicker from 'expo-image-picker';
+import { ref, uploadBytes } from 'firebase/storage';
+import { Alert } from 'react-native';
 
 import {
   fetchFollowedUsersByUsername,
   fetchFollowerUsersByUsername,
   fetchUserProfileByUsername,
   fetchAthletePlansByID,
-  fetchAthletesID
+  fetchAthletesID,
+  requestVerification,
+  fetchTrainerByUsername
 } from '../../requests';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
 import { getProfilePicURL } from '../../utils';
-import { auth } from '../../../firebaseConfig';
+import { auth, storage } from '../../../firebaseConfig';
 
 import TrainerProfile from './layout';
 
@@ -24,6 +29,7 @@ export default function TrainerProfileContainer({ navigation }) {
   const [profPicLoading, setProfPicLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [athleteID, setAthleteID] = useState(null);
+  const [canVerify, setCanVerify] = useState(null);
 
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
@@ -42,14 +48,29 @@ export default function TrainerProfileContainer({ navigation }) {
       const userJson = await userResponse.json();
       const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
       const followersJson = await followersResponse.json();
-
+      const trainerResponse = await fetchTrainerByUsername(state.user.username);
+      const trainerJson = await trainerResponse.json();
+      console.log('ALOHA', trainerJson);
+      if (trainerJson.error !== undefined) {
+        setCanVerify(false);
+      } else if (trainerJson.verification === 2) {
+        setCanVerify(false);
+      } else {
+        setCanVerify(true);
+      }
+      /*
+       * if trainerJsonerror or verification === verificado
+       * canVerify false
+       * else
+       * if verification !== ya verificado
+       * canVerify true
+       */
       const AthletesResponse = await fetchAthletesID();
       const athletesJson = await AthletesResponse.json();
       const foundAthlete = await athletesJson.find((athlete) => athlete.external_id === state.user.username);
       setAthleteID(foundAthlete.id);
       const plansResponse = await fetchAthletePlansByID(athleteID);
       const plansJson = await plansResponse.json();
-      console.log(state.plansData);
       let likesTotales = 0;
       let likePromedio = 0;
       let averageCalification = null;
@@ -93,7 +114,8 @@ export default function TrainerProfileContainer({ navigation }) {
         likePromedio,
         averageCalification,
         bestCalificationPlan,
-        mostLikedPlan
+        mostLikedPlan,
+        trainerId: trainerJson.id
       });
       setLoading(false);
     }
@@ -101,6 +123,26 @@ export default function TrainerProfileContainer({ navigation }) {
   }, []);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
+  const handlePickVideo = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+      quality: 1
+    });
+
+    const cloudProfPicPath = 'verifications'.concat('/user_', data.trainerId, '.mp4');
+    const cloudProfilePicRef = ref(storage, cloudProfPicPath);
+    if (!result.cancelled) {
+      try {
+        const response = await fetch(result.uri);
+        const blob = await response.blob();
+        await uploadBytes(cloudProfilePicRef, blob);
+      } catch (error) {
+        Alert.alert("Couldn't upload video!");
+      }
+      // Hacer la llamada que pidio
+      await requestVerification(data.trainerId);
+    }
+  };
   const handleEditProfile = () => navigation.navigate(texts.EditTrainerProfile.name);
   const handlePlanPress = (itemData) => {
     navigation.navigate(texts.TrainerPlanView.name, { itemData });
@@ -138,6 +180,8 @@ export default function TrainerProfileContainer({ navigation }) {
       handlePlanPress={handlePlanPress}
       handleSignOutPress={handleSignOutPress}
       handleTrainerHome={handleTrainerHome}
+      handlePickVideo={handlePickVideo}
+      canVerify={canVerify}
     />
   );
 }
