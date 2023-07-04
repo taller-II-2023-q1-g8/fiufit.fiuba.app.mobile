@@ -99,7 +99,7 @@ export default function UserProfile({
                       style={{ width: 20, height: 20, marginRight: 2, tintColor: colors.white }}
                       source={TrainerIcon}
                     />
-                    <Text style={{ color: colors.white }}>Entrenador</Text>
+                    <Text style={{ color: colors.white }}>Atleta</Text>
                   </View>
                 </View>
               </View>

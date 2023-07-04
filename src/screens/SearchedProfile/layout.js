@@ -322,6 +322,22 @@ function SearchedProfile({
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} />
             <Text style={{ color: colors.white }}>{data.role}</Text>
+            {data.verification === 2 ? (
+              <View
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                  backgroundColor: colors.main_soft,
+                  marginLeft: 10
+                }}
+              >
+                <Ionicons name="checkmark" size={20} color={colors.white} />
+              </View>
+            ) : null}
           </View>
         </View>
       </Animated.View>

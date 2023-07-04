@@ -123,7 +123,7 @@ export const removeExerciseFromPlan = async (planID, exerciseID) =>
   });
 
 export const fetchTrainerByUsername = async (username) =>
-  fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers/usernames?prefix=${username}`);
+  fetchData(`https://fiufit-plans2.onrender.com/api/v1/trainers/username/${username}`);
 
 export const fetchAthletePlansByID = async (athleteId) =>
   fetch('https://fiufit-plans2.onrender.com/api/v1/plans/search', {
@@ -188,6 +188,10 @@ export const calificatePlan = async (planID, athleteID, values) =>
     },
     mode: 'cors',
     body: JSON.stringify(values)
+  });
+export const requestVerification = async (trainerId) =>
+  fetch(`https://fiufit-plans2.onrender.com/api/v1/verifications/${trainerId}/request`, {
+    method: 'PATCH'
   });
 
 export const fetchPlansByTrainerUsername = async (username) =>

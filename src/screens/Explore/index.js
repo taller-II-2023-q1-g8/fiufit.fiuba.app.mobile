@@ -186,16 +186,20 @@ export default function ExploreScreen({ navigation }) {
         const allUR = await allUsers.json();
         const trainersResponse = await fetchTrainersID();
         const trainersJson = await trainersResponse.json();
+        console.log(trainersJson);
         const allU = allUR.message
           .filter((user) => user.username !== state.user.username)
-          .map((user) => ({
-            username: user.username,
-            role: trainersJson.find((trainer) => trainer.external_id === user.username)
-              ? 'Trainer'
-              : 'Athlete',
-            latitude: user.latitude,
-            longitude: user.longitude
-          }));
+          .map((user) => {
+            const tr = trainersJson.find((trainer) => trainer.external_id === user.username);
+            return {
+              username: user.username,
+              role: tr ? 'Trainer' : 'Athlete',
+              latitude: user.latitude,
+              longitude: user.longitude,
+              verification: tr ? tr.verification.status : -1
+            };
+          });
+        console.log(allU);
         setUsernames(allU);
       }
       fetchData();

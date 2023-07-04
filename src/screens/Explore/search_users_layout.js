@@ -20,6 +20,7 @@ import GenericSelectField from '../../components/Fields/GenericSelectField';
 import { styles } from './styles';
 import TextField from '../../components/Fields/TextField';
 import { phoneFieldType } from '../../components/Fields/constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export function Item({ handleItemPress, user }) {
   const [profPicUrl, setProfPicUrl] = useState(null);
@@ -41,7 +42,25 @@ export function Item({ handleItemPress, user }) {
           <Image source={defaultProfPic} style={styles.profilePic} />
         )}
         <View style={{ display: 'flex' }}>
-          <Text style={styles.profileName}>{user.username}</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.profileName}>{user.username}</Text>
+            {user.verification === 2 ? (
+              <View
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                  backgroundColor: colors.main_soft,
+                  marginLeft: 10
+                }}
+              >
+                <Ionicons name="checkmark" size={20} color={colors.white} />
+              </View>
+            ) : null}
+          </View>
           <Text style={styles.profileType}>{user.role}</Text>
         </View>
       </View>
