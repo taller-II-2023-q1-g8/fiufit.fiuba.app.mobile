@@ -72,6 +72,7 @@ export default function SearchedProfileContainer({ route, navigation }) {
           followers: followersJson.message.length,
           followed: followedJson.message.length,
           role: 'Athlete',
+          verification: -1,
           completedPlans: completedPlansFeedItems
         });
 
@@ -88,6 +89,7 @@ export default function SearchedProfileContainer({ route, navigation }) {
         followers: followersJson.message.length,
         followed: followedJson.message.length,
         role: 'Trainer',
+        verification: id.verification.status,
         completedPlans: completedPlansFeedItems,
         createdPlans: plansJson
       });

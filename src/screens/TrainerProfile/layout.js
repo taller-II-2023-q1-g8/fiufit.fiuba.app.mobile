@@ -88,13 +88,13 @@ export default function TrainerProfile({
   handleAddStat,
   handlePlanPress,
   handleSignOutPress,
-  handleTrainerHome
+  handleTrainerHome,
+  handlePickVideo
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <Loader loading={loading} />
       <View style={styles.container}>
-        <Loader loading={loading} />
-
         {loading ? null : (
           <ScrollView contentContainerStyle={scrollviewStyle}>
             <View style={styles.header}>
@@ -124,6 +124,22 @@ export default function TrainerProfile({
                       source={TrainerIcon}
                     />
                     <Text style={{ color: colors.white }}>Entrenador</Text>
+                    {data.trainerVerification === 2 ? (
+                      <View
+                        style={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: 50,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          alignSelf: 'center',
+                          backgroundColor: colors.main_soft,
+                          marginLeft: 10
+                        }}
+                      >
+                        <Ionicons name="checkmark" size={20} color={colors.white} />
+                      </View>
+                    ) : null}
                   </View>
                 </View>
               </View>
@@ -160,6 +176,14 @@ export default function TrainerProfile({
                 </TouchableOpacity>
               </View>
             </View>
+            {data.trainerVerification !== 2 && data.trainerVerification !== -1 ? (
+              <>
+                <Text style={styles.title}> Envia tu video para ser verificado</Text>
+                <TouchableOpacity style={styles.actionButton} onPress={handlePickVideo}>
+                  <Text style={{ color: colors.white, fontSize: 20, alignItems: 'center' }}> Verificar</Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <Text style={styles.title}>Estadísticas</Text>
             </View>
@@ -219,5 +243,6 @@ TrainerProfile.propTypes = {
   profPicUrl: string,
   loading: bool,
   handleSignOutPress: func,
-  handleTrainerHome: func
+  handleTrainerHome: func,
+  handlePickVideo: func
 };

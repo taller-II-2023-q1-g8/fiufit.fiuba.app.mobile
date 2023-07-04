@@ -73,6 +73,12 @@ export const styles = StyleSheet.create({
     borderColor: 'lightgray',
     backgroundColor: colors.feed_items,
     paddingLeft: 10
+  },
+  actionButton: {
+    borderRadius: 20,
+    width: '40%',
+    backgroundColor: 'green',
+    alignItems: 'center'
   }
 });
 

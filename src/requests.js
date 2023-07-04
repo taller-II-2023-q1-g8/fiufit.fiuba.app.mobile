@@ -132,7 +132,7 @@ export const removeExerciseFromPlan = async (planID, exerciseID) =>
   });
 
 export const fetchTrainerByUsername = async (username) =>
-  fetchData(`${GATEWAY_URL}/trainers/usernames?prefix=${username}`);
+  fetchData(`${GATEWAY_URL}/trainers/username/${username}`);
 
 export const fetchAthletePlansByID = async (athleteId) =>
   fetch(`${GATEWAY_URL}/plans/search`, {
@@ -201,6 +201,10 @@ export const calificatePlan = async (planID, athleteID, values) =>
     },
     mode: 'cors',
     body: JSON.stringify(values)
+  });
+export const requestVerification = async (trainerId) =>
+  fetch(`https://fiufit-plans2.onrender.com/api/v1/verifications/${trainerId}/request`, {
+    method: 'PATCH'
   });
 
 export const fetchPlansByTrainerUsername = async (username) =>
