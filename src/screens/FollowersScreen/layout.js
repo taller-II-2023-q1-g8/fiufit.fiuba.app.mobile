@@ -32,7 +32,6 @@ function UserList({ data, handleItemPress }) {
 const UserListMemo = React.memo(UserList);
 function Tabs({ data, index, routes, setIndex, handleItemPress }) {
   const renderScene = ({ route }) => {
-    console.log(route.key);
     switch (route.key) {
       case 'first':
         return <UserListMemo data={data.followed} handleItemPress={handleItemPress} />;
@@ -58,34 +57,32 @@ function Tabs({ data, index, routes, setIndex, handleItemPress }) {
     />
   );
   return (
-    <ImageBackground source={BackgroundImage} resizeMode="cover">
-      <View style={styles.container}>
-        <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          renderTabBar={renderTabBar}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-        />
-      </View>
-    </ImageBackground>
+    <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      renderTabBar={renderTabBar}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+    />
   );
 }
 
 export default function FollowInfo({ loading, index, routes, setIndex, data, handleItemPress }) {
   return (
-    <>
-      <Loader loading={loading} />
-      {!loading && (
-        <Tabs
-          data={data}
-          index={index}
-          setIndex={setIndex}
-          routes={routes}
-          handleItemPress={handleItemPress}
-        />
-      )}
-    </>
+    <ImageBackground source={BackgroundImage} resizeMode="cover">
+      <View style={styles.container}>
+        <Loader loading={loading} />
+        {!loading && (
+          <Tabs
+            data={data}
+            index={index}
+            setIndex={setIndex}
+            routes={routes}
+            handleItemPress={handleItemPress}
+          />
+        )}
+      </View>
+    </ImageBackground>
   );
 }
 

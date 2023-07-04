@@ -221,16 +221,16 @@ export default function Home({
               <KeyboardAvoidingView style={styles.formContainer} enabled>
                 <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
                 {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
+                <Text style={styles.suggestedPlansT}>{homeTexts.lastPlansTitles}</Text>
+                {lastPlans.map((plan) => (
+                  <LastPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
+                ))}
                 <Text style={styles.suggestedPlansT}>{homeTexts.suggestedPlansTitle}</Text>
                 {loading
                   ? null
                   : suggestedPlans.map((plan) => (
                       <SuggestedPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
                     ))}
-                <Text style={styles.suggestedPlansT}>{homeTexts.lastPlansTitles}</Text>
-                {lastPlans.map((plan) => (
-                  <LastPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
-                ))}
               </KeyboardAvoidingView>
             </ScrollView>
           )}
