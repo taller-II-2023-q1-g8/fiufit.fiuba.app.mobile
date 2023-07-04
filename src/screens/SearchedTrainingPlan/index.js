@@ -45,7 +45,12 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
       response = await fetchAthletesID();
       dataJson = await response.json();
       const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
-      setFavorite(rating.is_liked);
+      if (rating !== undefined) {
+        setFavorite(rating.is_liked);
+      } else {
+        setFavorite(false);
+      }
+
       setOwnAthleteInternalID(myAthlete.id);
     }
     fetchData();
