@@ -5,18 +5,14 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signInWithEmailAndPassword, signInWithCredential, GoogleAuthProvider } from 'firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import React, { useEffect, useState } from 'react';
-import * as TaskManager from 'expo-task-manager';
-import * as Location from 'expo-location';
 
 import { auth } from '../../../../firebaseConfig';
-import { fetchUserByEmail } from '../../../requests';
+import { fetchUserByEmail, fetchUserIsBlocked } from '../../../requests';
 import { useStateValue } from '../../../state';
 import texts from '../../../texts';
 
 import { getFields } from './utils';
 import Login from './layout';
-
-const LOCATION_TRACKING = 'location-tracking';
 
 GoogleSignin.configure({
   webClientId: '587864716594-rieevghh6j6gi2m10lhb835u4ndn0631.apps.googleusercontent.com',
@@ -50,16 +46,6 @@ export default function LoginContainer({ navigation }) {
         });
     }
   }, []);
-  useEffect(() => {
-    const stopLocation = () => {
-      TaskManager.isTaskRegisteredAsync(LOCATION_TRACKING).then((tracking) => {
-        if (tracking) {
-          Location.stopLocationUpdatesAsync(LOCATION_TRACKING);
-        }
-      });
-    };
-    stopLocation();
-  }, []);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
@@ -89,6 +75,14 @@ export default function LoginContainer({ navigation }) {
         return;
       }
       dispatch({ type: 'logIn', automaticallyLogged: 'false' });
+      // Fijarse si esta blocked el usuario.
+      const blocked = await fetchUserIsBlocked(json.message.username);
+      const blockedJson = await blocked.json();
+      if (blockedJson.message.blocked) {
+        Alert.alert('Esta cuenta esta bloqueada');
+        setLoading(false);
+        return;
+      }
       await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (error) {
       Alert.alert('Error', error.message);
@@ -117,6 +111,15 @@ export default function LoginContainer({ navigation }) {
       return;
     }
     if (json.message.is_federated) {
+      const blocked = await fetchUserIsBlocked(json.message.username);
+      const blockedJson = await blocked.json();
+      console.log(blockedJson);
+      if (blockedJson.message.blocked) {
+        Alert.alert('Esta cuenta esta bloqueada');
+        await GoogleSignin.signOut();
+        setLoading(false);
+        return;
+      }
       const googleCredential = GoogleAuthProvider.credential(user.idToken);
       // Sign-in the user with the credential
       dispatch({ type: 'logIn', automaticallyLogged: 'false' });

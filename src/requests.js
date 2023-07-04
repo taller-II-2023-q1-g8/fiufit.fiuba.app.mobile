@@ -37,6 +37,7 @@ export const fetchUsersByUsererrorTextname = async (username) =>
 export const fetchAllUsers = async () => fetchData(`${GATEWAY_URL}/user/`);
 export const fetchUserByEmail = async (email) => fetchData(`${GATEWAY_URL}/user?email=${email}`);
 
+export const fetchUserIsBlocked = async (username) => fetchData(`${GATEWAY_URL}/user/blocked/${username}`);
 export const fetchUserProfileByUsername = async (username) =>
   fetchData(`${GATEWAY_URL}/user?username=${username}`);
 
