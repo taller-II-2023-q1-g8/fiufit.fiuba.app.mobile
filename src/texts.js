@@ -103,7 +103,7 @@ const texts = {
     name: 'PrivateMessage'
   },
   EditUserProfile: {
-    name: 'EditUserProfile'
+    name: 'Edita tu perfil'
   },
   CreateGoal: {
     name: 'CreateGoal',
