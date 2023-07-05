@@ -8,6 +8,8 @@ import Loader from '../components/Loader';
 
 import AuthStack from './components/AuthStack';
 import UserStack from './components/UserStack';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { signOut } from 'firebase/auth';
 
 export default function RootNavigation() {
   const [authenticated, setAuthenticated] = useState(loggedIn());
@@ -17,9 +19,18 @@ export default function RootNavigation() {
   const [state] = useStateValue();
 
   const handleBiometricAuth = async () => {
+    console.log('abc');
     try {
       const hasBiometricAuth = await LocalAuthentication.hasHardwareAsync();
-      if (!hasBiometricAuth) return;
+      if (!hasBiometricAuth) {
+        console.log('Couldnt authenticate via biometric');
+        if (auth.currentUser.providerData[0].providerId === 'google.com') {
+          await GoogleSignin.revokeAccess();
+        }
+        await signOut(auth);
+        console.log('Finished signing out');
+        return;
+      }
 
       const isEnrolled = await LocalAuthentication.isEnrolledAsync();
       if (!isEnrolled) return;
