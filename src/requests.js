@@ -7,7 +7,7 @@ const fetchData = async (url) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors'
   });
@@ -18,7 +18,7 @@ export const updateUserInformationRequest = async (values) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -30,7 +30,7 @@ export const registerRequest = async (values) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -61,7 +61,7 @@ export const createGoalRequest = async (values) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -73,7 +73,7 @@ export const createMetricRequest = async (values) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -89,7 +89,7 @@ export const deletePlan = async (planID) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors'
   });
@@ -102,7 +102,7 @@ export const createPlanRequest = async (values) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -114,7 +114,7 @@ export const editPlanRequest = async (values, planID) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -126,7 +126,7 @@ export const removeExerciseFromPlan = async (planID, exerciseID) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors'
   });
@@ -140,7 +140,7 @@ export const fetchAthletePlansByID = async (athleteId) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify({
@@ -153,7 +153,7 @@ export const registerAthlete = async (athleteName) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify({
@@ -170,7 +170,7 @@ export const addPlanToAthleteAsFavorite = async (planID, athleteID) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     }
   });
 
@@ -180,7 +180,7 @@ export const removePlanToAthleteAsFavorite = async (planID, athleteID) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     }
   });
 
@@ -190,7 +190,7 @@ export const AddExcerciseToPlanRequest = async (planID, exerciseID, values) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -202,7 +202,7 @@ export const likePlan = async (planID, athleteID) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     }
   });
 
@@ -212,7 +212,7 @@ export const calificatePlan = async (planID, athleteID, values) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(values)
@@ -223,7 +223,7 @@ export const requestVerification = async (trainerId) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     }
   });
 
@@ -233,7 +233,7 @@ export const fetchPlansByTrainerUsername = async (username) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify({ trainer_username: username })
@@ -245,7 +245,7 @@ export const fetchPlansByTrainerID = async (id) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify(id)
@@ -257,7 +257,7 @@ export const updateDeviceToken = async (username, token) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify({ device_token: token })
@@ -269,7 +269,7 @@ export const updateLoginTime = async (username) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors'
   });
@@ -280,7 +280,7 @@ export const updateUserLocation = async (user) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify({
@@ -295,7 +295,7 @@ export const fetchCompletedPlansByAthleteID = async (athleteId) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify({
@@ -313,7 +313,7 @@ username=${username}&type=training_plan_completed`,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        FiuFitAuth: FIUTFIT_API_KEY
+        'Fiu-Fit-Auth': FIUTFIT_API_KEY
       },
       mode: 'cors'
     }
@@ -331,7 +331,7 @@ export const followUser = async (followerUsername, followedUsername) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     }
   });
 
@@ -341,7 +341,7 @@ export const unfollowUser = async (followerUsername, followedUsername) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     }
   });
 
@@ -351,7 +351,7 @@ export const sendMessageNotification = async (sender, receiver, message) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      FiuFitAuth: FIUTFIT_API_KEY
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
     },
     mode: 'cors',
     body: JSON.stringify({
