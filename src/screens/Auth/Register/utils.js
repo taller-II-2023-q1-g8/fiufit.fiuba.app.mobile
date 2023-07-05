@@ -4,14 +4,8 @@ import { emailFieldType, passwordFieldType, phoneFieldType } from '../../../comp
 import DateField from '../../../components/Fields/DateField';
 import SelectField from '../../../components/Fields/SelectField';
 import TextField from '../../../components/Fields/TextField';
+import InterestPicker from '../../../components/Fields/InterestPicker';
 import texts from '../../../texts';
-import { Text, TouchableOpacity, View } from 'react-native';
-import GenericSelectField from '../../../components/Fields/GenericSelectField';
-import { styles } from '../../EditUserProfile/styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colors } from '../../../colors';
-import { array, bool, func, string } from 'prop-types';
-import EditUserProfile from '../../EditUserProfile/layout';
 
 const fieldTexts = texts.Fields;
 
@@ -26,50 +20,6 @@ export const fillErrors = (updatedErrors, keysToFilter, data) =>
   keysToFilter.forEach((key) => {
     if (data[key] === '') updatedErrors[key] = 'Campo obligatorio';
   });
-
-const defaultTags = [
-  { label: 'Abdominales', value: 'ABS' },
-  { label: 'Espalda', value: 'BACK' },
-  { label: 'Pecho', value: 'CHEST' },
-  { label: 'Cardio', value: 'CARDIO' },
-  { label: 'Piernas', value: 'LEGS' }
-];
-
-function InterestPicker({ tags, handleOnChangeTags, handleOnAddTag, handleOnDeleteTag }) {
-  return (
-    <View>
-      <View style={{ flexDirection: 'row' }}>
-        <GenericSelectField
-          items={defaultTags}
-          name="tags"
-          onChangeText={handleOnChangeTags}
-          title="Intereses"
-          containerStyle={styles.fieldContainer}
-        />
-        <TouchableOpacity onPress={handleOnAddTag}>
-          <Ionicons name="add" size={35} color={colors.white} style={{ paddingTop: 40, paddingLeft: 20 }} />
-        </TouchableOpacity>
-      </View>
-      {tags.map((tag) => (
-        <View style={styles.item}>
-          <Text style={{ color: colors.white, fontSize: 15, paddingTop: 5 }}>{tag}</Text>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={() => handleOnDeleteTag(tag)}
-            style={{ marginRight: 10, marginBotton: 10 }}
-          >
-            <Ionicons
-              name="trash"
-              style={{ width: 30, height: 30, tintColor: colors.white }}
-              size={25}
-              color={colors.white}
-            />
-          </TouchableOpacity>
-        </View>
-      ))}
-    </View>
-  );
-}
 
 export const getFields = (
   data,
@@ -201,10 +151,3 @@ export const getStepsData = (handleNextStepPress, handlePrevPress, handleSubmitP
     onSubmit: handleSubmitPress
   }
 ];
-
-InterestPicker.propTypes = {
-  handleOnChangeTags: func,
-  handleOnAddTag: func,
-  tags: array,
-  handleOnDeleteTag: func
-};

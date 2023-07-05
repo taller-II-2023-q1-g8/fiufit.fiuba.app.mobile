@@ -66,6 +66,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     fontSize: 16,
     width: '100%'
+  },
+  fieldContainer2: {
+    alignItems: 'flex-start',
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 24,
+    padding: 0,
+    width: '80%'
+  },
+  item: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingVertical: 15,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: 'lightgray',
+    backgroundColor: colors.feed_items,
+    paddingLeft: 10,
+    marginBottom: 15
   }
 });
 

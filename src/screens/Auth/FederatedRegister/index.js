@@ -5,7 +5,12 @@ import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { cloneDeep } from 'lodash';
 
-import { fetchUsersByUsername, registerAthlete, registerRequest } from '../../../requests';
+import {
+  fetchUserByUsername,
+  fetchUserProfileByUsername,
+  registerAthlete,
+  registerRequest
+} from '../../../requests';
 import { auth } from '../../../../firebaseConfig';
 
 import FederatedRegister from './layout';
@@ -29,8 +34,26 @@ export default function FederatedRegisterContainer() {
   };
   const [data, setData] = useState({ ...initialData, gender: 'female' });
   const [errors, setErrors] = useState(initialData);
-
+  const [currentTag, setCurrentTag] = useState('ABS');
+  const [tags, setTags] = useState([]);
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
+
+  const handleOnChangeTags = (name, value) => {
+    console.log(value);
+    setCurrentTag(value);
+  };
+  const handleOnAddTag = () => {
+    if (tags.includes(currentTag)) {
+      console.log('Error, tag ya usado');
+    } else {
+      setTags((oldTags) => [...oldTags, currentTag]);
+      console.log(tags);
+    }
+  };
+  const handleOnDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+    console.log(tags);
+  };
 
   const setStepErrors = () => {
     const updatedErrors = cloneDeep(initialData);
@@ -47,8 +70,9 @@ export default function FederatedRegisterContainer() {
       return;
     }
 
-    const response = await fetchUsersByUsername(data.username);
-    if (!response.ok) {
+    const response = await fetchUserProfileByUsername(data.username);
+    const rJ = await response.json();
+    if (rJ.message !== null) {
       setErrors({ ...initialData, username: 'Nombre de usuario en uso' });
       setStepError(true);
       return;
@@ -74,7 +98,10 @@ export default function FederatedRegisterContainer() {
       firstname: user.user.givenName,
       email: user.user.email,
       lastname: user.user.familyName,
-      is_federated: true
+      is_federated: true,
+      interests: tags,
+      is_admin: false,
+      password: 'noimporta'
     };
 
     try {
@@ -104,7 +131,15 @@ export default function FederatedRegisterContainer() {
     registerUser();
   };
 
-  const fields = getFields(data, errors, handleOnChangeText);
+  const fields = getFields(
+    data,
+    errors,
+    handleOnChangeText,
+    tags,
+    handleOnChangeTags,
+    handleOnAddTag,
+    handleOnDeleteTag
+  );
 
   const stepData = getStepsData(handleNextStepPress, handlePreviousStepPress, handleSubmitPress);
 
