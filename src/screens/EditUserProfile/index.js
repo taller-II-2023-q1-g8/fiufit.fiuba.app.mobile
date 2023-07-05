@@ -18,6 +18,8 @@ export default function EditUserProfileContainer() {
   const [state, dispatch] = useStateValue();
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentTag, setCurrentTag] = useState('ABS');
+  const [tags, setTags] = useState([]);
 
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
@@ -35,10 +37,35 @@ export default function EditUserProfileContainer() {
     async function fetchData() {
       const response = await fetchUserProfileByUsername(state.user.username);
       const json = await response.json();
+      if (json.message.interests === null) {
+        json.message.interests = [];
+      } else {
+        setTags((oldTags) => [...json.message.interests]);
+      }
+      json.message.weight_in_kg = json.message.weight_in_kg.toString();
+      json.message.height_in_cm = json.message.height_in_cm.toString();
       setData(json.message);
+      console.log(json.message);
     }
     fetchData();
   }, []);
+
+  const handleOnChangeTags = (name, value) => {
+    console.log(value);
+    setCurrentTag(value);
+  };
+  const handleOnAddTag = () => {
+    if (tags.includes(currentTag)) {
+      console.log('Error, tag ya usado');
+    } else {
+      setTags((oldTags) => [...oldTags, currentTag]);
+      console.log(tags);
+    }
+  };
+  const handleOnDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+    console.log(tags);
+  };
 
   const handlePickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -66,7 +93,7 @@ export default function EditUserProfileContainer() {
     setLoading(true);
 
     const values = { ...data };
-
+    values.interests = tags;
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await updateUserInformationRequest(values);
@@ -87,6 +114,10 @@ export default function EditUserProfileContainer() {
       handleSubmitPress={handleSubmitPress}
       image={profPicUrl}
       loading={loading}
+      handleOnChangeTags={handleOnChangeTags}
+      handleOnAddTag={handleOnAddTag}
+      tags={tags}
+      handleOnDeleteTag={handleOnDeleteTag}
     />
   );
 }
