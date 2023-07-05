@@ -45,7 +45,6 @@ export default function EditUserProfileContainer() {
       json.message.weight_in_kg = json.message.weight_in_kg.toString();
       json.message.height_in_cm = json.message.height_in_cm.toString();
       setData(json.message);
-      console.log(json.message);
     }
     fetchData();
   }, []);
@@ -97,8 +96,12 @@ export default function EditUserProfileContainer() {
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
       const response = await updateUserInformationRequest(values);
-      if (response.ok) Alert.alert('Actualizado correctamente!', '');
-      else Alert.alert('Error', 'Intente nuevamente');
+      if (response.ok) {
+        dispatch({
+          type: 'updateUser',
+          user: values
+        });
+      } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
       // console.log(error);
     }
