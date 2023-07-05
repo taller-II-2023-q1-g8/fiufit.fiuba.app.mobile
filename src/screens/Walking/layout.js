@@ -8,6 +8,7 @@ import { func, number, shape, string } from 'prop-types';
 import BackgroundImage from '../../assets/Background.jpg';
 
 import { styles } from './styles';
+import Loader from '../../components/Loader';
 
 export default function Walking({
   timePassed,
@@ -18,7 +19,8 @@ export default function Walking({
   isPedometerAvailable,
   distance,
   isAvailable,
-  isLocationAvailable
+  isLocationAvailable,
+  loading
 }) {
   let minutes = Math.floor(timePassed / 60);
   let seconds = timePassed % 60;
@@ -36,6 +38,7 @@ export default function Walking({
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
+        <Loader loading={loading} />
         {isAvailable === 'true' && (
           <>
             <View style={styles.infoContainer}>
@@ -114,5 +117,6 @@ Walking.propTypes = {
   isPedometerAvailable: string.isRequired,
   distance: number.isRequired,
   isAvailable: string.isRequired,
-  isLocationAvailable: string.isRequired
+  isLocationAvailable: string.isRequired,
+  loading: true
 };

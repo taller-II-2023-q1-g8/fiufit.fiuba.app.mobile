@@ -12,10 +12,12 @@ import {
   registerRequest
 } from '../../../requests';
 import { auth } from '../../../../firebaseConfig';
+import { useStateValue } from '../../../state';
 
 import FederatedRegister from './layout';
 import { STEP_KEYS } from './constants';
 import { fillErrors, formatDate, getFields, getStepsData, nextStep, prevStep, thereIsAnError } from './utils';
+
 /*
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10); */
@@ -36,6 +38,7 @@ export default function FederatedRegisterContainer() {
   const [errors, setErrors] = useState(initialData);
   const [currentTag, setCurrentTag] = useState('ABS');
   const [tags, setTags] = useState([]);
+  const [, dispatch] = useStateValue();
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
   const handleOnChangeTags = (name, value) => {
@@ -109,9 +112,9 @@ export default function FederatedRegisterContainer() {
       const response = await registerRequest(values);
       if (response.ok) {
         const r = await registerAthlete(data.username);
-        Alert.alert('Bienvenido', 'Registro exitoso');
         const googleCredential = GoogleAuthProvider.credential(user.idToken);
         // Sign-in the user with the credential
+        dispatch({ type: 'logIn', automaticallyLogged: 'false' });
         await signInWithCredential(auth, googleCredential);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {

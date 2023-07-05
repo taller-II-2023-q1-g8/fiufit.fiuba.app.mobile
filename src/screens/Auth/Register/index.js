@@ -6,10 +6,12 @@ import { cloneDeep } from 'lodash';
 
 import { auth } from '../../../../firebaseConfig';
 import { registerAthlete, registerRequest } from '../../../requests';
+import { useStateValue } from '../../../state';
 
 import Register from './layout';
 import { fillErrors, formatDate, getFields, getStepsData, nextStep, prevStep, thereIsAnError } from './utils';
 import { STEP_KEYS } from './constants';
+
 /*
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10); */
@@ -34,6 +36,7 @@ export default function RegisterContainer() {
   const [errors, setErrors] = useState(initialData);
   const [currentTag, setCurrentTag] = useState('ABS');
   const [tags, setTags] = useState([]);
+  const [, dispatch] = useStateValue();
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
   const handleOnChangeTags = (name, value) => {
@@ -98,7 +101,7 @@ export default function RegisterContainer() {
       const response = await registerRequest(values);
       if (response.ok) {
         const r = await registerAthlete(data.username);
-        Alert.alert('Bienvenido', 'Registro exitoso');
+        dispatch({ type: 'logIn', automaticallyLogged: 'false' });
         await signInWithEmailAndPassword(auth, data.email, data.password);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
