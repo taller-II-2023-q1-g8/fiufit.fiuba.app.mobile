@@ -62,7 +62,7 @@ export default function EditUserProfile({
                 items={defaultTags}
                 name="tags"
                 onChangeText={handleOnChangeTags}
-                title="Tags"
+                title="Intereses"
                 containerStyle={styles.fieldContainer}
               />
               <TouchableOpacity onPress={handleOnAddTag}>

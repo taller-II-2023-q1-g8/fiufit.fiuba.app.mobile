@@ -32,8 +32,26 @@ export default function RegisterContainer() {
   };
   const [data, setData] = useState({ ...initialData, gender: 'female' });
   const [errors, setErrors] = useState(initialData);
-
+  const [currentTag, setCurrentTag] = useState('ABS');
+  const [tags, setTags] = useState([]);
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
+
+  const handleOnChangeTags = (name, value) => {
+    console.log(value);
+    setCurrentTag(value);
+  };
+  const handleOnAddTag = () => {
+    if (tags.includes(currentTag)) {
+      console.log('Error, tag ya usado');
+    } else {
+      setTags((oldTags) => [...oldTags, currentTag]);
+      console.log(tags);
+    }
+  };
+  const handleOnDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+    console.log(tags);
+  };
 
   const setStepErrors = () => {
     const updatedErrors = cloneDeep(initialData);
@@ -71,7 +89,8 @@ export default function RegisterContainer() {
       ...data,
       birth_date: formatDate(data.birth_date),
       is_federated: false,
-      is_admin: false
+      is_admin: false,
+      interests: tags
     };
 
     try {
@@ -83,12 +102,20 @@ export default function RegisterContainer() {
         await signInWithEmailAndPassword(auth, data.email, data.password);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
     setLoading(false);
   };
 
-  const fields = getFields(data, errors, handleOnChangeText);
+  const fields = getFields(
+    data,
+    errors,
+    handleOnChangeText,
+    tags,
+    handleOnChangeTags,
+    handleOnAddTag,
+    handleOnDeleteTag
+  );
 
   const stepData = getStepsData(handleNextStepPress, handlePrevPress, handleSubmitPress);
 

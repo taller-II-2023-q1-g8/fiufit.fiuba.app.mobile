@@ -5,6 +5,13 @@ import DateField from '../../../components/Fields/DateField';
 import SelectField from '../../../components/Fields/SelectField';
 import TextField from '../../../components/Fields/TextField';
 import texts from '../../../texts';
+import { Text, TouchableOpacity, View } from 'react-native';
+import GenericSelectField from '../../../components/Fields/GenericSelectField';
+import { styles } from '../../EditUserProfile/styles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { colors } from '../../../colors';
+import { array, bool, func, string } from 'prop-types';
+import EditUserProfile from '../../EditUserProfile/layout';
 
 const fieldTexts = texts.Fields;
 
@@ -20,7 +27,59 @@ export const fillErrors = (updatedErrors, keysToFilter, data) =>
     if (data[key] === '') updatedErrors[key] = 'Campo obligatorio';
   });
 
-export const getFields = (data, errors, handleOnChangeText) => [
+const defaultTags = [
+  { label: 'Abdominales', value: 'ABS' },
+  { label: 'Espalda', value: 'BACK' },
+  { label: 'Pecho', value: 'CHEST' },
+  { label: 'Cardio', value: 'CARDIO' },
+  { label: 'Piernas', value: 'LEGS' }
+];
+
+function InterestPicker({ tags, handleOnChangeTags, handleOnAddTag, handleOnDeleteTag }) {
+  return (
+    <View>
+      <View style={{ flexDirection: 'row' }}>
+        <GenericSelectField
+          items={defaultTags}
+          name="tags"
+          onChangeText={handleOnChangeTags}
+          title="Intereses"
+          containerStyle={styles.fieldContainer}
+        />
+        <TouchableOpacity onPress={handleOnAddTag}>
+          <Ionicons name="add" size={35} color={colors.white} style={{ paddingTop: 40, paddingLeft: 20 }} />
+        </TouchableOpacity>
+      </View>
+      {tags.map((tag) => (
+        <View style={styles.item}>
+          <Text style={{ color: colors.white, fontSize: 15, paddingTop: 5 }}>{tag}</Text>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => handleOnDeleteTag(tag)}
+            style={{ marginRight: 10, marginBotton: 10 }}
+          >
+            <Ionicons
+              name="trash"
+              style={{ width: 30, height: 30, tintColor: colors.white }}
+              size={25}
+              color={colors.white}
+            />
+          </TouchableOpacity>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+export const getFields = (
+  data,
+  errors,
+  handleOnChangeText,
+  tags,
+  handleOnChangeTags,
+  handleOnAddTag,
+  handleOnDeleteTag
+) => [
   [
     <TextField
       key="emailField"
@@ -116,6 +175,12 @@ export const getFields = (data, errors, handleOnChangeText) => [
       onChangeText={handleOnChangeText}
       placeholder={fieldTexts.weightPlaceholder}
       title={fieldTexts.weightTitle}
+    />,
+    <InterestPicker
+      handleOnChangeTags={handleOnChangeTags}
+      handleOnAddTag={handleOnAddTag}
+      tags={tags}
+      handleOnDeleteTag={handleOnDeleteTag}
     />
   ]
 ];
@@ -136,3 +201,10 @@ export const getStepsData = (handleNextStepPress, handlePrevPress, handleSubmitP
     onSubmit: handleSubmitPress
   }
 ];
+
+InterestPicker.propTypes = {
+  handleOnChangeTags: func,
+  handleOnAddTag: func,
+  tags: array,
+  handleOnDeleteTag: func
+};

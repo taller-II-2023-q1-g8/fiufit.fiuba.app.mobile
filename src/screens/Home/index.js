@@ -31,7 +31,6 @@ export default function HomeScreen({ navigation }) {
     updateLoginTime(state.user.username);
   }, []);
   useEffect(() => {
-    console.log('KAWABUNGA');
     if (!loading) {
       const g = state.userGoals;
       setGoals(g);
