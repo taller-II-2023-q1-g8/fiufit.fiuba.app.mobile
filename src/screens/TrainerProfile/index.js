@@ -143,7 +143,11 @@ export default function TrainerProfileContainer({ navigation }) {
   };
   const handleEditProfile = () => navigation.navigate(texts.EditTrainerProfile.name);
   const handlePlanPress = (itemData) => {
-    navigation.navigate(texts.TrainerPlanView.name, { itemData });
+    if (itemData.blocked === 'true') {
+      Alert.alert(texts.BlockedPlan.alert);
+    } else {
+      navigation.navigate(texts.TrainerPlanView.name, { itemData });
+    }
   };
   const handleSignOutPress = async () => {
     setLoading(true);
