@@ -220,8 +220,14 @@ export default function Home({
               </View>
               <KeyboardAvoidingView style={styles.formContainer} enabled>
                 <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
+                {sortGoals(goals).length === 0 ? (
+                  <Text style={styles.noPlans}>No tienes ninguna meta pendiente</Text>
+                ) : null}
                 {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
                 <Text style={styles.suggestedPlansT}>{homeTexts.lastPlansTitles}</Text>
+                {lastPlans.length === 0 ? (
+                  <Text style={styles.noPlans}>No realizaste ningun plan</Text>
+                ) : null}
                 {lastPlans.map((plan) => (
                   <LastPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
                 ))}
