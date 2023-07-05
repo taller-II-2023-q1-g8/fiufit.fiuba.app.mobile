@@ -77,12 +77,12 @@ export const styles = StyleSheet.create({
   actionButton: {
     borderRadius: 20,
     width: '40%',
-    backgroundColor: 'green',
+    backgroundColor: colors.main_soft,
     alignItems: 'center'
   }
 });
 
 export const scrollviewStyle = {
   flexGrow: 1,
-  padding: 0
+  paddingBottom: 40
 };

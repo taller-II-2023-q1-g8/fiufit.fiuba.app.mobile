@@ -4,7 +4,7 @@ import React from 'react-native';
 import { colors } from '../../../../../../../colors';
 import texts from '../../../../../../../texts';
 import TrainerProfileContainer from '../../../../../../../screens/TrainerProfile';
-import EditTrainerProfile from '../../../../../../../screens/EditTrainerProfile';
+import EditUserProfileContainer from '../../../../../../../screens/EditUserProfile';
 
 export default function UserProfileStack() {
   const Stack = createNativeStackNavigator();
@@ -22,7 +22,7 @@ export default function UserProfileStack() {
         name={texts.TrainerProfile.name}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name={texts.EditTrainerProfile.name} component={EditTrainerProfile} />
+      <Stack.Screen name={texts.EditUserProfile.name} component={EditUserProfileContainer} />
     </Stack.Navigator>
   );
 }

@@ -20,15 +20,39 @@ export default function EditPlanScreen({ route, navigation }) {
   const initialData = {
     title: plan.title,
     description: plan.description,
-    tags: plan.tags,
     difficulty: plan.difficulty
   };
   const [data, setData] = useState(initialData);
-  const [errors, setErrors] = useState({ title: '', description: '', tags: '', difficulty: '' });
+  const [errors, setErrors] = useState({ title: '', description: '', difficulty: '' });
   const [planPicUrl, setPlanPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageLoading, setImageLoading] = useState(true);
+  const [currentTag, setCurrentTag] = useState('ABS');
+  const [tags, setTags] = useState([]);
 
+  useEffect(() => {
+    let aux = plan.tags.split(',');
+    aux = aux.map((tag) => tag.trim());
+    console.log('abc', aux);
+    setTags((oldTags) => [...aux]);
+  }, []);
+
+  const handleOnChangeTags = (name, value) => {
+    console.log(value);
+    setCurrentTag(value);
+  };
+  const handleOnAddTag = () => {
+    if (tags.includes(currentTag)) {
+      console.log('Error, tag ya usado');
+    } else {
+      setTags((oldTags) => [...oldTags, currentTag]);
+      console.log(tags);
+    }
+  };
+  const handleOnDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+    console.log(tags);
+  };
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
   const thereIsAnError = () => Object.keys(errors).find((key) => data[key] === '');
@@ -46,10 +70,18 @@ export default function EditPlanScreen({ route, navigation }) {
       setErrors(updatedErrors);
       return;
     }
+    if (tags.length === 0) {
+      Alert.alert('Debe elegir al menos un tag');
+      return;
+    }
 
     setLoading(true);
-
-    const values = { ...data, trainer_username: state.user.username };
+    let tagsAux = '';
+    tags.forEach((tag) => {
+      tagsAux = `${tagsAux + tag}, `;
+    });
+    tagsAux = tagsAux.substring(0, tagsAux.length - 2);
+    const values = { ...data, trainer_username: state.user.username, tags: tagsAux };
     await editPlanRequest(values, plan.id)
       .then(async (result) => {
         if (!result.ok) return;
@@ -103,6 +135,10 @@ export default function EditPlanScreen({ route, navigation }) {
       loading={loading && imageLoading}
       planPicUrl={planPicUrl}
       handlePickImage={handlePickImage}
+      handleOnChangeTags={handleOnChangeTags}
+      handleOnAddTag={handleOnAddTag}
+      tags={tags}
+      handleOnDeleteTag={handleOnDeleteTag}
     />
   );
 }

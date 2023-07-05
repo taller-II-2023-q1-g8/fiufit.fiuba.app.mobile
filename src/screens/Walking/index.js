@@ -5,7 +5,7 @@ import { Pedometer } from 'expo-sensors';
 import * as Location from 'expo-location';
 
 import { useStateValue } from '../../state';
-import { createMetricRequest } from '../../requests';
+import { createMetricRequest, fetchUserGoalsByUsername } from '../../requests';
 
 import Walking from './layout';
 import { styles } from './styles';
@@ -26,6 +26,7 @@ export default function WalkingScreen({ navigation }) {
   const [intervalRef, setIntervalRef] = useState(null);
   const [pedometerRef, setPedometerRef] = useState(null);
   const [locationRef, setLocationRef] = useState(null);
+  const [loading, setLoading] = useState(false);
   const setup = async () => {
     const location = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.BestForNavigation
@@ -133,9 +134,10 @@ export default function WalkingScreen({ navigation }) {
     }
   };
 
-  const handleSubmitPress = () => {
-    if (isPedometerAvailable) {
-      createMetricRequest({
+  const handleSubmitPress = async () => {
+    setLoading(true);
+    if (isPedometerAvailable === 'true') {
+      await createMetricRequest({
         type: 'steps_taken',
         duration_in_seconds: timePassed,
         step_count: currentStepCount,
@@ -143,8 +145,8 @@ export default function WalkingScreen({ navigation }) {
         username: state.user.username
       });
     }
-    if (isLocationAvailable) {
-      createMetricRequest({
+    if (isLocationAvailable === 'true') {
+      await createMetricRequest({
         type: 'distance_travelled',
         duration_in_seconds: timePassed,
         distance_in_meters: distance * 1000,
@@ -162,6 +164,13 @@ export default function WalkingScreen({ navigation }) {
       setCurrentStepCount(0);
       pedometerRef.remove();
     }
+    const goalsResponse = await fetchUserGoalsByUsername(state.user.username);
+    const goalsJson = await goalsResponse.json();
+    dispatch({
+      type: 'updateGoals',
+      newUserGoals: goalsJson.message
+    });
+    setLoading(false);
   };
 
   return (
@@ -175,6 +184,7 @@ export default function WalkingScreen({ navigation }) {
       isLocationAvailable={isLocationAvailable}
       isAvailable={isAvailable}
       distance={distance}
+      loading={loading}
     />
   );
 }

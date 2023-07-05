@@ -25,13 +25,6 @@ export const getFields = (errors, values, handleOnChangeText) => [
     placeholder={values.description}
     title={texts.Fields.planDescription}
   />,
-  <TextField
-    error={errors.tags}
-    name="tags"
-    onChangeText={handleOnChangeText}
-    placeholder={values.tags}
-    title={texts.Fields.planTags}
-  />,
   <GenericSelectField
     items={difficulties}
     name="difficulty"

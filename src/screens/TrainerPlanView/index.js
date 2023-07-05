@@ -14,6 +14,7 @@ export default function TrainerPlanViewContainer({ route, navigation }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);
+    console.log(plan);
   }, []);
 
   const handleShowStatsPress = () => {

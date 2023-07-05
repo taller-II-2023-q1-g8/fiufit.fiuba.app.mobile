@@ -264,6 +264,11 @@ export const styles = StyleSheet.create({
   bottomRight: {
     flex: 1,
     marginTop: 8
+  },
+  noPlans: {
+    color: colors.white,
+    fontSize: 16,
+    opacity: 0.7
   }
 });
 

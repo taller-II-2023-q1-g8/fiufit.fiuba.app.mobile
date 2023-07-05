@@ -11,9 +11,8 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 import BackgroundImage from '../../assets/Background.jpg';
 import manPic from '../../assets/man.jpeg';
 
-import { styles } from './styles';
+import { styles, scrollviewStyle } from './styles';
 import { getPlanPicURL } from '../../utils';
-import { scrollviewStyle } from '../Home/styles';
 
 function Item({ handleItemPress, itemData }) {
   const [planPicUrl, setPlanPicUrl] = useState(null);

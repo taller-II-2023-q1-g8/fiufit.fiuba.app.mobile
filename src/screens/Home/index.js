@@ -49,7 +49,34 @@ export default function HomeScreen({ navigation }) {
       validCalificationsAths.length
     );
   }
-
+  useEffect(() => {
+    async function fetchSuggestedPlans() {
+      const response = await fetchPlans('');
+      const plans = await response.json();
+      plans.forEach((plan) => {
+        plan.averageCalification = avgCalification(plan);
+      });
+      plans.sort((plan1, plan2) => plan2.averageCalification - plan1.averageCalification);
+      console.log('Intereses', state.user.interests);
+      if (state.user.interests !== null && state.user.interests.length > 0) {
+        const plansInterests = plans.filter((plan) => {
+          if (state.user.interests.some((v) => plan.tags.includes(v))) {
+            return true;
+          }
+          return false;
+        });
+        plansInterests.forEach((plan) => console.log(plan.title, plan.tags));
+        const numberOfSuggestedPlans = getRandomInt(3, 4);
+        setSuggestedPlans(plansInterests.slice(0, numberOfSuggestedPlans));
+      } else {
+        const numberOfSuggestedPlans = getRandomInt(3, 4);
+        setSuggestedPlans(plans.slice(0, numberOfSuggestedPlans));
+      }
+    }
+    if (!loading) {
+      fetchSuggestedPlans();
+    }
+  }, [state.user.interests]);
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -84,12 +111,26 @@ export default function HomeScreen({ navigation }) {
         }
       });
       setLastPlans(lastPlansItems);
+      // setSuggestedPlans que dependa tambien de tus intereses
       plans.forEach((plan) => {
         plan.averageCalification = avgCalification(plan);
       });
       plans.sort((plan1, plan2) => plan2.averageCalification - plan1.averageCalification);
-      const numberOfSuggestedPlans = getRandomInt(3, 4);
-      setSuggestedPlans(plans.slice(0, numberOfSuggestedPlans));
+      console.log('Intereses', state.user.interests);
+      if (state.user.interests !== null && state.user.interests.length > 0) {
+        const plansInterests = plans.filter((plan) => {
+          if (state.user.interests.some((v) => plan.tags.includes(v))) {
+            return true;
+          }
+          return false;
+        });
+        plansInterests.forEach((plan) => console.log(plan.title, plan.tags));
+        const numberOfSuggestedPlans = getRandomInt(3, 4);
+        setSuggestedPlans(plansInterests.slice(0, numberOfSuggestedPlans));
+      } else {
+        const numberOfSuggestedPlans = getRandomInt(3, 4);
+        setSuggestedPlans(plans.slice(0, numberOfSuggestedPlans));
+      }
       setLoading(false);
     }
     fetchData();

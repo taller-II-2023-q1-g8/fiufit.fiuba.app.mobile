@@ -16,14 +16,30 @@ import { getFields } from './utils';
 
 export default function CreatePlanContainer({ navigation }) {
   const [state, dispatch] = useStateValue();
-  const initialData = { title: '', description: '', tags: '', difficulty: '' };
+  const initialData = { title: '', description: '', difficulty: '' };
   const [data, setData] = useState({ ...initialData, difficulty: 'EASY' });
   const [errors, setErrors] = useState(initialData);
+  const [currentTag, setCurrentTag] = useState('ABS');
+  const [tags, setTags] = useState([]);
   const [planPicUrl, setPlanPicUrl] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
-
+  const handleOnChangeTags = (name, value) => {
+    console.log(value);
+    setCurrentTag(value);
+  };
+  const handleOnAddTag = () => {
+    if (tags.includes(currentTag)) {
+      console.log('Error, tag ya usado');
+    } else {
+      setTags((oldTags) => [...oldTags, currentTag]);
+      console.log(tags);
+    }
+  };
+  const handleOnDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+    console.log(tags);
+  };
   const thereIsAnError = () => Object.keys(errors).find((key) => data[key] === '');
 
   const fillErrors = (updatedErrors) =>
@@ -39,10 +55,18 @@ export default function CreatePlanContainer({ navigation }) {
       setErrors(updatedErrors);
       return;
     }
+    if (tags.length === 0) {
+      Alert.alert('Debe elegir al menos un tag');
+      return;
+    }
 
     setLoading(true);
-
-    const values = { ...data, trainer_username: state.user.username };
+    let tagsAux = '';
+    tags.forEach((tag) => {
+      tagsAux = `${tagsAux + tag}, `;
+    });
+    tagsAux = tagsAux.substring(0, tagsAux.length - 2);
+    const values = { ...data, trainer_username: state.user.username, tags: tagsAux };
     await createPlanRequest(values)
       .then(async (result) => {
         if (!result.ok) return;
@@ -91,6 +115,10 @@ export default function CreatePlanContainer({ navigation }) {
       loading={loading}
       planPicUrl={planPicUrl}
       handlePickImage={handlePickImage}
+      handleOnChangeTags={handleOnChangeTags}
+      handleOnAddTag={handleOnAddTag}
+      tags={tags}
+      handleOnDeleteTag={handleOnDeleteTag}
     />
   );
 }

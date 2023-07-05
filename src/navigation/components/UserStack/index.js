@@ -13,9 +13,6 @@ import { useStateValue } from '../../../state';
 import UserStack from './layout';
 
 export default function UserStackContainer({ email }) {
-  // Token es una promise, hay que ejecutarla en algun momento
-  // Cargar aca el usuario en initial state y ejecutar la token promise
-  // Para tener el token de validacion para hacer requests
   const [loading, setLoading] = useState(true);
   const [locationGranted, setLocationGranted] = useState(false);
   const [, dispatch] = useStateValue();

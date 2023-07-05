@@ -5,6 +5,12 @@ import SelectField from '../../../components/Fields/SelectField';
 import TextField from '../../../components/Fields/TextField';
 import texts from '../../../texts';
 import { phoneFieldType, textFieldType } from '../../../components/Fields/constants';
+import { Text, TouchableOpacity, View } from 'react-native';
+import GenericSelectField from '../../../components/Fields/GenericSelectField';
+import { styles } from '../../EditUserProfile/styles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { colors } from '../../../colors';
+import InterestPicker from '../../../components/Fields/InterestPicker';
 
 const fieldTexts = texts.Fields;
 const federatedRegisterTexts = texts.FederatedRegister;
@@ -21,7 +27,15 @@ export const fillErrors = (updatedErrors, keysToFilter, data) =>
     if (data[key] === '') updatedErrors[key] = 'Campo obligatorio';
   });
 
-export const getFields = (data, errors, handleOnChangeText) => [
+export const getFields = (
+  data,
+  errors,
+  handleOnChangeText,
+  tags,
+  handleOnChangeTags,
+  handleOnAddTag,
+  handleOnDeleteTag
+) => [
   [
     <TextField
       error={errors.username}
@@ -77,6 +91,12 @@ export const getFields = (data, errors, handleOnChangeText) => [
       onChangeText={handleOnChangeText}
       placeholder={fieldTexts.weightPlaceholder}
       title={fieldTexts.weightTitle}
+    />,
+    <InterestPicker
+      handleOnChangeTags={handleOnChangeTags}
+      handleOnAddTag={handleOnAddTag}
+      tags={tags}
+      handleOnDeleteTag={handleOnDeleteTag}
     />
   ]
 ];

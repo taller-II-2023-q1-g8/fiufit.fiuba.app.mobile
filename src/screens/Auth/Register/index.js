@@ -6,10 +6,12 @@ import { cloneDeep } from 'lodash';
 
 import { auth } from '../../../../firebaseConfig';
 import { registerAthlete, registerRequest } from '../../../requests';
+import { useStateValue } from '../../../state';
 
 import Register from './layout';
 import { fillErrors, formatDate, getFields, getStepsData, nextStep, prevStep, thereIsAnError } from './utils';
 import { STEP_KEYS } from './constants';
+
 /*
 var bcrypt = require("bcryptjs");
 var salt = bcrypt.genSaltSync(10); */
@@ -32,8 +34,27 @@ export default function RegisterContainer() {
   };
   const [data, setData] = useState({ ...initialData, gender: 'female' });
   const [errors, setErrors] = useState(initialData);
-
+  const [currentTag, setCurrentTag] = useState('ABS');
+  const [tags, setTags] = useState([]);
+  const [, dispatch] = useStateValue();
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
+
+  const handleOnChangeTags = (name, value) => {
+    console.log(value);
+    setCurrentTag(value);
+  };
+  const handleOnAddTag = () => {
+    if (tags.includes(currentTag)) {
+      console.log('Error, tag ya usado');
+    } else {
+      setTags((oldTags) => [...oldTags, currentTag]);
+      console.log(tags);
+    }
+  };
+  const handleOnDeleteTag = (tagToDelete) => {
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+    console.log(tags);
+  };
 
   const setStepErrors = () => {
     const updatedErrors = cloneDeep(initialData);
@@ -71,7 +92,8 @@ export default function RegisterContainer() {
       ...data,
       birth_date: formatDate(data.birth_date),
       is_federated: false,
-      is_admin: false
+      is_admin: false,
+      interests: tags
     };
 
     try {
@@ -79,16 +101,24 @@ export default function RegisterContainer() {
       const response = await registerRequest(values);
       if (response.ok) {
         const r = await registerAthlete(data.username);
-        Alert.alert('Bienvenido', 'Registro exitoso');
+        dispatch({ type: 'logIn', automaticallyLogged: 'false' });
         await signInWithEmailAndPassword(auth, data.email, data.password);
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
     setLoading(false);
   };
 
-  const fields = getFields(data, errors, handleOnChangeText);
+  const fields = getFields(
+    data,
+    errors,
+    handleOnChangeText,
+    tags,
+    handleOnChangeTags,
+    handleOnAddTag,
+    handleOnDeleteTag
+  );
 
   const stepData = getStepsData(handleNextStepPress, handlePrevPress, handleSubmitPress);
 
