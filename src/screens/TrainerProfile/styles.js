@@ -84,5 +84,5 @@ export const styles = StyleSheet.create({
 
 export const scrollviewStyle = {
   flexGrow: 1,
-  padding: 0
+  paddingBottom: 40
 };
