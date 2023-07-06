@@ -5,8 +5,9 @@ import { array, object, func } from 'prop-types';
 import { colors } from '../../colors';
 import BackgroundImage from '../../assets/Background.jpg';
 import { styles } from '../Home/styles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-function MaxWeightLiftedInExercise({ goal }) {
+function MaxWeightLiftedInExercise({ goal, handleDeleteGoal }) {
   const completionPercentage = goal.completion_percentage;
   let barColor;
   let goalStatus;
@@ -40,9 +41,23 @@ function MaxWeightLiftedInExercise({ goal }) {
         marginBottom: 10
       }}
     >
-      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
-        Máximo Peso Levantado en {goal.exercise_title}
-      </Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
+          Máximo Peso Levantado en {goal.exercise_title}
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => handleDeleteGoal(goal._id)}
+          style={{ marginRight: 25 }}
+        >
+          <Ionicons
+            name="trash"
+            style={{ width: 30, height: 30, tintColor: colors.white }}
+            size={25}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
           Objetivo: {goal.goal_weight_in_kg}KG
@@ -69,7 +84,7 @@ function MaxWeightLiftedInExercise({ goal }) {
   );
 }
 
-function TotalStepsTaken({ goal }) {
+function TotalStepsTaken({ goal, handleDeleteGoal }) {
   const completionPercentage = goal.completion_percentage;
   let barColor;
   let goalStatus;
@@ -103,9 +118,23 @@ function TotalStepsTaken({ goal }) {
         marginBottom: 10
       }}
     >
-      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
-        Total de Pasos Dados
-      </Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
+          Total de Pasos Dados
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => handleDeleteGoal(goal._id)}
+          style={{ marginRight: 25 }}
+        >
+          <Ionicons
+            name="trash"
+            style={{ width: 30, height: 30, tintColor: colors.white }}
+            size={25}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
           Objetivo: {goal.goal_num_of_completions}
@@ -132,7 +161,7 @@ function TotalStepsTaken({ goal }) {
   );
 }
 
-function TrainingPlanCompletion({ goal }) {
+function TrainingPlanCompletion({ goal, handleDeleteGoal }) {
   const completionPercentage = goal.completion_percentage;
   let barColor;
   let goalStatus;
@@ -166,9 +195,24 @@ function TrainingPlanCompletion({ goal }) {
         marginBottom: 10
       }}
     >
-      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
-        Planes de Entrenamiento Completados
-      </Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
+          Planes de Entrenamiento Completados
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => handleDeleteGoal(goal._id)}
+          style={{ marginRight: 25 }}
+        >
+          <Ionicons
+            name="trash"
+            style={{ width: 30, height: 30, tintColor: colors.white }}
+            size={25}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+      </View>
+
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
           Objetivo: {goal.goal_num_of_completions}
@@ -195,7 +239,7 @@ function TrainingPlanCompletion({ goal }) {
   );
 }
 
-function TotalDistanceTravelled({ goal }) {
+function TotalDistanceTravelled({ goal, handleDeleteGoal }) {
   const completionPercentage = goal.completion_percentage;
   let barColor;
   let goalStatus;
@@ -229,9 +273,24 @@ function TotalDistanceTravelled({ goal }) {
         marginBottom: 10
       }}
     >
-      <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
-        Distancia Recorrida
-      </Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={{ fontWeight: 'bold', padding: 5, paddingTop: 0, color: colors.gray }}>
+          Distancia Recorrida
+        </Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => handleDeleteGoal(goal._id)}
+          style={{ marginRight: 25 }}
+        >
+          <Ionicons
+            name="trash"
+            style={{ width: 30, height: 30, tintColor: colors.white }}
+            size={25}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+      </View>
+
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={{ paddingBottom: 5, paddingLeft: 5, color: colors.white }}>
           Objetivo: {goal.goal_num_of_completions}
@@ -258,22 +317,22 @@ function TotalDistanceTravelled({ goal }) {
   );
 }
 
-export function Goal({ goal }) {
+export function Goal({ goal, handleDeleteGoal }) {
   switch (goal.type) {
     case 'max_weight_lifted_in_exercise':
-      return MaxWeightLiftedInExercise({ goal });
+      return MaxWeightLiftedInExercise({ goal, handleDeleteGoal });
     case 'training_plan_completion':
-      return TrainingPlanCompletion({ goal });
+      return TrainingPlanCompletion({ goal, handleDeleteGoal });
     case 'total_steps_taken':
-      return TotalStepsTaken({ goal });
+      return TotalStepsTaken({ goal, handleDeleteGoal });
     case 'total_distance_travelled':
-      return TotalDistanceTravelled({ goal });
+      return TotalDistanceTravelled({ goal, handleDeleteGoal });
     default:
       return null;
   }
 }
 
-export function PersonalGoals({ goals, handleAddGoal }) {
+export function PersonalGoals({ goals, handleAddGoal, handleDeleteGoal }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
@@ -295,7 +354,7 @@ export function PersonalGoals({ goals, handleAddGoal }) {
               <Text style={{ color: colors.white, padding: 3 }}>Agregar</Text>
             </TouchableOpacity>
           </View>
-          {goals.length === 0 ? null : goals.map((goal) => Goal({ goal }))}
+          {goals.length === 0 ? null : goals.map((goal) => Goal({ goal, handleDeleteGoal }))}
         </ScrollView>
       </View>
     </ImageBackground>
@@ -304,21 +363,26 @@ export function PersonalGoals({ goals, handleAddGoal }) {
 
 PersonalGoals.propTypes = {
   goals: array.isRequired,
-  handleAddGoal: func.isRequired
+  handleAddGoal: func.isRequired,
+  handleDeleteGoal: func.isRequired
 };
 
 TrainingPlanCompletion.propTypes = {
-  goal: object.isRequired
+  goal: object.isRequired,
+  handleDeleteGoal: func.isRequired
 };
 
 MaxWeightLiftedInExercise.propTypes = {
-  goal: object.isRequired
+  goal: object.isRequired,
+  handleDeleteGoal: func.isRequired
 };
 
 TotalDistanceTravelled.propTypes = {
-  goal: object.isRequired
+  goal: object.isRequired,
+  handleDeleteGoal: func.isRequired
 };
 
 TotalStepsTaken.propTypes = {
-  goal: object.isRequired
+  goal: object.isRequired,
+  handleDeleteGoal: func.isRequired
 };

@@ -66,6 +66,16 @@ export const createGoalRequest = async (values) =>
     mode: 'cors',
     body: JSON.stringify(values)
   });
+export const deleteGoal = async (goalId) =>
+  fetch(`${GATEWAY_URL}/goals/${goalId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
+    },
+    mode: 'cors'
+  });
 
 export const createMetricRequest = async (values) =>
   fetch(`${GATEWAY_URL}/metrics`, {
