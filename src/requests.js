@@ -23,6 +23,26 @@ export const updateUserInformationRequest = async (values) =>
     mode: 'cors',
     body: JSON.stringify(values)
   });
+export const incrementPasswordChange = async (username) =>
+  fetch(`${GATEWAY_URL}/user/changed-password/${username}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
+    },
+    mode: 'cors'
+  });
+export const updateLastLoginTime = async (username) =>
+  fetch(`${GATEWAY_URL}/user/login/${username}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
+    },
+    mode: 'cors'
+  });
 
 export const registerRequest = async (values) =>
   fetch(`${GATEWAY_URL}/user`, {

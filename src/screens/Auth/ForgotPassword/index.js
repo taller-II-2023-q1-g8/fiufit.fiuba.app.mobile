@@ -8,6 +8,7 @@ import { auth } from '../../../../firebaseConfig';
 
 import ForgotPassword from './layout';
 import { getField } from './utils';
+import { fetchUserByEmail, incrementPasswordChange } from '../../../requests';
 
 export default function ForgotPasswordContainer({ navigation }) {
   const [loading, setLoading] = useState(false);
@@ -28,6 +29,10 @@ export default function ForgotPasswordContainer({ navigation }) {
       setLoading(false);
       return;
     }
+    const ur = await fetchUserByEmail(email);
+    const urJ = await ur.json();
+    console.log(urJ);
+    await incrementPasswordChange(urJ.message.username);
     Alert.alert(
       'Recupero de contraseña',
       'Se te envio un mail con instruccione para recuperar la contraseña'

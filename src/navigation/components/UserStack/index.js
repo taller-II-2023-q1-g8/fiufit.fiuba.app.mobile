@@ -6,6 +6,7 @@ import {
   fetchFollowedUsersByUsername,
   fetchUserByEmail,
   fetchUserGoalsByUsername,
+  updateLastLoginTime,
   updateUserLocation
 } from '../../../requests';
 import { useStateValue } from '../../../state';
@@ -20,6 +21,7 @@ export default function UserStackContainer({ email }) {
   const fetchUser = async () => {
     const userResponse = await fetchUserByEmail(email);
     const userJson = await userResponse.json();
+    updateLastLoginTime(userJson.message.username);
     const goalsResponse = await fetchUserGoalsByUsername(userJson.message.username);
     const goalsJson = await goalsResponse.json();
     const followed = await fetchFollowedUsersByUsername(userJson.message.username);
