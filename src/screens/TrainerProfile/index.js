@@ -118,7 +118,7 @@ export default function TrainerProfileContainer({ navigation }) {
       setLoading(false);
     }
     fetchData();
-  }, [state.user]);
+  }, [state.user, state.plansData]);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handlePickVideo = async () => {
