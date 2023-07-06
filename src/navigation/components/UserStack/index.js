@@ -17,23 +17,30 @@ export default function UserStackContainer({ email }) {
   const [loading, setLoading] = useState(true);
   const [locationGranted, setLocationGranted] = useState(false);
   const [, dispatch] = useStateValue();
+  const [err, setErr] = useState(false);
 
   const fetchUser = async () => {
-    const userResponse = await fetchUserByEmail(email);
-    const userJson = await userResponse.json();
-    updateLastLoginTime(userJson.message.username);
-    const goalsResponse = await fetchUserGoalsByUsername(userJson.message.username);
-    const goalsJson = await goalsResponse.json();
-    const followed = await fetchFollowedUsersByUsername(userJson.message.username);
-    const followedJson = await followed.json();
+    try {
+      const userResponse = await fetchUserByEmail(email);
+      const userJson = await userResponse.json();
+      updateLastLoginTime(userJson.message.username);
+      const goalsResponse = await fetchUserGoalsByUsername(userJson.message.username);
+      const goalsJson = await goalsResponse.json();
+      const followed = await fetchFollowedUsersByUsername(userJson.message.username);
+      const followedJson = await followed.json();
 
-    dispatch({
-      type: 'setUserData',
-      user: userJson.message,
-      userGoals: goalsJson.message,
-      followedUsers: followedJson.message
-    });
-    setLoading(false);
+      dispatch({
+        type: 'setUserData',
+        user: userJson.message,
+        userGoals: goalsJson.message,
+        followedUsers: followedJson.message
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setErr(true);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -81,7 +88,7 @@ export default function UserStackContainer({ email }) {
       return () => clearInterval(dataInterval);
     }
   }, [locationGranted]);
-  return <UserStack loading={loading} />;
+  return <UserStack loading={loading} err={err} />;
 }
 
 UserStackContainer.propTypes = {

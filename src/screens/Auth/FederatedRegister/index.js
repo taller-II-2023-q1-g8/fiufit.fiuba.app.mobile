@@ -9,7 +9,8 @@ import {
   fetchUserByUsername,
   fetchUserProfileByUsername,
   registerAthlete,
-  registerRequest
+  registerRequest,
+  serviceState
 } from '../../../requests';
 import { auth } from '../../../../firebaseConfig';
 import { useStateValue } from '../../../state';
@@ -109,6 +110,16 @@ export default function FederatedRegisterContainer() {
 
     try {
       /* const hash = bcrypt.hashSync(password, salt); */
+      const a = await serviceState('Users');
+      const ajs = await a.json();
+      const b = await serviceState('Plans');
+      const bjs = await b.json();
+      setLoading(false);
+      if (a.status !== 200 || b.status !== 200) {
+        Alert.alert('Error', 'Servicios bloqueados intente nuevamente mas tarde');
+        setLoading(false);
+        return;
+      }
       const response = await registerRequest(values);
       if (response.ok) {
         const r = await registerAthlete(data.username);

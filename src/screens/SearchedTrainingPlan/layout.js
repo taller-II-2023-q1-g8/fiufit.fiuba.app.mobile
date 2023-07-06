@@ -10,6 +10,7 @@ import BackgroundImage from '../../assets/Background.jpg';
 import Loader from '../../components/Loader';
 
 import { styles } from './styles';
+import ErrorView from '../ErrorScreen';
 
 function Exercises({ exercises }) {
   return exercises.map((exercise, index) => (
@@ -63,91 +64,97 @@ export default function SearchedTrainingPlan({
   handleLike,
   handleRateTraining,
   planPicUrl,
-  loading
+  loading,
+  err
 }) {
   return (
     <ImageBackground source={BackgroundImage}>
       <Loader loading={loading} />
-      <View style={styles.container}>
-        <View style={styles.header}>
-          {planPicUrl !== null ? (
-            <Image source={{ uri: planPicUrl }} style={styles.profilePicture} />
-          ) : (
-            <Image source={manPic} style={styles.profilePicture} />
-          )}
-          <View>
-            <Text style={styles.username}>{title}</Text>
-            <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
-              <View style={{ marginRight: 30, display: 'flex', flexDirection: 'row' }}>
-                <Text style={{ color: colors.white }}>Dificultad</Text>
-                <Text style={{ marginLeft: 20, fontWeight: 'bold', color: colors.white }}>{difficulty}</Text>
+      <ErrorView err={err} />
+      {!err && (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            {planPicUrl !== null ? (
+              <Image source={{ uri: planPicUrl }} style={styles.profilePicture} />
+            ) : (
+              <Image source={manPic} style={styles.profilePicture} />
+            )}
+            <View>
+              <Text style={styles.username}>{title}</Text>
+              <View style={{ display: 'flex', flexDirection: 'row', marginVertical: 10 }}>
+                <View style={{ marginRight: 30, display: 'flex', flexDirection: 'row' }}>
+                  <Text style={{ color: colors.white }}>Dificultad</Text>
+                  <Text style={{ marginLeft: 20, fontWeight: 'bold', color: colors.white }}>
+                    {difficulty}
+                  </Text>
+                </View>
+              </View>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                {/* <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} /> */}
+                <Text style={{ width: '80%', color: colors.white }}>{description}</Text>
+              </View>
+              <View
+                style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingVertical: 10 }}
+              >
+                <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} />
+                <Text style={{ paddingHorizontal: 5, color: colors.white }}>Trainer: {trainer}</Text>
               </View>
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              {/* <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} /> */}
-              <Text style={{ width: '80%', color: colors.white }}>{description}</Text>
-            </View>
-            <View
-              style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingVertical: 10 }}
-            >
-              <Image style={{ width: 20, height: 20, tintColor: colors.white }} source={TrainerIcon} />
-              <Text style={{ paddingHorizontal: 5, color: colors.white }}>Trainer: {trainer}</Text>
-            </View>
           </View>
-        </View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingVertical: 10
-          }}
-        >
-          <Text style={styles.title}>Ejercicios</Text>
-          <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity activeOpacity={0.5} onPress={handleRateTraining}>
-              <Ionicons
-                name="star"
-                style={{ width: 30, height: 30, tintColor: colors.white }}
-                size={25}
-                color="#ffb300"
-              />
-            </TouchableOpacity>
-            {favorite ? (
-              <TouchableOpacity activeOpacity={0.5} onPress={handleLike}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingVertical: 10
+            }}
+          >
+            <Text style={styles.title}>Ejercicios</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity activeOpacity={0.5} onPress={handleRateTraining}>
                 <Ionicons
-                  name="heart"
+                  name="star"
                   style={{ width: 30, height: 30, tintColor: colors.white }}
                   size={25}
-                  color={colors.error}
+                  color="#ffb300"
                 />
               </TouchableOpacity>
-            ) : (
-              <TouchableOpacity activeOpacity={0.5} onPress={handleLike}>
-                <Ionicons
-                  name="heart-outline"
-                  style={{ width: 30, height: 30, tintColor: colors.white }}
-                  size={25}
-                  color={colors.white}
-                />
-              </TouchableOpacity>
-            )}
+              {favorite ? (
+                <TouchableOpacity activeOpacity={0.5} onPress={handleLike}>
+                  <Ionicons
+                    name="heart"
+                    style={{ width: 30, height: 30, tintColor: colors.white }}
+                    size={25}
+                    color={colors.error}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity activeOpacity={0.5} onPress={handleLike}>
+                  <Ionicons
+                    name="heart-outline"
+                    style={{ width: 30, height: 30, tintColor: colors.white }}
+                    size={25}
+                    color={colors.white}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
-        </View>
 
-        <FlatList
-          style={{ flex: 0.5 }}
-          data={exercises}
-          renderItem={(exercise) => <Item exercise={exercise} />}
-          ItemSeparatorComponent={ItemSeparatorView}
-        />
-        <View style={{ paddingVertical: 10 }}>
-          <TouchableOpacity style={styles.startButton} activeOpacity={0.5} onPress={handleStartTraining}>
-            <Text style={styles.startButtonText}>Empezar!</Text>
-          </TouchableOpacity>
+          <FlatList
+            style={{ flex: 0.5 }}
+            data={exercises}
+            renderItem={(exercise) => <Item exercise={exercise} />}
+            ItemSeparatorComponent={ItemSeparatorView}
+          />
+          <View style={{ paddingVertical: 10 }}>
+            <TouchableOpacity style={styles.startButton} activeOpacity={0.5} onPress={handleStartTraining}>
+              <Text style={styles.startButtonText}>Empezar!</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      )}
     </ImageBackground>
   );
 }
@@ -167,5 +174,6 @@ SearchedTrainingPlan.propTypes = {
   handleLike: func,
   handleRateTraining: func,
   planPicUrl: string,
-  loading: bool
+  loading: bool,
+  err: bool
 };

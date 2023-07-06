@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { cloneDeep } from 'lodash';
 
 import { auth } from '../../../../firebaseConfig';
-import { registerAthlete, registerRequest } from '../../../requests';
+import { registerAthlete, registerRequest, serviceState } from '../../../requests';
 import { useStateValue } from '../../../state';
 
 import Register from './layout';
@@ -97,7 +97,16 @@ export default function RegisterContainer() {
     };
 
     try {
-      /* const hash = bcrypt.hashSync(password, salt); */
+      const a = await serviceState('Users');
+      const ajs = await a.json();
+      const b = await serviceState('Plans');
+      const bjs = await b.json();
+      setLoading(false);
+      if (a.status === 200 || b.status === 200) {
+        Alert.alert('Error', 'Servicios bloqueados intente nuevamente mas tarde');
+        setLoading(false);
+        return;
+      }
       const response = await registerRequest(values);
       if (response.ok) {
         const r = await registerAthlete(data.username);

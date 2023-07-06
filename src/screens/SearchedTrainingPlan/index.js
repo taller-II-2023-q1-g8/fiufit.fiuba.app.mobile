@@ -8,7 +8,11 @@ import {
   fetchAthletesID,
   addPlanToAthleteAsFavorite,
   removePlanToAthleteAsFavorite,
-  likePlan
+  likePlan,
+  fetchUserByEmail,
+  updateLastLoginTime,
+  fetchUserGoalsByUsername,
+  fetchFollowedUsersByUsername
 } from '../../requests';
 import Loader from '../../components/Loader';
 import { getPlanPicURL } from '../../utils';
@@ -23,6 +27,8 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
   const [athleteRating, setAthleteRating] = useState(null);
   const [favorite, setFavorite] = useState(null);
   const [planPicUrl, setPlanPicUrl] = useState(null);
+  const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleStartTraining = () => {
     navigation.navigate(texts.Exercise.name, { plan, athleteId: ownAthleteInternalID, athleteRating });
@@ -37,27 +43,32 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
   };
   useEffect(() => {
     async function fetchData() {
-      let response = await fetchTrainingPlanByID(plan.id);
-      let dataJson = await response.json();
-      console.log(dataJson);
-      setTrainerUsername(dataJson.trainer.external_id);
-      const rating = dataJson.athletes.find((athlete) => athlete.external_id === state.user.username);
-      setAthleteRating(rating);
-      response = await fetchAthletesID();
-      dataJson = await response.json();
-      const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
-      if (rating !== undefined) {
-        setFavorite(rating.is_liked);
-      } else {
-        setFavorite(false);
-      }
+      try {
+        let response = await fetchTrainingPlanByID(plan.id);
+        let dataJson = await response.json();
+        console.log(dataJson);
+        setTrainerUsername(dataJson.trainer.external_id);
+        const rating = dataJson.athletes.find((athlete) => athlete.external_id === state.user.username);
+        setAthleteRating(rating);
+        response = await fetchAthletesID();
+        dataJson = await response.json();
+        const myAthlete = await dataJson.find((athlete) => athlete.external_id === state.user.username);
+        if (rating !== undefined) {
+          setFavorite(rating.is_liked);
+        } else {
+          setFavorite(false);
+        }
 
-      setOwnAthleteInternalID(myAthlete.id);
+        setOwnAthleteInternalID(myAthlete.id);
+      } catch (error) {
+        console.log(error);
+        setErr(true);
+        setLoading(false);
+      }
     }
     fetchData();
   }, []);
 
-  const [loading, setLoading] = useState(true);
   const fetchPlanPicUrl = async () => {
     const url = await getPlanPicURL(plan.id);
     setPlanPicUrl(url);
@@ -83,6 +94,7 @@ export default function SearchedTrainingPlanContainer({ route, navigation }) {
           handleRateTraining={handleRateTraining}
           planPicUrl={planPicUrl}
           loading={loading}
+          err={err}
         />
       )}
       <Loader loading={!('title' in plan)} />

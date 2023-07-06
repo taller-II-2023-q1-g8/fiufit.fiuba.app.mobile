@@ -375,6 +375,16 @@ export const unfollowUser = async (followerUsername, followedUsername) =>
     }
   });
 
+export const serviceState = async (service) =>
+  fetch(`${GATEWAY_URL}/services/state/${service}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Fiu-Fit-Auth': FIUFIT_API_KEY
+    }
+  });
+
 export const sendMessageNotification = async (sender, receiver, message) =>
   fetch(`${GATEWAY_URL}/messages/send`, {
     method: 'POST',
