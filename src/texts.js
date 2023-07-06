@@ -106,7 +106,7 @@ const texts = {
     name: 'PrivateMessage'
   },
   EditUserProfile: {
-    name: 'EditUserProfile'
+    name: 'Edita tu perfil'
   },
   CreateGoal: {
     name: 'CreateGoal',
@@ -151,9 +151,13 @@ const texts = {
     goalExerciseTitle: 'Nombre del Ejercicio',
     goalExerciseTitlePlaceholder: 'ej: Sentadillas',
     completionWeightTitle: 'Peso en Kg',
+    completionStepsTitle: 'Cantidad de Pasos',
     goalCompletionWeightPlaceholder: 'ej: 25',
     completionPlansTitle: 'Cantidad de Planes',
+    completionDistanceTitle: 'Distancia en metros',
     goalCompletionPlansPlaceholder: 'ej: 5',
+    goalStepsPlaceholder: 'ej: 3000',
+    goalDistancePlaceholder: 'ej: 1000',
     planTitlePlaceholder: 'Titulo del Plan de entrenamiento',
     planTitle: 'Titulo',
     planDescriptionPlaceholder: 'Descripción del Plan de entrenamiento',

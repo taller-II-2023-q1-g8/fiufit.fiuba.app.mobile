@@ -71,7 +71,7 @@ export default function UserProfileContainer({ navigation }) {
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [state.user]);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);

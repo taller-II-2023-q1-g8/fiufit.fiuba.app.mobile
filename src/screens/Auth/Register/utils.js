@@ -4,6 +4,7 @@ import { emailFieldType, passwordFieldType, phoneFieldType } from '../../../comp
 import DateField from '../../../components/Fields/DateField';
 import SelectField from '../../../components/Fields/SelectField';
 import TextField from '../../../components/Fields/TextField';
+import InterestPicker from '../../../components/Fields/InterestPicker';
 import texts from '../../../texts';
 
 const fieldTexts = texts.Fields;
@@ -20,7 +21,15 @@ export const fillErrors = (updatedErrors, keysToFilter, data) =>
     if (data[key] === '') updatedErrors[key] = 'Campo obligatorio';
   });
 
-export const getFields = (data, errors, handleOnChangeText) => [
+export const getFields = (
+  data,
+  errors,
+  handleOnChangeText,
+  tags,
+  handleOnChangeTags,
+  handleOnAddTag,
+  handleOnDeleteTag
+) => [
   [
     <TextField
       key="emailField"
@@ -116,6 +125,12 @@ export const getFields = (data, errors, handleOnChangeText) => [
       onChangeText={handleOnChangeText}
       placeholder={fieldTexts.weightPlaceholder}
       title={fieldTexts.weightTitle}
+    />,
+    <InterestPicker
+      handleOnChangeTags={handleOnChangeTags}
+      handleOnAddTag={handleOnAddTag}
+      tags={tags}
+      handleOnDeleteTag={handleOnDeleteTag}
     />
   ]
 ];

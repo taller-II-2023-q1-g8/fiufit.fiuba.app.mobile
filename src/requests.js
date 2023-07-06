@@ -22,6 +22,26 @@ export const updateUserInformationRequest = async (values) =>
     mode: 'cors',
     body: JSON.stringify(values)
   });
+export const incrementPasswordChange = async (username) =>
+  fetch(`${GATEWAY_URL}/user/changed-password/${username}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
+    },
+    mode: 'cors'
+  });
+export const updateLastLoginTime = async (username) =>
+  fetch(`${GATEWAY_URL}/user/login/${username}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
+    },
+    mode: 'cors'
+  });
 
 export const registerRequest = async (values) =>
   fetch(`${GATEWAY_URL}/user`, {
@@ -64,6 +84,16 @@ export const createGoalRequest = async (values) =>
     },
     mode: 'cors',
     body: JSON.stringify(values)
+  });
+export const deleteGoal = async (goalId) =>
+  fetch(`${GATEWAY_URL}/goals/${goalId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Fiu-Fit-Auth': FIUTFIT_API_KEY
+    },
+    mode: 'cors'
   });
 
 export const createMetricRequest = async (values) =>
@@ -312,7 +342,7 @@ username=${username}&type=training_plan_completed`,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Fiu-Fit-Auth': 'mn3YK1ijws0ThRpUn19N3SPlkTgUfXg7'
+      'Fiu-Fit-Auth': 'mn3YK1ijws0ThRpUn19N3SPlkTgUfXg7'
       },
       mode: 'cors'
     }

@@ -118,7 +118,7 @@ export default function TrainerProfileContainer({ navigation }) {
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [state.user]);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handlePickVideo = async () => {
@@ -141,7 +141,7 @@ export default function TrainerProfileContainer({ navigation }) {
       await requestVerification(data.trainerId);
     }
   };
-  const handleEditProfile = () => navigation.navigate(texts.EditTrainerProfile.name);
+  const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
   const handlePlanPress = (itemData) => {
     if (itemData.blocked === 'true') {
       Alert.alert(texts.BlockedPlan.alert);

@@ -17,21 +17,12 @@ export const getFields = (data, handleOnChangeText) => [
     title={fieldTexts.nameTitle}
   />,
   <TextField
-    key="usernameField"
-    name="username"
-    defaultValue={data.username}
+    key="lastnameField"
+    name="lastname"
+    defaultValue={data.lastname}
     onChangeText={handleOnChangeText}
-    placeholder={fieldTexts.usernamePlaceholder}
-    title={fieldTexts.usernameTitle}
-  />,
-  <TextField
-    key="emailField"
-    name="email"
-    defaultValue={data.email}
-    keyboardType={emailFieldType}
-    onChangeText={handleOnChangeText}
-    placeholder={fieldTexts.emailPlaceholder}
-    title={fieldTexts.emailTitle}
+    placeholder={fieldTexts.lastnamePlaceholder}
+    title={fieldTexts.lastnameTitle}
   />,
   <SelectField
     key="genderField"
@@ -48,5 +39,23 @@ export const getFields = (data, handleOnChangeText) => [
     onChangeText={handleOnChangeText}
     placeholder={fieldTexts.phonePlaceholder}
     title={fieldTexts.phoneTitle}
+  />,
+  <TextField
+    key="weigthField"
+    name="weight_in_kg"
+    defaultValue={data.weight_in_kg}
+    keyboardType={phoneFieldType}
+    onChangeText={handleOnChangeText}
+    placeholder={fieldTexts.weightPlaceholder}
+    title={fieldTexts.weightTitle}
+  />,
+  <TextField
+    key="heightField"
+    name="height_in_cm"
+    defaultValue={data.height_in_cm}
+    keyboardType={phoneFieldType}
+    onChangeText={handleOnChangeText}
+    placeholder={fieldTexts.heightPlaceholder}
+    title={fieldTexts.heightTitle}
   />
 ];

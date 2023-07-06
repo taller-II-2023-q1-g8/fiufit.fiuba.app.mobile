@@ -6,6 +6,7 @@ import {
   fetchFollowedUsersByUsername,
   fetchUserByEmail,
   fetchUserGoalsByUsername,
+  updateLastLoginTime,
   updateUserLocation
 } from '../../../requests';
 import { useStateValue } from '../../../state';
@@ -13,9 +14,6 @@ import { useStateValue } from '../../../state';
 import UserStack from './layout';
 
 export default function UserStackContainer({ email }) {
-  // Token es una promise, hay que ejecutarla en algun momento
-  // Cargar aca el usuario en initial state y ejecutar la token promise
-  // Para tener el token de validacion para hacer requests
   const [loading, setLoading] = useState(true);
   const [locationGranted, setLocationGranted] = useState(false);
   const [, dispatch] = useStateValue();
@@ -23,6 +21,7 @@ export default function UserStackContainer({ email }) {
   const fetchUser = async () => {
     const userResponse = await fetchUserByEmail(email);
     const userJson = await userResponse.json();
+    updateLastLoginTime(userJson.message.username);
     const goalsResponse = await fetchUserGoalsByUsername(userJson.message.username);
     const goalsJson = await goalsResponse.json();
     const followed = await fetchFollowedUsersByUsername(userJson.message.username);
