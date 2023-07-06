@@ -181,6 +181,12 @@ export default function TrainerProfile({
                 <TouchableOpacity style={styles.actionButton} onPress={handlePickVideo}>
                   <Text style={{ color: colors.white, fontSize: 20, alignItems: 'center' }}> Verificar</Text>
                 </TouchableOpacity>
+                {data.trainerVerification === 1 && (
+                  <Text style={{ color: colors.white }}>Status: Pendiente</Text>
+                )}
+                {data.trainerVerification === 3 && (
+                  <Text style={{ color: colors.error }}>Status: Rechaza</Text>
+                )}
               </>
             ) : null}
             <View style={{ display: 'flex', flexDirection: 'row' }}>
