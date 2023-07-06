@@ -203,6 +203,7 @@ function InputModal({
                     }}
                     selectedValue={exerciseSelected}
                     style={styles.fieldInputContainer}
+                    mode="dropdown"
                   >
                     {exercises.map((exercise) => (
                       <Picker.Item label={exercise.title} value={exercise} />
