@@ -8,6 +8,7 @@ import texts from '../../texts';
 import FollowInfo from './layout';
 import { useFocusEffect } from '@react-navigation/native';
 import { processFetchedPlans } from '../../utils';
+import ErrorView from '../ErrorScreen';
 
 export default function FollowersScreen({ navigation }) {
   const [state] = useStateValue();
@@ -18,35 +19,42 @@ export default function FollowersScreen({ navigation }) {
   ]);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(false);
   // Focus effect?
   useFocusEffect(
     React.useCallback(() => {
       async function fetchData() {
         // setLoading(true);
-        console.log('fetching');
-        const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
-        const followersJson = await followersResponse.json();
-        const trainersResponse = await fetchTrainersID();
-        const trainersJson = await trainersResponse.json();
-        // Get de usuarios no traiga admins
-        const followers = followersJson.message
-          .filter((username) => username !== state.user.username)
-          .map((username) => ({
-            username,
-            role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
-          }));
-        const followed = state.followedUsers
-          .filter((username) => username !== state.user.username)
-          .map((username) => ({
-            username,
-            role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
-          }));
-        setData({
-          followers,
-          followed
-        });
+        try {
+          setErr(false);
+          console.log('fetching');
+          const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
+          const followersJson = await followersResponse.json();
+          const trainersResponse = await fetchTrainersID();
+          const trainersJson = await trainersResponse.json();
+          // Get de usuarios no traiga admins
+          const followers = followersJson.message
+            .filter((username) => username !== state.user.username)
+            .map((username) => ({
+              username,
+              role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+            }));
+          const followed = state.followedUsers
+            .filter((username) => username !== state.user.username)
+            .map((username) => ({
+              username,
+              role: trainersJson.find((trainer) => trainer.external_id === username) ? 'Trainer' : 'Athlete'
+            }));
+          setData({
+            followers,
+            followed
+          });
 
-        setLoading(false);
+          setLoading(false);
+        } catch (error) {
+          console.log(error);
+          setErr(true);
+        }
       }
       fetchData();
       return () => {
@@ -60,14 +68,19 @@ export default function FollowersScreen({ navigation }) {
   };
 
   return (
-    <FollowInfo
-      loading={loading}
-      index={index}
-      routes={routes}
-      setIndex={setIndex}
-      data={data}
-      handleItemPress={nothing}
-    />
+    <>
+      <ErrorView err={err} />
+      {!err && (
+        <FollowInfo
+          loading={loading}
+          index={index}
+          routes={routes}
+          setIndex={setIndex}
+          data={data}
+          handleItemPress={nothing}
+        />
+      )}
+    </>
   );
 }
 

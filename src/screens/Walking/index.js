@@ -5,7 +5,12 @@ import { Pedometer } from 'expo-sensors';
 import * as Location from 'expo-location';
 
 import { useStateValue } from '../../state';
-import { createMetricRequest, fetchUserGoalsByUsername } from '../../requests';
+import {
+  createMetricRequest,
+  fetchFollowerUsersByUsername,
+  fetchTrainersID,
+  fetchUserGoalsByUsername
+} from '../../requests';
 
 import Walking from './layout';
 import { styles } from './styles';
@@ -136,23 +141,34 @@ export default function WalkingScreen({ navigation }) {
 
   const handleSubmitPress = async () => {
     setLoading(true);
-    if (isPedometerAvailable === 'true') {
-      await createMetricRequest({
-        type: 'steps_taken',
-        duration_in_seconds: timePassed,
-        step_count: currentStepCount,
-        created_at: new Date().toISOString(),
-        username: state.user.username
+    try {
+      if (isPedometerAvailable === 'true') {
+        await createMetricRequest({
+          type: 'steps_taken',
+          duration_in_seconds: timePassed,
+          step_count: currentStepCount,
+          created_at: new Date().toISOString(),
+          username: state.user.username
+        });
+      }
+      if (isLocationAvailable === 'true') {
+        await createMetricRequest({
+          type: 'distance_travelled',
+          duration_in_seconds: timePassed,
+          distance_in_meters: distance * 1000,
+          created_at: new Date().toISOString(),
+          username: state.user.username
+        });
+      }
+      const goalsResponse = await fetchUserGoalsByUsername(state.user.username);
+      const goalsJson = await goalsResponse.json();
+      dispatch({
+        type: 'updateGoals',
+        newUserGoals: goalsJson.message
       });
-    }
-    if (isLocationAvailable === 'true') {
-      await createMetricRequest({
-        type: 'distance_travelled',
-        duration_in_seconds: timePassed,
-        distance_in_meters: distance * 1000,
-        created_at: new Date().toISOString(),
-        username: state.user.username
-      });
+    } catch (error) {
+      console.log(error);
+      Alert.alert('No se pudo crear metrica ya que el servicio esta bloqueado');
     }
     setTimePassed(0);
     setActivityStatus('stopped');
@@ -164,12 +180,6 @@ export default function WalkingScreen({ navigation }) {
       setCurrentStepCount(0);
       pedometerRef.remove();
     }
-    const goalsResponse = await fetchUserGoalsByUsername(state.user.username);
-    const goalsJson = await goalsResponse.json();
-    dispatch({
-      type: 'updateGoals',
-      newUserGoals: goalsJson.message
-    });
     setLoading(false);
   };
 

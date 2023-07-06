@@ -3,7 +3,17 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 
-import { fetchAllUsers, fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
+import {
+  fetchAllUsers,
+  fetchCompletedPlanMetricsByUsername,
+  fetchFollowedUsersByUsername,
+  fetchFollowerUsersByUsername,
+  fetchPlans,
+  fetchPlansByTrainerID,
+  fetchTrainersID,
+  fetchUserProfileByUsername,
+  fetchUsersByUsername
+} from '../../requests';
 import { processFetchedPlans } from '../../utils';
 import { useStateValue } from '../../state';
 import texts from '../../texts';
@@ -11,6 +21,7 @@ import texts from '../../texts';
 import { getDistanceFromLatLonInKm, getFilters } from './utils';
 import { hasSelectedFilters } from './filtering';
 import Explore from './layout';
+import ErrorView from '../ErrorScreen';
 
 export default function ExploreScreen({ navigation }) {
   const [plans, setPlans] = useState([]);
@@ -25,6 +36,7 @@ export default function ExploreScreen({ navigation }) {
     { key: 'first', title: 'Usuarios' },
     { key: 'second', title: 'Entrenamientos' }
   ]);
+  const [err, setErr] = useState(false);
 
   const filterData = (searchQuery) => plans.filter((plan) => hasSelectedFilters(searchQuery, plan));
 
@@ -182,30 +194,36 @@ export default function ExploreScreen({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       async function fetchData() {
-        const response = await fetchPlans('');
-        const plans1 = await response.json();
-        await processFetchedPlans(plans1);
-        setPlans(plans1);
-        setFilteredPlans(plans1);
-        const allUsers = await fetchAllUsers();
-        const allUR = await allUsers.json();
-        const trainersResponse = await fetchTrainersID();
-        const trainersJson = await trainersResponse.json();
-        console.log(trainersJson);
-        const allU = allUR.message
-          .filter((user) => user.username !== state.user.username)
-          .map((user) => {
-            const tr = trainersJson.find((trainer) => trainer.external_id === user.username);
-            return {
-              username: user.username,
-              role: tr ? 'Trainer' : 'Athlete',
-              latitude: user.latitude,
-              longitude: user.longitude,
-              verification: tr ? tr.verification.status : -1
-            };
-          });
-        console.log(allU);
-        setUsernames(allU);
+        try {
+          setErr(false);
+          const response = await fetchPlans('');
+          const plans1 = await response.json();
+          await processFetchedPlans(plans1);
+          setPlans(plans1);
+          setFilteredPlans(plans1);
+          const allUsers = await fetchAllUsers();
+          const allUR = await allUsers.json();
+          const trainersResponse = await fetchTrainersID();
+          const trainersJson = await trainersResponse.json();
+          console.log(trainersJson);
+          const allU = allUR.message
+            .filter((user) => user.username !== state.user.username)
+            .map((user) => {
+              const tr = trainersJson.find((trainer) => trainer.external_id === user.username);
+              return {
+                username: user.username,
+                role: tr ? 'Trainer' : 'Athlete',
+                latitude: user.latitude,
+                longitude: user.longitude,
+                verification: tr ? tr.verification.status : -1
+              };
+            });
+          console.log(allU);
+          setUsernames(allU);
+        } catch (error) {
+          console.log(error);
+          setErr(true);
+        }
       }
       fetchData();
       return () => {
@@ -217,21 +235,26 @@ export default function ExploreScreen({ navigation }) {
 
   const filters = getFilters(handleOnChange);
   return (
-    <Explore
-      setIndex={setIndex}
-      index={index}
-      routes={routes}
-      dataPlans={filteredPlans}
-      dataUsers={filteredUsernames}
-      filterPlans={filters}
-      filterUsers={filterUsers}
-      handlePlanPress={handleItemPress}
-      handleUserPress={nothing}
-      handleOnPlanTitleChange={handleOnTitleChange}
-      handleOnUserNameChange={handleOnUsernameChange}
-      handleOnUserRoleChange={handleOnRoleChange}
-      handleOnDistanceChange={handleOnDistanceChange}
-    />
+    <>
+      <ErrorView err={err} />
+      {!err && (
+        <Explore
+          setIndex={setIndex}
+          index={index}
+          routes={routes}
+          dataPlans={filteredPlans}
+          dataUsers={filteredUsernames}
+          filterPlans={filters}
+          filterUsers={filterUsers}
+          handlePlanPress={handleItemPress}
+          handleUserPress={nothing}
+          handleOnPlanTitleChange={handleOnTitleChange}
+          handleOnUserNameChange={handleOnUsernameChange}
+          handleOnUserRoleChange={handleOnRoleChange}
+          handleOnDistanceChange={handleOnDistanceChange}
+        />
+      )}
+    </>
   );
 }
 

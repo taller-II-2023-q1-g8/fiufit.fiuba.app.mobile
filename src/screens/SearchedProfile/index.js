@@ -11,7 +11,9 @@ import {
   followUser,
   unfollowUser,
   fetchPlansByTrainerID,
-  fetchCompletedPlanMetricsByUsername
+  fetchCompletedPlanMetricsByUsername,
+  fetchTrainingPlanByID,
+  fetchAthletesID
 } from '../../requests';
 import { getProfilePicURL } from '../../utils';
 import { useStateValue } from '../../state';
@@ -22,6 +24,7 @@ import { styles } from '../Feed/styles';
 import { db } from '../../../firebaseConfig';
 
 import SearchedProfile from './layout';
+import ErrorView from '../ErrorScreen';
 
 export default function SearchedProfileContainer({ route, navigation }) {
   const [data, setData] = useState({});
@@ -30,7 +33,7 @@ export default function SearchedProfileContainer({ route, navigation }) {
   const [profPicUrl, setProfPicUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [following, setFollowing] = useState(state.followedUsers && state.followedUsers.includes(username));
-
+  const [err, setErr] = useState(false);
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(username);
     setProfPicUrl(url);
@@ -42,60 +45,66 @@ export default function SearchedProfileContainer({ route, navigation }) {
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
-      const userResponse = await fetchUserProfileByUsername(username);
-      const userJson = await userResponse.json();
-      const followersResponse = await fetchFollowerUsersByUsername(username);
-      const followersJson = await followersResponse.json();
-      const followedResponse = await fetchFollowedUsersByUsername(username);
-      const followedJson = await followedResponse.json();
-      const trainersResponse = await fetchTrainersID();
-      const trainersJson = await trainersResponse.json();
-      const id = trainersJson.find((trainer) => trainer.external_id === username);
-      const completedPlansResponse = await fetchCompletedPlanMetricsByUsername(username);
-      const completedPlans = await completedPlansResponse.json();
+      try {
+        setLoading(true);
+        const userResponse = await fetchUserProfileByUsername(username);
+        const userJson = await userResponse.json();
+        const followersResponse = await fetchFollowerUsersByUsername(username);
+        const followersJson = await followersResponse.json();
+        const followedResponse = await fetchFollowedUsersByUsername(username);
+        const followedJson = await followedResponse.json();
+        const trainersResponse = await fetchTrainersID();
+        const trainersJson = await trainersResponse.json();
+        const id = trainersJson.find((trainer) => trainer.external_id === username);
+        const completedPlansResponse = await fetchCompletedPlanMetricsByUsername(username);
+        const completedPlans = await completedPlansResponse.json();
 
-      const completedPlansFeedItems = [];
-      completedPlans.message.forEach((completedPlan) => {
-        completedPlansFeedItems.push({
-          type: 'training_plan_completed',
-          username,
-          title: completedPlan.plan_title,
-          date: new Date(completedPlan.created_at)
+        const completedPlansFeedItems = [];
+        completedPlans.message.forEach((completedPlan) => {
+          completedPlansFeedItems.push({
+            type: 'training_plan_completed',
+            username,
+            title: completedPlan.plan_title,
+            date: new Date(completedPlan.created_at)
+          });
         });
-      });
-      completedPlansFeedItems.sort((a, b) => b.date - a.date);
-      if (id === undefined) {
-        // Fetch de planes realizados x usuario
+        completedPlansFeedItems.sort((a, b) => b.date - a.date);
+        if (id === undefined) {
+          // Fetch de planes realizados x usuario
+          setData({
+            ...userJson.message,
+            followers: followersJson.message.length,
+            followed: followedJson.message.length,
+            role: 'Athlete',
+            verification: -1,
+            completedPlans: completedPlansFeedItems
+          });
+
+          setLoading(false);
+          return;
+        }
+        const idMessage = {
+          trainer_id: id.id
+        };
+        const plans = await fetchPlansByTrainerID(idMessage);
+        const plansJson = await plans.json();
         setData({
           ...userJson.message,
           followers: followersJson.message.length,
           followed: followedJson.message.length,
-          role: 'Athlete',
-          verification: -1,
-          completedPlans: completedPlansFeedItems
+          role: 'Trainer',
+          verification: id.verification.status,
+          completedPlans: completedPlansFeedItems,
+          createdPlans: plansJson
         });
-
+        await fetchProfPicUrl();
+        console.log('Finished fetching!!');
         setLoading(false);
-        return;
+      } catch (error) {
+        console.log(error);
+        setErr(true);
+        setLoading(false);
       }
-      const idMessage = {
-        trainer_id: id.id
-      };
-      const plans = await fetchPlansByTrainerID(idMessage);
-      const plansJson = await plans.json();
-      setData({
-        ...userJson.message,
-        followers: followersJson.message.length,
-        followed: followedJson.message.length,
-        role: 'Trainer',
-        verification: id.verification.status,
-        completedPlans: completedPlansFeedItems,
-        createdPlans: plansJson
-      });
-      await fetchProfPicUrl();
-      console.log('Finished fetching!!');
-      setLoading(false);
     }
     fetchData();
   }, []);
@@ -180,7 +189,8 @@ export default function SearchedProfileContainer({ route, navigation }) {
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
         <Loader loading={loading} />
-        {loading ? null : (
+        <ErrorView err={err} />
+        {!loading && !err && (
           <SearchedProfile
             data={data}
             loading={loading}

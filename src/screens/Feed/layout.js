@@ -137,7 +137,8 @@ export default function Feed({
   refreshing,
   onRefresh,
   handleUserProfilePress,
-  handlePlanPress
+  handlePlanPress,
+  err
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
@@ -148,11 +149,43 @@ export default function Feed({
           contentContainerStyle={scrollviewStyle}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-          <KeyboardAvoidingView style={styles.formContainer} enabled>
-            {loading
-              ? null
-              : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress, handlePlanPress))}
-          </KeyboardAvoidingView>
+          {err ? (
+            <View
+              style={{
+                width: '100%',
+                height: '100%',
+                alignItems: 'center',
+                justifyItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <View
+                style={{
+                  item: {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    paddingVertical: 10,
+                    borderWidth: 1,
+                    borderRadius: 20,
+                    borderColor: 'lightgray',
+                    backgroundColor: colors.feed_items,
+                    paddingLeft: 10
+                  }
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 25 }}>
+                  {' '}
+                  Servicios bloqueados intente nuevamente mas tarde{' '}
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <KeyboardAvoidingView style={styles.formContainer} enabled>
+              {loading
+                ? null
+                : feed.map((feedItem) => FeedItem({ feedItem }, handleUserProfilePress, handlePlanPress))}
+            </KeyboardAvoidingView>
+          )}
         </ScrollView>
       </View>
     </ImageBackground>
@@ -165,5 +198,6 @@ Feed.propTypes = {
   refreshing: bool.isRequired,
   onRefresh: func.isRequired,
   handleUserProfilePress: func,
-  handlePlanPress: func
+  handlePlanPress: func,
+  err: bool
 };

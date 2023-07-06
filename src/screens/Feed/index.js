@@ -12,6 +12,7 @@ import {
 } from '../../requests';
 
 import Feed from './layout';
+import ErrorView from '../ErrorScreen';
 
 function getCompletedPlansForEachFollower(followedUsers) {
   return Promise.all(
@@ -52,16 +53,18 @@ export default function FeedScreen({ navigation }) {
   const [state] = useStateValue();
   const [feed, setFeed] = useState([]);
   const [refreshingUsers, setRefreshingUsers] = useState(false);
+  const [err, setErr] = useState(false);
   const fetchData = async () => {
     // Get de los planes para cada usuario que seguís para mostrar información relevante en el feed.
     const { followedUsers } = state;
     // Get de los trainers para ver que followers son trainers a su vez
     setLoading(true);
-    const trainersResponse = await fetchTrainersID();
-    const trainersJson = await trainersResponse.json();
-    const plansResponse = await fetchPlans();
-    const plansJson = await plansResponse.json();
+    setErr(false);
     try {
+      const trainersResponse = await fetchTrainersID();
+      const trainersJson = await trainersResponse.json();
+      const plansResponse = await fetchPlans();
+      const plansJson = await plansResponse.json();
       const completedPlansForEachFollower = await getCompletedPlansForEachFollower(followedUsers);
       /*
       console.log(
@@ -118,7 +121,7 @@ export default function FeedScreen({ navigation }) {
       setLoading(false);
     } catch (error) {
       console.log('Error consiguiendo los planes completados para cada usuario seguido:', error);
-
+      setErr(true);
       setLoading(false);
     }
   };
@@ -153,6 +156,7 @@ export default function FeedScreen({ navigation }) {
       onRefresh={onRefreshUsers}
       handleUserProfilePress={handleUserProfilePress}
       handlePlanPress={handlePlanPress}
+      err={err}
     />
   );
 }
