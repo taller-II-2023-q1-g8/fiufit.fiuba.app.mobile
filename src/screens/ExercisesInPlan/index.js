@@ -9,6 +9,7 @@ import {
 } from '../../requests';
 
 import ExercisesInPlan from './layout';
+import ErrorView from '../ErrorScreen';
 
 export default function ExercisesInPlanScreen({ navigation, route }) {
   const { plan } = route.params;
@@ -21,38 +22,44 @@ export default function ExercisesInPlanScreen({ navigation, route }) {
   const [exerciseSelected, setExerciseSelected] = useState();
   const [repsInputValue, setRepsInputValue] = useState();
   const [weightInputValue, setWeightInputValue] = useState();
+  const [err, setErr] = useState(false);
   async function fetchData() {
     const validExercises = [];
-    await fetchExercises('')
-      .then((response) => response.json())
-      .then((fetchedExercises) => {
-        fetchedExercises.forEach((fetchedEx, idx) => {
-          validExercises.push({
-            id: fetchedEx.id,
-            title: fetchedEx.title,
-            muscles: fetchedEx.muscles
+    try {
+      await fetchExercises('')
+        .then((response) => response.json())
+        .then((fetchedExercises) => {
+          fetchedExercises.forEach((fetchedEx, idx) => {
+            validExercises.push({
+              id: fetchedEx.id,
+              title: fetchedEx.title,
+              muscles: fetchedEx.muscles
+            });
           });
+          setExercises(validExercises);
         });
-        setExercises(validExercises);
-      });
-    const exercisesFromPlan = [];
-    fetchPlanExercises(plan.id)
-      .then((response) => response.json())
-      .then((fetchedExercises) => {
-        fetchedExercises.forEach((fetchedEx, idx) => {
-          // eslint-disable-next-line camelcase
-          const { reps, weight, created_at, updated_at, ...newEx } = fetchedEx;
-          const aux = validExercises.find((x) => x.id === newEx.id);
-          exercisesFromPlan.push({
-            exercise: aux,
-            reps: fetchedEx.reps,
-            weight: fetchedEx.weight,
-            key: idx + 1
+      const exercisesFromPlan = [];
+      fetchPlanExercises(plan.id)
+        .then((response) => response.json())
+        .then((fetchedExercises) => {
+          fetchedExercises.forEach((fetchedEx, idx) => {
+            // eslint-disable-next-line camelcase
+            const { reps, weight, created_at, updated_at, ...newEx } = fetchedEx;
+            const aux = validExercises.find((x) => x.id === newEx.id);
+            exercisesFromPlan.push({
+              exercise: aux,
+              reps: fetchedEx.reps,
+              weight: fetchedEx.weight,
+              key: idx + 1
+            });
           });
+          setAddedExcersises(exercisesFromPlan);
+          setExerciseSelected(validExercises[0]);
         });
-        setAddedExcersises(exercisesFromPlan);
-        setExerciseSelected(validExercises[0]);
-      });
+    } catch (error) {
+      console.log(error);
+      setErr(true);
+    }
   }
 
   useEffect(() => {
@@ -108,29 +115,34 @@ export default function ExercisesInPlanScreen({ navigation, route }) {
   };
 
   return (
-    <ExercisesInPlan
-      addedExercises={addedExcersises}
-      exerciseSelected={exerciseSelected}
-      exerciseToBeEdited={exerciseToBeEdited}
-      modalVisible={modalVisible}
-      setAddedExercises={setAddedExcersises}
-      setExerciseToBeEdited={setExerciseToBeEdited}
-      setModalVisible={setModalVisible}
-      setExerciseSelected={setExerciseSelected}
-      handleAddExercise={handleAddExercise}
-      handleClearExercises={handleClearExercises}
-      handleTriggerEdit={handleTriggerEdit}
-      handleEditExercise={handleEditExercise}
-      swipedRow={swipedRow}
-      setSwipedRow={setSwipedRow}
-      repsInputValue={repsInputValue}
-      weightInputValue={weightInputValue}
-      setRepsInputValue={setRepsInputValue}
-      setWeightInputValue={setWeightInputValue}
-      exercises={exercises}
-      handleOnExerciseChange={handleOnExerciseChange}
-      handleRemoveExercise={handleRemoveExercise}
-    />
+    <>
+      <ErrorView err={err} />
+      {!err && (
+        <ExercisesInPlan
+          addedExercises={addedExcersises}
+          exerciseSelected={exerciseSelected}
+          exerciseToBeEdited={exerciseToBeEdited}
+          modalVisible={modalVisible}
+          setAddedExercises={setAddedExcersises}
+          setExerciseToBeEdited={setExerciseToBeEdited}
+          setModalVisible={setModalVisible}
+          setExerciseSelected={setExerciseSelected}
+          handleAddExercise={handleAddExercise}
+          handleClearExercises={handleClearExercises}
+          handleTriggerEdit={handleTriggerEdit}
+          handleEditExercise={handleEditExercise}
+          swipedRow={swipedRow}
+          setSwipedRow={setSwipedRow}
+          repsInputValue={repsInputValue}
+          weightInputValue={weightInputValue}
+          setRepsInputValue={setRepsInputValue}
+          setWeightInputValue={setWeightInputValue}
+          exercises={exercises}
+          handleOnExerciseChange={handleOnExerciseChange}
+          handleRemoveExercise={handleRemoveExercise}
+        />
+      )}
+    </>
   );
 }
 ExercisesInPlanScreen.propTypes = {

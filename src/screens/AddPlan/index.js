@@ -92,6 +92,7 @@ export default function CreatePlanContainer({ navigation }) {
       })
       .catch((error) => {
         console.log('Error:', error);
+        Alert.alert('No se pudo crear plan, microservicio bloqueado');
       });
     setLoading(false);
     navigation.navigate(texts.TrainerHome.iconTitle);

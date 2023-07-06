@@ -90,6 +90,7 @@ export default function EditPlanScreen({ route, navigation }) {
       })
       .catch((error) => {
         console.log('Error:', error);
+        Alert.alert('No se pudo actualizar plan, microservicio bloqueado');
       });
     setLoading(false);
   };

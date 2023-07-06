@@ -4,27 +4,33 @@ import { Alert } from 'react-native';
 
 import { useStateValue } from '../../state';
 import texts from '../../texts';
-import { fetchPlansByTrainerUsername } from '../../requests';
+import { fetchPlansByTrainerUsername, fetchUserProfileByUsername } from '../../requests';
 import { processFetchedPlans } from '../../utils';
 
 import TrainerHome from './layout';
+import ErrorView from '../ErrorScreen';
 
 export default function TrainerHomeScreen({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [data, setData] = useState(state.plansData); // initialState = state.dataPlans?
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(false);
 
   async function fetchData() {
-    const response = await fetchPlansByTrainerUsername(state.user.username);
-    const plans = await response.json();
+    try {
+      const response = await fetchPlansByTrainerUsername(state.user.username);
+      const plans = await response.json();
 
-    await processFetchedPlans(plans);
-    setLoading(false);
-    dispatch({
-      type: 'updatePlansData',
-      plansData: plans
-    });
-    // setData(plans);
+      await processFetchedPlans(plans);
+      setLoading(false);
+      dispatch({
+        type: 'updatePlansData',
+        plansData: plans
+      });
+    } catch (error) {
+      console.log(error);
+      setErr(true);
+    }
   }
 
   useEffect(() => {
@@ -50,13 +56,18 @@ export default function TrainerHomeScreen({ navigation }) {
     });
   };
   return (
-    <TrainerHome
-      username={state.user.username}
-      handleTrainerHome={handleTrainerHome}
-      data={data}
-      handleItemPress={handleItemPress}
-      loading={loading}
-    />
+    <>
+      <ErrorView err={err} />
+      {!err && (
+        <TrainerHome
+          username={state.user.username}
+          handleTrainerHome={handleTrainerHome}
+          data={data}
+          handleItemPress={handleItemPress}
+          loading={loading}
+        />
+      )}
+    </>
   );
 }
 TrainerHomeScreen.propTypes = {
