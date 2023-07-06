@@ -24,6 +24,7 @@ export default function HomeScreen({ navigation }) {
   const [goals, setGoals] = useState(state.userGoals);
   const [suggestedPlans, setSuggestedPlans] = useState([]);
   const [lastPlans, setLastPlans] = useState([]);
+  const [err, setErr] = useState(false);
 
   useEffect(() => {
     messaging()
@@ -119,7 +120,6 @@ export default function HomeScreen({ navigation }) {
   }, [state.user.interests]);
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
       const response = await fetchPlans('');
       const plans = await response.json();
       const completedPlansResponse = await fetchCompletedPlanMetricsByUsername(state.user.username);
@@ -173,7 +173,16 @@ export default function HomeScreen({ navigation }) {
       }
       setLoading(false);
     }
-    fetchData();
+    setLoading(true);
+    fetchData()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErr(true);
+        setLoading(false);
+      });
   }, []);
 
   const handleSignOutPress = async () => {
@@ -227,6 +236,7 @@ export default function HomeScreen({ navigation }) {
       handleSearchUsers={() => handleSearchUsers}
       handlePlanPress={handlePlanPress}
       loading={loading}
+      err={err}
     />
   );
 }

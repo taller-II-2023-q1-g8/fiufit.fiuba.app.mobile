@@ -12,6 +12,7 @@ import { getFields } from './utils';
 export default function CreateGoalContainer({ navigation }) {
   const [state, dispatch] = useStateValue();
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
   const initialData = {
     type: 'max_weight_lifted_in_exercise',
     exercise_title: '',
@@ -66,24 +67,21 @@ export default function CreateGoalContainer({ navigation }) {
       return;
     }
 
-    const createGoalResponse = await createGoalRequest(values);
-    if (!createGoalResponse.ok) {
-      setLoading(false);
-      return;
-    }
-    const createGoalJson = await createGoalResponse.json();
-    const getGoalResponse = await fetchGoalByID(createGoalJson.message);
-    if (!getGoalResponse.ok) {
-      setLoading(false);
-      return;
-    }
-    const getGoalJson = await getGoalResponse.json();
+    try {
+      const createGoalResponse = await createGoalRequest(values);
+      const createGoalJson = await createGoalResponse.json();
+      const getGoalResponse = await fetchGoalByID(createGoalJson.message);
+      const getGoalJson = await getGoalResponse.json();
 
-    dispatch({
-      type: 'addNewGoal',
-      newGoal: getGoalJson.message
-    });
+      dispatch({
+        type: 'addNewGoal',
+        newGoal: getGoalJson.message
+      });
 
+      navigation.navigate(texts.PersonalGoals.name);
+    } catch (error) {
+      alert('No se pudo crear la meta');
+    }
     setLoading(false);
     navigation.navigate(texts.PersonalGoals.name);
   };

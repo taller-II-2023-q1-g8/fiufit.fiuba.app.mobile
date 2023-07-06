@@ -19,6 +19,7 @@ import texts from '../../texts';
 import manPic from '../../assets/man.jpeg';
 import { dateToDisplayString } from '../Feed/layout';
 import { getPlanPicURL } from '../../utils';
+import ErrorView from '../ErrorScreen';
 
 import { scrollviewStyle, styles } from './styles';
 
@@ -205,42 +206,45 @@ export default function Home({
   handleSignOutPress,
   loading,
   handleTrainerHome,
-  handlePlanPress
+  handlePlanPress,
+  err
 }) {
   return (
     <MenuProvider>
       <ImageBackground source={BackgroundImage} resizeMode="cover">
         <Loader loading={loading} />
-
-        <View style={styles.container}>
-          {loading ? null : (
-            <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
-              <View style={styles.homeHeader}>
-                <Text style={{ ...styles.title, color: colors.white }}>{homeTexts.title}</Text>
-              </View>
-              <KeyboardAvoidingView style={styles.formContainer} enabled>
-                <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
-                {sortGoals(goals).length === 0 ? (
-                  <Text style={styles.noPlans}>No tienes ninguna meta pendiente</Text>
-                ) : null}
-                {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
-                <Text style={styles.suggestedPlansT}>{homeTexts.lastPlansTitles}</Text>
-                {lastPlans.length === 0 ? (
-                  <Text style={styles.noPlans}>No realizaste ningun plan</Text>
-                ) : null}
-                {lastPlans.map((plan) => (
-                  <LastPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
-                ))}
-                <Text style={styles.suggestedPlansT}>{homeTexts.suggestedPlansTitle}</Text>
-                {loading
-                  ? null
-                  : suggestedPlans.map((plan) => (
-                      <SuggestedPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
-                    ))}
-              </KeyboardAvoidingView>
-            </ScrollView>
-          )}
-        </View>
+        <ErrorView err={err} />
+        {!err && (
+          <View style={styles.container}>
+            {loading ? null : (
+              <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={scrollviewStyle}>
+                <View style={styles.homeHeader}>
+                  <Text style={{ ...styles.title, color: colors.white }}>{homeTexts.title}</Text>
+                </View>
+                <KeyboardAvoidingView style={styles.formContainer} enabled>
+                  <Text style={styles.goalsTitle}>{homeTexts.closeGoalsTitle}</Text>
+                  {sortGoals(goals).length === 0 ? (
+                    <Text style={styles.noPlans}>No tienes ninguna meta pendiente</Text>
+                  ) : null}
+                  {loading ? null : sortGoals(goals).map((goal) => Goal({ goal }))}
+                  <Text style={styles.suggestedPlansT}>{homeTexts.lastPlansTitles}</Text>
+                  {lastPlans.length === 0 ? (
+                    <Text style={styles.noPlans}>No realizaste ningun plan</Text>
+                  ) : null}
+                  {lastPlans.map((plan) => (
+                    <LastPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
+                  ))}
+                  <Text style={styles.suggestedPlansT}>{homeTexts.suggestedPlansTitle}</Text>
+                  {loading
+                    ? null
+                    : suggestedPlans.map((plan) => (
+                        <SuggestedPlan key={plan.id} plan={plan} handlePress={handlePlanPress} />
+                      ))}
+                </KeyboardAvoidingView>
+              </ScrollView>
+            )}
+          </View>
+        )}
       </ImageBackground>
     </MenuProvider>
   );
@@ -253,5 +257,6 @@ Home.propTypes = {
   loading: bool.isRequired,
   handleTrainerHome: func.isRequired,
   handlePlanPress: func.isRequired,
-  lastPlans: array
+  lastPlans: array,
+  err: bool
 };

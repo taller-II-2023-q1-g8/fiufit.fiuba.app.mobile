@@ -30,6 +30,7 @@ export default function UserProfileContainer({ navigation }) {
   const [profPicLoading, setProfPicLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [athleteID, setAthleteID] = useState(null);
+  const [err, setErr] = useState(false);
 
   const fetchProfPicUrl = async () => {
     const url = await getProfilePicURL(state.user.username);
@@ -43,7 +44,6 @@ export default function UserProfileContainer({ navigation }) {
 
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
       const userResponse = await fetchUserProfileByUsername(state.user.username);
       const userJson = await userResponse.json();
       const followersResponse = await fetchFollowerUsersByUsername(state.user.username);
@@ -68,9 +68,18 @@ export default function UserProfileContainer({ navigation }) {
         followed: state.followedUsers.length,
         plans: p
       });
-      setLoading(false);
     }
-    fetchData();
+
+    setLoading(true);
+    fetchData()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErr(true);
+        setLoading(false);
+      });
   }, [state.user]);
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
@@ -124,6 +133,7 @@ export default function UserProfileContainer({ navigation }) {
       handlePlanPress={handlePlanPress}
       handleTrainerHome={handleTrainerHome}
       handleSignOutPress={handleSignOutPress}
+      err={err}
     />
   );
 }

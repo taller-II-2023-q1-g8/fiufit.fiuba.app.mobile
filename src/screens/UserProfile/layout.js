@@ -11,6 +11,7 @@ import defaultProfPic from '../../assets/profile-pic-def.png';
 import BackgroundImage from '../../assets/Background.jpg';
 import manPic from '../../assets/man.jpeg';
 import { getPlanPicURL } from '../../utils';
+import ErrorView from '../ErrorScreen';
 
 import { styles } from './styles';
 
@@ -64,14 +65,15 @@ export default function UserProfile({
   handleAddStat,
   handlePlanPress,
   handleTrainerHome,
-  handleSignOutPress
+  handleSignOutPress,
+  err
 }) {
   return (
     <ImageBackground source={BackgroundImage} resizeMode="cover">
       <View style={styles.container}>
         <Loader loading={loading} />
-
-        {loading ? null : (
+        <ErrorView err={err} />
+        {!err && !loading && (
           <>
             <View style={styles.header}>
               <View style={styles.headerInfo}>
@@ -183,5 +185,6 @@ UserProfile.propTypes = {
   profPicUrl: string,
   loading: bool,
   handleTrainerHome: func,
-  handleSignOutPress: func
+  handleSignOutPress: func,
+  err: bool
 };
