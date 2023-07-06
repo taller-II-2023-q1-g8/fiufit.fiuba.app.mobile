@@ -5,13 +5,19 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signOut } from 'firebase/auth';
 
-import { fetchUserProfileByUsername, updateUserInformationRequest } from '../../requests';
+import {
+  createMetricRequest,
+  fetchUserGoalsByUsername,
+  fetchUserProfileByUsername,
+  updateUserInformationRequest
+} from '../../requests';
 import { useStateValue } from '../../state';
 import { auth, storage } from '../../../firebaseConfig';
 import { getProfilePicURL } from '../../utils';
 
 import EditUserProfile from './layout';
 import { getFields } from './utils';
+import ErrorView from '../ErrorScreen';
 
 export default function EditUserProfileContainer() {
   const [data, setData] = useState({});
@@ -20,7 +26,7 @@ export default function EditUserProfileContainer() {
   const [loading, setLoading] = useState(true);
   const [currentTag, setCurrentTag] = useState('ABS');
   const [tags, setTags] = useState([]);
-
+  const [err, setErr] = useState(false);
   const handleOnChangeText = (name, value) => setData({ ...data, [name]: value });
 
   const fetchProfPicUrl = async () => {
@@ -35,16 +41,21 @@ export default function EditUserProfileContainer() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetchUserProfileByUsername(state.user.username);
-      const json = await response.json();
-      if (json.message.interests === null) {
-        json.message.interests = [];
-      } else {
-        setTags((oldTags) => [...json.message.interests]);
+      try {
+        const response = await fetchUserProfileByUsername(state.user.username);
+        const json = await response.json();
+        if (json.message.interests === null) {
+          json.message.interests = [];
+        } else {
+          setTags((oldTags) => [...json.message.interests]);
+        }
+        json.message.weight_in_kg = json.message.weight_in_kg.toString();
+        json.message.height_in_cm = json.message.height_in_cm.toString();
+        setData(json.message);
+      } catch (error) {
+        console.log(error);
+        setErr(true);
       }
-      json.message.weight_in_kg = json.message.weight_in_kg.toString();
-      json.message.height_in_cm = json.message.height_in_cm.toString();
-      setData(json.message);
     }
     fetchData();
   }, []);
@@ -103,7 +114,7 @@ export default function EditUserProfileContainer() {
         });
       } else Alert.alert('Error', 'Intente nuevamente');
     } catch (error) {
-      // console.log(error);
+      Alert.alert('Error', 'Servicio bloqueado, no se pudo actualizar perfil');
     }
     setLoading(false);
   };
@@ -111,16 +122,21 @@ export default function EditUserProfileContainer() {
   const fields = getFields(data, handleOnChangeText);
 
   return (
-    <EditUserProfile
-      fields={fields}
-      handlePickImage={handlePickImage}
-      handleSubmitPress={handleSubmitPress}
-      image={profPicUrl}
-      loading={loading}
-      handleOnChangeTags={handleOnChangeTags}
-      handleOnAddTag={handleOnAddTag}
-      tags={tags}
-      handleOnDeleteTag={handleOnDeleteTag}
-    />
+    <>
+      <ErrorView err={err} />
+      {!err && (
+        <EditUserProfile
+          fields={fields}
+          handlePickImage={handlePickImage}
+          handleSubmitPress={handleSubmitPress}
+          image={profPicUrl}
+          loading={loading}
+          handleOnChangeTags={handleOnChangeTags}
+          handleOnAddTag={handleOnAddTag}
+          tags={tags}
+          handleOnDeleteTag={handleOnDeleteTag}
+        />
+      )}
+    </>
   );
 }
