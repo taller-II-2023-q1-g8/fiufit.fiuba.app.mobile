@@ -66,8 +66,13 @@ export default function HomeScreen({ navigation }) {
           return false;
         });
         plansInterests.forEach((plan) => console.log(plan.title, plan.tags));
-        const numberOfSuggestedPlans = getRandomInt(3, 4);
-        setSuggestedPlans(plansInterests.slice(0, numberOfSuggestedPlans));
+        if (plansInterests.length < 1) {
+          const numberOfSuggestedPlans = getRandomInt(3, 4);
+          setSuggestedPlans(plans.slice(0, numberOfSuggestedPlans));
+        } else {
+          const numberOfSuggestedPlans = getRandomInt(3, 4);
+          setSuggestedPlans(plansInterests.slice(0, numberOfSuggestedPlans));
+        }
       } else {
         const numberOfSuggestedPlans = getRandomInt(3, 4);
         setSuggestedPlans(plans.slice(0, numberOfSuggestedPlans));
