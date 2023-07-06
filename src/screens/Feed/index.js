@@ -1,5 +1,6 @@
 import { func, shape } from 'prop-types';
 import React, { useState, useEffect } from 'react';
+import { Alert } from 'react-native';
 
 import { useStateValue } from '../../state';
 import texts from '../../texts';
@@ -136,7 +137,11 @@ export default function FeedScreen({ navigation }) {
     navigation.navigate(texts.SearchedProfile.name, { username });
   };
   const handlePlanPress = (plan) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+    if (plan.blocked === 'true') {
+      Alert.alert(texts.BlockedPlan.alert);
+    } else {
+      navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+    }
   };
 
   feed.sort((a, b) => b.date - a.date);

@@ -4,6 +4,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { signOut } from 'firebase/auth';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
+import { Alert } from 'react-native';
 
 import {
   fetchFollowedUsersByUsername,
@@ -74,7 +75,13 @@ export default function UserProfileContainer({ navigation }) {
 
   const handleAddStat = () => navigation.navigate(texts.PersonalGoalsStack.name);
   const handleEditProfile = () => navigation.navigate(texts.EditUserProfile.name);
-  const handlePlanPress = (plan) => navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+  const handlePlanPress = (plan) => {
+    if (plan.blocked === 'true') {
+      Alert.alert(texts.BlockedPlan.alert);
+    } else {
+      navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+    }
+  };
 
   const handleTrainerHome = () => {
     dispatch({

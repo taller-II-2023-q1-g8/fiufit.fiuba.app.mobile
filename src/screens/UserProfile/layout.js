@@ -143,10 +143,10 @@ export default function UserProfile({
                   style={{
                     ...styles.title,
                     ...{
-                      color: 'red',
+                      color: 'orange',
                       marginHorizontal: 10,
                       paddingHorizontal: 10,
-                      borderColor: 'red',
+                      borderColor: 'orange',
                       borderWidth: 0.5,
                       borderRadius: 50,
                       fontWeight: '400'

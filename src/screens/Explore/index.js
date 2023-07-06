@@ -1,6 +1,7 @@
 import { func, shape } from 'prop-types';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 
 import { fetchAllUsers, fetchPlans, fetchTrainersID, fetchUsersByUsername } from '../../requests';
 import { processFetchedPlans } from '../../utils';
@@ -40,7 +41,11 @@ export default function ExploreScreen({ navigation }) {
   };
 
   const handleItemPress = (plan) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+    if (plan.blocked === 'true') {
+      Alert.alert(texts.BlockedPlan.alert);
+    } else {
+      navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+    }
   };
   // Users
   const [usernames, setUsernames] = useState([]);

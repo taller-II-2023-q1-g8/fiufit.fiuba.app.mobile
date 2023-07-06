@@ -3,6 +3,7 @@ import { func, shape } from 'prop-types';
 import { signOut } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import messaging from '@react-native-firebase/messaging';
+import { Alert } from 'react-native';
 
 import {
   updateDeviceToken,
@@ -207,7 +208,11 @@ export default function HomeScreen({ navigation }) {
   };
 
   const handlePlanPress = (plan) => {
-    navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+    if (plan.blocked === 'true') {
+      Alert.alert(texts.BlockedPlan.alert);
+    } else {
+      navigation.navigate(texts.SearchedTrainingPlan.name, { plan });
+    }
   };
 
   return (

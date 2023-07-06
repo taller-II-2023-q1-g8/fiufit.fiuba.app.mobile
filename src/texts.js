@@ -1,4 +1,7 @@
 const texts = {
+  BlockedPlan: {
+    alert: 'This plan has been blocked'
+  },
   Login: {
     name: 'Login',
     forgotYourPasswordQuestion: '¿Olvidaste tu contraseña?',
