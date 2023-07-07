@@ -33,7 +33,7 @@ export default function ErrorView({ err }) {
         >
           <Text style={{ color: 'white', fontSize: 25 }}>
             {' '}
-            Servicios bloqueados intente nuevamente mas tarde{' '}
+            Servicios bloqueados intente nuevamente más tarde{' '}
           </Text>
         </View>
       </View>
