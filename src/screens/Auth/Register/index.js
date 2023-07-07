@@ -102,7 +102,7 @@ export default function RegisterContainer() {
       const b = await serviceState('Plans');
       const bjs = await b.json();
       setLoading(false);
-      if (a.status === 200 || b.status === 200) {
+      if (a.status !== 200 || b.status !== 200) {
         Alert.alert('Error', 'Servicios bloqueados intente nuevamente mas tarde');
         setLoading(false);
         return;
