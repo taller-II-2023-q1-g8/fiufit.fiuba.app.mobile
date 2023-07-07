@@ -57,12 +57,7 @@ function ListItems({
     const RowTextStyle = data.item.key === swipedRow ? styles.SwipedExerciseText : styles.ExerciseText;
     // Conseguir foto del ejercicio y ponerla?
     return (
-      <TouchableHighlight
-        onPress={() => {
-          handleTriggerEdit(data.item);
-        }}
-        style={styles.ListView}
-      >
+      <View style={styles.ListView}>
         <View style={{ flexDirection: 'row' }}>
           <Image style={styles.profilePic} source={manPic} />
           <View style={{ marginLeft: 10 }}>
@@ -73,7 +68,7 @@ function ListItems({
             </Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </View>
     );
   };
 

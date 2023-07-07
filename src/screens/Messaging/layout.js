@@ -155,9 +155,6 @@ export default function Messaging({
           />
         ))}
       </ScrollView>
-      <TouchableOpacity style={styles.opacityButton} activeOpacity={0.6} onPress={newConversation}>
-        <Image source={newConvIcon} style={styles.opacityButtonIcon} />
-      </TouchableOpacity>
     </View>
   );
 }
