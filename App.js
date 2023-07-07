@@ -1,42 +1,53 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+import 'expo-dev-client';
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import messaging, { firebaseMessaging } from '@react-native-firebase/messaging';
+import { Alert, Share } from 'react-native';
 
-import Login from "./screens/Login";
-import Register from "./screens/Register";
-import { texts } from "./texts";
-import { colors } from "./colors";
+import './firebaseConfig';
+import { StateProvider } from './src/state';
+import RootNavigation from './src/navigation';
 
-const appTexts = texts.App;
-const Stack = createNativeStackNavigator();
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => {
+    console.info('Reactotron Configured');
+  });
+}
 
-const defaultNavigationOptions = {
-  title: appTexts.headerTitle,
-  headerTintColor: "white",
-  headerTitleStyle: {
-    fontWeight: "bold",
-    alignSelf: "center",
-  },
-  headerTitleAlign: "center",
-  headerStyle: {
-    backgroundColor: colors.purple,
-  },
+const shareMessage = async (message) => {
+  try {
+    await Share.share({
+      message: `Completé una meta en FiuFit: ${message.split(':')[1]}!`
+    });
+  } catch (error) {
+    console.log('Error al compartir:', error);
+  }
 };
 
+async function onMessageReceived(message) {
+  if (!message.notification.title.startsWith('Mensaje de')) {
+    console.log({ message });
+    console.log('NOTIFICATION RECEIVED:', message.title);
+    Alert.alert('Meta completada!', message.notification.body, [
+      {
+        text: 'Compartir',
+        onPress: () => shareMessage(message.notification.body)
+      },
+      {
+        text: 'Ok'
+      }
+    ]);
+  }
+}
+
 export default function App() {
+  messaging().onMessage(onMessageReceived);
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          component={Login}
-          name={texts.Login.name}
-          options={defaultNavigationOptions}
-        />
-        <Stack.Screen
-          component={Register}
-          name={texts.Register.name}
-          options={defaultNavigationOptions}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <StateProvider hidden>
+      <StatusBar hidden />
+      <RootNavigation />
+    </StateProvider>
   );
 }

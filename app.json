@@ -4,27 +4,45 @@
     "slug": "fiuFit",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+    "icon": "./src/assets/app.png",
+    "userInterfaceStyle": "dark",
+    "androidNavigationBar": {
+      "backgroundColor": "#000000"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "splash": {
+      "image": "./src/assets/app.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
+      "permissions": ["com.google.android.gms.permission.ACTIVITY_RECOGNITION", "android.permission.ACTIVITY_RECOGNITION"],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./src/assets/app.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.santiagobiach.fiuFit"
     },
+    "plugins": [
+      ["@react-native-google-signin/google-signin"],
+      ["expo-image-picker"],
+      ["expo-local-authentication"],
+      ["@react-native-firebase/app"],
+      ["expo-location"],
+      ["expo-task-manager"],
+      ["expo-sensors"]
+    ],
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9829a76e-1c34-4b71-86a4-e821a2181927"
+      }
     }
   }
 }
