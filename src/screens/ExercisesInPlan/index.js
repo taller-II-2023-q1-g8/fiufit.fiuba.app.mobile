@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { func, shape } from 'prop-types';
+import { Alert } from 'react-native';
 
 import {
   AddExcerciseToPlanRequest,
@@ -77,15 +78,19 @@ export default function ExercisesInPlanScreen({ navigation, route }) {
     setAddedExcersises([]);
   };
 
-  const handleAddExercise = (exercise) => {
+  const handleAddExercise = async (exercise) => {
     const newAddedExercises = [...addedExcersises, exercise];
     // Mandar requests al microservicio despues
     const values = {};
     values.reps = exercise.reps;
     values.weight = exercise.weight;
     console.log(exercise);
-    AddExcerciseToPlanRequest(plan.id, exercise.exercise.id, values);
-    setAddedExcersises(newAddedExercises);
+    try {
+      await AddExcerciseToPlanRequest(plan.id, exercise.exercise.id, values);
+      setAddedExcersises(newAddedExercises);
+    } catch (error) {
+      Alert.alert('No se pudo agregar ejercicio, microservicio bloqueado');
+    }
     setModalVisible(false);
   };
   const [exerciseToBeEdited, setExerciseToBeEdited] = useState(null);
