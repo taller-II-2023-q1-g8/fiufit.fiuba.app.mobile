@@ -103,31 +103,37 @@ export default function LoginContainer({ navigation }) {
     await GoogleSignin.signOut();
     const user = await GoogleSignin.signIn();
     setLoading(true);
-    const response = await fetchUserByEmail(user.user.email);
-    const json = await response.json();
-    if (json.message == null) {
-      setLoading(false);
-      navigation.navigate(texts.FederatedRegister.name);
-      return;
-    }
-    if (json.message.is_federated) {
-      const blocked = await fetchUserIsBlocked(json.message.username);
-      const blockedJson = await blocked.json();
-      console.log(blockedJson);
-      if (blockedJson.message.blocked) {
-        Alert.alert('Esta cuenta esta bloqueada');
-        await GoogleSignin.signOut();
+    try {
+      const response = await fetchUserByEmail(user.user.email);
+      const json = await response.json();
+      if (json.message == null) {
         setLoading(false);
+        navigation.navigate(texts.FederatedRegister.name);
         return;
       }
-      const googleCredential = GoogleAuthProvider.credential(user.idToken);
-      // Sign-in the user with the credential
-      dispatch({ type: 'logIn', automaticallyLogged: 'false' });
-      await signInWithCredential(auth, googleCredential);
-    } else {
-      Alert.alert('Ese email ya tiene una cuenta asociada');
+      if (json.message.is_federated) {
+        const blocked = await fetchUserIsBlocked(json.message.username);
+        const blockedJson = await blocked.json();
+        console.log(blockedJson);
+        if (blockedJson.message.blocked) {
+          Alert.alert('Esta cuenta esta bloqueada');
+          await GoogleSignin.signOut();
+          setLoading(false);
+          return;
+        }
+        const googleCredential = GoogleAuthProvider.credential(user.idToken);
+        // Sign-in the user with the credential
+        dispatch({ type: 'logIn', automaticallyLogged: 'false' });
+        await signInWithCredential(auth, googleCredential);
+      } else {
+        Alert.alert('Ese email ya tiene una cuenta asociada');
+      }
+      setLoading(false);
+    } catch (error) {
+      Alert.alert('Error', 'Microservicios caidos');
+      await GoogleSignin.signOut();
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const fields = getFields(handleOnChangeText, errors);
